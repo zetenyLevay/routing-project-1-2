@@ -1,0 +1,7 @@
+Was unable to upload one file since its 1.5GB+
+
+Here is the link to all the files for fast donwload:
+https://mega.nz/folder/d8sSgS6a#Y3VMg7VX8r0sOoDklRFGUw 
+
+
+Probably best to remove all of these files so that git clone will not take too long (and just keep the link)
