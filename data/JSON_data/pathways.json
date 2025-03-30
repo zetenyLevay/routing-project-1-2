@@ -1,0 +1,3946 @@
+[
+  {
+    "pathway_id": "LM4KF1-LM4KFA",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KF1-LM4KFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "LM4KFB",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3UK2-F00913",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3UK2",
+    "to_stop_id": "F00913",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KF1-LM4KFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "LM4KFC",
+    "traversal_time": 210
+  },
+  {
+    "pathway_id": "LM4KF1-LM4KFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "LM4KFD",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM1OPV-F01079",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1OPV",
+    "to_stop_id": "F01079",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1DF1-F00962",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF1",
+    "to_stop_id": "F00962",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "056233-F01336-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056233",
+    "to_stop_id": "F01336",
+    "traversal_time": 105
+  },
+  {
+    "pathway_id": "LM4KF2-LM4KFA-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPN",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPN",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPM",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPM",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPL",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPL",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPK",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPK",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "056227-F01290",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056227",
+    "to_stop_id": "F01290",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LMXKVE-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVE",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PU2-F01743-WC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU2",
+    "to_stop_id": "F01743",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3LE1-F02613-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE1",
+    "to_stop_id": "F02613",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KL1-F00959",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KL1",
+    "to_stop_id": "F00959",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP3-056234-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "056234",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KL1-F00958",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KL1",
+    "to_stop_id": "F00958",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HU2-LM3HU1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU2",
+    "to_stop_id": "LM3HU1",
+    "traversal_time": 10
+  },
+  {
+    "pathway_id": "LM3NL2-F01282",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NL2",
+    "to_stop_id": "F01282",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NY3-LM3NY1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY3",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3LEF-LM3LE1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEF",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DGE-LM3DG1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DGE",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1VUV-F01092",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1VUV",
+    "to_stop_id": "F01092",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3FT2-LM3FT1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FT2",
+    "to_stop_id": "LM3FT1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3LEB-LM3LE2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEB",
+    "to_stop_id": "LM3LE2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF4-LM4KFA-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3DGA-LM3DG1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DGA",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPF-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPF",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KV1-056227",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "056227",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3DF1-F00955",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "F00955",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3HUA1-LM3HU1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HUA1",
+    "to_stop_id": "LM3HU1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LMXKV1-LM3KV1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKV1",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LMXKVA-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVA",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NY1-F00936",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY1",
+    "to_stop_id": "F00936",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3DF1-F00954",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "F00954",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NY1-F00937",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY1",
+    "to_stop_id": "F00937",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3FTB-LM3FT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FTB",
+    "to_stop_id": "LM3FT1",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3AHD-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHD",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3AHD-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHD",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NYC-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYC",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "056227-F01289",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056227",
+    "to_stop_id": "F01289",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NYC-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYC",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KV1-056228",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "056228",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "056233-F01335-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056233",
+    "to_stop_id": "F01335",
+    "traversal_time": 105
+  },
+  {
+    "pathway_id": "L056214-056231-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056214",
+    "to_stop_id": "056231",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3DG1-F02681",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DG1",
+    "to_stop_id": "F02681",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DG1-F02680",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DG1",
+    "to_stop_id": "F02680",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008084-F01233",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008084",
+    "to_stop_id": "F01233",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008084-F01232",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008084",
+    "to_stop_id": "F01232",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKJ",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKI",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKJ",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-056233",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "056233",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKK",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKK",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKK",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKK",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP2-056234",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "056234",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKF",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKH",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKE",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKI",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKH",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKF",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKG",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKG",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3EUB-F01493",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EUB",
+    "to_stop_id": "F01493",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM2OV2-F01749",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2OV2",
+    "to_stop_id": "F01749",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP3-056233-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "056233",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLI",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYK-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYK",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L056214-056232-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056214",
+    "to_stop_id": "056232",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLH",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NLG-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLG",
+    "to_stop_id": "L008082",
+    "traversal_time": 75
+  },
+  {
+    "pathway_id": "LM3NYK-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYK",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM3NYL-LM3NY2",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYL",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLG",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PU2-F01742-WC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU2",
+    "to_stop_id": "F01742",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NYL-LM3NY1",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYL",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLF",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NT2-LM3NT1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT2",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3CN1-F01188",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CN1",
+    "to_stop_id": "F01188",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3CN1-F01189",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CN1",
+    "to_stop_id": "F01189",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "F00960-F00955",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00960",
+    "to_stop_id": "F00955",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "F00960-F00954",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00960",
+    "to_stop_id": "F00954",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NT1-F01252",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT1",
+    "to_stop_id": "F01252",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYD-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYD",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NT1-F01253",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT1",
+    "to_stop_id": "F01253",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYD-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYD",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3EU2-F01493",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EU2",
+    "to_stop_id": "F01493",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3KK1-F01543",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KK1",
+    "to_stop_id": "F01543",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "LM3AHG-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHG",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3KK1-F01544",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KK1",
+    "to_stop_id": "F01544",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "LM3AHG-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHG",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3CNF-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNF",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKD",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKE",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKB",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKC",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4MK2-LM4MKA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "LM4MKA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2BT1-F00062",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "F00062",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NLD-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLD",
+    "to_stop_id": "L008082",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM2BT1-F00063",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "F00063",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NL1-L008082",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NL1",
+    "to_stop_id": "L008082",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3KKD1-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKD1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 75
+  },
+  {
+    "pathway_id": "L056213-056229",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056213",
+    "to_stop_id": "056229",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1BUM-F01101",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1BUM",
+    "to_stop_id": "F01101",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HU3-F01541",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU3",
+    "to_stop_id": "F01541",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LEI-LM3LE1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEI",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3FU1-F02682",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FU1",
+    "to_stop_id": "F02682",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NTE-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTE",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3CN1-F01188-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CN1",
+    "to_stop_id": "F01188",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3DF1-LMXDFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "LMXDFA",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008082-F01283-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008082",
+    "to_stop_id": "F01283",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3LEA-LM3LE2",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEA",
+    "to_stop_id": "LM3LE2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1KKV-F01095",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1KKV",
+    "to_stop_id": "F01095",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2DP1-F00094",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DP1",
+    "to_stop_id": "F00094",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2DP1-F00093",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DP1",
+    "to_stop_id": "F00093",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L056213-056230",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056213",
+    "to_stop_id": "056230",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3UV2-F00897",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3UV2",
+    "to_stop_id": "F00897",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3DF1-LMXDFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "LMXDFD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPK-WC",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPK",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3DF1-LMXDFE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "LMXDFE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NTB-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTB",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DF1-LMXDFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "LMXDFB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3DF1-LMXDFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DF1",
+    "to_stop_id": "LMXDFC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK2-056222",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "056222",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK2-056221",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK2",
+    "to_stop_id": "056221",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1SFV-F02696",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1SFV",
+    "to_stop_id": "F02696",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLB",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2BL1-LM2BLA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "LM2BLA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF1-056216",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "056216",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AH1-F02637",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AH1",
+    "to_stop_id": "F02637",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF1-056215",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF1",
+    "to_stop_id": "056215",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4SG2-056224-WC",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4SG2",
+    "to_stop_id": "056224",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3PU2-F01878",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3PU2",
+    "to_stop_id": "F01878",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3EUE-F01494",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EUE",
+    "to_stop_id": "F01494",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM4BP1-056217",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4BP1",
+    "to_stop_id": "056217",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM1HTV-F01102",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1HTV",
+    "to_stop_id": "F01102",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3CNA-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNA",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4BP1-056218",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4BP1",
+    "to_stop_id": "056218",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3CNI-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNI",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF2-LM4KFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "LM4KFC",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM4KF2-LM4KFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "LM4KFB",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4KF2-LM4KFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "LM4KFD",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4KF2-LM4KFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008136-F00957",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008136",
+    "to_stop_id": "F00957",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008136-F00956",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008136",
+    "to_stop_id": "F00956",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF2-056216-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "056216",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "056228-F01290",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056228",
+    "to_stop_id": "F01290",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008162-F02684",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "F02684",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008162-F02685",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "F02685",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LMXKVF-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVF",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPL",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPL",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3KKF-LM3KK1-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKF",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 210
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPM",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPM",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPJ",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPN",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPN",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPB",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "056228-F01289",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056228",
+    "to_stop_id": "F01289",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPH",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPI",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPF",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPF",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPG",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASJ",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASI",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF4-056216",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "056216",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASF",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3AH4-F02637",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AH4",
+    "to_stop_id": "F02637",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF4-056215",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "056215",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "056228-F01289-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056228",
+    "to_stop_id": "F01289",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP2-LMXKPA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP2",
+    "to_stop_id": "LMXKPA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASH",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASG",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LMXKV1-056227",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKV1",
+    "to_stop_id": "056227",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM1HTM-F01103",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1HTM",
+    "to_stop_id": "F01103",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DG2-F02681",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DG2",
+    "to_stop_id": "F02681",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008082-F01282-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008082",
+    "to_stop_id": "F01282",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LMXKV1-056228",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKV1",
+    "to_stop_id": "056228",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4MK3-056221-WC",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK3",
+    "to_stop_id": "056221",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "F00912-L008186",
+    "pathway_mode": 2,
+    "is_bidirectional": 0,
+    "from_stop_id": "F00912",
+    "to_stop_id": "L008186",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DGD-LM3DG1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DGD",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASB",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1VUM-F01093",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1VUM",
+    "to_stop_id": "F01093",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4FT2-056226",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4FT2",
+    "to_stop_id": "056226",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2AS1-LM2ASC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "LM2ASC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKB1-LM3KK1-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKB1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3KKD3-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKD3",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NTC-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTC",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4FT2-056225",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4FT2",
+    "to_stop_id": "056225",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3CN1-F01189-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CN1",
+    "to_stop_id": "F01189",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "F00897-L008164",
+    "pathway_mode": 2,
+    "is_bidirectional": 0,
+    "from_stop_id": "F00897",
+    "to_stop_id": "L008164",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3GU1-F02684",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3GU1",
+    "to_stop_id": "F02684",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008163-F00898",
+    "pathway_mode": 2,
+    "is_bidirectional": 0,
+    "from_stop_id": "L008163",
+    "to_stop_id": "F00898",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKG-LM3KK1-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKG",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3KKC1-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKC1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NLC-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLC",
+    "to_stop_id": "L008082",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "LM3LE1-F02614-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE1",
+    "to_stop_id": "F02614",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LMXDF1-F00955",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXDF1",
+    "to_stop_id": "F00955",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LMXDF1-F00954",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXDF1",
+    "to_stop_id": "F00954",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2PU1-F01742",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU1",
+    "to_stop_id": "F01742",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPF-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPF",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NYH-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYH",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NYH-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYH",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYG-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYG",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4SG1-056224",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4SG1",
+    "to_stop_id": "056224",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NYG-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYG",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4SG1-056223",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4SG1",
+    "to_stop_id": "056223",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4SG2-056223",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4SG2",
+    "to_stop_id": "056223",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NYM-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYM",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM3HU2-F01542-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU2",
+    "to_stop_id": "F01542",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYM-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYM",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NT3-LM3NT1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT3",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NYB-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYB",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK1-056221",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "056221",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK1-056222",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "056222",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYB-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYB",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3AHC-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHC",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3AHC-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHC",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3EUD-F01494",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EUD",
+    "to_stop_id": "F01494",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3PU1-F01879",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3PU1",
+    "to_stop_id": "F01879",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4UK1-056220-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4UK1",
+    "to_stop_id": "056220",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "056227-F01290-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056227",
+    "to_stop_id": "F01290",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM3CNJ-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNJ",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "056227-F01289-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056227",
+    "to_stop_id": "F01289",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM2BT1-LM2BTD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "LM2BTD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "056228-F01290-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056228",
+    "to_stop_id": "F01290",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM2BT1-LM2BTC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "LM2BTC",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BT1-LM2BTB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "LM2BTB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BT1-LM2BTA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BT1",
+    "to_stop_id": "LM2BTA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LEE-LM3LE1",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEE",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKF-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKF",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3FU2-F02683",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FU2",
+    "to_stop_id": "F02683",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4FT1-056225",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4FT1",
+    "to_stop_id": "056225",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4FT1-056226",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4FT1",
+    "to_stop_id": "056226",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3DGC-LM3DG1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DGC",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4MK3-056222-WC",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK3",
+    "to_stop_id": "056222",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2PF1-F01324",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF1",
+    "to_stop_id": "F01324",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PF1-F01325",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF1",
+    "to_stop_id": "F01325",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKD2-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKD2",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3KKA-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKA",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3NLH-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLH",
+    "to_stop_id": "L008082",
+    "traversal_time": 75
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPF",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPE",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPD",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPC",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPJ",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPI",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPH",
+    "traversal_time": 210
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPG",
+    "traversal_time": 210
+  },
+  {
+    "pathway_id": "LM3LE5-LM3LE1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE5",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPB",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPA",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008186-F00913",
+    "pathway_mode": 2,
+    "is_bidirectional": 0,
+    "from_stop_id": "L008186",
+    "to_stop_id": "F00913",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4UK1-056219-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4UK1",
+    "to_stop_id": "056219",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3HU3-LM3HU1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU3",
+    "to_stop_id": "LM3HU1",
+    "traversal_time": 10
+  },
+  {
+    "pathway_id": "LM3CNE-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNE",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF3-LM4KFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "LM4KFC",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KF3-LM4KFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "LM4KFD",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KF3-LM4KFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KF3-LM4KFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "LM4KFB",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NL2-L008082",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NL2",
+    "to_stop_id": "L008082",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NY1-F00937-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY1",
+    "to_stop_id": "F00937",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1DF3-F00962",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "F00962",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NLE-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLE",
+    "to_stop_id": "L008082",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM1DF3-F00963",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "F00963",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM2OV1-F01749-WC",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2OV1",
+    "to_stop_id": "F01749",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4UK1-056219",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4UK1",
+    "to_stop_id": "056219",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1VTV-F00964",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1VTV",
+    "to_stop_id": "F00964",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "LMXKVG-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVG",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LMXKVC-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVC",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2DF1-F00960",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "F00960",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM2DF1-F00961",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "F00961",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM1SFM-F02697",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1SFM",
+    "to_stop_id": "F02697",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L056213-056229-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056213",
+    "to_stop_id": "056229",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPJ",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPJ",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPI",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPH",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPG",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPF",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPE",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPC",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPB",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3GU2-F02685",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3GU2",
+    "to_stop_id": "F02685",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-F01335",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "F01335",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3KKB1-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKB1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPN",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPN",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPM",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPM",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPL",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPL",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPK",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPK",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3KKG-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKG",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3NTD-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTD",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008084-F01233-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008084",
+    "to_stop_id": "F01233",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3UV1-F00898",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3UV1",
+    "to_stop_id": "F00898",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1KKM-F01096",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1KKM",
+    "to_stop_id": "F01096",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3AH3-F02638",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AH3",
+    "to_stop_id": "F02638",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF3-056216",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "056216",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KF3-056215",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "056215",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "056234-F01336-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056234",
+    "to_stop_id": "F01336",
+    "traversal_time": 105
+  },
+  {
+    "pathway_id": "L008082-F01283",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008082",
+    "to_stop_id": "F01283",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "L008082-F01282",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008082",
+    "to_stop_id": "F01282",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "LM2PU1-F01743",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU1",
+    "to_stop_id": "F01743",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4UK1-056220",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4UK1",
+    "to_stop_id": "056220",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L056213-056230-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056213",
+    "to_stop_id": "056230",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-LMXKPK-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "LMXKPK",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "F00962-F00960",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00962",
+    "to_stop_id": "F00960",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "F00962-F00961",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00962",
+    "to_stop_id": "F00961",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM3KKV3-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKV3",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NLB-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLB",
+    "to_stop_id": "L008082",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3CNC-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNC",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3CNG-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNG",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KP3-056234",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "056234",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KP3-056233",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "056233",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3KKC3-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKC3",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM1MUV-F02887",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1MUV",
+    "to_stop_id": "F02887",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKC2-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKC2",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "056234-F01335-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "056234",
+    "to_stop_id": "F01335",
+    "traversal_time": 105
+  },
+  {
+    "pathway_id": "LM3EUC-F01493",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EUC",
+    "to_stop_id": "F01493",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM2PU2-F01742",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU2",
+    "to_stop_id": "F01742",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYI-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYI",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PU2-F01743",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PU2",
+    "to_stop_id": "F01743",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYI-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYI",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3LE2-F02614",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE2",
+    "to_stop_id": "F02614",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DG2-LM3DG1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DG2",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3LE2-F02613",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE2",
+    "to_stop_id": "F02613",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1OKV-F01085",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1OKV",
+    "to_stop_id": "F01085",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYF-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYF",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYF-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYF",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "F00963-F00955",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00963",
+    "to_stop_id": "F00955",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "F00963-F00954",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00963",
+    "to_stop_id": "F00954",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM3AHE-LM3AH2",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHE",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AHE-LM3AH1",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHE",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3FTA-LM3FT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FTA",
+    "to_stop_id": "LM3FT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF2-056215-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "056215",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM4KP3-F01336",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KP3",
+    "to_stop_id": "F01336",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM2DF1-LMXDFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "LMXDFB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2DF1-LMXDFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "LMXDFA",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "F00963-F00960",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00963",
+    "to_stop_id": "F00960",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM2DF1-LMXDFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "LMXDFD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2DF1-LMXDFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "LMXDFC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "F00963-F00961",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00963",
+    "to_stop_id": "F00961",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM2DF1-LMXDFE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2DF1",
+    "to_stop_id": "LMXDFE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3CND-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CND",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3KKV2-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKV2",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM2PF2-F01324",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF2",
+    "to_stop_id": "F01324",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LED-LM3LE2",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LED",
+    "to_stop_id": "LM3LE2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008159-F02683",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008159",
+    "to_stop_id": "F02683",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008159-F02682",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008159",
+    "to_stop_id": "F02682",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3DGB-LM3DG1",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DGB",
+    "to_stop_id": "LM3DG1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PF2-F01325",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF2",
+    "to_stop_id": "F01325",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3FTD-LM3FT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FTD",
+    "to_stop_id": "LM3FT1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NYA-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYA",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NYA-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYA",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1DF3-LMXDFE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "LMXDFE",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3AHB-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHB",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM1DF3-LMXDFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "LMXDFD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HUB1-LM3HU1-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HUB1",
+    "to_stop_id": "LM3HU1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1DF3-LMXDFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "LMXDFC",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1BZV-F00996",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1BZV",
+    "to_stop_id": "F00996",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1DF3-LMXDFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "LMXDFB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1DF3-LMXDFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF3",
+    "to_stop_id": "LMXDFA",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AHB-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHB",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF3-LM4KFA-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF3",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3UK1-F00912",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3UK1",
+    "to_stop_id": "F00912",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3GU3-F02685",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3GU3",
+    "to_stop_id": "F02685",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVD",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1DF2-F00963",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1DF2",
+    "to_stop_id": "F00963",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVC",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVB",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVA",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NT1-F01253-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT1",
+    "to_stop_id": "F01253",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3KV1-F01289-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KV1",
+    "to_stop_id": "F01289",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVG",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008136-F00956-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008136",
+    "to_stop_id": "F00956",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVF",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4KV1-LMXKVE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KV1",
+    "to_stop_id": "LMXKVE",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3KV1-F01290-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KV1",
+    "to_stop_id": "F01290",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM2BL1-F01291",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "F01291",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2AS1-F01018",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "F01018",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2AS1-F01019",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2AS1",
+    "to_stop_id": "F01019",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2BL1-F01292",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2BL1",
+    "to_stop_id": "F01292",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LMXKVD-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVD",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2PF2-F01325-WC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF2",
+    "to_stop_id": "F01325",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LMXKVB-LM3KV1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LMXKVB",
+    "to_stop_id": "LM3KV1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008186-LM3UKC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKC",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "L008186-LM3UKD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKD",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM1VTM-F00965",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1VTM",
+    "to_stop_id": "F00965",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008186-LM3UKE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKE",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008186-LM3UKF",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKF",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008186-LM3UKA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKA",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008186-LM3UKB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKB",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4KF2-056215",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "056215",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3AH2-F02638",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AH2",
+    "to_stop_id": "F02638",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF2-056216",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF2",
+    "to_stop_id": "056216",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008186-LM3UKG",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKG",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008186-LM3UKH",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKH",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008186-LM3UKI",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008186",
+    "to_stop_id": "LM3UKI",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NLA-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLA",
+    "to_stop_id": "L008082",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM4BP2-056218",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4BP2",
+    "to_stop_id": "056218",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4BP2-056217",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4BP2",
+    "to_stop_id": "056217",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM1OPM-F01080",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1OPM",
+    "to_stop_id": "F01080",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HU1-F01542",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU1",
+    "to_stop_id": "F01542",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LEG-LM3LE1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEG",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HU1-F01541",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU1",
+    "to_stop_id": "F01541",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LEC-LM3LE2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEC",
+    "to_stop_id": "LM3LE2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NLF-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLF",
+    "to_stop_id": "L008082",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "056234-F01336",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056234",
+    "to_stop_id": "F01336",
+    "traversal_time": 250
+  },
+  {
+    "pathway_id": "056234-F01335",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056234",
+    "to_stop_id": "F01335",
+    "traversal_time": 250
+  },
+  {
+    "pathway_id": "LM3KKB2-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKB2",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2SZ1-F02480",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2SZ1",
+    "to_stop_id": "F02480",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2SZ1-F02481",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2SZ1",
+    "to_stop_id": "F02481",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3HU1-LM3HUB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU1",
+    "to_stop_id": "LM3HUB",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3HU1-LM3HUA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3HU1",
+    "to_stop_id": "LM3HUA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3FT1-F00953-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FT1",
+    "to_stop_id": "F00953",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NL1-F01283",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NL1",
+    "to_stop_id": "F01283",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3DG1-F02680-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3DG1",
+    "to_stop_id": "F02680",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF4-LM4KFA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "LM4KFA",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKA",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008077-F01879",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008077",
+    "to_stop_id": "F01879",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF4-LM4KFB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "LM4KFB",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKD",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008077-F01878",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008077",
+    "to_stop_id": "F01878",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM4KF4-LM4KFC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "LM4KFC",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM4MK1-LM4MKC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4MK1",
+    "to_stop_id": "LM4MKC",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM4KF4-LM4KFD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM4KF4",
+    "to_stop_id": "LM4KFD",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "F00962-F00955",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00962",
+    "to_stop_id": "F00955",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "LM1OKM-F01086",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1OKM",
+    "to_stop_id": "F01086",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKV1-LM3KK1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKV1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM3NLV-L008082",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NLV",
+    "to_stop_id": "L008082",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3EUA-F01493",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EUA",
+    "to_stop_id": "F01493",
+    "traversal_time": 45
+  },
+  {
+    "pathway_id": "LM3NYJ-LM3NY2",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYJ",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM3LE1-F02614",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE1",
+    "to_stop_id": "F02614",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3LE1-F02613",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LE1",
+    "to_stop_id": "F02613",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NYJ-LM3NY1",
+    "pathway_mode": 1,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYJ",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2KP1-F01335",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "F01335",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "F00961-F00955",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00961",
+    "to_stop_id": "F00955",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "F00962-F00954",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00962",
+    "to_stop_id": "F00954",
+    "traversal_time": 270
+  },
+  {
+    "pathway_id": "F00961-F00954",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "F00961",
+    "to_stop_id": "F00954",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3FTC-LM3FT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FTC",
+    "to_stop_id": "LM3FT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KKC1-LM3KK1-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KKC1",
+    "to_stop_id": "LM3KK1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008162-LM3GUE",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "LM3GUE",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM3AHA-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHA",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AHA-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHA",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM1MUM-F02888",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1MUM",
+    "to_stop_id": "F02888",
+    "traversal_time": 15
+  },
+  {
+    "pathway_id": "L008136-F00957-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008136",
+    "to_stop_id": "F00957",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM2PF2-F01324-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2PF2",
+    "to_stop_id": "F01324",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008084-F01232-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008084",
+    "to_stop_id": "F01232",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3CNB-LM3CN1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNB",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "L008162-LM3GUD",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "LM3GUD",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008162-LM3GUC",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "LM3GUC",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008162-LM3GUB",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "LM3GUB",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L008162-LM3GUA",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008162",
+    "to_stop_id": "LM3GUA",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM2KP1-LMXKPK-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "LMXKPK",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3CNH-LM3CN1",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3CNH",
+    "to_stop_id": "LM3CN1",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3LEH-LM3LE1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3LEH",
+    "to_stop_id": "LM3LE1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM1BZM-F00997",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1BZM",
+    "to_stop_id": "F00997",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KV1-F01289",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KV1",
+    "to_stop_id": "F01289",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3FT1-F00952-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FT1",
+    "to_stop_id": "F00952",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "056233-F01335",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056233",
+    "to_stop_id": "F01335",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "056233-F01336",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "056233",
+    "to_stop_id": "F01336",
+    "traversal_time": 150
+  },
+  {
+    "pathway_id": "LM1BUV-F01100",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM1BUV",
+    "to_stop_id": "F01100",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NTA-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTA",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L056214-056231",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056214",
+    "to_stop_id": "056231",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NY2-F00936",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY2",
+    "to_stop_id": "F00936",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NTF-LM3NT1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NTF",
+    "to_stop_id": "LM3NT1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3KV1-F01290",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3KV1",
+    "to_stop_id": "F01290",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "L056214-056232",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L056214",
+    "to_stop_id": "056232",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3NY2-F00937",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY2",
+    "to_stop_id": "F00937",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3FT1-F00953",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FT1",
+    "to_stop_id": "F00953",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AHF-LM3AH2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHF",
+    "to_stop_id": "LM3AH2",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM3FT1-F00952",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3FT1",
+    "to_stop_id": "F00952",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NYE-LM3NY2",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYE",
+    "to_stop_id": "LM3NY2",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "LM3NYE-LM3NY1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NYE",
+    "to_stop_id": "LM3NY1",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "LM2KP1-F01336",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM2KP1",
+    "to_stop_id": "F01336",
+    "traversal_time": 120
+  },
+  {
+    "pathway_id": "LM3NY1-F00936-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NY1",
+    "to_stop_id": "F00936",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3NT1-F01252-WC",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3NT1",
+    "to_stop_id": "F01252",
+    "traversal_time": 60
+  },
+  {
+    "pathway_id": "LM3AHF-LM3AH1",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3AHF",
+    "to_stop_id": "LM3AH1",
+    "traversal_time": 180
+  },
+  {
+    "pathway_id": "LM3EU1-F01494",
+    "pathway_mode": 5,
+    "is_bidirectional": 1,
+    "from_stop_id": "LM3EU1",
+    "to_stop_id": "F01494",
+    "traversal_time": 90
+  },
+  {
+    "pathway_id": "L008165-F00898",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008165",
+    "to_stop_id": "F00898",
+    "traversal_time": 30
+  },
+  {
+    "pathway_id": "L008165-F00897",
+    "pathway_mode": 2,
+    "is_bidirectional": 1,
+    "from_stop_id": "L008165",
+    "to_stop_id": "F00897",
+    "traversal_time": 30
+  }
+]
