@@ -1,0 +1,10 @@
+/target/classes/ClosureAnalysis/Data/Models/PointOfInterest.class
+/target/classes/ClosureAnalysis/Data/Enums/TransportType.class
+/target/classes/ClosureAnalysis/Data/Readers/StopReader.class
+/target/classes/ClosureAnalysis/StopEvaluator.class
+/target/classes/ClosureAnalysis/Data/Readers/RoadSegmentReader.class
+/target/classes/ClosureAnalysis/Data/Models/Stop.class
+/target/classes/ClosureAnalysis/Data/Models/RoadSegment.class
+/target/classes/ClosureAnalysis/Data/Readers/Reader.class
+/target/classes/ClosureAnalysis/Data/Enums/POIType.class
+/target/classes/ClosureAnalysis/Data/Readers/POIReader.class
