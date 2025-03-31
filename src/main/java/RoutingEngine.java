@@ -39,6 +39,15 @@ public class RoutingEngine {
                     continue;
                 }
                 // ... process other requests here
+                //load 
+                //make ping pong like test cases
+                //be able to convert from json to 
+                //you need to turn the json into java objects
+                //make bash scripts , msys2 for windows, git bash
+                // run basic hello worlds file containing {"ping":kkf}
+
+                //CI gitlab actions to run tests automatically when pushing, check if theyre enabled.
+                //java tests
             }
 
             sendError("Bad request");
