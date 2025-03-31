@@ -1,6 +1,6 @@
-package Data.Models;
+package ClosureAnalysis.Data.Models;
 
-import Data.Enums.TransportType;
+import ClosureAnalysis.Data.Enums.TransportType;
 
 public class RoadSegment {
     private String id;

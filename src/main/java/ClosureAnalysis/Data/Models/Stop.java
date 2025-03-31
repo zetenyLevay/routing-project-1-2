@@ -1,6 +1,6 @@
-package Data.Models;
+package ClosureAnalysis.Data.Models;
 
-import Data.Enums.TransportType;
+import ClosureAnalysis.Data.Enums.TransportType;
 
 public class Stop {
     private String id;
@@ -8,18 +8,19 @@ public class Stop {
     private double latitude;
     private double longitude;
     private TransportType transportType;
+
+    private int routeAmount; /* how many routes go through the stop*/
     private int passengerCount;
-    private int districtId;
 
     public Stop(String id, String name, double latitude, double longitude,
-                TransportType transportType, int passengerCount, int districtId) {
+                TransportType transportType, int passengerCount, int routeAmount) {
         this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.transportType = transportType;
         this.passengerCount = passengerCount;
-        this.districtId = districtId;
+        this.routeAmount = routeAmount;
     }
 
     public String getId() {
@@ -69,12 +70,10 @@ public class Stop {
     public void setPassengerCount(int passengerCount) {
         this.passengerCount = passengerCount;
     }
-
-    public int getDistrictId() {
-        return districtId;
+    public int getRouteAmount() {
+        return routeAmount;
     }
-
-    public void setDistrictId(int districtId) {
-        this.districtId = districtId;
+    public void setRouteAmount(int routeAmount) {
+        this.routeAmount = routeAmount;
     }
 }

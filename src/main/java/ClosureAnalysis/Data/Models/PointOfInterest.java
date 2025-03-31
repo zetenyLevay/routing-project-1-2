@@ -1,21 +1,19 @@
-package Data.Models;
+package ClosureAnalysis.Data.Models;
 
-import Data.Enums.POIType;
+import ClosureAnalysis.Data.Enums.POIType;
 
 public class PointOfInterest {
     private String id;
     private POIType type;
     private double latitude;
     private double longitude;
-    private double impactScore;
 
     public PointOfInterest(String id, POIType type, double latitude,
-                           double longitude, double impactScore) {
+                           double longitude) {
         this.id = id;
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.impactScore = impactScore;
     }
 
     public String getId() {
@@ -48,13 +46,5 @@ public class PointOfInterest {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public double getImpactScore() {
-        return impactScore;
-    }
-
-    public void setImpactScore(double impactScore) {
-        this.impactScore = impactScore;
     }
 }
