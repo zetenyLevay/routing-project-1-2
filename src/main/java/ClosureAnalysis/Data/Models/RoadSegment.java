@@ -6,16 +6,16 @@ public class RoadSegment {
     private String id;
     private int passengerFlow;
     private TransportType transportType;
-    private Stop startStop;
-    private Stop endStop;
+    private Coordinate startCoordinates;
+    private Coordinate endCoordinates;
 
     public RoadSegment(String id, int passengerFlow, TransportType transportType,
-                       Stop startStop, Stop endStop) {
+                        Coordinate startCoordinates, Coordinate endCoordinates) {
         this.id = id;
         this.passengerFlow = passengerFlow;
         this.transportType = transportType;
-        this.startStop = startStop;
-        this.endStop = endStop;
+        this.startCoordinates = startCoordinates;
+        this.endCoordinates = endCoordinates;
     }
 
     public String getId() {
@@ -42,19 +42,16 @@ public class RoadSegment {
         this.transportType = transportType;
     }
 
-    public Stop getStartStop() {
-        return startStop;
+    public Coordinate getStartCoordinates() {
+        return startCoordinates;
     }
-
-    public void setStartStop(Stop startStop) {
-        this.startStop = startStop;
+    public void setStartCoordinates(Coordinate startCoordinates) {
+        this.startCoordinates = startCoordinates;
     }
-
-    public Stop getEndStop() {
-        return endStop;
+    public Coordinate getEndCoordinates() {
+        return endCoordinates;
     }
-
-    public void setEndStop(Stop endStop) {
-        this.endStop = endStop;
+    public void setEndCoordinates(Coordinate endCoordinates) {
+        this.endCoordinates = endCoordinates;
     }
 }

@@ -5,15 +5,12 @@ import ClosureAnalysis.Data.Enums.POIType;
 public class PointOfInterest {
     private String id;
     private POIType type;
-    private double latitude;
-    private double longitude;
+    private Coordinate coordinates;
 
-    public PointOfInterest(String id, POIType type, double latitude,
-                           double longitude) {
+    public PointOfInterest(String id, POIType type, Coordinate coordinates) {
         this.id = id;
         this.type = type;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.coordinates = coordinates;
     }
 
     public String getId() {
@@ -32,19 +29,10 @@ public class PointOfInterest {
         this.type = type;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public Coordinate getCoordinates() {
+        return coordinates;
     }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setCoordinates(Coordinate coordinates) {
+        this.coordinates = coordinates;
     }
 }

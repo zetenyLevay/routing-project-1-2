@@ -5,22 +5,22 @@ import ClosureAnalysis.Data.Enums.TransportType;
 public class Stop {
     private String id;
     private String name;
-    private double latitude;
-    private double longitude;
+    private Coordinate coordinates;
     private TransportType transportType;
-
     private int routeAmount; /* how many routes go through the stop*/
     private int passengerCount;
+    private int stopWorth; // Higher the better
 
-    public Stop(String id, String name, double latitude, double longitude,
+    /* parameters could be changed to Builder */
+    public Stop(String id, String name, Coordinate coordinates, int stopWorth,
                 TransportType transportType, int passengerCount, int routeAmount) {
         this.id = id;
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.transportType = transportType;
         this.passengerCount = passengerCount;
         this.routeAmount = routeAmount;
+        this.stopWorth = stopWorth;
+        this.coordinates = coordinates;
     }
 
     public String getId() {
@@ -39,20 +39,17 @@ public class Stop {
         this.name = name;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public Coordinate getCoordinates() {
+        return coordinates;
     }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setCoordinates(Coordinate coordinates) {
+        this.coordinates = coordinates;
     }
-
-    public double getLongitude() {
-        return longitude;
+    public int getStopWorth() {
+        return stopWorth;
     }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setStopWorth(int stopWorth) {
+        this.stopWorth = stopWorth;
     }
 
     public TransportType getTransportType() {
