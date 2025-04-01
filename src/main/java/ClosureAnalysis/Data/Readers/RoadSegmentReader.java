@@ -2,7 +2,7 @@ package ClosureAnalysis.Data.Readers;
 
 
 import ClosureAnalysis.Data.Enums.POIType;
-import ClosureAnalysis.Data.Models.Coordinate;
+
 import ClosureAnalysis.Data.Models.PointOfInterest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,11 +17,11 @@ public class RoadSegmentReader extends Reader {
     }
 
     @Override
-    protected void readFile() throws IOException {
+    public void readFile() throws IOException {
     }
 
     @Override
-    protected void parseData() {
+    public void parseData() {
 
     }
 

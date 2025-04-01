@@ -2,17 +2,19 @@ package ClosureAnalysis.Data.Models;
 
 import ClosureAnalysis.Data.Enums.TransportType;
 
+import java.util.List;
+
 public class Stop {
     private String id;
     private String name;
-    private Coordinate coordinates;
+    private List<Double> coordinates;
     private TransportType transportType;
     private int routeAmount; /* how many routes go through the stop*/
     private int passengerCount;
     private int stopWorth; // Higher the better
 
     /* parameters could be changed to Builder */
-    public Stop(String id, String name, Coordinate coordinates, int stopWorth,
+    public Stop(String id, String name, List<Double> coordinates, int stopWorth,
                 TransportType transportType, int passengerCount, int routeAmount) {
         this.id = id;
         this.name = name;
@@ -39,12 +41,21 @@ public class Stop {
         this.name = name;
     }
 
-    public Coordinate getCoordinates() {
+    public List<Double> getCoordinates() {
         return coordinates;
     }
-    public void setCoordinates(Coordinate coordinates) {
+    public void setCoordinates(List<Double> coordinates) {
         this.coordinates = coordinates;
     }
+
+    public double getLatitude(){
+        return coordinates.getFirst();
+    }
+
+    public double getLongitude(){
+        return coordinates.getLast();
+    }
+
     public int getStopWorth() {
         return stopWorth;
     }

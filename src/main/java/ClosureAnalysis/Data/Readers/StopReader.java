@@ -6,12 +6,12 @@ public class StopReader extends Reader {
     }
 
     @Override
-    protected void readFile() {
+    public void readFile() {
 
     }
 
     @Override
-    protected void parseData() {
+    public void parseData() {
 
     }
 }

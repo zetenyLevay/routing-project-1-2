@@ -1,5 +1,7 @@
 package ClosureAnalysis.Data.Readers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,7 +12,8 @@ public abstract class Reader {
         this.filePath = filePath;
     }
 
-    protected abstract void readFile() throws IOException;
+    public abstract void readFile() throws IOException;
 
-    protected abstract void parseData();
+    public abstract void parseData();
+
 }
