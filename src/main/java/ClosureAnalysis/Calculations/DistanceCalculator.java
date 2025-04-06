@@ -4,11 +4,11 @@ public class DistanceCalculator {
 
     private static final double EARTH_RADIUS = 6371;
 
-    static double haversine(double val) {
+    private double haversine(double val) {
         return Math.pow(Math.sin(val / 2), 2);
     }
 
-    static double calculateDistance(double startLat, double startLong, double endLat, double endLong) {
+    public double calculateDistance(double startLat, double startLong, double endLat, double endLong) {
 
         double dLat = Math.toRadians((endLat - startLat));
         double dLong = Math.toRadians((endLong - startLong));
