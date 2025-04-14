@@ -1,59 +1,36 @@
 package ClosureAnalysis.Data.Models;
 
+import ClosureAnalysis.Builders.StopBuilder;
 import ClosureAnalysis.Data.Enums.TransportType;
+import routingenginemain.model.Coordinates;
 
-import java.util.List;
-
-public class Stop {
-    private String id;
-    private String name;
-    private List<Double> coordinates;
+public class Stop implements StopBuilder {
+    private final String id;
+    private final String name;
+    private final Coordinates coordinates;
     private TransportType transportType;
     private int routeAmount; /* how many routes go through the stop*/
     private int passengerCount;
+
+    private NearbyPOIs nearbyPOIs;
     private int stopWorth; // Higher the better
 
     /* parameters could be changed to Builder */
-    public Stop(String id, String name, List<Double> coordinates, int stopWorth,
-                TransportType transportType, int passengerCount, int routeAmount) {
+    public Stop(String id, String name, Coordinates coordinates) {
         this.id = id;
         this.name = name;
-        this.transportType = transportType;
-        this.passengerCount = passengerCount;
-        this.routeAmount = routeAmount;
-        this.stopWorth = stopWorth;
         this.coordinates = coordinates;
     }
 
     public String getId() {
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Double> getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
-    }
-    public void setCoordinates(List<Double> coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public double getLatitude(){
-        return coordinates.getFirst();
-    }
-
-    public double getLongitude(){
-        return coordinates.getLast();
     }
 
     public int getStopWorth() {
@@ -62,19 +39,23 @@ public class Stop {
     public void setStopWorth(int stopWorth) {
         this.stopWorth = stopWorth;
     }
-
     public TransportType getTransportType() {
         return transportType;
+    }
+
+    public void reset() {
+        this.stopWorth = 0;
+        this.transportType = null;
+        this.nearbyPOIs = null;
+        this.passengerCount = 0;
     }
 
     public void setTransportType(TransportType transportType) {
         this.transportType = transportType;
     }
-
     public int getPassengerCount() {
         return passengerCount;
     }
-
     public void setPassengerCount(int passengerCount) {
         this.passengerCount = passengerCount;
     }
@@ -84,4 +65,6 @@ public class Stop {
     public void setRouteAmount(int routeAmount) {
         this.routeAmount = routeAmount;
     }
+    public NearbyPOIs getNearbyPOIs() {return nearbyPOIs;}
+    public void setNearbyPOIs(NearbyPOIs nearbyPOIs) {this.nearbyPOIs = nearbyPOIs;}
 }

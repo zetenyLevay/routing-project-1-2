@@ -1,28 +1,27 @@
 package ClosureAnalysis.Data.Models;
 
 import ClosureAnalysis.Data.Enums.TransportType;
+import routingenginemain.model.Coordinates;
 
 import java.util.List;
 
 public class RoadSegment {
-    private String id;
+    private final String id;
     private int passengerFlow;
     private TransportType transportType;
     private List<Stop> stopList;
 
-    public RoadSegment(String id, int passengerFlow, TransportType transportType, List<Stop> stopList) {
+    private final Coordinates startCoordinates;
+    private final Coordinates endCoordinates;
+
+    public RoadSegment(String id, Coordinates startCoordinates, Coordinates endCoordinates) {
         this.id = id;
-        this.passengerFlow = passengerFlow;
-        this.transportType = transportType;
-        this.stopList = stopList;
+        this.startCoordinates = startCoordinates;
+        this.endCoordinates = endCoordinates;
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getPassengerFlow() {
@@ -48,4 +47,11 @@ public class RoadSegment {
         this.stopList = stopList;
     }
 
+    public Coordinates getEndCoordinates() {
+        return endCoordinates;
+    }
+
+    public Coordinates getStartCoordinates() {
+        return startCoordinates;
+    }
 }

@@ -1,15 +1,16 @@
 package ClosureAnalysis.Data.Models;
 
 import ClosureAnalysis.Data.Enums.POIType;
+import routingenginemain.model.Coordinates;
 
 import java.util.List;
 
 public class PointOfInterest {
     private String id;
     private POIType type;
-    private List<Double> coordinates;
+    private Coordinates coordinates;
 
-    public PointOfInterest(String id, POIType type, List<Double> coordinates) {
+    public PointOfInterest(String id, POIType type, Coordinates coordinates) {
         this.id = id;
         this.type = type;
         this.coordinates = coordinates;
@@ -31,18 +32,18 @@ public class PointOfInterest {
         this.type = type;
     }
 
-    public List<Double> getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
     public double getLatitude(){
-        return coordinates.getFirst();
+        return coordinates.getLatitude();
     }
 
     public double getLongitude(){
-        return coordinates.getLast();
+        return coordinates.getLongitude();
     }
-    public void setCoordinates(List<Double> coordinates) {
+    public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 }

@@ -6,6 +6,7 @@ import ClosureAnalysis.Data.Enums.POIType;
 import ClosureAnalysis.Data.Models.NearbyPOIs;
 import ClosureAnalysis.Data.Models.PointOfInterest;
 import ClosureAnalysis.Data.Models.Stop;
+import routingenginemain.model.Coordinates;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,13 +16,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class POIFinder {
+public class POIFinder implements Finder<Stop> {
 
     private final double BIGRADIUS = 0.8;
     private final double SMALLRADIUS = 0.4;
 
     private final DistanceCalculator calculator = new DistanceCalculator();
-     public NearbyPOIs findPOIs(Stop stop) {
+     public void find(Stop stop) {
 
         String query = "SELECT fid, buildingcategory, longitude, latitude FROM buildingsaspoints";
         List<PointOfInterest> closePOIs = new ArrayList<>();
@@ -38,14 +39,14 @@ public class POIFinder {
                 double longitude = rs.getDouble("longitude");
                 double latitude = rs.getDouble("latitude");
 
-                boolean inSmallRadius = calculator.calculateDistance(stop.getLatitude(), stop.getLongitude(), latitude, longitude) <= SMALLRADIUS;
-                boolean inBigRadius = calculator.calculateDistance(stop.getLatitude(), stop.getLongitude(), latitude, longitude) <= BIGRADIUS;
+                boolean inSmallRadius = calculator.calculateDistance(stop.getCoordinates(), new Coordinates(latitude, longitude)) <= SMALLRADIUS;
+                boolean inBigRadius = calculator.calculateDistance(stop.getCoordinates(), new Coordinates(latitude, longitude)) <= BIGRADIUS;
 
 
                 if (inSmallRadius) {
-                    closePOIs.add(new PointOfInterest(id, POIType.valueOf(type.toUpperCase()), List.of(longitude, latitude)));
-                } else if (inBigRadius && !inSmallRadius) {
-                    farPOIs.add(new PointOfInterest(id, POIType.valueOf(type.toUpperCase()), List.of(longitude, latitude)));
+                    closePOIs.add(new PointOfInterest(id, POIType.valueOf(type.toUpperCase()), new Coordinates(latitude, longitude)));
+                } else if (inBigRadius) {
+                    farPOIs.add(new PointOfInterest(id, POIType.valueOf(type.toUpperCase()), new Coordinates(latitude, longitude)));
                 }
 
 
@@ -57,18 +58,19 @@ public class POIFinder {
 
         }
 
-        NearbyPOIs result = new NearbyPOIs(closePOIs, farPOIs);
+        stop.setNearbyPOIs(new NearbyPOIs(closePOIs, farPOIs));
 
-        return result;
+
     }
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
         POIFinder finder = new POIFinder();
-        Stop testStop = new Stop("1", "a", List.of(47.510571,19.056072),0,null,0,0);
+        Stop testStop = new Stop("1", "a", new Coordinates(47.510571,19.056072));
 
-        NearbyPOIs poisInRadius = finder.findPOIs(testStop);
+        finder.find(testStop);
 
-        System.out.println(poisInRadius.getClosePointsOfInterest().size());
-        System.out.println(poisInRadius.getFarPointOfInterest().size());
+        System.out.println(testStop.getNearbyPOIs());
+
+
 
     }
 }
