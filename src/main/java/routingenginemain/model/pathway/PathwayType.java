@@ -1,4 +1,4 @@
-package com.group.routingenginemain.model.pathway;
+package routingenginemain.model.pathway;
 
 public enum PathwayType {
     WALKWAY(1, "Walkway"),

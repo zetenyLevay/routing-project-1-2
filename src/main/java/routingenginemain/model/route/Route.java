@@ -1,6 +1,6 @@
-package com.group.routingenginemain.model.route;
+package routingenginemain.model.route;
 
-import com.group.routingenginemain.model.Agency;
+import routingenginemain.model.Agency;
 
 public class Route {
     private final String routeID;

@@ -1,4 +1,4 @@
-package com.group.routingenginemain.model;
+package routingenginemain.model;
 
 public class Coordinates {
     private double latitude;

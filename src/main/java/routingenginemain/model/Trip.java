@@ -1,6 +1,6 @@
-package com.group.routingenginemain.model;
+package routingenginemain.model;
 
-import com.group.routingenginemain.model.route.Route;
+import routingenginemain.model.route.Route;
 
 import java.util.List;
 

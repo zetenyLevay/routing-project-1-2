@@ -1,7 +1,7 @@
-package com.group.routingenginemain.engine;
+package routingenginemain.engine;
 
-import com.group.routingenginemain.model.Coordinates;
-import com.group.routingenginemain.model.Stop;
+import routingenginemain.model.Coordinates;
+import routingenginemain.model.Stop;
 
 import java.time.LocalTime;
 

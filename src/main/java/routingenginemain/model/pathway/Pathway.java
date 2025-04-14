@@ -1,6 +1,6 @@
-package com.group.routingenginemain.model.pathway;
+package routingenginemain.model.pathway;
 
-import com.group.routingenginemain.model.Stop;
+import routingenginemain.model.Stop;
 
 public class Pathway {
     private final String pathwayID;

@@ -1,4 +1,4 @@
-package com.group.routingenginemain.model.route;
+package routingenginemain.model.route;
 
 public class RouteInfo {
     private final String routeShortName;

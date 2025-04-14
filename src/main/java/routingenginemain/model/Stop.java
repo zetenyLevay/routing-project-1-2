@@ -1,6 +1,6 @@
-package com.group.routingenginemain.model;
+package routingenginemain.model;
 
-import com.group.routingenginemain.model.pathway.Pathway;
+import routingenginemain.model.pathway.Pathway;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.group.routingenginemain.model.route;
+package routingenginemain.model.route;
 
 public enum RouteType {
     TRAM(0, "Tram"),
