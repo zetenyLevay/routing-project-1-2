@@ -8,3 +8,15 @@
 /target/classes/ClosureAnalysis/Data/Readers/Reader.class
 /target/classes/ClosureAnalysis/Data/Enums/POIType.class
 /target/classes/ClosureAnalysis/Data/Readers/POIReader.class
+/target/classes/ClosureAnalysis/Calculations/POIFinder.class
+/target/classes/gui/mainUI.class
+/target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class
+/.idea/.gitignore
+/.idea/vcs.xml
+/.idea/misc.xml
+/.idea/jarRepositories.xml
+/.idea/encodings.xml
+/.idea/compiler.xml
+/data/ClosureAnalysis/budapest_gtfs.db
+/data/ClosureAnalysis/budapest_gtfs.db-shm
+/data/ClosureAnalysis/budapest_gtfs.db-wal
