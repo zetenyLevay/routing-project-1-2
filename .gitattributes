@@ -1,1 +1,2 @@
 BuildingsAsPoints.geojson filter=lfs diff=lfs merge=lfs -text
+budapest_gtfs.db filter=lfs diff=lfs merge=lfs -text
