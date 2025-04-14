@@ -10,5 +10,9 @@ public abstract class OverlayItem {
      * 
      * 
      */
+    public static void create(){
+
+    }
+
 
 }
