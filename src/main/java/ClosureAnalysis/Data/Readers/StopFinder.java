@@ -36,7 +36,7 @@ public class StopFinder implements Finder<RoadSegment>{
                 Coordinates test1 = new Coordinates(47.501104, 19.082712);
                 Coordinates test2 = new Coordinates(47.500853, 19.082181);
 
-                double distanceFromRoadSegment = calculator.stopToRoadSegmentDistance(test1, test2, coordinates ) ;
+                double distanceFromRoadSegment = 0;
 
 
 
