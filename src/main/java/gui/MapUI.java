@@ -10,12 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
@@ -28,11 +24,14 @@ import EventHandlers.ZoomHandler;
 
 public class MapUI {
 
+    /**
+     * Creates the MapUI and draws
+     */
     public static void create() {
         JXMapViewer mapViewer = new JXMapViewer();
-        TileFactory tileFactory = new DefaultTileFactory(new OSMTileFactoryInfo());;
+        TileFactory tileFactory = new DefaultTileFactory(new OSMTileFactoryInfo());
         mapViewer.setTileFactory(tileFactory);
-        mapViewer.setZoom(5);                                               // default zoom
+        mapViewer.setZoom(5);
         mapViewer.setAddressLocation(new GeoPosition(47.4979, 19.0402));    //Budapest location
 
         ZoomHandler zoomHandler = new ZoomHandler(mapViewer);
@@ -40,31 +39,19 @@ public class MapUI {
         mapViewer.addMouseWheelListener(e -> {
             int rotation = e.getWheelRotation();
             if (rotation < 0) {
-
                 zoomHandler.zoomIn();
             } else if (rotation > 0) {
-
                 zoomHandler.zoomOut();
             }
         });
 
+        //so we can drag around the map
         PanMouseInputListener panListener = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(panListener);
         mapViewer.addMouseMotionListener(panListener);
 
-        JButton zoomInBtn = new JButton("+");
-        zoomInBtn.addActionListener(e -> zoomHandler.zoomIn()); // Zoom in
-
-        JButton zoomOutBtn = new JButton("-");
-        zoomOutBtn.addActionListener(e -> zoomHandler.zoomOut()); // Zoom out
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
-        buttonPanel.add(zoomInBtn);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        buttonPanel.add(zoomOutBtn);
-
+        //load and display stops
+        //TODO: put this in a seperate class
         List<GeoPosition> stops = new ArrayList<>();
         String filePath = "data/stops.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -95,23 +82,25 @@ public class MapUI {
             }
         });
 
+        //make layered pane and sets up map
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(800, 600));
-
         mapViewer.setBounds(0, 0, 800, 600);
-        buttonPanel.setOpaque(false);
-        buttonPanel.setBounds(700, 10, 50, 90);
-
         layeredPane.add(mapViewer, JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(buttonPanel, JLayeredPane.PALETTE_LAYER);
 
+        //create adn add control panel - this will also handle all buttons and control panel items
+        ControlPanel controlPanel = ControlPanel.create(mapViewer);
+        controlPanel.setBounds(0, 0, 800, 600);
+        layeredPane.add(controlPanel, JLayeredPane.PALETTE_LAYER);
+
+        //create frame
         JFrame frame = new JFrame("Map Viewer");
         frame.add(layeredPane);
-
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
     }
 
 }
