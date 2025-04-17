@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="" />
+    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/ControlPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/ControlPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/MapUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/MapUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/PanelButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/PanelButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/SearchBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/SearchBar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/mainUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/mainUI.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,26 +41,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.DataConverter.executor": "Run",
-    "Application.mainUI.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DataConverter.executor&quot;: &quot;Run&quot;,
+    &quot;Application.mainUI.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jakelockitch/Desktop/project 1-2/group20&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="mainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.mainUI" />
+      <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="gui.*" />
