@@ -6,37 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Enums/POIType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Enums/POIType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Enums/TransportType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Enums/TransportType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/NearbyPOIs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/NearbyPOIs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/PointOfInterest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/PointOfInterest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/RoadSegment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/RoadSegment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/Stop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Models/Stop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/Finder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/Finder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/POIFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/POIFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/StopFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/Data/Readers/StopFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ClosureAnalysis/StopEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ClosureAnalysis/StopEvaluator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/EventHandlers/ZoomHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/EventHandlers/ZoomHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Parsers/CLIRead.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Parsers/CLIRead.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Parsers/CLIWrite.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Parsers/CLIWrite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Parsers/RequestHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Parsers/RequestHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/RoutingEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RoutingEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/Request.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/StraightLineCalculator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/StraightLineCalculator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/gtfsparser/DataConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/gtfsparser/DataConverter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Agency.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Agency.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Stop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Stop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Timetable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Timetable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Trip.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Trip.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/pathway/Pathway.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/pathway/Pathway.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/pathway/PathwayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/pathway/PathwayType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/Route.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/Route.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/RouteInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/RouteInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/RouteType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/route/RouteType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/api/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/StraightLineCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Stop.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
