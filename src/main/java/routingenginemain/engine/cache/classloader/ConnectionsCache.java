@@ -1,15 +1,15 @@
 package routingenginemain.engine.cache.classloader;
 
+import routingenginemain.engine.util.TimeConverter;
 import routingenginemain.model.Connection;
 import routingenginemain.model.Stop;
 import routingenginemain.model.Trip;
-import routingenginemain.engine.ConnectionSort;
+import routingenginemain.engine.connectionspanalgorithm.ConnectionSort;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
+
+import static routingenginemain.engine.util.TimeConverter.timeToSeconds;
 
 public class ConnectionsCache {
     private static final List<Connection> SORTED_CONNECTIONS = new ArrayList<>();
@@ -29,8 +29,11 @@ public class ConnectionsCache {
             while (rs.next()) {
                 String tripId = rs.getString("trip_id");
                 String stopId = rs.getString("stop_id");
-                int arr = rs.getInt("arrival_time");
-                int dep = rs.getInt("departure_time");
+                String arrStr = rs.getString("arrival_time");
+                String depStr = rs.getString("departure_time");
+                int arr = TimeConverter.timeToSeconds(arrStr);
+                int dep = TimeConverter.timeToSeconds(depStr);
+
 
                 Stop stop = StopsCache.getStop(stopId);
 
