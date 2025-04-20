@@ -12,7 +12,7 @@ public class TripsCache {
     private static final Map<String, Trip> TRIPS = new HashMap<>();
 
     public static void init() {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:gtfs.db");
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:gtfs.db");
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM trips");
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

@@ -11,7 +11,7 @@ public class AgenciesCache {
 
     public static void init() {
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:gtfs.db");
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:gtfs.db");
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM agency");
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

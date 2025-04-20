@@ -8,7 +8,7 @@ import java.sql.*;
 public class PathwaysCache {
 
     public static void init() {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:gtfs.db");
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:gtfs.db");
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM pathways");
              ResultSet rs = stmt.executeQuery()) {
 

@@ -17,7 +17,7 @@ public class ConnectionsCache {
     public static void init() {
         List<Connection> connections = new ArrayList<>();
 
-        try (java.sql.Connection conn = DriverManager.getConnection("jdbc:sqlite:gtfs.db");
+        try (java.sql.Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:gtfs.db");
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM stop_times ORDER BY departure_time");
              ResultSet rs = stmt.executeQuery()) {
 
