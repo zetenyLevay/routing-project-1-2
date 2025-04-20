@@ -16,7 +16,7 @@ public class PathwaysCache {
                 String id = rs.getString("pathway_id");
                 String fromId = rs.getString("from_stop_id");
                 String toId = rs.getString("to_stop_id");
-                int type = rs.getInt("pathway_type");
+                int type = rs.getInt("pathway_mode");
                 int time = rs.getInt("traversal_time");
 
                 Stop from = StopsCache.getStop(fromId);
