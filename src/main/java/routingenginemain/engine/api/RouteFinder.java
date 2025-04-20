@@ -1,5 +1,10 @@
 package routingenginemain.engine.api;
 
-public class RouteFinder {
+import routingenginemain.model.MainAPImodel.ResultantRoute;
+
+public interface RouteFinder {
+    void acceptRequest();
+    ResultantRoute findRoute();
+    void displayResultantRoute();
 
 }

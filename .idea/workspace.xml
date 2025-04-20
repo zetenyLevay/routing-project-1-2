@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/api/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/api/RouteFinder.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/ResultantRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/ResultantRoute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/RouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/RouteStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/ResultantRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/ResultantRoute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/RouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/RouteStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -59,6 +63,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="routingenginemain.engine.api" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.CachingTest">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
