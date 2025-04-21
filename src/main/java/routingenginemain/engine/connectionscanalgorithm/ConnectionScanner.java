@@ -1,4 +1,4 @@
-package routingenginemain.engine.connectionspanalgorithm;
+package routingenginemain.engine.connectionscanalgorithm;
 
 import routingenginemain.engine.cache.classloader.ConnectionsCache;
 import routingenginemain.engine.cache.classloader.StopsCache;
@@ -26,7 +26,7 @@ public class ConnectionScanner {
         this.csaQuery = csaQuery;
     }
 
-    public ResultantRouteCSA findRoute() {
+    public ResultantRouteCSA findRouteViaCSA() {
         initialize();
         processConnections();
         return reconstructRoute();

@@ -4,12 +4,10 @@ import routingenginemain.engine.util.TimeConverter;
 import routingenginemain.model.Connection;
 import routingenginemain.model.Stop;
 import routingenginemain.model.Trip;
-import routingenginemain.engine.connectionspanalgorithm.ConnectionSort;
+import routingenginemain.engine.connectionscanalgorithm.ConnectionSort;
 
 import java.sql.*;
 import java.util.*;
-
-import static routingenginemain.engine.util.TimeConverter.timeToSeconds;
 
 public class ConnectionsCache {
     private static final List<Connection> SORTED_CONNECTIONS = new ArrayList<>();

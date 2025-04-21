@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/api/RouteFinder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/ResultantRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/ResultantRoute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/APImodel/RouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/RouteStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

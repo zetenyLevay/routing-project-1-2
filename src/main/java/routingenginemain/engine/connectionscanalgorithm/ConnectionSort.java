@@ -1,4 +1,4 @@
-package routingenginemain.engine.connectionspanalgorithm;
+package routingenginemain.engine.connectionscanalgorithm;
 
 import routingenginemain.model.Connection;
 
