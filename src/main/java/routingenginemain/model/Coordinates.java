@@ -1,8 +1,8 @@
 package routingenginemain.model;
 
 public class Coordinates {
-    private double latitude;
-    private double longitude;
+    private final double latitude;
+    private final double longitude;
 
     public Coordinates(double latitude, double longitude) {
         this.latitude = latitude;

@@ -7,7 +7,8 @@ public enum PathwayType {
     ESCALATOR(4, "Escalator"),
     ELEVATOR(5, "Elevator"),
     FARE_GATE(6, "Fare Gate"),
-    EXIT_GATE(7, "Exit Gate");
+    EXIT_GATE(7, "Exit Gate"),
+    UNDEFINED(-1, "UNDEFINED");
 
     private final int code;
     private final String name;
@@ -23,7 +24,7 @@ public enum PathwayType {
                 return pathwayType;
             }
         }
-        throw new IllegalArgumentException("Invalid : " + code);
+        return UNDEFINED;
     }
 
     public String showDisplayName() {
