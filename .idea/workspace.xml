@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
+    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/StraightLineCalculator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/api/RouteFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/api/RouteFinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/cache/classloader/ConnectionsCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/cache/classloader/ConnectionsCache.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -32,7 +35,7 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2vZfoSPqY6QIQaeOLxsIujHAiOJ" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -42,11 +45,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.CachingTest.executor": "Run",
+    "Application.ClosenessCentralityCalculator.executor": "Run",
     "Application.DataConverter.executor": "Run",
+    "Application.StopGraph.executor": "Run",
+    "Application.ZipToSQLite.executor": "Run",
     "Application.mainUI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "zetenyBranch",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20",
     "node.js.detected.package.eslint": "true",
@@ -61,17 +67,59 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Project1-2\data" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="routingenginemain.engine.api" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CachingTest">
+  <component name="RunManager" selected="Application.ClosenessCentralityCalculator">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="routingenginemain.engine.cache.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClosenessCentralityCalculator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ClosureAnalysis.Calculations.ClosenessCentralityCalculator" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ClosureAnalysis.Calculations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StopGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ClosureAnalysis.Data.StopGraph" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ClosureAnalysis.Data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZipToSQLite" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Parsers.ZipToSQLite" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Parsers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -94,6 +142,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ClosenessCentralityCalculator" />
+        <item itemvalue="Application.StopGraph" />
+        <item itemvalue="Application.ZipToSQLite" />
         <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.mainUI" />
       </list>
@@ -114,5 +165,30 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)" />
+    <option name="LAST_COMMIT_MESSAGE" value="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/ClosenessCentralityCalculator.java</url>
+          <line>46</line>
+          <properties class="ClosureAnalysis.Calculations.ClosenessCentralityCalculator" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((String[])((JDBC4ResultSet)rs).colsMeta)[0]" custom="org.sqlite.jdbc4.JDBC4ResultSet,java.lang.String[]" />
+        <watch expression="((String[])((JDBC4ResultSet)rs).colsMeta)[0]" custom="org.sqlite.jdbc4.JDBC4ResultSet,java.lang.String[]" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
