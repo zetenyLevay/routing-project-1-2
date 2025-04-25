@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="idk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/StraightLineCalculator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/api/RouteFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/api/RouteFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/engine/cache/classloader/ConnectionsCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/engine/cache/classloader/ConnectionsCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Connection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/routingenginemain/model/Coordinates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/ClosenessCentralityCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/ClosenessCentralityCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/StopGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Graph/StopGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gui/MapUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gui/MapUI.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +27,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPENED",
+    "assignee": {
+      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
+      "username": "I6375144",
+      "fullname": "Lévay, Zétény (Stud. DACS)"
+    }
+  }
+}]]></component>
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "https://gitlab.maastrichtuniversity.nl/bcs1600-2025/group20",
+    "second": "58a226fe-1dff-46de-b036-38d3f6da7a13"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -42,39 +55,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CachingTest.executor": "Run",
-    "Application.ClosenessCentralityCalculator.executor": "Run",
-    "Application.DataConverter.executor": "Run",
-    "Application.StopGraph.executor": "Run",
-    "Application.ZipToSQLite.executor": "Run",
-    "Application.mainUI.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "zetenyBranch",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CachingTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClosenessCentralityCalculator.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DataConverter.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StopGraph.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ZipToSQLite.executor&quot;: &quot;Run&quot;,
+    &quot;Application.mainUI.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;zetenyBranch&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jakelockitch/Desktop/project 1-2/group20&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\group20\data" />
       <recent name="F:\Project1-2\data" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="routingenginemain.engine.api" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ClosenessCentralityCalculator">
+  <component name="RunManager" selected="Application.StopGraph">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
@@ -102,11 +116,11 @@
       </method>
     </configuration>
     <configuration name="StopGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ClosureAnalysis.Data.StopGraph" />
+      <option name="MAIN_CLASS_NAME" value="ClosureAnalysis.Data.Graph.StopGraph" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ClosureAnalysis.Data.*" />
+          <option name="PATTERN" value="ClosureAnalysis.Data.Graph.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -142,13 +156,21 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClosenessCentralityCalculator" />
         <item itemvalue="Application.StopGraph" />
+        <item itemvalue="Application.ClosenessCentralityCalculator" />
         <item itemvalue="Application.ZipToSQLite" />
         <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.mainUI" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -160,6 +182,8 @@
       <updated>1744357691916</updated>
       <workItem from="1744357693498" duration="17000" />
       <workItem from="1744639713599" duration="19989000" />
+      <workItem from="1745489779322" duration="5000" />
+      <workItem from="1745579395682" duration="7712000" />
     </task>
     <servers />
   </component>
@@ -168,19 +192,29 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)" />
-    <option name="LAST_COMMIT_MESSAGE" value="distance calculaations, for stops near roadsegments is working,&#10;TODO: for every roadsegment find stops, for every stop find 3 roadsegments (before, center, after)" />
+    <MESSAGE value="idk" />
+    <option name="LAST_COMMIT_MESSAGE" value="idk" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/ClosenessCentralityCalculator.java</url>
-          <line>46</line>
+          <line>50</line>
           <properties class="ClosureAnalysis.Calculations.ClosenessCentralityCalculator" method="main">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java</url>
+          <line>18</line>
+          <properties class="Parsers.ZipToSQLite" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
