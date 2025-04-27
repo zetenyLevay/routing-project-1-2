@@ -1,10 +1,14 @@
 package Parsers;
-
 import java.io.EOFException;
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
+
+import RoutingEngineDijkstra.Models.Coordinate;
 
 public class RequestHandler {
 
@@ -38,10 +42,44 @@ public class RequestHandler {
 
             if (json instanceof Map<?, ?>) {
                 Map<?, ?> request = (Map<?, ?>) json;
+                
+            
+
                 if (request.containsKey("ping")) {
                     cliWrite.sendOk(Map.of("pong", request.get("ping")));
                     continue;
                 }
+                
+                else if (request.containsKey("load")) {
+                    String selectedFile = (String) request.get("load");
+
+                    //Unzip(selectedFile); 
+                    //TODO: hook up to ZipToSQLite
+                }
+                
+                //TODO: double check this is how it works?
+                else if (request.containsKey("routeFrom")) {
+    
+                    Coordinate startPoint = new Coordinate((String) request.get("routeFrom"));
+                    Coordinate endPoint = new Coordinate((String) request.get("to"));
+                    String startingAtStr = (String) request.get("startingAt");
+
+                    LocalTime localTime = LocalTime.parse(startingAtStr, DateTimeFormatter.ofPattern("HH:mm"));
+                    Time startingTime = Time.valueOf(localTime);
+
+                    // System.out.println(request.get("routeFrom"));
+                    System.out.println("SP: "+ startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingTime.toString());  
+                    // // {"routeFrom": "41.40338, 2.17403","to": "41.4032, 2.1283","startingAt": "10:05"}
+                    // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
+                    
+                    // Dijkstra.run(journey);
+                    // CSA.run(journey); 
+                } else {
+                    cliWrite.sendError("Bad request");
+                }
+
+                
+                
                 // ... process other requests here
                 //the switch statement deciding which transporation to use.
                 //load 
@@ -51,19 +89,33 @@ public class RequestHandler {
                 //make bash scripts , msys2 for windows, git bash
                 // run basic hello worlds file containing {"ping":kkf}
 
+
+
+                /**
+                * {"load":filenameString}
+                * {"routeFrom":sourcePoint,"to":targetPoint,"startingAt":timeString}
+                * Anything else gives an error
+                * {"error": error message} 
+
+                
+                
+                
+                
+                 */
+
                 //CI gitlab actions to run tests automatically when pushing, check if theyre enabled.
                 //java tests
             }
-            cliWrite.sendError("Bad request");
+            
         }
     }
 
-    /**
-     * Main method to run the request handler.
-     *
-     * @param args command-line arguments.
-     * @throws IOException if an I/O error occurs.
-     */
+    // /**
+    //  * Main method to run the request handler.
+    //  *
+    //  * @param args command-line arguments.
+    //  * @throws IOException if an I/O error occurs.
+    //  */
     public static void main(String[] args) throws IOException {
         new RequestHandler().run();
     }
