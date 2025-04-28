@@ -1,6 +1,6 @@
 package Routing.routingenginemain.engine.connectionscanalgorithm;
 
-import routingenginemain.model.Connection;
+import Routing.routingenginemain.model.Connection;
 
 import java.util.Comparator;
 import java.util.List;

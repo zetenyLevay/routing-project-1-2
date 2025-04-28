@@ -6,51 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/PointOfInterest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/PointOfInterest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/RoadSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/RoadSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Models/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Readers/POIFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Readers/POIFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Readers/StopFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClosureAnalysis/Data/Readers/StopFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Parsers/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Parsers/RequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineAstar/RoutingEngineAstar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineAstar/RoutingEngineAstar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineDijkstra/RoutingEngineDijkstra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineDijkstra/RoutingEngineDijkstra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineModels/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/Coordinate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineModels/FinalRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/FinalRoute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineModels/InputJourney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/InputJourney.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RoutingEngineModels/RouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/RouteStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/api/RouteFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/api/RouteFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/CachingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/CachingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/AgenciesCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/AgenciesCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/PathwaysCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/PathwaysCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/RouteInfoCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/RouteInfoCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/RoutesCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/RoutesCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/StopsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/TripsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/classloader/TripsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/masterloader/MasterLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/cache/masterloader/MasterLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/util/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/util/StraightLineCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/util/TimeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/engine/util/TimeConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/gtfsparser/DataConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/gtfsparser/DataConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Agency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/Agency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/CSAAPImodel/CSAQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/CSAAPImodel/CSAQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/CSAAPImodel/ResultantRouteCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/CSAAPImodel/ResultantRouteCSA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/CSAAPImodel/RouteSegmentCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/CSAAPImodel/RouteSegmentCSA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/CSAAPImodel/RouteSegmentTypeCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/CSAAPImodel/RouteSegmentTypeCSA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/MainAPImodel/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/ResultantRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/MainAPImodel/ResultantRoute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/MainAPImodel/RouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/MainAPImodel/RouteStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/Trip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/pathway/Pathway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/pathway/Pathway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/pathway/PathwayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/pathway/PathwayType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/route/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/route/Route.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/route/RouteInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/route/RouteInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/model/route/RouteType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/routingenginemain/model/route/RouteType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Parsers/ZipToSQLite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/FinalRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Routing/RoutingEngineModels/FinalRoute.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +42,7 @@
   "keyToString": {
     "Application.CachingTest.executor": "Run",
     "Application.DataConverter.executor": "Run",
+    "Application.RequestHandler.executor": "Run",
     "Application.mainUI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -114,13 +72,26 @@
       <recent name="RoutingEngineAstar" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CachingTest">
+  <component name="RunManager" selected="Application.mainUI">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="routingenginemain.engine.cache.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RequestHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Parsers.RequestHandler" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Parsers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -143,8 +114,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.mainUI" />
+        <item itemvalue="Application.RequestHandler" />
+        <item itemvalue="Application.CachingTest" />
       </list>
     </recent_temporary>
   </component>

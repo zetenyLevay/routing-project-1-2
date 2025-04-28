@@ -1,8 +1,8 @@
 package Routing.routingenginemain.model.CSAAPImodel;
 
-import routingenginemain.model.Connection;
-import routingenginemain.model.Stop;
-import routingenginemain.model.pathway.Pathway;
+import Routing.routingenginemain.model.Connection;
+import Routing.routingenginemain.model.Stop;
+import Routing.routingenginemain.model.pathway.Pathway;
 
 public class RouteSegmentCSA {
     private final RouteSegmentTypeCSA routeSegmentTypeCSA;

@@ -225,7 +225,7 @@ public class ZipToSQLite {
             int count = 0;
             while (reader.readLine() != null) {
                 count++;
-                if (count > 11){
+                if (count > 11) {
                     return true;
                 }
             }
