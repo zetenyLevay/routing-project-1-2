@@ -12,12 +12,14 @@ import java.time.LocalTime;
 
 public class RunCSATest {
     public static void main(String[] args) {
+        Instant start = Instant.now();
         MasterLoader.initAllCaches();
+
         Stop departureStop = StopsCache.getStop("002133");
-        Stop arrivalStop = StopsCache.getStop("007883");
+        Stop arrivalStop = StopsCache.getStop("MERGED_F03810");
         CSAQuery csaQuery = new CSAQuery(departureStop, arrivalStop, LocalTime.parse("08:03:00"));
         CSARouteFinding csaRouteFinding = new CSARouteFinding(csaQuery);
-        Instant start = Instant.now();
+
         csaRouteFinding.findRouteViaCSA();
         Instant end = Instant.now();
 
