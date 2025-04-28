@@ -6,9 +6,8 @@ import ClosureAnalysis.Data.Enums.POIType;
 import ClosureAnalysis.Data.Models.NearbyPOIs;
 import ClosureAnalysis.Data.Models.PointOfInterest;
 import ClosureAnalysis.Data.Models.Stop;
-import routingenginemain.model.Coordinates;
+import Routing.routingenginemain.model.Coordinates;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

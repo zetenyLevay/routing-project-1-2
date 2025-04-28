@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
 
-import RoutingEngineDijkstra.Models.Coordinate;
+import Routing.RoutingEngineModels.Coordinate;
 
 public class RequestHandler {
 

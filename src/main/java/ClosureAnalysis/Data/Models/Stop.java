@@ -2,7 +2,7 @@ package ClosureAnalysis.Data.Models;
 
 import ClosureAnalysis.Builders.StopBuilder;
 import ClosureAnalysis.Data.Enums.TransportType;
-import routingenginemain.model.Coordinates;
+import Routing.routingenginemain.model.Coordinates;
 
 public class Stop implements StopBuilder {
     private final String id;

@@ -3,7 +3,7 @@ package ClosureAnalysis.Data.Readers;
 import ClosureAnalysis.Calculations.DistanceCalculator;
 import ClosureAnalysis.Data.Models.RoadSegment;
 import ClosureAnalysis.Data.Models.Stop;
-import routingenginemain.model.Coordinates;
+import Routing.routingenginemain.model.Coordinates;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
