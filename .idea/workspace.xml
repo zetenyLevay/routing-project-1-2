@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="implementing-Astar" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -39,28 +41,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CachingTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DataConverter.executor&quot;: &quot;Run&quot;,
-    &quot;Application.mainUI.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;working-on-request-handler&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jakelockitch/Desktop/project 1-2/group20/src/main/java/RoutingEngineModels&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CachingTest.executor": "Run",
+    "Application.DataConverter.executor": "Run",
+    "Application.ZipToSQLite.executor": "Run",
+    "Application.mainUI.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20/src/main/java/RoutingEngineModels",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/RoutingEngineModels" />
@@ -72,7 +75,7 @@
       <recent name="RoutingEngineAstar" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainUI">
+  <component name="RunManager" selected="Application.ZipToSQLite">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
@@ -99,8 +102,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ZipToSQLite" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Parsers.ZipToSQLite" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Parsers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ZipToSQLite" />
         <item itemvalue="Application.MainUI" />
         <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.CachingTest" />

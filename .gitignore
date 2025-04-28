@@ -13,6 +13,7 @@
 /target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class
 target/*
 /.idea/.gitignore
+/.idea/*
 /.idea/vcs.xml
 /.idea/misc.xml
 /.idea/jarRepositories.xml
