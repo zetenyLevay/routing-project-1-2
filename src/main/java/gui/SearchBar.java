@@ -1,7 +1,10 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class SearchBar implements ControlPanelItem {
     private int width;
@@ -35,22 +38,6 @@ public class SearchBar implements ControlPanelItem {
         return panel;
     }
 
-    //TODO: get rid of if we dont need
-//    /**
-//     * gets the text
-//     * @return the current text of the searchbar
-//     */
-//    public String getText() {
-//        return textField.getText();
-//    }
-//
-//    /**
-//     * Sets the text in the searchbar
-//     * @param text the desired text you want the searchbar to display
-//     */
-//    public void setText(String text) {
-//        textField.setText(text);
-//    }
 
 }
 

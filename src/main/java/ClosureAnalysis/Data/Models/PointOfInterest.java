@@ -1,9 +1,7 @@
 package ClosureAnalysis.Data.Models;
 
 import ClosureAnalysis.Data.Enums.POIType;
-import routingenginemain.model.Coordinates;
-
-import java.util.List;
+import Routing.routingenginemain.model.Coordinates;
 
 public class PointOfInterest {
     private String id;

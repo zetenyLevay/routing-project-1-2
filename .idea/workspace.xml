@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/tests/RunCSATest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/tests/RunCSATest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionspanalgorithm/ConnectionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routingenginemain/engine/connectionscanalgorithm/ConnectionSort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,13 +43,12 @@
   "keyToString": {
     "Application.CachingTest.executor": "Run",
     "Application.DataConverter.executor": "Run",
-    "Application.RunCSATest.executor": "Run",
     "Application.mainUI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "working-on-request-handler",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20",
+    "last_opened_file_path": "/Users/jakelockitch/Desktop/project 1-2/group20/src/main/java/RoutingEngineModels",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -56,34 +57,28 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/RoutingEngineModels" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="routingenginemain.engine.api" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="RoutingEngineAstar" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.RunCSATest">
+  <component name="RunManager" selected="Application.CachingTest">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="routingenginemain.engine.cache.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routingenginemain.tests.RunCSATest" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routingenginemain.tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -106,11 +101,20 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RunCSATest" />
         <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.mainUI" />
+        <item itemvalue="Application.RequestHandler" />
+        <item itemvalue="Application.CachingTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,5 +131,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

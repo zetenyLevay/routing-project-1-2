@@ -23,4 +23,5 @@ public class CLIRead {
     public Object read() throws IOException, JSONSyntaxError {
         return requestReader.read();
     }
+    
 }

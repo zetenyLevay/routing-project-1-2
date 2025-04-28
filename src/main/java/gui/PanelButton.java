@@ -56,23 +56,4 @@ public class PanelButton implements ControlPanelItem {
         return this.panel;
     }
 
-    //TODO: get rid of if we dont need
-//    /**
-//     * Returns the button component
-//     *
-//     * @return The JButton
-//     */
-//    public JButton getButton() {
-//        return this.button;
-//    }
-//
-//    /**
-//     * Sets the button text
-//     *
-//     * @param text The new text for the button
-//     */
-//    public void setText(String text) {
-//        this.text = text;
-//        this.button.setText(text);
-//    }
 }
