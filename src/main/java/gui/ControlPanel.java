@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import org.jxmapviewer.JXMapViewer;
-import EventHandlers.ZoomHandler;
+import eventHandlers.ZoomHandler;
 
 public class ControlPanel extends JPanel {
     private static JPanel contentPanel;

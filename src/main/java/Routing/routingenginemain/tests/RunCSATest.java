@@ -1,10 +1,10 @@
 package Routing.routingenginemain.tests;
 
-import Routing.routingenginemain.engine.cache.classloader.StopsCache;
-import Routing.routingenginemain.engine.cache.masterloader.MasterLoader;
-import Routing.routingenginemain.engine.connectionscanalgorithm.CSARouteFinding;
-import Routing.routingenginemain.model.CSAAPImodel.CSAQuery;
-import Routing.routingenginemain.model.Stop;
+import routing.routingenginemain.engine.cache.classloader.StopsCache;
+import routing.routingenginemain.engine.cache.masterloader.MasterLoader;
+import routing.routingenginemain.engine.connectionscanalgorithm.CSARouteFinding;
+import routing.routingenginemain.model.CSAAPImodel.CSAQuery;
+import routing.routingenginemain.model.Stop;
 
 import java.time.Duration;
 import java.time.Instant;

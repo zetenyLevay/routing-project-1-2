@@ -20,7 +20,7 @@ import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactory;
 
-import EventHandlers.ZoomHandler;
+import eventHandlers.ZoomHandler;
 
 public class MapUI {
 

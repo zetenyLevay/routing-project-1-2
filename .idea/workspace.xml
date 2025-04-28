@@ -72,7 +72,7 @@
       <recent name="RoutingEngineAstar" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.mainUI">
+  <component name="RunManager" selected="Application.MainUI">
     <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
       <module name="bcs1600" />
@@ -86,8 +86,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="mainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.mainUI" />
+    <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
@@ -101,7 +101,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.mainUI" />
+        <item itemvalue="Application.MainUI" />
         <item itemvalue="Application.CachingTest" />
         <item itemvalue="Application.CachingTest" />
       </list>
