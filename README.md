@@ -1,6 +1,6 @@
 # BCS1600 Spring 2025 Project Skeleton
 
-The files in this repository can be used as a basis for your implementation of the Routing
+The files in this repository can be used as a basis for your implementation of the routing
 Engine portion of the project.
 
 [Maven]: https://maven.apache.org/
@@ -26,5 +26,5 @@ repository.
 
  - `pom.xml`: [Maven][] configuration file.
 
- - `src/main/java/RoutingEngine.java`: Skeleton Routing Engine server implementation for you to
+ - `src/main/java/RoutingEngine.java`: Skeleton routing Engine server implementation for you to
    build on.
