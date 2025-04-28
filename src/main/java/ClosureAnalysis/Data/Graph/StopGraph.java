@@ -9,32 +9,37 @@ public class StopGraph {
     private Set<StopNode> stopNodes;
 
     public StopGraph() {
-        stopNodes = new HashSet<>();
+        stopNodes = new LinkedHashSet<>();
     }
 
-    List<StopNode> getStopNodes() {
+    public List<StopNode> getStopNodes() {
         return new ArrayList<>(stopNodes);
     }
 
-    List<StopNode> getNeighbours(StopNode s) {
-        List<StopNode> neighbours = new ArrayList<>();
-        for (StopEdge e : s.getEdges()) {
-            neighbours.add(e.getTo());
-        }
-        return neighbours;
-    }
+//    public List<StopNode> getNeighbours(StopNode s) {
+//        List<StopNode> neighbours = new ArrayList<>();
+//        for (StopEdge e : s.getEdges()) {
+//            neighbours.add(e.getTo());
+//        }
+//        return neighbours;
+//    }
 
     void addStopNode(StopNode n) {
         stopNodes.add(n);
     }
 
-    public StopGraph buildStopGraph(Connection conn) {
+    public int getSize(){
+        return stopNodes.size();
+    }
 
+
+    public StopGraph buildStopGraph(Connection conn) {
         EdgeWeightCalculator calculator = new EdgeWeightCalculator();
         StopGraph stopGraph = new StopGraph();
-        String query = "SELECT trip_id, stop_id, CAST(stop_sequence AS INTEGER) as stop_sequence, " +
+        String query = "SELECT DISTINCT(trip_id), stop_id, CAST(stop_sequence AS INTEGER) as stop_sequence, " +
                 "CAST(shape_dist_traveled AS INTEGER) as shape_dist_traveled, arrival_time, departure_time  " +
-                "FROM stop_times_txt ORDER BY trip_id, stop_sequence";
+                "FROM stop_times_txt " +
+                "ORDER BY trip_id, stop_sequence";
         Map<String, List<StopNode>> tripStops = new HashMap<>();
         Map<String, StopNode> stopNodeMap = new HashMap<>();
 
@@ -69,22 +74,23 @@ public class StopGraph {
             throw new RuntimeException(e);
         }
 
-        for (List<StopNode> stops : tripStops.values()) {
+        for (Map.Entry<String, List<StopNode>> entry : tripStops.entrySet()) {
+            String tripId = entry.getKey();
+            List<StopNode> stops = entry.getValue();
+
             for (int i = 0; i < stops.size()-1; i++) {
 
                 StopNode from = stops.get(i);
                 StopNode to = stops.get(i + 1);
 
-                boolean found = from.getEdges().stream().anyMatch(e -> e.getTo().getLabel().equals(to.getLabel()));
+                StopEdge edge = new StopEdge(to);
+                double weight = calculator.calculateEdgeWeight(from, to);
+                edge.setWeight(weight);
 
-                if (!found) {
-                    StopEdge edge = new StopEdge(to);
-                    double weight = calculator.calculateEdgeWeight(from,to);
-                    edge.setWeight(weight);
-                    from.addEdge(edge);
-                }
+                from.addEdge(tripId, edge);
 
-                stopGraph.addStopNode(from);
+
+
 
             }
 
@@ -93,12 +99,23 @@ public class StopGraph {
             }
         }
 
-        List<StopNode> neighbors = stopGraph.getNeighbours(stopGraph.getStopNodes().get(0));
+        stopGraph.getStopNodes().addAll(stopNodeMap.values());
+        for (StopNode node : stopGraph.getStopNodes()) {
+            System.out.println("From: " + node.getLabel());
+            for (StopEdge edge : node.getAllEdges()){
+                System.out.println("To : " + edge.getTo().getLabel() + " weight: " + edge.getWeight());
+            }
+        }
 
-        StopEdge edge = stopGraph.getStopNodes().get(0).getEdges().get(0);
+//        StopNode first = stopGraph.getStopNodes().getFirst();
+//       StopEdge edge = first.getAllEdges().getFirst();
+//       StopNode to = edge.getTo();
+//
+//
+//       System.out.println(first.getLabel() + " " + first.getArrivalTime());
+//       System.out.println(to.getLabel() + " " + to.getArrivalTime());
+//        System.out.println(edge.getWeight());
 
-        System.out.println(edge.getTo().getLabel());
-        System.out.println(edge.getWeight());
 
 
         return stopGraph;

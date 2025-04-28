@@ -1,14 +1,12 @@
 package ClosureAnalysis.Data.Graph;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StopNode {
 
     private String label;
-    private Set<StopEdge> edges;
+    private Map<String, Set<StopEdge>> edges;
     private String arrivalTime;
     private String departureTime;
     private int distanceTraveledAtStop;
@@ -17,15 +15,16 @@ public class StopNode {
 
     public StopNode(String label) {
         this.label = label;
-        edges = new HashSet<>();
+        edges = new HashMap<>();
     }
 
-    String getLabel() {
+    public String getLabel() {
         return label;
     }
-    void addEdge(StopEdge e) {
-        edges.add(e);
+    void addEdge(String tripId, StopEdge e) {
+        edges.computeIfAbsent(tripId, k -> new HashSet<>()).add(e);
     }
+
 
     void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
@@ -39,8 +38,12 @@ public class StopNode {
         this.distanceTraveledAtStop = distanceTraveledAtStop;
     }
 
-    public List<StopEdge> getEdges() {
-        return new ArrayList<>(edges);
+    public List<StopEdge> getTripIDEdges(String tripId) {
+        return new ArrayList<>(edges.getOrDefault(tripId, Collections.emptySet()));
+    }
+
+    public List<StopEdge> getAllEdges() {
+        return edges.values().stream().flatMap(Set::stream).collect(Collectors.toList());
     }
 
     public String getArrivalTime() {

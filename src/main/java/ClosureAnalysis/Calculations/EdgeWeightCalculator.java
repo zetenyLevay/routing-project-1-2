@@ -3,6 +3,12 @@ package ClosureAnalysis.Calculations;
 import ClosureAnalysis.Data.Graph.StopEdge;
 import ClosureAnalysis.Data.Graph.StopNode;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EdgeWeightCalculator {
 
     double ALPHA = 0.5;
@@ -30,14 +36,21 @@ public class EdgeWeightCalculator {
     }
 
     private double calculateTimeTaken(StopNode from, StopNode to) {
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+
         double timeTaken = 0;
 
-        String arrivalTimeString = to.getArrivalTime().replace(":", "");
-        String departureTimeString = from.getDepartureTime().replace(":", "");
+        try {
+            Date arrivalTime = formatter.parse(to.getArrivalTime());
+            Date departureTime = formatter.parse(from.getDepartureTime());
 
-        int arrivalTimeInt = Integer.parseInt(arrivalTimeString);
-        int departureTimeInt = Integer.parseInt(departureTimeString);
+            long diffInTime = arrivalTime.getTime() - departureTime.getTime();
+            long diffInMinutes = ( diffInTime / 60000) % 60;
+            double minutes = diffInMinutes;
 
-        return arrivalTimeInt - departureTimeInt;
+            return minutes;
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
