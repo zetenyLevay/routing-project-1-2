@@ -3,8 +3,6 @@ package Parsers;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.sql.*;
 import java.util.Collections;
@@ -16,8 +14,16 @@ import java.util.zip.ZipFile;
 
 public class ZipToSQLite {
 
+    /*
+    * When entering full file path make sure its not wrapped in ""
+    *
+    * */
     public static void main(String[] args) {
-        File selectedFile = zipChooser();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter full file path: ");
+
+        String fileName = scanner.nextLine();
+        File selectedFile = new File(fileName);
         if (selectedFile == null) {
             System.out.println("No file selected, exiting");
             return;
@@ -42,17 +48,6 @@ public class ZipToSQLite {
         }
     }
 
-    private static File zipChooser() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("ZIP files", "zip"));
-        int returnValue = fileChooser.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile();
-        } else {
-            return null;
-        }
-    }
 
     private static String DBName(String zipName) {
         return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
