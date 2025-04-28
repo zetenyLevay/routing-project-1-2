@@ -11,7 +11,7 @@ import routingenginemain.model.pathway.Pathway;
 
 import java.util.*;
 
-public class CSARouteFinding {
+public class  CSARouteFinding {
     private final Map<Stop, Integer> earliestArrival;
     private final Map<Stop, Connection> parentConnection;
     private final Map<Stop, Pathway> parentFootpath;
