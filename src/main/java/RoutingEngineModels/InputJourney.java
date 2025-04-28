@@ -1,4 +1,4 @@
-package RoutingEngineDijkstra.Models;
+package RoutingEngineModels;
 
 import java.sql.Time;
 

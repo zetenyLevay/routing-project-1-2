@@ -1,6 +1,8 @@
 //collection of RouteSteps
 
-package RoutingEngineDijkstra.Models;
+package RoutingEngineModels;
+import RoutingEngineDijkstra.Models.RouteStep;
+
 import java.util.ArrayList;
 
 public class FinalRoute{

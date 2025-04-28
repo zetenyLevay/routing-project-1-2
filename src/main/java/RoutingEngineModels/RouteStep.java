@@ -1,4 +1,4 @@
-package RoutingEngineDijkstra.Models;
+package RoutingEngineModels;
 
 public class RouteStep {
     // {Mode of transpotr, startCoord, endCoord, Time}

@@ -1,4 +1,4 @@
-package RoutingEngineDijkstra.Models;
+package RoutingEngineModels;
 
 public class Coordinate {
     private final double latitude;
