@@ -11,14 +11,14 @@ import routingenginemain.model.pathway.Pathway;
 
 import java.util.*;
 
-public class ConnectionScanner {
+public class  CSARouteFinding {
     private final Map<Stop, Integer> earliestArrival;
     private final Map<Stop, Connection> parentConnection;
     private final Map<Stop, Pathway> parentFootpath;
     private final List<Connection> sortedConnections;
     private final CSAQuery csaQuery;
 
-    public ConnectionScanner(CSAQuery csaQuery) {
+    public CSARouteFinding(CSAQuery csaQuery) {
         this.earliestArrival = new HashMap<>();
         this.parentConnection = new HashMap<>();
         this.parentFootpath = new HashMap<>();
