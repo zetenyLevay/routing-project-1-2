@@ -62,11 +62,11 @@ public class RequestHandler {
                     Coordinate endPoint = new Coordinate((String) request.get("to"));
                     String startingAtStr = (String) request.get("startingAt");
 
-                    LocalTime localTime = LocalTime.parse(startingAtStr, DateTimeFormatter.ofPattern("HH:mm"));
-                    Time startingTime = Time.valueOf(localTime);
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
+                    LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
 
                     // System.out.println(request.get("routeFrom"));
-                    System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingTime.toString());
+                    System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtTime);
                     // // {"routeFrom": "41.40338, 2.17403","to": "41.4032, 2.1283","startingAt": "10:05"}
                     // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
 
