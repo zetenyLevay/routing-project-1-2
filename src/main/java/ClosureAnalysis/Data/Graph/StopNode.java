@@ -6,54 +6,73 @@ import java.util.stream.Collectors;
 public class StopNode {
 
     private String label;
-    private Map<String, Set<StopEdge>> edges;
-    private String arrivalTime;
-    private String departureTime;
-    private int distanceTraveledAtStop;
+    private Set<StopEdge> edges;
+    private Map<Integer, String> arrivalTime;
+    private Map<Integer, String> departureTime;
+
+    private Map<Integer, Integer> distanceTraveledAtStop;
+
+    private List<Integer> stopSequence;
     private double closenessCentrality;
     private double betweennessCentrality;
 
     public StopNode(String label) {
         this.label = label;
-        edges = new HashMap<>();
+        edges = new HashSet<>();
+        stopSequence = new ArrayList<>();
+        arrivalTime = new HashMap<>();
+        departureTime = new HashMap<>();
+        distanceTraveledAtStop = new HashMap<>();
+
     }
 
     public String getLabel() {
         return label;
     }
-    void addEdge(String tripId, StopEdge e) {
-        edges.computeIfAbsent(tripId, k -> new HashSet<>()).add(e);
+    void addEdge( StopEdge e) {
+        edges.add(e);
     }
 
 
-    void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    void addArrivalTime(int stopSequence, String arrivalTime) {
+        this.arrivalTime.put(stopSequence, arrivalTime);
+
     }
 
-    void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
+    void addStopSequence(int stopSequence) {
+        this.stopSequence.add(stopSequence);
     }
 
-    void setDistanceTraveledAtStop(int distanceTraveledAtStop) {
-        this.distanceTraveledAtStop = distanceTraveledAtStop;
+    void addDepartureTime(int stopSequence, String departureTime) {
+        this.departureTime.put(stopSequence, departureTime);
     }
 
-    public List<StopEdge> getTripIDEdges(String tripId) {
-        return new ArrayList<>(edges.getOrDefault(tripId, Collections.emptySet()));
+    void addDistanceTraveledAtStop(int stopSequence, int distanceTraveledAtStop) {
+        this.distanceTraveledAtStop.put(stopSequence, distanceTraveledAtStop);
+    }
+
+
+
+    public int getEdgeListSize(){
+        return edges.size();
     }
 
     public List<StopEdge> getAllEdges() {
-        return edges.values().stream().flatMap(Set::stream).collect(Collectors.toList());
+        return new ArrayList<>(edges);
     }
 
-    public String getArrivalTime() {
-        return arrivalTime;
+    public String getArrivalTime(int stopSequence) {
+        return arrivalTime.get(stopSequence);
     }
-    public String getDepartureTime() {
-        return departureTime;
+    public String getDepartureTime(int stopSequence) {
+        return departureTime.get(stopSequence);
     }
-    public int getDistanceTraveledAtStop() {
-        return distanceTraveledAtStop;
+    public int getDistanceTraveledAtStop(int stopSequence) {
+        return distanceTraveledAtStop.get(stopSequence);
+    }
+
+    public List<Integer> getStopSequence() {
+        return stopSequence;
     }
 
     public double getClosenessCentrality() {
@@ -72,4 +91,9 @@ public class StopNode {
     }
 
 
+    public List<StopNode> getNeighbors() {
+        return edges.stream()
+                .map(StopEdge::getTo)
+                .collect(Collectors.toList());
+    }
 }

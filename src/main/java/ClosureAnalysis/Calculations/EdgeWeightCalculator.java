@@ -2,6 +2,7 @@ package ClosureAnalysis.Calculations;
 
 import ClosureAnalysis.Data.Graph.StopEdge;
 import ClosureAnalysis.Data.Graph.StopNode;
+import javafx.util.Pair;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -27,8 +28,10 @@ public class EdgeWeightCalculator {
     private double calculateDistanceTraveled(StopNode from, StopNode to) {
         double distanceTraveled = 0;
 
-        double start = from.getDistanceTraveledAtStop();
-        double end = to.getDistanceTraveledAtStop();
+        int[] stopSequences = findNeighbouringSequence(from, to);
+
+        double start = from.getDistanceTraveledAtStop(stopSequences[0]);
+        double end = to.getDistanceTraveledAtStop(stopSequences[1]);
 
         distanceTraveled = end - start;
 
@@ -38,11 +41,12 @@ public class EdgeWeightCalculator {
     private double calculateTimeTaken(StopNode from, StopNode to) {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
+        int[] stopSequences = findNeighbouringSequence(from, to);
         double timeTaken = 0;
 
         try {
-            Date arrivalTime = formatter.parse(to.getArrivalTime());
-            Date departureTime = formatter.parse(from.getDepartureTime());
+            Date arrivalTime = formatter.parse(to.getArrivalTime(stopSequences[1]));
+            Date departureTime = formatter.parse(from.getDepartureTime(stopSequences[0]));
 
             long diffInTime = arrivalTime.getTime() - departureTime.getTime();
             long diffInMinutes = ( diffInTime / 60000) % 60;
@@ -52,5 +56,15 @@ public class EdgeWeightCalculator {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+    public int[] findNeighbouringSequence(StopNode from, StopNode to) {
+        for (int fromSequence : from.getStopSequence()){
+            for (int toSequence : to.getStopSequence()){
+                if (fromSequence == toSequence-1){
+                    return new int[]{fromSequence, toSequence};
+                }
+            }
+        }
+        return null;
     }
 }

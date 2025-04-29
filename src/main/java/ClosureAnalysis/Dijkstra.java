@@ -37,14 +37,14 @@ public class Dijkstra {
                 continue;
             }
             visited.add(current);
-//            for (StopEdge edge : current.getEdges()) {
-//                StopNode neighbour = edge.getTo();
-//                double newDist = dist.get(current) + edge.getWeight();
-//                if (newDist < dist.get(neighbour)) {
-//                    dist.put(neighbour, Double.valueOf(newDist));
-//                    pq.offer(neighbour);
-//                }
-//            }
+            for (StopEdge edge : current.getAllEdges()) {
+                StopNode neighbour = edge.getTo();
+                double newDist = dist.get(current) + edge.getWeight();
+                if (newDist < dist.get(neighbour)) {
+                    dist.put(neighbour, newDist);
+                    pq.offer(neighbour);
+                }
+            }
         }
         return dist;
     }

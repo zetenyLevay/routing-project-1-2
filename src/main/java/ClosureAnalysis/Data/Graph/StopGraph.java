@@ -7,6 +7,7 @@ import java.util.*;
 
 public class StopGraph {
     private Set<StopNode> stopNodes;
+    private Map<String, StopEdge> edgeCache = new HashMap<>();
 
     public StopGraph() {
         stopNodes = new LinkedHashSet<>();
@@ -52,21 +53,32 @@ public class StopGraph {
                 String stopId = rs.getString("stop_id");
                 String arrivalTime = rs.getString("arrival_time");
                 String departureTime = rs.getString("departure_time");
+                int stopSequence = rs.getInt("stop_sequence");
                 int distanceTraveled = rs.getInt("shape_dist_traveled");
 
 
-
-                StopNode node = stopNodeMap.computeIfAbsent(stopId, k -> {
-                    StopNode newNode = new StopNode(stopId);
-                    newNode.setDistanceTraveledAtStop(distanceTraveled);
-                    newNode.setArrivalTime(arrivalTime);
-                    newNode.setDepartureTime(departureTime);
-                    return newNode;
-                });
-
-
-                tripStops.computeIfAbsent(tripId, k -> new ArrayList<>()).add(node);
-
+                if (stopNodeMap.containsKey(stopId) && !containsStopNode(stopId)) {
+                    StopNode nodeToUpdate = stopNodeMap.get(stopId);
+                    if (!nodeToUpdate.getStopSequence().contains(stopSequence)) {
+                        nodeToUpdate.addStopSequence(stopSequence);
+                        nodeToUpdate.addArrivalTime(stopSequence, arrivalTime);
+                        nodeToUpdate.addDepartureTime(stopSequence, departureTime);
+                        nodeToUpdate.addDistanceTraveledAtStop(stopSequence, distanceTraveled);
+                    }
+                    stopNodeMap.put(stopId, nodeToUpdate);
+                    tripStops.computeIfAbsent(tripId, k -> new ArrayList<>()).add(nodeToUpdate);
+                }
+                else{
+                    StopNode node = stopNodeMap.computeIfAbsent(stopId, k -> {
+                        StopNode newNode = new StopNode(stopId);
+                        newNode.addStopSequence(stopSequence);
+                        newNode.addDistanceTraveledAtStop(stopSequence,distanceTraveled);
+                        newNode.addArrivalTime(stopSequence,arrivalTime);
+                        newNode.addDepartureTime(stopSequence,departureTime);
+                        return newNode;
+                    });
+                    tripStops.computeIfAbsent(tripId, k -> new ArrayList<>()).add(node);
+                }
             }
 
 
@@ -74,38 +86,32 @@ public class StopGraph {
             throw new RuntimeException(e);
         }
 
-        for (Map.Entry<String, List<StopNode>> entry : tripStops.entrySet()) {
-            String tripId = entry.getKey();
-            List<StopNode> stops = entry.getValue();
-
-            for (int i = 0; i < stops.size()-1; i++) {
-
-                StopNode from = stops.get(i);
-                StopNode to = stops.get(i + 1);
-
-                StopEdge edge = new StopEdge(to);
-                double weight = calculator.calculateEdgeWeight(from, to);
-                edge.setWeight(weight);
-
-                from.addEdge(tripId, edge);
+        for (List<StopNode> nodes : tripStops.values()) {
+            for (int node = 0; node < nodes.size()-1; node++) {
 
 
+                StopNode from = nodes.get(node);
+                StopNode to = nodes.get(node+1);
 
+                String edgeKey = from.getLabel() + "->" + to.getLabel();
 
-            }
+                StopEdge edge = edgeCache.computeIfAbsent(edgeKey, k -> {
+                    StopEdge newEdge = new StopEdge(from, to);
+                    double weight = calculator.calculateEdgeWeight(from, to);
+                    newEdge.setWeight(weight);
+                    return newEdge;
+                });
 
-            if (!stops.isEmpty()) {
-                stopGraph.addStopNode(stops.getLast());
+                from.addEdge(edge);
+
+                stopGraph.addStopNode(from);
+
             }
         }
 
-        stopGraph.getStopNodes().addAll(stopNodeMap.values());
-        for (StopNode node : stopGraph.getStopNodes()) {
-            System.out.println("From: " + node.getLabel());
-            for (StopEdge edge : node.getAllEdges()){
-                System.out.println("To : " + edge.getTo().getLabel() + " weight: " + edge.getWeight());
-            }
-        }
+
+
+
 
 //        StopNode first = stopGraph.getStopNodes().getFirst();
 //       StopEdge edge = first.getAllEdges().getFirst();
@@ -120,11 +126,46 @@ public class StopGraph {
 
         return stopGraph;
     }
+
+    public boolean containsStopNode(String stopId) {
+        for (StopNode stopNode : stopNodes) {
+            if (stopNode.getLabel().equals(stopId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void printAllNeighbors() {
+        for (StopNode node : stopNodes) {
+            System.out.println("\nNode: " + node.getLabel());
+            System.out.println("Neighbors:");
+
+            List<StopNode> neighbors = node.getNeighbors();
+            if (neighbors.isEmpty()) {
+                System.out.println("  (No neighbors)");
+            } else {
+                for (StopNode neighbor : neighbors) {
+                    System.out.println("  - " + neighbor.getLabel());
+
+                    node.getAllEdges().stream()
+                            .filter(e -> e.getTo().equals(neighbor))
+                            .findFirst()
+                            .ifPresent(e -> System.out.println("    Edge weight: " + e.getWeight()));
+                }
+            }
+        }
+    }
     public static void main(String[] args) throws SQLException {
         StopGraph stopGraph = new StopGraph();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
         stopGraph = stopGraph.buildStopGraph(conn);
         List<StopNode> stops = stopGraph.getStopNodes();
         System.out.println(stops.size());
+
+
+
+
+
     }
 }

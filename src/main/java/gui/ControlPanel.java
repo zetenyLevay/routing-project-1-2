@@ -1,10 +1,11 @@
- package gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-import org.jxmapviewer.JXMapViewer;
 import EventHandlers.ZoomHandler;
+import org.jxmapviewer.JXMapViewer;
+
 
 public class ControlPanel extends JPanel {
     private static JPanel contentPanel;
