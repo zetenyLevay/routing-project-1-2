@@ -13,13 +13,20 @@ import java.util.*;
 public class Dijkstra {
 
 
-    public Map<StopNode, Double> dijkstra(StopGraph graph, StopNode startNode) {
+    public DijkstraResult dijkstra(StopGraph graph, StopNode startNode) {
 
+        Map<StopNode, List<StopNode>> pred = new HashMap<>();
+        Map<StopNode, Integer> sigma = new HashMap<>();
+        Stack<StopNode> stack = new Stack<>();
         Map<StopNode, Double> distances = new HashMap<>();
         for (StopNode node : graph.getStopNodes()) {
             distances.put(node, Double.MAX_VALUE);
+            sigma.put(node, 0);
+            pred.put(node, new ArrayList<>());
         }
+
         distances.put(startNode, 0.0);
+        sigma.put(startNode, 1);
 
 
         PriorityQueue<StopNode> queue = new PriorityQueue<>(
@@ -32,11 +39,15 @@ public class Dijkstra {
         while (!queue.isEmpty()) {
             StopNode current = queue.poll();
 
+
+
+
             if (visited.contains(current)) {
                 continue;
             }
             visited.add(current);
 
+            stack.push(current);
 
             for (StopEdge edge : current.getAllEdges()) {
                 StopNode neighbor = edge.getTo(current);
@@ -46,12 +57,18 @@ public class Dijkstra {
 
                 if (newDistance < distances.getOrDefault(neighbor, Double.MAX_VALUE)) {
                     distances.put(neighbor, newDistance);
+                    sigma.put(neighbor, 0);
+                    pred.get(neighbor).clear();
                     queue.add(neighbor);
+                }
+                if (distances.get(neighbor).equals(newDistance) ) {
+                    sigma.put(neighbor, sigma.get(neighbor) + sigma.get(current));
+                    pred.get(neighbor).add(current);
                 }
             }
         }
 
-        return distances;
+        return new DijkstraResult(distances, sigma, pred, stack);
     }
 
     public static void main(String[] args) throws SQLException {
@@ -63,17 +80,37 @@ public class Dijkstra {
 
         System.out.println(graph.getStopNodes().size());
 
-        StopNode testNode = graph.getStopNodes().get(100);
+        StopNode testNode = graph.getStopNode("007884");
         System.out.println(testNode.getLabel());
 
 
+        DijkstraResult dijkstraResult = dijkstra.dijkstra(graph, testNode);
+        Map<StopNode, List<StopNode>> pred = dijkstraResult.pred;
+        Map<StopNode, Double> dist = dijkstraResult.dist;
+        List<StopNode> list = pred.get(testNode);
 
+        System.out.println(list.size());
 
-        Map<StopNode, Double> dist = dijkstra.dijkstra(graph, testNode);
-        for (StopNode node : graph.getStopNodes()) {
-            System.out.println(dist.get(node));
+        for (StopNode node : pred.get(testNode)) {
+            System.out.println("To: " + node.getLabel() + " | "+ dist.get(node) + " Meters");
         }
 
 
+        /*
+
+        for (StopNode node : graph.getStopNodes()) {
+            System.out.println("To: " + node.getLabel() + " | "+ dist.get(node) + " Meters");
+        }
+
+         */
+
+
+
     }
+
+    public record DijkstraResult(Map<StopNode, Double> dist, Map<StopNode, Integer> sigma, Map<StopNode, List<StopNode>> pred,
+                          Stack<StopNode> stack) {
+    }
+
+
 }

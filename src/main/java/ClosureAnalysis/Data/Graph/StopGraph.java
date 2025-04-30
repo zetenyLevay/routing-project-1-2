@@ -35,6 +35,15 @@ public class StopGraph {
         return stopNodes.size();
     }
 
+    public StopNode getStopNode(String id) {
+        for (StopNode n : stopNodes) {
+            if (n.getLabel().equals(id)) {
+                return n;
+            }
+        }
+        return null;
+    }
+
 
     public StopGraph buildStopGraph(Connection conn) {
         EdgeWeightCalculator calculator = new EdgeWeightCalculator();

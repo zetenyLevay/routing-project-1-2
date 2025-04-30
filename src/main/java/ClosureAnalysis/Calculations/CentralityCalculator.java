@@ -1,5 +1,6 @@
 package ClosureAnalysis.Calculations;
 
+import ClosureAnalysis.Data.Graph.StopEdge;
 import ClosureAnalysis.Data.Graph.StopGraph;
 import ClosureAnalysis.Data.Graph.StopNode;
 import ClosureAnalysis.Dijkstra;
@@ -16,7 +17,7 @@ public class CentralityCalculator {
         Dijkstra dijkstra = new Dijkstra();
 
         for (StopNode node : graph.getStopNodes()) {
-            Map<StopNode, Double> dist = dijkstra.dijkstra(graph, node);
+            Map<StopNode, Double> dist = dijkstra.dijkstra(graph, node).dist();
 
             double totalDistance = dist.values().stream()
                     .filter(d -> d != Double.MAX_VALUE)
@@ -27,12 +28,9 @@ public class CentralityCalculator {
                     .filter(d -> d != Double.MAX_VALUE)
                     .count();
 
-            double result = totalDistance / reachableNodes;
-            DecimalFormat df = new DecimalFormat("#.##");
-
-
-            if (totalDistance > 0 && reachableNodes > 0) {
-                node.setClosenessCentrality(Double.valueOf(df.format(result)));
+            if (reachableNodes > 0) {
+                double result = (reachableNodes - 1) / totalDistance;
+                node.setClosenessCentrality(result);
             }
             else {
                 node.setClosenessCentrality(0.0);
@@ -42,7 +40,48 @@ public class CentralityCalculator {
     }
 
     public void calculateBetweennessCentrality(StopGraph graph) {
+
         Dijkstra dijkstra = new Dijkstra();
+
+
+        Map<StopNode, Double> betweenness = new HashMap<>();
+        for (StopNode node : graph.getStopNodes()) {
+            betweenness.put(node, 0.0);
+        }
+
+        for (StopNode node : graph.getStopNodes()) {
+            Dijkstra.DijkstraResult result = dijkstra.dijkstra(graph, node);
+            Stack<StopNode> stack = result.stack();
+            Map<StopNode, List<StopNode>> predecessors = result.pred();
+            Map<StopNode, Integer> sigma = result.sigma();
+            Map<StopNode, Double> dist = result.dist();
+
+            Map<StopNode, Double> delta = new HashMap<>();
+            for (StopNode n : graph.getStopNodes()) {
+                delta.put(n, 0.0);
+            }
+
+            while (!stack.isEmpty()) {
+                StopNode n = stack.pop();
+                for (StopNode pred : predecessors.get(n)) {
+                    double coefficient = ((double) sigma.get(pred) / sigma.get(n)) * (1 +delta.get(n));
+                    delta.put(pred, delta.get(pred) + coefficient);
+                }
+                if (!n.equals(node)) {
+                    betweenness.put(n, betweenness.get(n) + delta.get(n));
+                }
+            }
+        }
+
+
+
+        for (StopNode node : graph.getStopNodes()) {
+            node.setBetweennessCentrality(betweenness.get(node));
+
+        }
+
+
+
     }
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -50,14 +89,74 @@ public class CentralityCalculator {
         CentralityCalculator calculator = new CentralityCalculator();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
         stopGraph = stopGraph.buildStopGraph(conn);
+        calculator.calculateBetweennessCentrality(stopGraph);
         calculator.calculateClosenessCentrality(stopGraph);
+        List<StopNode> list = new ArrayList<>();
 
+        StopNode test = stopGraph.getStopNode("007884");
+
+        System.out.println(test.getClosenessCentrality());
+        System.out.println(test.getBetweennessCentrality());
+
+
+
+        /*
         for (StopNode node : stopGraph.getStopNodes()) {
-            System.out.println(node.getClosenessCentrality());
+            if (node.getBetweennessCentrality() == 0.0)
+            {
+                list.add(node);
+            }
+            System.out.println(node.getBetweennessCentrality());
+
         }
 
 
 
+        for (StopNode node : list) {
+            List<StopNode> neighbors = node.getNeighbors();
 
+            // Skip if node and its only neighbor only point to each other
+            if (neighbors.size() == 1) {
+                StopNode neighbor = neighbors.get(0);
+                List<StopNode> neighborNeighbors = neighbor.getNeighbors();
+                if (neighborNeighbors.size() == 1 && neighborNeighbors.get(0).equals(node)) {
+                    continue; // Skip this trivial pair
+                }
+            }
+
+            System.out.printf("Node: %s\n", node.getLabel());
+            System.out.printf("  Betweenness Centrality: %.6f\n", node.getBetweennessCentrality());
+
+            if (neighbors.isEmpty()) {
+                System.out.println("  Neighbors: (none)");
+            } else {
+                System.out.print("  Neighbors: ");
+                for (int i = 0; i < neighbors.size(); i++) {
+                    System.out.print(neighbors.get(i).getLabel());
+                    if (i < neighbors.size() - 1) System.out.print(", ");
+                }
+                System.out.println();
+            }
+        }
+
+
+
+        stopGraph.getStopNodes().stream()
+                .sorted(Comparator.comparingDouble(StopNode::getBetweennessCentrality).reversed())
+                .limit(10)
+                .forEach(node -> System.out.println("Node : " + node.getBetweennessCentrality() + "Label: " + node.getLabel()));
+
+
+
+        stopGraph.getStopNodes().stream()
+                .sorted(Comparator.comparingDouble(StopNode::getClosenessCentrality))
+                .limit(10)
+                .forEach(node -> System.out.println("Node : " + node.getClosenessCentrality() + "Label: " + node.getLabel()));
+
+
+
+
+
+         */
     }
 }
