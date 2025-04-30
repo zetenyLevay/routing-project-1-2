@@ -12,19 +12,35 @@ import java.time.LocalTime;
 
 public class RunCSATest {
     public static void main(String[] args) {
-        Instant start = Instant.now();
+        Instant startLoadingCache = Instant.now();
         MasterLoader.initAllCaches();
+        Instant endLoadingCaches = Instant.now();
 
+        Instant startFirstTest = Instant.now();
         Stop departureStop = StopsCache.getStop("002133");
         Stop arrivalStop = StopsCache.getStop("MERGED_F03810");
         CSAQuery csaQuery = new CSAQuery(departureStop, arrivalStop, LocalTime.parse("08:03:00"));
         CSARouteFinding csaRouteFinding = new CSARouteFinding(csaQuery);
-
         csaRouteFinding.findRouteViaCSA();
-        Instant end = Instant.now();
+        Instant endFirstTest = Instant.now();
 
-        Duration duration = Duration.between(start, end);
-        System.out.println("Route finding completed in: " + duration.toMillis() + " milliseconds");
+        Instant startSecondTest = Instant.now();
+        Stop departureStop2 = StopsCache.getStop("004952");
+        Stop arrivalStop2 = StopsCache.getStop("F00179");
+        CSAQuery csaQuery2 = new CSAQuery(departureStop2, arrivalStop2, LocalTime.parse("18:43:01"));
+        CSARouteFinding csaRouteFinding2 = new CSARouteFinding(csaQuery2);
+        csaRouteFinding2.findRouteViaCSA();
+        Instant endSecondTest = Instant.now();
+
+        Duration durationLoading = Duration.between(startLoadingCache, endLoadingCaches);
+        System.out.println("Loading completed in: " + durationLoading.toMillis() + " milliseconds");
+
+        Duration durationFirstTest = Duration.between(startFirstTest, endFirstTest);
+        System.out.println("First test took " + durationFirstTest.toMillis() + "milliseconds");
+
+        Duration durationSecondTest = Duration.between(startSecondTest,endSecondTest);
+        System.out.println("Second test took " + durationSecondTest.toMillis() + "milliseconds");
+
 
 
     }
