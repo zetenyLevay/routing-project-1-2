@@ -1,70 +1,91 @@
 package ClosureAnalysis.Calculations;
 
 import ClosureAnalysis.Data.Graph.StopEdge;
+import ClosureAnalysis.Data.Graph.StopInstance;
 import ClosureAnalysis.Data.Graph.StopNode;
 import javafx.util.Pair;
+import routingenginemain.model.Stop;
 
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class EdgeWeightCalculator {
 
     double ALPHA = 0.5;
     double BETA = 0.5;
+    int count = 0;
+
     public double calculateEdgeWeight(StopNode from, StopNode to) {
 
-        double weight = 0;
+        List<StopInstance> instances = neighboringInstances(from, to);
 
-        double meters = calculateDistanceTraveled(from, to);
-        double timeTaken = calculateTimeTaken(from, to);
-
-        weight = ALPHA * meters + BETA * timeTaken;
-        return weight;
-    }
-
-    private double calculateDistanceTraveled(StopNode from, StopNode to) {
-        double distanceTraveled = 0;
-
-        int[] stopSequences = findNeighbouringSequence(from, to);
-
-        double start = from.getDistanceTraveledAtStop(stopSequences[0]);
-        double end = to.getDistanceTraveledAtStop(stopSequences[1]);
-
-        distanceTraveled = end - start;
-
-        return distanceTraveled;
-    }
-
-    private double calculateTimeTaken(StopNode from, StopNode to) {
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-
-        int[] stopSequences = findNeighbouringSequence(from, to);
-        double timeTaken = 0;
-
-        try {
-            Date arrivalTime = formatter.parse(to.getArrivalTime(stopSequences[1]));
-            Date departureTime = formatter.parse(from.getDepartureTime(stopSequences[0]));
-
-            long diffInTime = arrivalTime.getTime() - departureTime.getTime();
-            long diffInMinutes = ( diffInTime / 60000) % 60;
-            double minutes = diffInMinutes;
-
-            return minutes;
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        if (instances == null){
+            System.err.println("No neighbor for from: " + from.getLabel() + " to " + to.getLabel());
+            return Double.NEGATIVE_INFINITY;
         }
+
+        double meters = calculateDistanceTraveled(instances.getFirst(), instances.getLast());
+        double minutes = calculateTimeTaken(instances.getFirst(),instances.getLast());
+
+
+        if (meters < 0 || minutes < 0) {
+            System.out.println("Weight issue from " + from.getLabel() + " to " + to.getLabel());
+            System.out.println("  Distance: " + meters + " | Time: " + minutes);
+            count++;
+            System.err.println(count);
+            return Double.NEGATIVE_INFINITY;
+
+        }
+
+
+        return  ALPHA * meters + BETA * minutes;
     }
-    public int[] findNeighbouringSequence(StopNode from, StopNode to) {
-        for (int fromSequence : from.getStopSequence()){
-            for (int toSequence : to.getStopSequence()){
-                if (fromSequence == toSequence-1){
-                    return new int[]{fromSequence, toSequence};
+
+    public double calculateDistanceTraveled(StopInstance from, StopInstance to) {
+        return to.getDistanceTraveled() - from.getDistanceTraveled();
+    }
+
+
+
+    private List<StopInstance> neighboringInstances(StopNode from, StopNode to){
+        List<StopInstance> neighboringInstances = new ArrayList<>();
+
+
+            for (StopInstance fInstance : from.getStopInstances()) {
+                for (StopInstance tInstance : to.getStopInstances()) {
+
+                    if (fInstance.getTripId().equals(tInstance.getTripId())) {
+                        if (fInstance.getStopSequence() == tInstance.getStopSequence() - 1) {
+                            neighboringInstances.add(fInstance);
+                            neighboringInstances.add(tInstance);
+                            return neighboringInstances;
+                        }
+                    }
                 }
-            }
+
         }
+
+
         return null;
+    }
+
+
+    public double calculateTimeTaken(StopInstance departure, StopInstance arrival) {
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date departureTime = formatter.parse(departure.getDepartureTime());
+            Date arrivalTime = formatter.parse(arrival.getArrivalTime());
+            long diff = arrivalTime.getTime() - departureTime.getTime();
+            return diff / 60000.0; // convert ms to minutes
+        } catch (ParseException e) {
+            System.err.println("Failed to parse time: " + departure + " or " + arrival);
+            return Double.POSITIVE_INFINITY;
+        }
     }
 }

@@ -7,22 +7,15 @@ public class StopNode {
 
     private String label;
     private Set<StopEdge> edges;
-    private Map<Integer, String> arrivalTime;
-    private Map<Integer, String> departureTime;
 
-    private Map<Integer, Integer> distanceTraveledAtStop;
-
-    private List<Integer> stopSequence;
+    private List<StopInstance> stopInstances;
     private double closenessCentrality;
     private double betweennessCentrality;
 
     public StopNode(String label) {
         this.label = label;
         edges = new HashSet<>();
-        stopSequence = new ArrayList<>();
-        arrivalTime = new HashMap<>();
-        departureTime = new HashMap<>();
-        distanceTraveledAtStop = new HashMap<>();
+        stopInstances = new ArrayList<>();
 
     }
 
@@ -34,21 +27,14 @@ public class StopNode {
     }
 
 
-    void addArrivalTime(int stopSequence, String arrivalTime) {
-        this.arrivalTime.put(stopSequence, arrivalTime);
-
+    public void addStopInstance(StopInstance instance) {
+        if (!stopInstances.contains(instance)) {
+            stopInstances.add(instance);
+        }
     }
 
-    void addStopSequence(int stopSequence) {
-        this.stopSequence.add(stopSequence);
-    }
-
-    void addDepartureTime(int stopSequence, String departureTime) {
-        this.departureTime.put(stopSequence, departureTime);
-    }
-
-    void addDistanceTraveledAtStop(int stopSequence, int distanceTraveledAtStop) {
-        this.distanceTraveledAtStop.put(stopSequence, distanceTraveledAtStop);
+    public List<StopInstance> getStopInstances() {
+        return stopInstances;
     }
 
 
@@ -61,19 +47,7 @@ public class StopNode {
         return new ArrayList<>(edges);
     }
 
-    public String getArrivalTime(int stopSequence) {
-        return arrivalTime.get(stopSequence);
-    }
-    public String getDepartureTime(int stopSequence) {
-        return departureTime.get(stopSequence);
-    }
-    public int getDistanceTraveledAtStop(int stopSequence) {
-        return distanceTraveledAtStop.get(stopSequence);
-    }
 
-    public List<Integer> getStopSequence() {
-        return stopSequence;
-    }
 
     public double getClosenessCentrality() {
         return closenessCentrality;
@@ -82,18 +56,25 @@ public class StopNode {
         return betweennessCentrality;
     }
 
-    void setClosenessCentrality(double closenessCentrality) {
+    public void setClosenessCentrality(double closenessCentrality) {
         this.closenessCentrality = closenessCentrality;
     }
 
-    void setBetweennessCentrality(double betweennessCentrality) {
+    public void setBetweennessCentrality(double betweennessCentrality) {
         this.betweennessCentrality = betweennessCentrality;
     }
 
 
     public List<StopNode> getNeighbors() {
         return edges.stream()
-                .map(StopEdge::getTo)
+                .flatMap(edge -> {
+                    List<StopNode> nodes = new ArrayList<>();
+                    if (!edge.getTo(this).equals(this)) { // avoid self-loops
+                        nodes.add(edge.getTo(this));
+                    }
+                    return nodes.stream();
+                })
+                .distinct()
                 .collect(Collectors.toList());
     }
 }

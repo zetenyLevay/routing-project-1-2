@@ -12,56 +12,66 @@ import java.util.*;
 
 public class Dijkstra {
 
-    private int count = 0;
-    public Map<StopNode, Double> dijkstra(StopGraph graph, StopNode start) {
 
+    public Map<StopNode, Double> dijkstra(StopGraph graph, StopNode startNode) {
 
-        Map<StopNode, Double> dist = new HashMap<>();
+        Map<StopNode, Double> distances = new HashMap<>();
         for (StopNode node : graph.getStopNodes()) {
-            dist.put(node, Double.valueOf(Double.MAX_VALUE));
+            distances.put(node, Double.MAX_VALUE);
         }
-        dist.put(start, Double.valueOf(0.0));
+        distances.put(startNode, 0.0);
 
-        PriorityQueue<StopNode> pq = new PriorityQueue<>(
-                Comparator.comparingDouble(dist::get)
+
+        PriorityQueue<StopNode> queue = new PriorityQueue<>(
+                Comparator.comparingDouble(node -> distances.getOrDefault(node, Double.MAX_VALUE))
         );
-        pq.offer(start);
-
-
+        queue.add(startNode);
 
         Set<StopNode> visited = new HashSet<>();
-        while (!pq.isEmpty()) {
-            StopNode current = pq.poll();
+
+        while (!queue.isEmpty()) {
+            StopNode current = queue.poll();
 
             if (visited.contains(current)) {
                 continue;
             }
             visited.add(current);
+
+
             for (StopEdge edge : current.getAllEdges()) {
-                StopNode neighbour = edge.getTo();
-                double newDist = dist.get(current) + edge.getWeight();
-                if (newDist < dist.get(neighbour)) {
-                    dist.put(neighbour, newDist);
-                    pq.offer(neighbour);
+                StopNode neighbor = edge.getTo(current);
+                double edgeWeight = edge.getWeight();
+                double newDistance = distances.get(current) + edgeWeight;
+
+
+                if (newDistance < distances.getOrDefault(neighbor, Double.MAX_VALUE)) {
+                    distances.put(neighbor, newDistance);
+                    queue.add(neighbor);
                 }
             }
         }
-        return dist;
+
+        return distances;
     }
 
     public static void main(String[] args) throws SQLException {
         StopGraph graph = new StopGraph();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
         graph = graph.buildStopGraph(conn);
-        List<StopNode> nodes = graph.getStopNodes();
+
         Dijkstra dijkstra = new Dijkstra();
-        Map<StopNode, Double> dist;
+
+        System.out.println(graph.getStopNodes().size());
+
+        StopNode testNode = graph.getStopNodes().get(100);
+        System.out.println(testNode.getLabel());
 
 
-        for (StopNode node : nodes) {
 
-            dist = dijkstra.dijkstra(graph, node);
-            System.out.println("At node: " + node.getLabel() + " dist: " + dist.get(node));
+
+        Map<StopNode, Double> dist = dijkstra.dijkstra(graph, testNode);
+        for (StopNode node : graph.getStopNodes()) {
+            System.out.println(dist.get(node));
         }
 
 
