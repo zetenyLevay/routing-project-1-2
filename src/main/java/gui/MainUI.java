@@ -8,7 +8,7 @@ public class MainUI {
 
     public static void main(String[] args) throws IOException {
         //uncomment at some point
-//                MapUI.create();
+               MapUI.create();
         RequestHandler rh = new RequestHandler();
         rh.run();
     }
