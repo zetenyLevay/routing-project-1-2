@@ -12,7 +12,9 @@ import java.util.stream.IntStream;
 
 public class RunCSATest {
     public static void main(String[] args) {
+        Instant startCaching = Instant.now();
         MasterLoader.initAllCaches();
+        System.out.println("Time to taken load master cache: " + Duration.between(startCaching, Instant.now()).toMillis());
         List<String> stops = StopsCache.getAllStops().stream()
                 .map(Stop::getStopID)
                 .toList();
@@ -36,6 +38,6 @@ public class RunCSATest {
                 })
                 .sum();
 
-        System.out.printf("Average runtime: %.2f ms%n", totalTime / 1000.0);
+        System.out.printf("Average runtime: %.3f ms%n", totalTime / 1000.0);
     }
 }

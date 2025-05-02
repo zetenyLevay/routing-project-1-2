@@ -175,4 +175,9 @@
     <expand />
     <select />
   </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/group20$RunCSATest.ic" NAME="RunCSATest Coverage Results" MODIFIED="1746188154473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>routing.routingenginemain.tests.*</FILTER>
+    </SUITE>
+  </component>
 </project>
