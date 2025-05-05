@@ -3,22 +3,22 @@ package routing.routingEngineModels;
 import java.time.LocalTime;
 
 public class InputJourney {
-    Coordinate start;
-    Coordinate end; 
+    Coordinates start;
+    Coordinates end; 
     LocalTime startTime;
 
-    public InputJourney(Coordinate start, Coordinate end, LocalTime startTime) {
+    public InputJourney(Coordinates start, Coordinates end, LocalTime startTime) {
         this.start = start;
         this.end = end;
         this.startTime = startTime;
     }
 
 
-    public Coordinate getStart() {
+    public Coordinates getStart() {
         return this.start;
     }
 
-    public Coordinate getEnd() {
+    public Coordinates getEnd() {
         return this.end;
     }
 

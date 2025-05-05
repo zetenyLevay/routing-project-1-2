@@ -1,15 +1,15 @@
-package RoutingEngineModels;
+package routing.routingEngineModels;
 
-public class Coordinate {
+public class Coordinates {
     private final double latitude;
     private final double longitude;
 
-    public Coordinate(double latitude, double longitude) {
+    public Coordinates(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
     
-    public Coordinate(String coord) {
+    public Coordinates(String coord) {
         String[] parts = (coord).split(",");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid coordinate format. Expected 'lat,lon'");

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
 
-import routing.routingEngineModels.Coordinate;
+import routing.routingEngineModels.Coordinates;
 
 public class RequestHandler {
 
@@ -52,13 +52,14 @@ public class RequestHandler {
 
                     //Unzip(selectedFile); 
                     //TODO: hook up to ZipToSQLite
+                    //what we want to do: call this: zipToSQLite(selectedFile); and have everything done.
                 }
 
                 //TODO: double check this is how it works?
                 else if (request.containsKey("routeFrom")) {
 
-                    Coordinate startPoint = new Coordinate((String) request.get("routeFrom"));
-                    Coordinate endPoint = new Coordinate((String) request.get("to"));
+                    Coordinates startPoint = new Coordinates((String) request.get("routeFrom"));
+                    Coordinates endPoint = new Coordinates((String) request.get("to"));
                     String startingAtStr = (String) request.get("startingAt");
 
                     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");

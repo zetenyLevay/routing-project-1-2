@@ -3,11 +3,11 @@ package routing.routingEngineModels;
 public class RouteStep {
     // {Mode of transpotr, startCoord, endCoord, Time}
     private String modeOfTransport;
-    private Coordinate startCoord;
-    private Coordinate endCoord;
+    private Coordinates startCoord;
+    private Coordinates endCoord;
     private double time;
 
-    public RouteStep(String modeOfTransport, Coordinate startCoord, Coordinate endCoord, double time) {
+    public RouteStep(String modeOfTransport, Coordinates startCoord, Coordinates endCoord, double time) {
         this.modeOfTransport = modeOfTransport;
         this.startCoord = startCoord;
         this.endCoord = endCoord;
@@ -16,10 +16,10 @@ public class RouteStep {
     public String getModeOfTransport() {
         return modeOfTransport;
     }
-    public Coordinate getStartCoord() {
+    public Coordinates getStartCoord() {
         return startCoord;
     }   
-    public Coordinate getEndCoord() {
+    public Coordinates getEndCoord() {
         return endCoord;
     }
     public double getTime() {

@@ -1,4 +1,4 @@
-//collection of RouteSteps
+//list of RouteSteps
 
 package routing.routingEngineModels;
 //import Routing.RoutingEngineModels.RouteStep;
