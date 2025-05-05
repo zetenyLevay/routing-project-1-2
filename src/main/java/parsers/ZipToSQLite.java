@@ -1,4 +1,4 @@
-package parsers;
+package Parsers;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -15,14 +15,39 @@ import java.util.zip.ZipFile;
 public class ZipToSQLite {
 
     /*
-    * When entering full file path make sure its not wrapped in ""
+    * To run from another file: ZipToSQL.run("fullFileLocationHere")
+    *       example: ZipToSQLite.run("C:\\Users\\growt\\Downloads\\gtfs.zip");
+    *
+    * To run just this file: jus edit the hardcoded zip file location below**
     *
     * */
+
+
     public static void main(String[] args) {
+        // here**
+        run("C:\\Users\\growt\\Downloads\\gtfs.zip");
+    }
+
+
+    private static String DBName(String zipName) {
+        return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
+    }
+
+    private static void configureDatabase(Connection conn) throws SQLException {
+        try (Statement statem = conn.createStatement()) {
+            statem.execute("PRAGMA synchronous = NORMAL;");
+            statem.execute("PRAGMA journal_mode = WAL;");
+        }
+    }
+
+    public static void run(String fileName) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter full file path: ");
 
-        String fileName = scanner.nextLine();
+        if (fileName == null){
+            fileName = scanner.nextLine();
+        }
+
         File selectedFile = new File(fileName);
         if (selectedFile == null) {
             System.out.println("No file selected, exiting");
@@ -45,18 +70,6 @@ public class ZipToSQLite {
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-
-    private static String DBName(String zipName) {
-        return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
-    }
-
-    private static void configureDatabase(Connection conn) throws SQLException {
-        try (Statement statem = conn.createStatement()) {
-            statem.execute("PRAGMA synchronous = NORMAL;");
-            statem.execute("PRAGMA journal_mode = WAL;");
         }
     }
 
