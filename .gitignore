@@ -22,3 +22,4 @@ target/*
 /data/ClosureAnalysis/budapest_gtfs.db
 /data/ClosureAnalysis/budapest_gtfs.db-shm
 /data/ClosureAnalysis/budapest_gtfs.db-wal
+/.idea
