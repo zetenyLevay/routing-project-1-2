@@ -1,9 +1,9 @@
 package routing.csa.engine.cache.classloader;
 
 import routing.csa.engine.util.TimeConverter;
-import routing.csa.model.Connection;
-import routing.csa.model.Stop;
-import routing.csa.model.Trip;
+import routing.routingEngineModels.csamodel.Connection;
+import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.csamodel.Trip;
 import routing.csa.engine.connectionscanalgorithm.ConnectionSort;
 
 import java.sql.*;

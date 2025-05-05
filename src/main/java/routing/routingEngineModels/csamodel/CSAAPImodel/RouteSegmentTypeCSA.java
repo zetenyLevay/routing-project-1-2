@@ -1,4 +1,4 @@
-package routing.csa.model.CSAAPImodel;
+package routing.routingEngineModels.csamodel.CSAAPImodel;
 
 public enum RouteSegmentTypeCSA {
     TRANSIT(0,"Transit"),

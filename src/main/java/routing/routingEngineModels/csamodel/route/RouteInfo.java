@@ -1,4 +1,4 @@
-package routing.csa.model.route;
+package routing.routingEngineModels.csamodel.route;
 
 public class RouteInfo {
     private final String routeShortName;

@@ -1,8 +1,8 @@
 package routing.csa.engine.cache.classloader;
 
-import routing.csa.model.Agency;
-import routing.csa.model.route.Route;
-import routing.csa.model.route.RouteInfo;
+import routing.routingEngineModels.csamodel.Agency;
+import routing.routingEngineModels.csamodel.route.Route;
+import routing.routingEngineModels.csamodel.route.RouteInfo;
 
 import java.sql.*;
 import java.util.HashMap;

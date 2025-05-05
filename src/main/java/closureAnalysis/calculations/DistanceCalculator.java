@@ -1,6 +1,6 @@
 package closureAnalysis.calculations;
 
-import routing.csa.model.Coordinates;
+import routing.routingEngineModels.csamodel.Coordinates;
 
 public class DistanceCalculator {
 

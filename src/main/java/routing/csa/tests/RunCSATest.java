@@ -3,8 +3,8 @@ package routing.csa.tests;
 import routing.csa.engine.cache.classloader.StopsCache;
 import routing.csa.engine.cache.masterloader.MasterLoader;
 import routing.csa.engine.connectionscanalgorithm.CSARouteFinding;
-import routing.csa.model.CSAAPImodel.CSAQuery;
-import routing.csa.model.Stop;
+import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
+import routing.routingEngineModels.csamodel.Stop;
 
 import java.time.*;
 import java.util.*;

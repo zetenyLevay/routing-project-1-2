@@ -1,6 +1,6 @@
-package routing.csa.model.MainAPImodel;
+package routing.routingEngineModels.csamodel.MainAPImodel;
 
-import routing.csa.model.Coordinates;
+import routing.routingEngineModels.csamodel.Coordinates;
 
 import java.time.LocalTime;
 

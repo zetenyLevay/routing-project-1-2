@@ -120,11 +120,11 @@
       </method>
     </configuration>
     <configuration name="RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.routingenginemain.tests.RunCSATest" />
+      <option name="MAIN_CLASS_NAME" value="routing.csa.tests.RunCSATest" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="routing.routingenginemain.tests.*" />
+          <option name="PATTERN" value="routing.csa.tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -174,7 +174,7 @@
       <workItem from="1744357693498" duration="17000" />
       <workItem from="1744639713599" duration="19989000" />
       <workItem from="1746275654740" duration="308000" />
-      <workItem from="1746455030310" duration="1201000" />
+      <workItem from="1746455030310" duration="1361000" />
     </task>
     <servers />
   </component>

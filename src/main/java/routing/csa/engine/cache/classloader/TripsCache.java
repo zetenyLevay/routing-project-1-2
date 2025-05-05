@@ -1,7 +1,7 @@
 package routing.csa.engine.cache.classloader;
 
-import routing.csa.model.Trip;
-import routing.csa.model.route.Route;
+import routing.routingEngineModels.csamodel.Trip;
+import routing.routingEngineModels.csamodel.route.Route;
 
 import java.sql.*;
 import java.util.ArrayList;

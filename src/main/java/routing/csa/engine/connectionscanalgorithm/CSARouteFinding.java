@@ -2,12 +2,12 @@ package routing.csa.engine.connectionscanalgorithm;
 
 import routing.csa.engine.cache.classloader.ConnectionsCache;
 import routing.csa.engine.cache.classloader.StopsCache;
-import routing.csa.model.CSAAPImodel.CSAQuery;
-import routing.csa.model.CSAAPImodel.ResultantRouteCSA;
-import routing.csa.model.CSAAPImodel.RouteSegmentCSA;
-import routing.csa.model.Connection;
-import routing.csa.model.Stop;
-import routing.csa.model.pathway.Pathway;
+import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
+import routing.routingEngineModels.csamodel.CSAAPImodel.ResultantRouteCSA;
+import routing.routingEngineModels.csamodel.CSAAPImodel.RouteSegmentCSA;
+import routing.routingEngineModels.csamodel.Connection;
+import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.csamodel.pathway.Pathway;
 
 import java.util.*;
 

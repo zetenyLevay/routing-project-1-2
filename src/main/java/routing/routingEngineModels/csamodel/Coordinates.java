@@ -1,4 +1,4 @@
-package routing.csa.model;
+package routing.routingEngineModels.csamodel;
 
 public class Coordinates {
     private final double latitude;

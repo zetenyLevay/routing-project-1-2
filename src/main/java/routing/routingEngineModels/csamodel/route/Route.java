@@ -1,6 +1,6 @@
-package routing.csa.model.route;
+package routing.routingEngineModels.csamodel.route;
 
-import routing.csa.model.Agency;
+import routing.routingEngineModels.csamodel.Agency;
 
 public class Route {
     private final String routeID;

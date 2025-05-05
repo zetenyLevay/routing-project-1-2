@@ -1,4 +1,4 @@
-package routing.csa.model.pathway;
+package routing.routingEngineModels.csamodel.pathway;
 
 public enum PathwayType {
     WALKWAY(1, "Walkway"),

@@ -1,4 +1,4 @@
-package routing.csa.model.route;
+package routing.routingEngineModels.csamodel.route;
 
 public enum RouteType {
     TRAM(0, "Tram"),

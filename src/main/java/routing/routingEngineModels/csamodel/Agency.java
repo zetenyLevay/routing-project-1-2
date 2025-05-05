@@ -1,4 +1,4 @@
-package routing.csa.model;
+package routing.routingEngineModels.csamodel;
 
 public class Agency {
     public final String agencyID;

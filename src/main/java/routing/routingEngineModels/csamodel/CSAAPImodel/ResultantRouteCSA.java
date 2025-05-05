@@ -1,4 +1,4 @@
-package routing.csa.model.CSAAPImodel;
+package routing.routingEngineModels.csamodel.CSAAPImodel;
 
 import java.util.Collections;
 import java.util.List;

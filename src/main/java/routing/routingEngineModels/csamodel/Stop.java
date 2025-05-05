@@ -1,6 +1,6 @@
-package routing.csa.model;
+package routing.routingEngineModels.csamodel;
 
-import routing.csa.model.pathway.Pathway;
+import routing.routingEngineModels.csamodel.pathway.Pathway;
 
 import java.util.List;
 
