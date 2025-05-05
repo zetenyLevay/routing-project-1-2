@@ -1,7 +1,7 @@
 package closureAnalysis.data.models;
 
 import closureAnalysis.data.enums.TransportType;
-import routing.routingenginemain.model.Coordinates;
+import routing.csa.model.Coordinates;
 
 import java.util.List;
 

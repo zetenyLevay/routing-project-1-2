@@ -6,7 +6,7 @@ import closureAnalysis.data.enums.POIType;
 import closureAnalysis.data.models.NearbyPOIs;
 import closureAnalysis.data.models.PointOfInterest;
 import closureAnalysis.data.models.Stop;
-import routing.routingenginemain.model.Coordinates;
+import routing.csa.model.Coordinates;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
