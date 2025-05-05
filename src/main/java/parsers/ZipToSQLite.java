@@ -15,10 +15,10 @@ import java.util.zip.ZipFile;
 public class ZipToSQLite {
 
     /*
-    * To run from another file: ZipToSQL.run("fullFileLocationHere")
+    * To run from another file: ZipToSQLite.run("fullFileLocationHere")
     *       example: ZipToSQLite.run("C:\\Users\\growt\\Downloads\\gtfs.zip");
     *
-    * To run just this file: jus edit the hardcoded zip file location below**
+    * To run just this file: Edit the hardcoded zip file location below**
     *
     * */
 
