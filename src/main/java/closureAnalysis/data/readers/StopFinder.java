@@ -2,7 +2,7 @@ package closureAnalysis.data.readers;
 
 import closureAnalysis.calculations.DistanceCalculator;
 import closureAnalysis.data.models.*;
-import routing.routingEngineModels.csamodel.Coordinates;
+import routing.routingEngineModels.Coordinates;
 
 
 import java.sql.Connection;
