@@ -4,190 +4,62 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="">
+    <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Enum" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="implementing-Astar" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 7
-}</component>
-  <component name="ProjectId" id="2vZfoSPqY6QIQaeOLxsIujHAiOJ" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2wgOIW4NuyaZ7PA5RmC4jSqVnGb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CachingTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DataConverter.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RunCSATest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ZipToSQLite.executor&quot;: &quot;Run&quot;,
-    &quot;Application.mainUI.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/adityasingha/group20&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "working-on-request-handler",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/RoutingEngineModels" />
-    </key>
-    <key name="ExtractSuperBase.RECENT_KEYS">
-      <recent name="routingenginemain.engine.api" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="RoutingEngineAstar" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.RunCSATest">
-    <configuration name="CachingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routingenginemain.engine.cache.CachingTest" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routingenginemain.engine.cache.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="gui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MapUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.MapUI" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="gui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.csa.tests.RunCSATest" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routing.csa.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ZipToSQLite" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Parsers.ZipToSQLite" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Parsers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.RunCSATest" />
-        <item itemvalue="Application.MapUI" />
-        <item itemvalue="Application.MainUI" />
-        <item itemvalue="Application.CachingTest" />
-        <item itemvalue="Application.ZipToSQLite" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4bec5b52-9049-4809-a959-bbc867e85169" name="Changes" comment="" />
-      <created>1744357691916</created>
+      <changelist id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="" />
+      <created>1746459671759</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1744357691916</updated>
-      <workItem from="1744357693498" duration="17000" />
-      <workItem from="1744639713599" duration="19989000" />
-      <workItem from="1746275654740" duration="308000" />
-      <workItem from="1746455030310" duration="1361000" />
+      <updated>1746459671759</updated>
+      <workItem from="1746459673067" duration="641000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/group20$RunCSATest.ic" NAME="RunCSATest Coverage Results" MODIFIED="1746188154473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>routing.routingenginemain.tests.*</FILTER>
-    </SUITE>
   </component>
 </project>

@@ -2,8 +2,8 @@ package routing.routingEngineModels;
 
 import java.util.List;
 
-import routing.routingenginemain.model.Coordinates;
-import routing.routingenginemain.model.pathway.Pathway;
+import routing.routingEngineModels.Coordinates;
+
 
 public class Stop {
 
