@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/DistanceCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/DistanceCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/PointOfInterest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/PointOfInterest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/RoadSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/RoadSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parsers/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parsers/RequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/PathwaysCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/PathwaysCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/engine/cache/classloader/StopsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/engine/connectionscanalgorithm/CSARouteFinding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/engine/connectionscanalgorithm/CSARouteFinding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/engine/util/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/engine/util/StraightLineCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/csa/tests/RunCSATest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/csa/tests/RunCSATest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/Coordinates.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/MainAPImodel/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/MainAPImodel/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" afterDir="false" />
-    </list>
+    <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
