@@ -1,4 +1,4 @@
-package ClosureAnalysis.Data.Graph;
+package closureAnalysis.data.graph;
 
 import java.util.Objects;
 

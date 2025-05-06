@@ -1,4 +1,4 @@
-package ClosureAnalysis.Calculations;
+package closureAnalysis.calculations;
 
 public class BetweennessCentralityCalculator {
 }

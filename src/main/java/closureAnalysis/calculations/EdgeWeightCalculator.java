@@ -2,15 +2,15 @@ package closureAnalysis.calculations;
 
 
 
-import closureAnalysis.data.graph.StopInstance;
-import closureAnalysis.data.graph.StopNode;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import closureAnalysis.data.graph.StopInstance;
+import closureAnalysis.data.graph.StopNode;
 
 public class EdgeWeightCalculator {
 

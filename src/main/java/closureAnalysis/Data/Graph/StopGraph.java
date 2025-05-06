@@ -1,6 +1,6 @@
-package ClosureAnalysis.Data.Graph;
+package closureAnalysis.data.graph;
 
-import ClosureAnalysis.Calculations.EdgeWeightCalculator;
+import closureAnalysis.calculations.EdgeWeightCalculator;
 import javafx.util.Pair;
 
 import java.sql.*;
