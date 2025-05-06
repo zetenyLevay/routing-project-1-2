@@ -1,0 +1,141 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/target/classes/ClosureAnalysis/Data/Models/PointOfInterest.class\r\n/target/classes/ClosureAnalysis/Data/Enums/TransportType.class\r\n/target/classes/ClosureAnalysis/Data/Readers/StopReader.class\r\n/target/classes/ClosureAnalysis/StopEvaluator.class\r\n/target/classes/ClosureAnalysis/Data/Readers/RoadSegmentReader.class\r\n/target/classes/ClosureAnalysis/Data/Models/Stop.class\r\n/target/classes/ClosureAnalysis/Data/Models/RoadSegment.class\r\n/target/classes/ClosureAnalysis/Data/Readers/Reader.class\r\n/target/classes/ClosureAnalysis/Data/Enums/POIType.class\r\n/target/classes/ClosureAnalysis/Data/Readers/POIReader.class\r\n/target/classes/ClosureAnalysis/Calculations/POIFinder.class\r\n/target/classes/gui/mainUI.class\r\n/target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class\r\n/.idea/.gitignore\r\n/.idea/vcs.xml\r\n/.idea/misc.xml\r\n/.idea/jarRepositories.xml\r\n/.idea/encodings.xml\r\n/.idea/compiler.xml\r\n/data/ClosureAnalysis/budapest_gtfs.db\r\n/data/ClosureAnalysis/budapest_gtfs.db-shm\r\n/data/ClosureAnalysis/budapest_gtfs.db-wal\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 624df651f5e4e3bab132943cc06d25cd8da2f505)
++++ b/.gitignore	(date 1745330481737)
+@@ -20,3 +20,8 @@
+ /data/ClosureAnalysis/budapest_gtfs.db
+ /data/ClosureAnalysis/budapest_gtfs.db-shm
+ /data/ClosureAnalysis/budapest_gtfs.db-wal
++/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_1_06_PM_[Changes]/shelved.patch
++/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_5_50_PM_[Changes]/shelved.patch
++/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_1_06_PM__Changes_.xml
++/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_5_50_PM__Changes_.xml
++/.idea/workspace.xml
+Index: src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ClosureAnalysis.Calculations;\r\n\r\nimport routingenginemain.model.Coordinates;\r\n\r\npublic class DistanceCalculator {\r\n\r\n    private static final double EARTH_RADIUS_KM = 6371;\r\n    private static final double EARTH_RADIUS_M = 6_371_000;\r\n\r\n\r\n    public double calculateDistance(Coordinates startCoordinates, Coordinates endCoordinates) {\r\n\r\n        double startLatitudeRadian = Math.toRadians(startCoordinates.getLatitude());\r\n        double endLatitudeRadian = Math.toRadians(endCoordinates.getLatitude());\r\n        double deltaLatitude = Math.toRadians(endCoordinates.getLatitude() - startCoordinates.getLatitude());\r\n        double deltaLongitude = Math.toRadians(endCoordinates.getLongitude() - startCoordinates.getLongitude());\r\n\r\n        double a =  Math.sin(deltaLatitude/2) * Math.sin(deltaLatitude/2) +\r\n                Math.cos(startLatitudeRadian) * Math.cos(endLatitudeRadian) *\r\n                        Math.sin(deltaLongitude/2) * Math.sin(deltaLongitude/2);\r\n\r\n        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));\r\n\r\n        return EARTH_RADIUS_M * c;\r\n\r\n    }\r\n\r\n    public double stopToRoadDistance(Coordinates startCoordinates, Coordinates endCoordinates, Coordinates stopCoordinates) {\r\n\r\n        double roadDist = calculateDistance(startCoordinates, endCoordinates);\r\n        double startToStopDist = calculateDistance(startCoordinates, stopCoordinates);\r\n        double endToStopDist = calculateDistance(endCoordinates, stopCoordinates);\r\n\r\n\r\n        // projection is where along the segment the stop is (if < 0 or > roadDist then it is outside the segment)\r\n        double projection = (startToStopDist * startToStopDist + roadDist * roadDist - endToStopDist * endToStopDist)\r\n                / (2* roadDist);\r\n\r\n        if (projection <= 0 || projection >= roadDist)\r\n            return Double.POSITIVE_INFINITY;\r\n        else\r\n            return Math.sqrt(startToStopDist * startToStopDist - projection * projection);\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        DistanceCalculator calculator = new DistanceCalculator();\r\n        Coordinates endCoordinates = new Coordinates(47.5013360673781, 19.0834875092641);\r\n        Coordinates startCoordinates = new Coordinates(47.5009585313839, 19.0826709483695);\r\n        Coordinates stopCoord = new Coordinates(47.501104,19.082712);\r\n\r\n        System.out.println(calculator.stopToRoadDistance(startCoordinates, endCoordinates,stopCoord));\r\n    }\r\n\r\n\r\n    /*\r\n    public double stopToRoadSegmentDistance(Coordinates start, Coordinates end, Coordinates stop) {\r\n\r\n        /*\r\n            Start coordinates are converted to a vector of (0,0) so that we can calculate on a 2d plane instead\r\n            of a sphere (earth)\r\n\r\n\r\n        double x1 = 0;\r\n        double y1 = 0;\r\n\r\n        /*\r\n            x2 is the longitude difference (where the end point is compared to start point)\r\n            y2 is the latitude difference\r\n\r\n\r\n        double x2 = calculateDistance(start, new Coordinates(start.getLatitude(), end.getLongitude())) *\r\n                Math.signum(end.getLongitude() - start.getLongitude());\r\n        double y2 = calculateDistance(start, new Coordinates(end.getLatitude(), start.getLongitude())) *\r\n                Math.signum(end.getLatitude() - start.getLatitude());\r\n\r\n        // where the stop is compared to start point\r\n\r\n        double stopX = calculateDistance(start, new Coordinates(start.getLatitude(), stop.getLongitude())) *\r\n                Math.signum(stop.getLongitude() - start.getLongitude());\r\n        double stopY = calculateDistance(start, new Coordinates(stop.getLatitude(), start.getLongitude())) *\r\n                Math.signum(stop.getLongitude() - start.getLongitude());\r\n\r\n        /*\r\n        magic math which I do not understand\r\n        https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment/1501725#1501725\r\n\r\n\r\n        double a = x1 - x2;\r\n        double b = y1 - y2;\r\n        double c = stopX - x2;\r\n        double d = stopY - y2;\r\n\r\n        double lenSq = c * c + d * d;\r\n\r\n        double param = -1;\r\n\r\n        if (lenSq != 0){\r\n            double dotProd = a*c - b*d;\r\n            param = dotProd / lenSq;\r\n        }\r\n\r\n        double xx;\r\n        double yy;\r\n\r\n        if (param < 0){\r\n            xx = x1;\r\n            yy = y1;\r\n        }\r\n        else if (param > 1){\r\n            xx = x2;\r\n            yy = y2;\r\n        }\r\n        else {\r\n            xx = x1 + param * c;\r\n            yy = y1 + param * d;\r\n        }\r\n\r\n        double dx = x1 - xx;\r\n        double dy = y1 - yy;\r\n\r\n        return Math.sqrt(dx * dx + dy * dy);\r\n\r\n    }\r\n    */\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java b/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java
+--- a/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java	(revision 624df651f5e4e3bab132943cc06d25cd8da2f505)
++++ b/src/main/java/ClosureAnalysis/Calculations/DistanceCalculator.java	(date 1744795245298)
+@@ -7,7 +7,7 @@
+     private static final double EARTH_RADIUS_KM = 6371;
+     private static final double EARTH_RADIUS_M = 6_371_000;
+ 
+-
++    // haversine calculations
+     public double calculateDistance(Coordinates startCoordinates, Coordinates endCoordinates) {
+ 
+         double startLatitudeRadian = Math.toRadians(startCoordinates.getLatitude());
+@@ -24,7 +24,6 @@
+         return EARTH_RADIUS_M * c;
+ 
+     }
+-
+     public double stopToRoadDistance(Coordinates startCoordinates, Coordinates endCoordinates, Coordinates stopCoordinates) {
+ 
+         double roadDist = calculateDistance(startCoordinates, endCoordinates);
+@@ -33,6 +32,7 @@
+ 
+ 
+         // projection is where along the segment the stop is (if < 0 or > roadDist then it is outside the segment)
++        // projection is cos(y)*startToStopDist, where y is the angle at the start
+         double projection = (startToStopDist * startToStopDist + roadDist * roadDist - endToStopDist * endToStopDist)
+                 / (2* roadDist);
+ 
+@@ -41,7 +41,6 @@
+         else
+             return Math.sqrt(startToStopDist * startToStopDist - projection * projection);
+     }
+-
+     public static void main(String[] args) {
+         DistanceCalculator calculator = new DistanceCalculator();
+         Coordinates endCoordinates = new Coordinates(47.5013360673781, 19.0834875092641);
+@@ -50,78 +49,4 @@
+ 
+         System.out.println(calculator.stopToRoadDistance(startCoordinates, endCoordinates,stopCoord));
+     }
+-
+-
+-    /*
+-    public double stopToRoadSegmentDistance(Coordinates start, Coordinates end, Coordinates stop) {
+-
+-        /*
+-            Start coordinates are converted to a vector of (0,0) so that we can calculate on a 2d plane instead
+-            of a sphere (earth)
+-
+-
+-        double x1 = 0;
+-        double y1 = 0;
+-
+-        /*
+-            x2 is the longitude difference (where the end point is compared to start point)
+-            y2 is the latitude difference
+-
+-
+-        double x2 = calculateDistance(start, new Coordinates(start.getLatitude(), end.getLongitude())) *
+-                Math.signum(end.getLongitude() - start.getLongitude());
+-        double y2 = calculateDistance(start, new Coordinates(end.getLatitude(), start.getLongitude())) *
+-                Math.signum(end.getLatitude() - start.getLatitude());
+-
+-        // where the stop is compared to start point
+-
+-        double stopX = calculateDistance(start, new Coordinates(start.getLatitude(), stop.getLongitude())) *
+-                Math.signum(stop.getLongitude() - start.getLongitude());
+-        double stopY = calculateDistance(start, new Coordinates(stop.getLatitude(), start.getLongitude())) *
+-                Math.signum(stop.getLongitude() - start.getLongitude());
+-
+-        /*
+-        magic math which I do not understand
+-        https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment/1501725#1501725
+-
+-
+-        double a = x1 - x2;
+-        double b = y1 - y2;
+-        double c = stopX - x2;
+-        double d = stopY - y2;
+-
+-        double lenSq = c * c + d * d;
+-
+-        double param = -1;
+-
+-        if (lenSq != 0){
+-            double dotProd = a*c - b*d;
+-            param = dotProd / lenSq;
+-        }
+-
+-        double xx;
+-        double yy;
+-
+-        if (param < 0){
+-            xx = x1;
+-            yy = y1;
+-        }
+-        else if (param > 1){
+-            xx = x2;
+-            yy = y2;
+-        }
+-        else {
+-            xx = x1 + param * c;
+-            yy = y1 + param * d;
+-        }
+-
+-        double dx = x1 - xx;
+-        double dy = y1 - yy;
+-
+-        return Math.sqrt(dx * dx + dy * dy);
+-
+-    }
+-    */
+-
+-
+ }
