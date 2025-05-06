@@ -1,6 +1,6 @@
 package routing.csa.engine.cache.classloader;
 
-import routing.routingEngineModels.csamodel.Trip;
+import routing.routingEngineModels.Trip;
 import routing.routingEngineModels.csamodel.route.Route;
 
 import java.sql.*;
