@@ -8,7 +8,7 @@ public class Coordinates {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    
+
     public Coordinates(String coord) {
         String[] parts = (coord).split(",");
         if (parts.length != 2) {

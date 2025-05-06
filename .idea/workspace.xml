@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +36,10 @@
     "Application.RunCSATest.executor": "Run",
     "Application.StopGraph.executor": "Run",
     "Application.ZipToSQLite.executor": "Run",
+    "Application.routing.routingEngineCSA.tests.RunCSATest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "organizing-structure",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -52,7 +54,7 @@
       <recent name="routing.routingEngineModels" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RunCSATest">
+  <component name="RunManager" selected="Application.routing.routingEngineCSA.tests.RunCSATest">
     <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
       <module name="bcs1600" />
@@ -79,32 +81,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RequestHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="parsers.RequestHandler" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="parsers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.csa.tests.RunCSATest" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routing.csa.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="StopGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="closureAnalysis.data.graph.StopGraph" />
       <module name="bcs1600" />
@@ -118,13 +94,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="routing.routingEngineCSA.tests.RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.routingEngineCSA.tests.RunCSATest" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.routingEngineCSA.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RunCSATest" />
-        <item itemvalue="Application.MapUI" />
+        <item itemvalue="Application.routing.routingEngineCSA.tests.RunCSATest" />
         <item itemvalue="Application.MainUI" />
+        <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.StopGraph" />
-        <item itemvalue="Application.RequestHandler" />
       </list>
     </recent_temporary>
   </component>

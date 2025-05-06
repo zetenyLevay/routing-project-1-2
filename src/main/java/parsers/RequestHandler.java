@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
-
 import routing.routingEngineModels.Coordinates;
 
 public class RequestHandler {
