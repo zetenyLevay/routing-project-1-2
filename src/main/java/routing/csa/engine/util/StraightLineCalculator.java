@@ -1,7 +1,7 @@
 package routing.csa.engine.util;
 
-import routing.routingEngineModels.csamodel.Coordinates;
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.Stop;
 
 import java.time.LocalTime;
 

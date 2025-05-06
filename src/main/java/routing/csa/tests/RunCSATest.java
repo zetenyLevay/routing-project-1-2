@@ -4,7 +4,7 @@ import routing.csa.engine.cache.classloader.StopsCache;
 import routing.csa.engine.cache.masterloader.MasterLoader;
 import routing.csa.engine.connectionscanalgorithm.CSARouteFinding;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Stop;
 
 import java.time.*;
 import java.util.*;

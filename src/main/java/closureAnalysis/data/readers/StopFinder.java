@@ -3,7 +3,7 @@ package closureAnalysis.data.readers;
 import closureAnalysis.calculations.DistanceCalculator;
 import closureAnalysis.data.models.RoadSegment;
 import closureAnalysis.data.models.Stop;
-import routing.routingEngineModels.csamodel.Coordinates;
+import routing.routingEngineModels.Coordinates;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

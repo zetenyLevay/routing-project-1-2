@@ -1,4 +1,4 @@
-package routing.routingEngineModels.csamodel;
+package routing.routingEngineModels;
 
 import routing.routingEngineModels.csamodel.route.Route;
 

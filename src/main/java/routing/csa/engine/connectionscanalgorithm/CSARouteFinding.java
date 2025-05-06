@@ -5,8 +5,8 @@ import routing.csa.engine.cache.classloader.StopsCache;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
 import routing.routingEngineModels.csamodel.CSAAPImodel.ResultantRouteCSA;
 import routing.routingEngineModels.csamodel.CSAAPImodel.RouteSegmentCSA;
-import routing.routingEngineModels.csamodel.Connection;
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Connection;
+import routing.routingEngineModels.Stop;
 import routing.routingEngineModels.csamodel.pathway.Pathway;
 
 import java.util.*;

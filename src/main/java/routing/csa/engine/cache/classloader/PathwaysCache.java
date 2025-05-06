@@ -1,7 +1,7 @@
 package routing.csa.engine.cache.classloader;
 
 import routing.routingEngineModels.csamodel.pathway.Pathway;
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Stop;
 
 import java.sql.*;
 

@@ -1,6 +1,6 @@
 package routing.routingEngineModels.csamodel.pathway;
 
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Stop;
 
 public class Pathway {
     private final String pathwayID;

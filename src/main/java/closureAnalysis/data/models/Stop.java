@@ -2,7 +2,7 @@ package closureAnalysis.data.models;
 
 import closureAnalysis.builders.StopBuilder;
 import closureAnalysis.data.enums.TransportType;
-import routing.routingEngineModels.csamodel.Coordinates;
+import routing.routingEngineModels.Coordinates;
 
 public class Stop implements StopBuilder {
     private final String id;

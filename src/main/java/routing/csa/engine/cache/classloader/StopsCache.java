@@ -1,7 +1,7 @@
 package routing.csa.engine.cache.classloader;
 
-import routing.routingEngineModels.csamodel.Coordinates;
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.Stop;
 
 import java.sql.*;
 import java.util.ArrayList;

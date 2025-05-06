@@ -1,7 +1,7 @@
 package closureAnalysis.data.models;
 
 import closureAnalysis.data.enums.POIType;
-import routing.routingEngineModels.csamodel.Coordinates;
+import routing.routingEngineModels.Coordinates;
 
 public class PointOfInterest {
     private String id;

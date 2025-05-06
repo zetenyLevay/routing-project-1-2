@@ -1,6 +1,6 @@
 package routing.routingEngineModels.csamodel.CSAAPImodel;
 
-import routing.routingEngineModels.csamodel.Stop;
+import routing.routingEngineModels.Stop;
 
 import java.time.LocalTime;
 

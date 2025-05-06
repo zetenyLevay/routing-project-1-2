@@ -1,4 +1,4 @@
-package routing.routingEngineModels.csamodel;
+package routing.routingEngineModels;
 
 public class Connection {
     private final Trip trip;
