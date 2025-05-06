@@ -1,10 +1,10 @@
 package closureAnalysis.data.models;
 
-import closureAnalysis.builders.StopBuilder;
+
 import closureAnalysis.data.enums.TransportType;
 import routing.routingEngineModels.Coordinates;
 
-public class Stop implements StopBuilder {
+public class Stop{
     private final String id;
     private final String name;
     private final Coordinates coordinates;

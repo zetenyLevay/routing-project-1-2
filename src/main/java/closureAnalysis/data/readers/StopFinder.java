@@ -1,9 +1,9 @@
 package closureAnalysis.data.readers;
 
 import closureAnalysis.calculations.DistanceCalculator;
-import closureAnalysis.data.models.RoadSegment;
-import closureAnalysis.data.models.Stop;
-import routing.routingEngineModels.Coordinates;
+import closureAnalysis.data.models.*;
+import routing.routingEngineModels.csamodel.Coordinates;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +36,7 @@ public class StopFinder implements Finder<RoadSegment>{
                 Coordinates test1 = new Coordinates(47.501104, 19.082712);
                 Coordinates test2 = new Coordinates(47.500853, 19.082181);
 
-                double distanceFromRoadSegment = calculator.stopToRoadSegmentDistance(test1, test2, coordinates ) ;
+                double distanceFromRoadSegment = 0;
 
 
 
