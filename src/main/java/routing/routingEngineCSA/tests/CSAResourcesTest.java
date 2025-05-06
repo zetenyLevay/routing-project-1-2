@@ -10,7 +10,7 @@ import java.time.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class RunCSATest {
+public class CSAResourcesTest {
     public static void main(String[] args) {
         printMemoryUsage("Before loading cache: ");
         Instant startCaching = Instant.now();
