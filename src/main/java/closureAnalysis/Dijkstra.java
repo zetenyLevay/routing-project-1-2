@@ -1,9 +1,11 @@
 package closureAnalysis;
 
-import ClosureAnalysis.Data.Graph.StopEdge;
-import ClosureAnalysis.Data.Graph.StopGraph;
-import ClosureAnalysis.Data.Graph.StopNode;
 
+
+
+import closureAnalysis.data.graph.StopEdge;
+import closureAnalysis.data.graph.StopGraph;
+import closureAnalysis.data.graph.StopNode;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

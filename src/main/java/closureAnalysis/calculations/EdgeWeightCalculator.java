@@ -1,19 +1,16 @@
-package ClosureAnalysis.Calculations;
+package closureAnalysis.calculations;
 
-import ClosureAnalysis.Data.Graph.StopEdge;
-import ClosureAnalysis.Data.Graph.StopInstance;
-import ClosureAnalysis.Data.Graph.StopNode;
-import javafx.util.Pair;
-import routingenginemain.model.Stop;
 
-import java.sql.Time;
+
+import closureAnalysis.data.graph.StopInstance;
+import closureAnalysis.data.graph.StopNode;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class EdgeWeightCalculator {
 

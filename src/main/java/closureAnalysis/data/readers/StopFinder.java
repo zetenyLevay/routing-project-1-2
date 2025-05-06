@@ -1,8 +1,8 @@
-package ClosureAnalysis.Data.Readers;
+package closureAnalysis.data.readers;
 
-import ClosureAnalysis.Calculations.DistanceCalculator;
-import routingenginemain.model.Coordinates;
-import ClosureAnalysis.Data.Models.*;
+import closureAnalysis.calculations.DistanceCalculator;
+import closureAnalysis.data.models.*;
+import routing.routingEngineModels.csamodel.Coordinates;
 
 
 import java.sql.Connection;
