@@ -32,6 +32,7 @@
     "Application.MainUI.executor": "Run",
     "Application.MapUI.executor": "Run",
     "Application.RequestHandler.executor": "Run",
+    "Application.RunCSATest.executor": "Run",
     "Application.StopGraph.executor": "Run",
     "Application.ZipToSQLite.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -51,7 +52,7 @@
       <recent name="routing.routingEngineModels" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MapUI">
+  <component name="RunManager" selected="Application.RunCSATest">
     <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
       <module name="bcs1600" />
@@ -91,6 +92,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RunCSATest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.csa.tests.RunCSATest" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.csa.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StopGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="closureAnalysis.data.graph.StopGraph" />
       <module name="bcs1600" />
@@ -104,26 +118,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ZipToSQLite" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="parsers.ZipToSQLite" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="parsers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RunCSATest" />
         <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.MainUI" />
         <item itemvalue="Application.StopGraph" />
         <item itemvalue="Application.RequestHandler" />
-        <item itemvalue="Application.ZipToSQLite" />
       </list>
     </recent_temporary>
   </component>
