@@ -1,4 +1,4 @@
-package routing.csa.engine.util;
+package routing.routingEngineCSA.engine.util;
 
 public class TimeConverter {
     public static int timeToSeconds(String time) {

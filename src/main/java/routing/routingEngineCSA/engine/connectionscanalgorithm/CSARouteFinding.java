@@ -1,7 +1,7 @@
-package routing.csa.engine.connectionscanalgorithm;
+package routing.routingEngineCSA.engine.connectionscanalgorithm;
 
-import routing.csa.engine.cache.classloader.ConnectionsCache;
-import routing.csa.engine.cache.classloader.StopsCache;
+import routing.routingEngineCSA.engine.cache.classloader.ConnectionsCache;
+import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
 import routing.routingEngineModels.csamodel.CSAAPImodel.ResultantRouteCSA;
 import routing.routingEngineModels.csamodel.CSAAPImodel.RouteSegmentCSA;

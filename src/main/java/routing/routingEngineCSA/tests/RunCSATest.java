@@ -1,8 +1,8 @@
-package routing.csa.tests;
+package routing.routingEngineCSA.tests;
 
-import routing.csa.engine.cache.classloader.StopsCache;
-import routing.csa.engine.cache.masterloader.MasterLoader;
-import routing.csa.engine.connectionscanalgorithm.CSARouteFinding;
+import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
+import routing.routingEngineCSA.engine.cache.masterloader.MasterLoader;
+import routing.routingEngineCSA.engine.connectionscanalgorithm.CSARouteFinding;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
 import routing.routingEngineModels.Stop;
 
