@@ -1,0 +1,17 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/target/classes/ClosureAnalysis/Data/Models/PointOfInterest.class\r\n/target/classes/ClosureAnalysis/Data/Enums/TransportType.class\r\n/target/classes/ClosureAnalysis/Data/Readers/StopReader.class\r\n/target/classes/ClosureAnalysis/StopEvaluator.class\r\n/target/classes/ClosureAnalysis/Data/Readers/RoadSegmentReader.class\r\n/target/classes/ClosureAnalysis/Data/Models/Stop.class\r\n/target/classes/ClosureAnalysis/Data/Models/RoadSegment.class\r\n/target/classes/ClosureAnalysis/Data/Readers/Reader.class\r\n/target/classes/ClosureAnalysis/Data/Enums/POIType.class\r\n/target/classes/ClosureAnalysis/Data/Readers/POIReader.class\r\n/target/classes/ClosureAnalysis/Calculations/POIFinder.class\r\n/target/classes/gui/mainUI.class\r\n/target/classes/ClosureAnalysis/Calculations/DistanceCalculator.class\r\n/.idea/.gitignore\r\n/.idea/vcs.xml\r\n/.idea/misc.xml\r\n/.idea/jarRepositories.xml\r\n/.idea/encodings.xml\r\n/.idea/compiler.xml\r\n/data/ClosureAnalysis/budapest_gtfs.db\r\n/data/ClosureAnalysis/budapest_gtfs.db-shm\r\n/data/ClosureAnalysis/budapest_gtfs.db-wal\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 4029f5c2b4681e477bac71d43678e62d0ce73d5e)
++++ b/.gitignore	(date 1744645839550)
+@@ -20,3 +20,6 @@
+ /data/ClosureAnalysis/budapest_gtfs.db
+ /data/ClosureAnalysis/budapest_gtfs.db-shm
+ /data/ClosureAnalysis/budapest_gtfs.db-wal
++/target/classes/ClosureAnalysis/Data/Readers/Finder.class
++/target/classes/ClosureAnalysis/Data/Models/NearbyPOIs.class
++/target/classes/ClosureAnalysis/Data/Readers/StopFinder.class
