@@ -59,7 +59,7 @@ public class StopGraph {
         try (PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery();
         ) {
-
+            printMemoryUsage("Before scanning trips");
             while (rs.next()) {
                 String tripId = rs.getString("trip_id");
                 String stopId = rs.getString("stop_id");
@@ -85,6 +85,7 @@ public class StopGraph {
 
                 tripToProcess.add(new Pair<>(stopSequence, node));
             }
+            printMemoryUsage("After scanning trips");
             if (!tripToProcess.isEmpty()) {
                 processTrip(tripToProcess, calculator, stopGraph);
             }
@@ -94,6 +95,7 @@ public class StopGraph {
             throw new RuntimeException(e);
         }
         stopNodes.addAll(stopNodeMap.values());
+        printMemoryUsage("End");
         return stopGraph;
     }
 
@@ -161,6 +163,16 @@ public class StopGraph {
     }
     */
 
+    private static void printMemoryUsage(String phase) {
+        Runtime runtime = Runtime.getRuntime();
+        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+        long maxMemory = runtime.maxMemory();
+        System.out.printf("[MEMORY] %s - Used: %.2f MB / Max: %.2f MB%n",
+                phase,
+                usedMemory / (1024.0 * 1024.0),
+                maxMemory / (1024.0 * 1024.0));
+    }
+
     public static void main(String[] args) throws SQLException {
         StopGraph stopGraph = new StopGraph();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
@@ -168,7 +180,6 @@ public class StopGraph {
         List<StopNode> stops = stopGraph.getStopNodes();
         System.out.println(stops.size());
 
-        // stopGraph.printAllNeighbors();
 
 
 

@@ -29,14 +29,15 @@ public class CentralityCalculator {
                     .count();
 
             if (reachableNodes > 0) {
-                double result = (reachableNodes - 1) / totalDistance;
-                node.setClosenessCentrality(result);
+                double result = 1 / totalDistance;
+                node.setClosenessCentrality(result*100);
             }
             else {
                 node.setClosenessCentrality(0.0);
             }
         }
 
+        System.out.println(dijkstra.totalTime);
     }
 
     public void calculateBetweennessCentrality(StopGraph graph) {
@@ -146,17 +147,18 @@ public class CentralityCalculator {
                 .limit(10)
                 .forEach(node -> System.out.println("Node : " + node.getBetweennessCentrality() + "Label: " + node.getLabel()));
 
-
+        */
 
         stopGraph.getStopNodes().stream()
-                .sorted(Comparator.comparingDouble(StopNode::getClosenessCentrality))
-                .limit(10)
-                .forEach(node -> System.out.println("Node : " + node.getClosenessCentrality() + "Label: " + node.getLabel()));
+                .sorted(Comparator.comparingDouble(StopNode::getClosenessCentrality).reversed())
+                .limit(1000)
+                .forEach(node -> System.out.println("Node : " + node.getClosenessCentrality() + " Label: " + node.getLabel()));
 
 
 
 
 
-         */
+
+
     }
 }

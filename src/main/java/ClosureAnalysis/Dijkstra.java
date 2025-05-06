@@ -8,12 +8,19 @@ import ClosureAnalysis.Data.Graph.StopNode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 public class Dijkstra {
 
+    public long totalTime;
+
 
     public DijkstraResult dijkstra(StopGraph graph, StopNode startNode) {
+
+        Instant start = Instant.now();
+        //System.out.println("Dijkstra start: " + start);
 
         Map<StopNode, List<StopNode>> pred = new HashMap<>();
         Map<StopNode, Integer> sigma = new HashMap<>();
@@ -67,6 +74,12 @@ public class Dijkstra {
                 }
             }
         }
+
+        Instant finish = Instant.now();
+        totalTime +=  Duration.between(start,finish).toMillis();
+        //System.out.println("Dijkstra finished");
+        //System.out.println("Dijkstra time: " + Duration.between(start, finish).toMillis());
+
 
         return new DijkstraResult(distances, sigma, pred, stack);
     }
