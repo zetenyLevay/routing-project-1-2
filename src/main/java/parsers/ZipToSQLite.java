@@ -26,23 +26,31 @@ import org.apache.commons.csv.CSVRecord;
 
 public class ZipToSQLite {
 
-    /*
-    * To run from another file: ZipToSQLite.run("fullFileLocationHere")
-    *       example: ZipToSQLite.run("C:\\Users\\growt\\Downloads\\gtfs.zip");
-    *
-    * To run just this file: Edit the hardcoded zip file location below**
-    *
-    * */
 
 
     public static void main(String[] args) {
-        // here**
-        run("C:\\Users\\growt\\Downloads\\gtfs.zip");
-    }
 
+        run("/Users/jakelockitch/Downloads/budapest_gtfs.zip");
+    }
 
     private static String DBName(String zipName) {
         return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
+    }
+
+    /**
+     * Turn an entry name like "folder/sub/file-name.txt" into a safe table name "file_name"
+     */
+    private static String sanitizeTableName(String entryName) {
+        // strip any path
+        String fileName = entryName.contains("/")
+                ? entryName.substring(entryName.lastIndexOf('/') + 1)
+                : entryName;
+        // remove extension
+        String base = fileName.contains(".")
+                ? fileName.substring(0, fileName.lastIndexOf('.'))
+                : fileName;
+        // replace any non-alphanumeric/underscore with underscore
+        return base.replaceAll("[^A-Za-z0-9_]", "_");
     }
 
     private static void configureDatabase(Connection conn) throws SQLException {
@@ -53,13 +61,6 @@ public class ZipToSQLite {
     }
 
     public static void run(String fileName) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter full file path: ");
-
-        if (fileName == null){
-            fileName = scanner.nextLine();
-        }
-
         File selectedFile = new File(fileName);
         if (selectedFile == null) {
             System.out.println("No file selected, exiting");
@@ -69,7 +70,7 @@ public class ZipToSQLite {
         String zipPath = selectedFile.getAbsolutePath();
         String dbName = DBName(selectedFile.getName());
         String dbPath = dbName;
-        System.out.println("dbName " + "saved to: " + System.getProperty("user.dir"));
+        System.out.println("dbName " + dbName + " saved to: " + System.getProperty("user.dir"));
 
         File dbFile = new File(dbName);
         boolean dbExisted = dbFile.exists();
@@ -78,20 +79,19 @@ public class ZipToSQLite {
             configureDatabase(conn);
             processZipFile(zipPath, conn, dbExisted);
             listTables(conn);
-            handleUserQueries(conn);
+//            handleUserQueries(conn);
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-
     private static void processZipFile(String zipPath, Connection conn, boolean dbExisted) {
         try (ZipFile zipFile = new ZipFile(zipPath)) {
             if (!dbExisted) {
                 processZipEntries(zipFile, conn);
             } else {
-                System.out.println("DB already exists, using existing one:" + new File(zipPath).getName());
+                System.out.println("DB already exists, using existing one: " + new File(zipPath).getName());
             }
         } catch (IOException e) {
             System.out.println("!!Error with zip: " + e.getMessage());
@@ -108,11 +108,11 @@ public class ZipToSQLite {
                 processCsvEntry(zipFile, entry, entryName, conn);
             }
         }
-
     }
 
     private static void processCsvEntry(ZipFile zipFile, ZipEntry entry, String entryName, Connection conn) {
-        String tableName = entryName.replaceAll("\\.", "_");
+
+        String tableName = sanitizeTableName(entryName);
         System.out.println("loading " + entryName + " into table " + tableName);
 
         try (InputStream inputStream = zipFile.getInputStream(entry);
@@ -140,7 +140,7 @@ public class ZipToSQLite {
     private static void insertCsvData(Connection conn, String tableName, List<String> headers, CSVParser parser) throws SQLException {
         String insertSQL = "INSERT INTO " + tableName + " (" +
                 String.join(", ", headers) + ") VALUES (" +
-                String.join(", ", Collections.nCopies(headers.size(), "?")) + ")";
+                String.join(",", Collections.nCopies(headers.size(), "?")) + ")";
         try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             conn.setAutoCommit(false);
             int batchSize = 1000;
@@ -163,14 +163,13 @@ public class ZipToSQLite {
             }
         } finally {
             conn.setAutoCommit(true);
-
         }
     }
 
     private static void listTables(Connection conn) throws SQLException {
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table'")) {
-            System.out.println("Tabels in DB: ");
+            System.out.println("Tables in DB:");
             while (rs.next()) {
                 System.out.println(rs.getString("name"));
             }
@@ -178,18 +177,18 @@ public class ZipToSQLite {
         }
     }
 
-    private static void handleUserQueries(Connection conn) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Loading database done.");
-        while (true) {
-            System.out.print("Enter SQL or exit to quit: ");
-            String query = scanner.nextLine().trim();
-            if (query.equalsIgnoreCase("exit")) {
-                break;
-            }
-            executeUserQuery(conn, query);
-        }
-    }
+//    private static void handleUserQueries(Connection conn) {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Loading database done.");
+//        while (true) {
+//            System.out.print("Enter SQL or exit to quit: ");
+//            String query = scanner.nextLine().trim();
+//            if (query.equalsIgnoreCase("exit")) {
+//                break;
+//            }
+//            executeUserQuery(conn, query);
+//        }
+//    }
 
     private static void executeUserQuery(Connection conn, String query) {
         try (Statement queryStmt = conn.createStatement()) {
@@ -199,7 +198,7 @@ public class ZipToSQLite {
                     printResultSet(rs);
                 }
             } else {
-                System.out.println("No response set (successful update or just nothing meets this crieteria)");
+                System.out.println("No result set (update executed or no rows found)");
             }
         } catch (SQLException e) {
             System.out.println("Error executing query: " + e.getMessage());
@@ -217,7 +216,6 @@ public class ZipToSQLite {
             for (int i = 1; i <= columnCount; i++) {
                 System.out.print(rs.getString(i) + "\t");
             }
-
             System.out.println();
         }
     }
@@ -228,7 +226,7 @@ public class ZipToSQLite {
             int count = 0;
             while (reader.readLine() != null) {
                 count++;
-                if (count > 11){
+                if (count > 11) {
                     return true;
                 }
             }

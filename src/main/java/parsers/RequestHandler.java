@@ -48,11 +48,18 @@ public class RequestHandler {
                     cliWrite.sendOk(Map.of("pong", request.get("ping")));
                     continue;
                 } else if (request.containsKey("load")) {
-                    String selectedFile = (String) request.get("load");
 
-                    //Unzip(selectedFile); 
-                    //TODO: hook up to ZipToSQLite
-                    //what we want to do: call this: zipToSQLite(selectedFile); and have everything done.
+                    String selectedFile = (String) request.get("load");
+                    try{
+                    ZipToSQLite.run(selectedFile);
+                        cliWrite.sendOk("loaded");
+                    } catch (Exception e) {
+
+                        cliWrite.sendError(e.getMessage());
+                        break;
+                    }
+
+
                 }
 
                 //TODO: double check this is how it works?
@@ -71,7 +78,9 @@ public class RequestHandler {
                     // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
 
                     // Dijkstra.run(journey);
-                    // CSA.run(journey); 
+                    // CSA.run(journey);
+
+                    //TODO: write JSON response
                 } else {
                     cliWrite.sendError("Bad request");
                 }

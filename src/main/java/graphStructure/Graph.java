@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import routing.routingEngineModels.RouteStep;
-import routing.routingEngineModels.Stop;
+import routing.routingEngineModels.csamodel.Stop;
 
 
 /**
