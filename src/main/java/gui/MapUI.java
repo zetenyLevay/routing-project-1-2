@@ -23,95 +23,118 @@ import javax.swing.*;
 public class MapUI {
 
     public static void create() {
-        List<GeoPosition> stops = loadStops("data/stops.csv");
-        double maxLat = dmsToDecimal(47, 32, 48.7);
-        double minLat = dmsToDecimal(47, 24, 47.8);
-        double minLon = dmsToDecimal(18, 57, 44.6);
-        double maxLon = dmsToDecimal(19, 17, 30.9);
+        List<GeoPosition> list = loadStops("data/stops.csv");
+        double a = dmsToDecimal(47, 32, 48.7);
+        double b = dmsToDecimal(47, 24, 47.8);
+        double c = dmsToDecimal(18, 57, 44.6);
+        double d = dmsToDecimal(19, 17, 30.9);
 
-        SwingUtilities.invokeLater(() -> {
-            try {
-                OfflineMapPanel panel = new OfflineMapPanel(minLat, maxLat, minLon, maxLon, stops);
-                JFrame frame = new JFrame("Offline Map Viewer");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.add(new JScrollPane(panel));
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            } catch (IOException e) {
-                e.printStackTrace();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    OfflineMapPanel panel = new OfflineMapPanel(a, b, c, d, list);
+                    JFrame frame = new JFrame("Offline Map Viewer");
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.add(new JScrollPane(panel));
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    private static List<GeoPosition> loadStops(String filePath) {
-        List<GeoPosition> list = new ArrayList<>();
-        try (BufferedReader r = new BufferedReader(new FileReader(filePath))) {
+    private static List<GeoPosition> loadStops(String f) {
+        List<GeoPosition> list = new ArrayList<GeoPosition>();
+        BufferedReader r = null;
+        try {
+            r = new BufferedReader(new FileReader(f));
             r.readLine();
-            String line;
-            while ((line = r.readLine()) != null) {
-                String[] p = line.split(",");
+            String l = null;
+            while ((l = r.readLine()) != null) {
+                String[] p = l.split(",");
                 try {
-                    list.add(new GeoPosition(
-                        Double.parseDouble(p[2]), Double.parseDouble(p[3])
-                    ));
-                } catch (Exception ex) { }
+                    double la = Double.parseDouble(p[2]);
+                    double lo = Double.parseDouble(p[3]);
+                    list.add(new GeoPosition(la, lo));
+                } catch (Exception ex) {
+                }
             }
         } catch (IOException e) {
-            System.out.println("Error loading stops: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (r != null) {
+                try { r.close(); } catch (IOException ex) { }
+            }
         }
         return list;
     }
 
     private static double dmsToDecimal(int deg, int min, double sec) {
-        return deg + min / 60.0 + sec / 3600.0;
+        return deg + (min / 60.0) + (sec / 3600.0);
     }
 
     public static class GeoPosition {
-        private final double lat, lon;
-        public GeoPosition(double lat, double lon) { this.lat = lat; this.lon = lon; }
-        public double getLatitude() { return lat; }
-        public double getLongitude() { return lon; }
+        private final double la;
+        private final double lo;
+        public GeoPosition(double la, double lo) {
+            this.la = la;
+            this.lo = lo;
+        }
+        public double getLatitude() { return la; }
+        public double getLongitude() { return lo; }
     }
 
     public static class OfflineMapPanel extends JPanel {
-        private BufferedImage img;
-        private final double minLat, maxLat, minLon, maxLon;
-        private final java.util.List<GeoPosition> stops;
-        private double scale = 1.0;
-        private double offsetX = 0, offsetY = 0;
-        private Point lastDrag;
+        private BufferedImage image;
+        private double minA, maxA, minB, maxB;
+        private List<GeoPosition> list;
+        private double s;
+        private double oX = 0, oY = 0;
+        private Point lp;
 
-        public OfflineMapPanel(double minLat, double maxLat, double minLon, double maxLon, java.util.List<GeoPosition> stops) throws IOException {
-            this.minLat = minLat; this.maxLat = maxLat;
-            this.minLon = minLon; this.maxLon = maxLon;
-            this.stops = stops;
-            try (InputStream in = MapUI.class.getResourceAsStream("/mapImage.png")) {
-                if (in == null) throw new FileNotFoundException("mapImage.png not found");
-                img = ImageIO.read(in);
-            }
-            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-            int maxW = screen.width - 50, maxH = screen.height - 50;
-            double sx = (double)maxW / img.getWidth(), sy = (double)maxH / img.getHeight();
+        public OfflineMapPanel(double minA, double maxA, double minB, double maxB, List<GeoPosition> list) throws IOException {
+            this.minA = minA; this.maxA = maxA;
+            this.minB = minB; this.maxB = maxB;
+            this.list = list;
+
+            InputStream in = MapUI.class.getResourceAsStream("/mapImage.png");
+            if (in == null) throw new FileNotFoundException("mapImage.png not found");
+            image = ImageIO.read(in);
+            in.close();
+
+            Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
+            int w = scr.width - 50;
+            int h = scr.height - 50;
+            double sx = (double) w / image.getWidth();
+            double sy = (double) h / image.getHeight();
             double init = Math.min(1.0, Math.min(sx, sy));
-            scale = init;
-            setPreferredSize(new Dimension((int)(img.getWidth()*init), (int)(img.getHeight()*init)));
-            addMouseWheelListener(e -> {
-                double old = scale;
-                scale *= (e.getWheelRotation() < 0 ? 1.1 : 0.9);
-                scale = Math.max(init/4, Math.min(scale, init*4));
-                double mx = e.getX(), my = e.getY();
-                offsetX = mx - (mx - offsetX) * (scale/old);
-                offsetY = my - (my - offsetY) * (scale/old);
-                revalidate(); repaint();
+            s = init;
+            setPreferredSize(new Dimension((int)(image.getWidth() * init), (int)(image.getHeight() * init)));
+
+            addMouseWheelListener(new MouseWheelListener() {
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    double old = s;
+                    if (e.getWheelRotation() < 0) s = s * 1.1;
+                    else s = s * 0.9;
+                    if (s < init / 4) s = init / 4;
+                    if (s > init * 4) s = init * 4;
+                    double x = e.getX(), y = e.getY();
+                    oX = x - (x - oX) * (s / old);
+                    oY = y - (y - oY) * (s / old);
+                    revalidate(); repaint();
+                }
             });
+
             MouseAdapter ma = new MouseAdapter() {
-                public void mousePressed(MouseEvent e) { lastDrag = e.getPoint(); }
+                public void mousePressed(MouseEvent e) { lp = e.getPoint(); }
                 public void mouseDragged(MouseEvent e) {
                     Point p = e.getPoint();
-                    offsetX += p.x - lastDrag.x;
-                    offsetY += p.y - lastDrag.y;
-                    lastDrag = p;
+                    oX += p.x - lp.x;
+                    oY += p.y - lp.y;
+                    lp = p;
                     repaint();
                 }
             };
@@ -124,28 +147,25 @@ public class MapUI {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             AffineTransform at = new AffineTransform();
-            at.translate(offsetX, offsetY);
-            at.scale(scale, scale);
-            g2.drawImage(img, at, null);
+            at.translate(oX, oY);
+            at.scale(s, s);
+            g2.drawImage(image, at, null);
             g2.setColor(Color.RED);
-            for (GeoPosition stop : stops) {
-                Point pt = geoToPoint(stop);
+            for (int i = 0; i < list.size(); i++) {
+                GeoPosition gp = list.get(i);
+                Point pt = geoToPoint(gp);
                 Point2D p2 = at.transform(pt, null);
-                g2.fillOval((int)p2.getX()-4, (int)p2.getY()-4, 8, 8);
+                g2.fillOval((int)p2.getX() - 4, (int)p2.getY() - 4, 8, 8);
             }
         }
 
         private Point geoToPoint(GeoPosition gp) {
-            double xFrac = (gp.getLongitude() - minLon)/(maxLon - minLon);
-            double yFrac = (maxLat - gp.getLatitude())/(maxLat - minLat);
-            int x = (int)(xFrac * img.getWidth());
-            int y = (int)(yFrac * img.getHeight());
+            double xf = (gp.getLongitude() - minB) / (maxB - minB);
+            double yf = (maxA - gp.getLatitude()) / (maxA - minA);
+            int x = (int)(xf * image.getWidth());
+            int y = (int)(yf * image.getHeight());
             return new Point(x, y);
         }
-    }
-
-    public static void main(String[] args) {
-        create();
     }
 }
 
