@@ -23,6 +23,10 @@ public class  CSARouteFinding {
         this.parentConnection = new HashMap<>();
         this.parentFootpath = new HashMap<>();
         this.sortedConnections = ConnectionsCache.getSortedConnections();
+        if (sortedConnections == null || sortedConnections.isEmpty()) {
+            throw new IllegalStateException("ConnectionsCache not initialized or empty.");
+        }
+
         this.csaQuery = csaQuery;
     }
 
