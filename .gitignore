@@ -24,3 +24,4 @@ target/*
 /data/ClosureAnalysis/budapest_gtfs.db-wal
 /.idea
 /data/budapest_gtfs.db
+.idea/workspace.xml

@@ -20,7 +20,6 @@ public class RequestHandler {
     }
 
     //TODO: needs to be able to speak to the routing engine
-
     /**
      * Processes incoming JSON requests in a loop.
      *
@@ -57,10 +56,7 @@ public class RequestHandler {
                         cliWrite.sendError(e.getMessage());
                         break;
                     }
-
-
                 }
-
                 //TODO: double check this is how it works?
                 else if (request.containsKey("routeFrom")) {
 
@@ -71,7 +67,9 @@ public class RequestHandler {
                     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
                     LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
 
-                    // System.out.println(request.get("routeFrom"));
+                    //TODO: this part should be part of the CLIWrite!!! (the printing)
+
+//                     System.out.println(request.get("routeFrom"));
                     System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtTime);
                     // // {"routeFrom": "41.40338, 2.17403","to": "41.4032, 2.1283","startingAt": "10:05"}
                     // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
@@ -79,12 +77,9 @@ public class RequestHandler {
                     // Dijkstra.run(journey);
                     // CSA.run(journey);
 
-                    //TODO: write JSON response
                 } else {
                     cliWrite.sendError("Bad request");
                 }
-
-
                 // ... process other requests here
                 //the switch statement deciding which transporation to use.
                 //load 

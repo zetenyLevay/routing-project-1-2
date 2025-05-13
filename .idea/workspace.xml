@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/MainUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parsers/CLIWrite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parsers/CLIWrite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parsers/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parsers/RequestHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,33 +30,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainUI.executor": "Run",
-    "Application.MapUI.executor": "Run",
-    "Application.RequestHandler.executor": "Run",
-    "Application.RunCSATest.executor": "Run",
-    "Application.StopGraph.executor": "Run",
-    "Application.ZipToSQLite.executor": "Run",
-    "Application.routing.routingEngineCSA.tests.RunCSATest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "organizing-structure",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RequestHandler.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunCSATest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StopGraph.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ZipToSQLite.executor&quot;: &quot;Run&quot;,
+    &quot;Application.routing.routingEngineCSA.tests.RunCSATest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="routing.routingEngineModels" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.routing.routingEngineCSA.tests.RunCSATest">
+  <component name="RunManager" selected="Application.MainUI">
     <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
       <module name="bcs1600" />
@@ -109,8 +111,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.routing.routingEngineCSA.tests.RunCSATest" />
         <item itemvalue="Application.MainUI" />
+        <item itemvalue="Application.routing.routingEngineCSA.tests.RunCSATest" />
         <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.StopGraph" />
       </list>
@@ -119,8 +121,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +137,8 @@
       <workItem from="1746459673067" duration="641000" />
       <workItem from="1746528233048" duration="2862000" />
       <workItem from="1746533560051" duration="652000" />
+      <workItem from="1746612531265" duration="22000" />
+      <workItem from="1747128269303" duration="1241000" />
     </task>
     <servers />
   </component>

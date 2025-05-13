@@ -36,4 +36,6 @@ public class CLIWrite {
         responseWriter.getWriter().write('\n');
         responseWriter.getWriter().flush();
     }
+
+    //TODO: maybe see if the
 }
