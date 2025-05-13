@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="" />
+=======
+    <list default="true" id="4e5109b1-5336-4c8c-907d-26cb72d965de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,22 +34,40 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+<<<<<<< Updated upstream
+=======
+    &quot;Application.BooleanTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CSAResourcesTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CachingTest.executor&quot;: &quot;Run&quot;,
+>>>>>>> Stashed changes
     &quot;Application.MainUI.executor&quot;: &quot;Run&quot;,
     &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
     &quot;Application.RequestHandler.executor&quot;: &quot;Run&quot;,
     &quot;Application.RunCSATest.executor&quot;: &quot;Run&quot;,
+<<<<<<< Updated upstream
+=======
+    &quot;Application.SingleTest.executor&quot;: &quot;Run&quot;,
+>>>>>>> Stashed changes
     &quot;Application.StopGraph.executor&quot;: &quot;Run&quot;,
     &quot;Application.ZipToSQLite.executor&quot;: &quot;Run&quot;,
     &quot;Application.routing.routingEngineCSA.tests.RunCSATest.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+<<<<<<< Updated upstream
+=======
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+>>>>>>> Stashed changes
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+<<<<<<< Updated upstream
+=======
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.inline.completion&quot;,
+>>>>>>> Stashed changes
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -106,6 +131,13 @@
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< Updated upstream
+=======
+        <item itemvalue="Application.BooleanTest" />
+        <item itemvalue="Application.SingleTest" />
+        <item itemvalue="Application.CachingTest" />
+        <item itemvalue="Application.CSAResourcesTest" />
+>>>>>>> Stashed changes
         <item itemvalue="Application.MainUI" />
         <item itemvalue="Application.routing.routingEngineCSA.tests.RunCSATest" />
         <item itemvalue="Application.MapUI" />
@@ -132,8 +164,15 @@
       <workItem from="1746459673067" duration="641000" />
       <workItem from="1746528233048" duration="2862000" />
       <workItem from="1746533560051" duration="652000" />
+<<<<<<< Updated upstream
       <workItem from="1746612531265" duration="22000" />
       <workItem from="1747128269303" duration="1241000" />
+=======
+      <workItem from="1746538075837" duration="99000" />
+      <workItem from="1746544262454" duration="18897000" />
+      <workItem from="1746725162031" duration="3000" />
+      <workItem from="1747053538522" duration="698000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
