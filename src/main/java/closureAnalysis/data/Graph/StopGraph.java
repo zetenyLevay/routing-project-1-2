@@ -1,12 +1,23 @@
-package closureAnalysis.data.graph;
+package closureAnalysis.data.Graph;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import closureAnalysis.calculations.EdgeWeightCalculator;
 import javafx.util.Pair;
 
-import java.sql.*;
-import java.util.*;
-
 public class StopGraph {
+
     private Set<StopNode> stopNodes;
     private Map<String, StopEdge> edgeCache = new HashMap<>();
     Map<String, StopNode> stopNodeMap = new HashMap<>();
@@ -26,12 +37,11 @@ public class StopGraph {
 //        }
 //        return neighbours;
 //    }
-
     void addStopNode(StopNode n) {
         stopNodes.add(n);
     }
 
-    public int getSize(){
+    public int getSize() {
         return stopNodes.size();
     }
 
@@ -44,21 +54,18 @@ public class StopGraph {
         return null;
     }
 
-
     public StopGraph buildStopGraph(Connection conn) {
         EdgeWeightCalculator calculator = new EdgeWeightCalculator();
         StopGraph stopGraph = new StopGraph();
-        String query = "SELECT DISTINCT(trip_id), stop_id, CAST(stop_sequence AS INTEGER) as stop_sequence, " +
-                "CAST(shape_dist_traveled AS INTEGER) as shape_dist_traveled, arrival_time, departure_time  " +
-                "FROM stop_times_txt " +
-                "ORDER BY trip_id, stop_sequence";
+        String query = "SELECT DISTINCT(trip_id), stop_id, CAST(stop_sequence AS INTEGER) as stop_sequence, "
+                + "CAST(shape_dist_traveled AS INTEGER) as shape_dist_traveled, arrival_time, departure_time  "
+                + "FROM stop_times_txt "
+                + "ORDER BY trip_id, stop_sequence";
         List<Pair<Integer, StopNode>> tripToProcess = new ArrayList<>();
 
         String previousTrip = null;
 
-        try (PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery();
-        ) {
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
             printMemoryUsage("Before scanning trips");
             while (rs.next()) {
                 String tripId = rs.getString("trip_id");
@@ -68,16 +75,13 @@ public class StopGraph {
                 int stopSequence = rs.getInt("stop_sequence");
                 int distanceTraveled = rs.getInt("shape_dist_traveled");
 
-
                 StopNode node = stopNodeMap.computeIfAbsent(stopId, k -> new StopNode(stopId));
                 StopInstance inst = new StopInstance(tripId, stopSequence, arrivalTime, departureTime, distanceTraveled);
                 node.addStopInstance(inst);
 
-
                 if (previousTrip == null) {
                     previousTrip = tripId;
-                }
-                else if (!previousTrip.equals(tripId)) {
+                } else if (!previousTrip.equals(tripId)) {
                     processTrip(tripToProcess, calculator, stopGraph);
                     previousTrip = tripId;
                     tripToProcess.clear();
@@ -90,7 +94,6 @@ public class StopGraph {
                 processTrip(tripToProcess, calculator, stopGraph);
             }
 
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -102,25 +105,25 @@ public class StopGraph {
     private void processTrip(List<Pair<Integer, StopNode>> tripStops, EdgeWeightCalculator calculator, StopGraph stopGraph) {
         tripStops.sort(Comparator.comparingInt(Pair::getKey));
 
-        for (int i = 0; i < tripStops.size() - 1; i++ ) {
+        for (int i = 0; i < tripStops.size() - 1; i++) {
             StopNode from = tripStops.get(i).getValue();
-            StopNode to = tripStops.get(i+1).getValue();
+            StopNode to = tripStops.get(i + 1).getValue();
 
-            String edgeKey = from.getLabel().compareTo(to.getLabel()) < 0 ?
-                    from.getLabel() + "--" + to.getLabel() :
-                    to.getLabel() + "--" + from.getLabel();
+            String edgeKey = from.getLabel().compareTo(to.getLabel()) < 0
+                    ? from.getLabel() + "--" + to.getLabel()
+                    : to.getLabel() + "--" + from.getLabel();
 
             StopEdge edge = edgeCache.computeIfAbsent(edgeKey, k -> {
                 StopEdge newEdge = new StopEdge(from, to);
                 double weight = calculator.calculateEdgeWeight(from, to);
                 newEdge.setWeight(weight);
                 return newEdge;
-                });
+            });
             /*
             if (edge.getWeight() > 0) {
 
             }
-            */
+             */
 
             from.addEdge(edge);
             to.addEdge(edge);
@@ -140,7 +143,8 @@ public class StopGraph {
         }
         return false;
     }
-/*
+
+    /*
     public void printAllNeighbors() {
         for (StopNode node : stopNodes) {
             System.out.println("\nNode: " + node.getLabel());
@@ -161,7 +165,7 @@ public class StopGraph {
             }
         }
     }
-    */
+     */
 
     private static void printMemoryUsage(String phase) {
         Runtime runtime = Runtime.getRuntime();
@@ -179,11 +183,6 @@ public class StopGraph {
         stopGraph = stopGraph.buildStopGraph(conn);
         List<StopNode> stops = stopGraph.getStopNodes();
         System.out.println(stops.size());
-
-
-
-
-
 
     }
 }

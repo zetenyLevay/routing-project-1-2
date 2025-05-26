@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import closureAnalysis.data.graph.StopInstance;
-import closureAnalysis.data.graph.StopNode;
+import closureAnalysis.data.Graph.StopInstance;
+import closureAnalysis.data.Graph.StopNode;
 
 public class EdgeWeightCalculator {
 

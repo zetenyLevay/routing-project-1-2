@@ -2,14 +2,19 @@ package closureAnalysis.calculations;
 
 
 
-import closureAnalysis.Dijkstra;
-import closureAnalysis.data.graph.StopGraph;
-import closureAnalysis.data.graph.StopNode;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+import closureAnalysis.Dijkstra;
+import closureAnalysis.data.Graph.StopGraph;
+import closureAnalysis.data.Graph.StopNode;
 
 public class CentralityCalculator {
 
