@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -23,107 +24,196 @@ import javax.swing.*;
 public class MapUI {
 
     public static void create() {
-        List<GeoPosition> list = loadStops("data/stops.csv");
-        double north = dmsToDecimal(47, 31, 35.08);
-        double south = dmsToDecimal(47, 28, 5.16);
-        double west  = dmsToDecimal(18, 58, 50.07);
-        double east  = dmsToDecimal(19, 7, 26.23);
+        List<GeoPosition> stopPositions = loadStopCoordinates("data/stops.csv");
+
+        double mapNorth = convertDMS(47, 31, 35.08);
+        double mapSouth = convertDMS(47, 28, 5.16);
+        double mapWest  = convertDMS(18, 58, 50.07);
+        double mapEast  = convertDMS(19, 7, 26.23);
 
         SwingUtilities.invokeLater(() -> {
             try {
-                OfflineMapPanel panel = new OfflineMapPanel(south, north, west, east, list);
-                JFrame frame = new JFrame("Offline Map Viewer");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.add(new JScrollPane(panel));
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+                OfflineMapPanel mapPanel = new OfflineMapPanel(mapSouth, mapNorth, mapWest, mapEast, stopPositions);
+
+                JTextField startCoordinateInput = new JTextField("Start (lat,lon)", 20);
+                JTextField endCoordinateInput = new JTextField("End (lat,lon)", 20);
+                JToggleButton heatmapToggleButton = new JToggleButton("Show Heatmap", true);
+                heatmapToggleButton.addActionListener(e -> mapPanel.setShowHeatmap(heatmapToggleButton.isSelected()));
+
+                JPanel topControlsPanel = new JPanel(new BorderLayout());
+                topControlsPanel.add(startCoordinateInput, BorderLayout.WEST);
+                topControlsPanel.add(endCoordinateInput, BorderLayout.CENTER);
+                topControlsPanel.add(heatmapToggleButton, BorderLayout.EAST);
+
+                JPanel mainPanel = new JPanel(new BorderLayout());
+                mainPanel.add(topControlsPanel, BorderLayout.NORTH);
+                mainPanel.add(new JScrollPane(mapPanel), BorderLayout.CENTER);
+
+                JFrame applicationFrame = new JFrame("Offline Map Viewer");
+                applicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                applicationFrame.setContentPane(mainPanel);
+                applicationFrame.pack();
+                applicationFrame.setLocationRelativeTo(null);
+                applicationFrame.setVisible(true);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    private static List<GeoPosition> loadStops(String path) {
-        List<GeoPosition> list = new ArrayList<>();
-        String pattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
-        try (BufferedReader r = new BufferedReader(new FileReader(path))) {
-            r.readLine();
+    private static List<GeoPosition> loadStopCoordinates(String csvFilePath) {
+        List<GeoPosition> stopList = new ArrayList<>();
+        String csvPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+            reader.readLine();
             String line;
-            while ((line = r.readLine()) != null) {
-                String[] p = line.split(pattern, -1);
-                if (p.length < 4) continue;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(csvPattern, -1);
+                if (fields.length < 4) continue;
                 try {
-                    double lat = Double.parseDouble(p[2]);
-                    double lon = Double.parseDouble(p[3]);
-                    list.add(new GeoPosition(lat, lon));
-                } catch (NumberFormatException ignore) {}
+                    double latitude = Double.parseDouble(fields[2]);
+                    double longitude = Double.parseDouble(fields[3]);
+                    stopList.add(new GeoPosition(latitude, longitude));
+                } catch (NumberFormatException ignored) {}
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        return list;
+        return stopList;
     }
 
-    private static double dmsToDecimal(int deg, int min, double sec) {
-        return deg + min / 60.0 + sec / 3600.0;
+    private static double convertDMS(int degrees, int minutes, double seconds) {
+        return degrees + minutes / 60.0 + seconds / 3600.0;
     }
 
     public static class GeoPosition {
-        private final double latitude, longitude;
+        private final double latitude;
+        private final double longitude;
+
         public GeoPosition(double latitude, double longitude) {
             this.latitude = latitude;
             this.longitude = longitude;
         }
-        public double getLatitude()  { return latitude; }
-        public double getLongitude() { return longitude; }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
     }
 
     public static class OfflineMapPanel extends JPanel {
-        private final BufferedImage image;
-        private final double minLat, maxLat, minLon, maxLon;
-        private final List<GeoPosition> stops;
-        private double scale, offsetX, offsetY;
-        private Point lastDragPoint;
+        private final BufferedImage mapImage;
+        private final List<GeoPosition> stopLocations;
+        private final double minLatitude, maxLatitude, minLongitude, maxLongitude;
+        private double zoomScale, imageOffsetX, imageOffsetY;
+        private Point mouseDragStart;
+        private BufferedImage heatmapImage;
+        private boolean displayHeatmap = true;
 
         public OfflineMapPanel(double minLat, double maxLat, double minLon, double maxLon, List<GeoPosition> stops) throws IOException {
-            this.minLat = minLat;
-            this.maxLat = maxLat;
-            this.minLon = minLon;
-            this.maxLon = maxLon;
-            this.stops  = stops;
+            this.minLatitude = minLat;
+            this.maxLatitude = maxLat;
+            this.minLongitude = minLon;
+            this.maxLongitude = maxLon;
+            this.stopLocations = stops;
+            this.mapImage = loadBaseMapImage();
+            this.heatmapImage = createHeatmapOverlay();
+            initializeMapView();
+            registerMouseInteractions();
+        }
+
+        public void setShowHeatmap(boolean show) {
+            this.displayHeatmap = show;
+            repaint();
+        }
+
+        private BufferedImage loadBaseMapImage() throws IOException {
             try (InputStream in = MapUI.class.getResourceAsStream("/mapImage.jpg")) {
                 if (in == null) throw new FileNotFoundException("mapImage.jpg not found");
-                image = ImageIO.read(in);
+                return ImageIO.read(in);
             }
-            Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
-            int w = scr.width - 50, h = scr.height - 50;
-            double sx = (double) w / image.getWidth();
-            double sy = (double) h / image.getHeight();
-            scale = Math.min(1.0, Math.min(sx, sy));
-            setPreferredSize(new Dimension((int)(image.getWidth()*scale), (int)(image.getHeight()*scale)));
-            offsetX = offsetY = 0;
+        }
+
+        private void initializeMapView() {
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            int width = screen.width - 50, height = screen.height - 50;
+            double scaleX = (double) width / mapImage.getWidth();
+            double scaleY = (double) height / mapImage.getHeight();
+            zoomScale = Math.min(1.0, Math.min(scaleX, scaleY));
+            setPreferredSize(new Dimension((int)(mapImage.getWidth() * zoomScale), (int)(mapImage.getHeight() * zoomScale)));
+            imageOffsetX = imageOffsetY = 0;
+        }
+
+        private void registerMouseInteractions() {
             addMouseWheelListener(e -> {
-                double old = scale;
-                scale *= e.getWheelRotation() < 0 ? 1.1 : 0.9;
-                scale = Math.max(old/4, Math.min(old*4, scale));
-                double mx = e.getX(), my = e.getY();
-                offsetX = mx - (mx - offsetX)*(scale/old);
-                offsetY = my - (my - offsetY)*(scale/old);
+                double previousScale = zoomScale;
+                zoomScale *= e.getWheelRotation() < 0 ? 1.1 : 0.9;
+                zoomScale = Math.max(previousScale / 4, Math.min(previousScale * 4, zoomScale));
+                double mouseX = e.getX(), mouseY = e.getY();
+                imageOffsetX = mouseX - (mouseX - imageOffsetX) * (zoomScale / previousScale);
+                imageOffsetY = mouseY - (mouseY - imageOffsetY) * (zoomScale / previousScale);
                 revalidate(); repaint();
             });
-            MouseAdapter ma = new MouseAdapter() {
-                public void mousePressed(MouseEvent e) { lastDragPoint = e.getPoint(); }
+            MouseAdapter adapter = new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    mouseDragStart = e.getPoint();
+                }
                 public void mouseDragged(MouseEvent e) {
-                    Point p = e.getPoint();
-                    offsetX += p.x - lastDragPoint.x;
-                    offsetY += p.y - lastDragPoint.y;
-                    lastDragPoint = p;
+                    Point current = e.getPoint();
+                    imageOffsetX += current.x - mouseDragStart.x;
+                    imageOffsetY += current.y - mouseDragStart.y;
+                    mouseDragStart = current;
                     repaint();
                 }
             };
-            addMouseListener(ma);
-            addMouseMotionListener(ma);
+            addMouseListener(adapter);
+            addMouseMotionListener(adapter);
+        }
+
+        private BufferedImage createHeatmapOverlay() {
+            int width = mapImage.getWidth(), height = mapImage.getHeight();
+            int[][] heatValues = new int[width][height];
+            double circleRadius = 120.0;
+            int r = (int) Math.ceil(circleRadius);
+
+            for (GeoPosition gp : stopLocations) {
+                Point2D center = convertGeoToPixel(gp);
+                int cx = (int) Math.round(center.getX());
+                int cy = (int) Math.round(center.getY());
+                for (int dy = -r; dy <= r; dy++) {
+                    for (int dx = -r; dx <= r; dx++) {
+                        int x = cx + dx, y = cy + dy;
+                        if (x >= 0 && x < width && y >= 0 && y < height) {
+                            double distSq = (dx + 0.5) * (dx + 0.5) + (dy + 0.5) * (dy + 0.5);
+                            if (distSq <= circleRadius * circleRadius) {
+                                heatValues[x][y]++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int maxHeat = Arrays.stream(heatValues).flatMapToInt(Arrays::stream).max().orElse(0);
+            Color[] colorRamp = new Color[maxHeat + 1];
+            for (int i = 1; i <= maxHeat; i++) {
+                float hue = 1.0f - Math.min(i, 10) / 10.0f;
+                colorRamp[i] = Color.getHSBColor(hue, 1.0f, 1.0f);
+            }
+
+            BufferedImage heatmap = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int count = heatValues[x][y];
+                    if (count <= 1) continue;
+                    Color color = colorRamp[Math.min(count, maxHeat)];
+                    int rgba = (color.getRGB() & 0x00FFFFFF) | (180 << 24);
+                    heatmap.setRGB(x, y, rgba);
+                }
+            }
+            return heatmap;
         }
 
         @Override
@@ -131,33 +221,27 @@ public class MapUI {
             super.paintComponent(g0);
             Graphics2D g = (Graphics2D) g0;
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,  RenderingHints.VALUE_ANTIALIAS_ON);
-            AffineTransform orig = g.getTransform();
-            g.translate(offsetX, offsetY);
-            g.scale(scale, scale);
-            g.drawImage(image, 0, 0, null);
-            double r = 4.0;
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            AffineTransform original = g.getTransform();
+            g.translate(imageOffsetX, imageOffsetY);
+            g.scale(zoomScale, zoomScale);
+            g.drawImage(mapImage, 0, 0, null);
+            if (displayHeatmap) g.drawImage(heatmapImage, 0, 0, null);
             g.setColor(Color.RED);
-            for (GeoPosition gp : stops) {
-                Point2D p = geoToPoint(gp);
-                g.fill(new Ellipse2D.Double(p.getX()-r, p.getY()-r, 2*r, 2*r));
+            for (GeoPosition gp : stopLocations) {
+                Point2D p = convertGeoToPixel(gp);
+                g.fill(new Ellipse2D.Double(p.getX() - 2, p.getY() - 2, 4, 4));
             }
-            g.setTransform(orig);
+            g.setTransform(original);
         }
 
-        private Point2D geoToPoint(GeoPosition gp) {
-            double xFrac = (gp.getLongitude() - minLon) / (maxLon - minLon);
-            double yFrac = (maxLat - gp.getLatitude()) / (maxLat - minLat);
-            return new Point2D.Double(xFrac * image.getWidth(), yFrac * image.getHeight());
+        private Point2D convertGeoToPixel(GeoPosition gp) {
+            double xFraction = (gp.getLongitude() - minLongitude) / (maxLongitude - minLongitude);
+            double yFraction = (maxLatitude - gp.getLatitude()) / (maxLatitude - minLatitude);
+            return new Point2D.Double(xFraction * mapImage.getWidth(), yFraction * mapImage.getHeight());
         }
-    }
-
-    public static void main(String[] args) {
-        create();
     }
 }
-
-
 
 
 
