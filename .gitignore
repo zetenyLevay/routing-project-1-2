@@ -26,3 +26,4 @@ target/*
 /data/budapest_gtfs.db
 .idea/workspace.xml
 /.idea
+*.xml
