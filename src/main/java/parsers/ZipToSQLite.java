@@ -30,7 +30,7 @@ public class ZipToSQLite {
 
     public static void main(String[] args) {
 
-        run("/Users/jakelockitch/Downloads/budapest_gtfs.zip");
+        run("data/budapest_gtfs.zip");
     }
 
     private static String DBName(String zipName) {

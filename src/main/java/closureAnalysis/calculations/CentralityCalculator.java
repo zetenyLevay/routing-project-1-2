@@ -13,14 +13,40 @@ import java.util.Map;
 import java.util.Stack;
 
 import closureAnalysis.Dijkstra;
-import closureAnalysis.data.Graph.StopGraph;
-import closureAnalysis.data.Graph.StopNode;
+import closureAnalysis.data.graph.StopGraph;
+import closureAnalysis.data.graph.StopNode;
 
 public class CentralityCalculator {
 
     public void calculateClosenessCentrality(StopGraph graph) {
         Dijkstra dijkstra = new Dijkstra();
 
+        graph.getStopNodes().parallelStream().forEach(node -> {
+            Map<StopNode, Double> dist = dijkstra.dijkstra(graph, node).dist();
+
+            double totalDistance = dist.values().stream()
+                    .filter(d -> d != Double.MAX_VALUE)
+                    .mapToDouble(Double::doubleValue)
+                    .sum();
+
+            long reachableNodes = dist.values().stream()
+                    .filter(d -> d != Double.MAX_VALUE)
+                    .count();
+
+            double result = (reachableNodes-1) / totalDistance;
+
+
+
+            if (reachableNodes > 0) {
+
+                node.setClosenessCentrality(result);
+            }
+            else {
+                node.setClosenessCentrality(0.0);
+            }
+        });
+
+    /*
         for (StopNode node : graph.getStopNodes()) {
             Map<StopNode, Double> dist = dijkstra.dijkstra(graph, node).dist();
 
@@ -33,16 +59,21 @@ public class CentralityCalculator {
                     .filter(d -> d != Double.MAX_VALUE)
                     .count();
 
+            double result = (reachableNodes-1) / totalDistance;
+
+
+
             if (reachableNodes > 0) {
-                double result = 1 / totalDistance;
-                node.setClosenessCentrality(result*100);
+
+                node.setClosenessCentrality(result);
             }
             else {
                 node.setClosenessCentrality(0.0);
             }
         }
 
-        System.out.println(dijkstra.totalTime);
+     */
+
     }
 
     public void calculateBetweennessCentrality(StopGraph graph) {
@@ -55,6 +86,31 @@ public class CentralityCalculator {
             betweenness.put(node, 0.0);
         }
 
+        graph.getStopNodes().parallelStream().forEach(node -> {
+            Dijkstra.DijkstraResult result = dijkstra.dijkstra(graph, node);
+            Stack<StopNode> stack = result.stack();
+            Map<StopNode, List<StopNode>> predecessors = result.pred();
+            Map<StopNode, Integer> sigma = result.sigma();
+            Map<StopNode, Double> dist = result.dist();
+
+            Map<StopNode, Double> delta = new HashMap<>();
+            for (StopNode n : graph.getStopNodes()) {
+                delta.put(n, 0.0);
+            }
+
+            while (!stack.isEmpty()) {
+                StopNode n = stack.pop();
+                for (StopNode pred : predecessors.get(n)) {
+                    double coefficient = ((double) sigma.get(pred) / sigma.get(n)) * (1 +delta.get(n));
+                    delta.put(pred, delta.get(pred) + coefficient);
+                }
+                if (!n.equals(node)) {
+                    betweenness.put(n, betweenness.get(n) + delta.get(n));
+                }
+            }
+        });
+
+        /*
         for (StopNode node : graph.getStopNodes()) {
             Dijkstra.DijkstraResult result = dijkstra.dijkstra(graph, node);
             Stack<StopNode> stack = result.stack();
@@ -78,6 +134,8 @@ public class CentralityCalculator {
                 }
             }
         }
+
+         */
 
 
 
@@ -130,7 +188,7 @@ public class CentralityCalculator {
                 }
             }
 
-            System.out.printf("Node: %s\n", node.getLabel());
+            System.out.printf("Node: %s\n", node.getId());
             System.out.printf("  Betweenness Centrality: %.6f\n", node.getBetweennessCentrality());
 
             if (neighbors.isEmpty()) {
@@ -138,7 +196,7 @@ public class CentralityCalculator {
             } else {
                 System.out.print("  Neighbors: ");
                 for (int i = 0; i < neighbors.size(); i++) {
-                    System.out.print(neighbors.get(i).getLabel());
+                    System.out.print(neighbors.get(i).getId());
                     if (i < neighbors.size() - 1) System.out.print(", ");
                 }
                 System.out.println();
@@ -147,17 +205,19 @@ public class CentralityCalculator {
 
 
 
-        stopGraph.getStopNodes().stream()
-                .sorted(Comparator.comparingDouble(StopNode::getBetweennessCentrality).reversed())
-                .limit(10)
-                .forEach(node -> System.out.println("Node : " + node.getBetweennessCentrality() + "Label: " + node.getLabel()));
+         */
 
-        */
+        stopGraph.getStopNodes().stream()
+                .sorted(Comparator.comparingDouble(StopNode::getBetweennessCentrality))
+                .limit(10)
+                .forEach(node -> System.out.println("Node : " + node.getBetweennessCentrality() + "Label: " + node.getId()));
+
+
 
         stopGraph.getStopNodes().stream()
                 .sorted(Comparator.comparingDouble(StopNode::getClosenessCentrality).reversed())
                 .limit(1000)
-                .forEach(node -> System.out.println("Node : " + node.getClosenessCentrality() + " Label: " + node.getLabel()));
+                .forEach(node -> System.out.println("Node : " + node.getClosenessCentrality() + " Label: " + node.getId()));
 
 
 

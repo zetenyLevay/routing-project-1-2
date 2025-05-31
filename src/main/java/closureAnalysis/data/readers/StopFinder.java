@@ -12,10 +12,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StopFinder implements Finder<RoadSegment>{
+public class StopFinder {
 
     DistanceCalculator calculator = new DistanceCalculator();
-   @Override
     public void find(RoadSegment roadSegment) {
 
         String query = "SELECT stop_id, stop_name ,stop_lat, stop_lon FROM stops";
@@ -58,13 +57,13 @@ public class StopFinder implements Finder<RoadSegment>{
 
     public static void main(String[] args) {
 
-        Finder<RoadSegment> finder = new StopFinder();
+
 
         RoadSegment roadSegment = new RoadSegment("1",
                 new Coordinates(47.5009585313839, 19.0826709483695),
                 new Coordinates(47.5013360673781, 19.0834875092641));
 
-        finder.find(roadSegment);
+
 
         System.out.println(roadSegment.getStopList().size());
 

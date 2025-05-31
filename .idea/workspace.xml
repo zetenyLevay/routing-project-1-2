@@ -4,39 +4,130 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="" />
+    <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/Dijkstra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/Dijkstra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/StopEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/StopEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/BetweennessCentralityCalculator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/CentralityCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/CentralityCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/EdgeWeightCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/EdgeWeightCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/Graph/StopEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopEdge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/Graph/StopGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/Graph/StopInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/Graph/StopNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/enums/POIType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/enums/POIType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/enums/TransportType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/enums/TransportType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/Finder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/Finder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/StopFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parsers/ZipToSQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parsers/ZipToSQLite.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 1
-}]]></component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;I6375144&quot;,
+      &quot;fullname&quot;: &quot;Lévay, Zétény (Stud. DACS)&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://gitlab.maastrichtuniversity.nl/bcs1600-2025/group20.git&quot;,
+    &quot;second&quot;: &quot;d859f074-7475-44b2-bc9f-5ce56edcce51&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2xfdvE4dFpYWrcsGCJ84whpcmN1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CentralityCalculator.executor&quot;: &quot;Run&quot;,
+    &quot;Application.POIFinder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StopEvaluator.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StopGraph.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ZipToSQLite.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\group20\data" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.StopEvaluator">
+    <configuration name="POIFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="closureAnalysis.data.readers.POIFinder" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="closureAnalysis.data.readers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StopEvaluator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="closureAnalysis.StopEvaluator" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="closureAnalysis.kdtree.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.StopEvaluator" />
+        <item itemvalue="Application.POIFinder" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -50,6 +141,9 @@
       <updated>1748259054103</updated>
       <workItem from="1748259055255" duration="1085000" />
       <workItem from="1748333291923" duration="44000" />
+      <workItem from="1748516324057" duration="8189000" />
+      <workItem from="1748593460072" duration="6058000" />
+      <workItem from="1748685762020" duration="8265000" />
     </task>
     <servers />
   </component>

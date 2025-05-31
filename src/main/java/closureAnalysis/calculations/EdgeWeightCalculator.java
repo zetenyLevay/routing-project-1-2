@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import closureAnalysis.data.Graph.StopInstance;
-import closureAnalysis.data.Graph.StopNode;
+import closureAnalysis.data.graph.StopInstance;
+import closureAnalysis.data.graph.StopNode;
 
 public class EdgeWeightCalculator {
 
-    double ALPHA = 0.5;
-    double BETA = 0.5;
+    double ALPHA = 0;
+    double BETA = 1;
     int count = 0;
 
     public double calculateEdgeWeight(StopNode from, StopNode to) {
@@ -23,7 +23,7 @@ public class EdgeWeightCalculator {
         List<StopInstance> instances = neighboringInstances(from, to);
 
         if (instances == null){
-            System.err.println("No neighbor for from: " + from.getLabel() + " to " + to.getLabel());
+            System.err.println("No neighbor for from: " + from.getId() + " to " + to.getId());
             return Double.NEGATIVE_INFINITY;
         }
 
@@ -32,7 +32,7 @@ public class EdgeWeightCalculator {
 
 
         if (meters < 0 || minutes < 0) {
-            System.out.println("Weight issue from " + from.getLabel() + " to " + to.getLabel());
+            System.out.println("Weight issue from " + from.getId() + " to " + to.getId());
             System.out.println("  Distance: " + meters + " | Time: " + minutes);
             count++;
             System.err.println(count);

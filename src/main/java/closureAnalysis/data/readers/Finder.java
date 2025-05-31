@@ -1,5 +1,7 @@
 package closureAnalysis.data.readers;
 
-public interface Finder<I> {
-    void find(I input);
+import closureAnalysis.data.graph.StopNode;
+
+public interface Finder {
+    void find(StopNode input);
 }

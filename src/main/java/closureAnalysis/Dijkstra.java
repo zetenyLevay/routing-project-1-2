@@ -18,9 +18,9 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
-import closureAnalysis.data.Graph.StopEdge;
-import closureAnalysis.data.Graph.StopGraph;
-import closureAnalysis.data.Graph.StopNode;
+import closureAnalysis.data.graph.StopEdge;
+import closureAnalysis.data.graph.StopGraph;
+import closureAnalysis.data.graph.StopNode;
 
 public class Dijkstra {
 
@@ -75,7 +75,7 @@ public class Dijkstra {
                 if (newDistance < distances.getOrDefault(neighbor, Double.MAX_VALUE)) {
                     distances.put(neighbor, newDistance);
                     sigma.put(neighbor, 0);
-                    pred.get(neighbor).clear();
+                    pred.get(neighbor);
                     queue.add(neighbor);
                 }
                 if (distances.get(neighbor).equals(newDistance) ) {
@@ -104,7 +104,7 @@ public class Dijkstra {
         System.out.println(graph.getStopNodes().size());
 
         StopNode testNode = graph.getStopNode("007884");
-        System.out.println(testNode.getLabel());
+        System.out.println(testNode.getId());
 
 
         DijkstraResult dijkstraResult = dijkstra.dijkstra(graph, testNode);
@@ -115,14 +115,14 @@ public class Dijkstra {
         System.out.println(list.size());
 
         for (StopNode node : pred.get(testNode)) {
-            System.out.println("To: " + node.getLabel() + " | "+ dist.get(node) + " Meters");
+            System.out.println("To: " + node.getId() + " | "+ dist.get(node) + " Meters");
         }
 
 
         /*
 
         for (StopNode node : graph.getStopNodes()) {
-            System.out.println("To: " + node.getLabel() + " | "+ dist.get(node) + " Meters");
+            System.out.println("To: " + node.getId() + " | "+ dist.get(node) + " Meters");
         }
 
          */
