@@ -45,11 +45,19 @@ public class StopGraph {
 
     public StopGraph buildStopGraph(Connection conn) {
 
+        EdgeWeightCalculator calculator = new EdgeWeightCalculator();
+        StopGraph stopGraph = new StopGraph();
+        String query = "SELECT trip_id, stop_id, CAST(stop_sequence AS INTEGER) as stop_sequence, "
+                + "CAST(shape_dist_traveled AS INTEGER) as shape_dist_traveled, arrival_time, departure_time "
+                + "FROM stop_times "
+                + "ORDER BY trip_id, stop_sequence";
+        List<Pair<Integer, StopNode>> tripToProcess = new ArrayList<>();
+
+        String previousTrip = null;
 
 
 
-
-        try (PreparedStatement ps = conn.prepareStatement(query3);
+        try (PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery();) {
             printMemoryUsage("Before scanning trips");
             while (rs.next()) {
