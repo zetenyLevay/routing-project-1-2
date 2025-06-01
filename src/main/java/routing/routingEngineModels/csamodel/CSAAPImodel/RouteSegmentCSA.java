@@ -1,7 +1,7 @@
 package routing.routingEngineModels.csamodel.CSAAPImodel;
 
 import routing.routingEngineModels.Connection;
-import routing.routingEngineModels.Stop;
+import routing.routingEngineModels.Stop.Stop;
 import routing.routingEngineModels.csamodel.pathway.Pathway;
 
 public class RouteSegmentCSA {

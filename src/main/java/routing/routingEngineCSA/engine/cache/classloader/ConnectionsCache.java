@@ -2,7 +2,7 @@ package routing.routingEngineCSA.engine.cache.classloader;
 
 import routing.routingEngineCSA.engine.util.TimeConverter;
 import routing.routingEngineModels.Connection;
-import routing.routingEngineModels.Stop;
+import routing.routingEngineModels.Stop.Stop;
 import routing.routingEngineModels.Trip;
 import routing.routingEngineCSA.engine.connectionscanalgorithm.ConnectionSort;
 

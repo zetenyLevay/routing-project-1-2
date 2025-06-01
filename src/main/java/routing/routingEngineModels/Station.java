@@ -1,5 +1,7 @@
 package routing.routingEngineModels;
 
+import routing.routingEngineModels.Stop.Stop;
+
 import java.util.List;
 
 public class Station {

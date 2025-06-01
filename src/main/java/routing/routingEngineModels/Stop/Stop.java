@@ -1,5 +1,7 @@
-package routing.routingEngineModels;
+package routing.routingEngineModels.Stop;
 
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.Station;
 import routing.routingEngineModels.csamodel.pathway.Pathway;
 
 import java.util.List;
@@ -9,15 +11,17 @@ public class Stop {
     private final String stopName;
     private final Coordinates stopCoordinates;
 //    private final int minimumTransferTime = 120;
-    private final Station parentStation;
+    private final StopType stopType;
+    private final String parentStationID;
 //    private final List<Pathway> footpaths;
 
-    public Stop(String stopID, String stopName, Coordinates stopCoordinates, List<Pathway> footpaths, Station parentStation) {
+    public Stop(String stopID, String stopName, Coordinates stopCoordinates, int code, String parentStationID) {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
 //        this.footpaths = footpaths;
-        this.parentStation = parentStation;
+        this.stopType = StopType.getNameFromCode(code);
+        this.parentStationID = parentStationID;
     }
 
     public double getLatitude() {
@@ -36,14 +40,26 @@ public class Stop {
         return this.stopID;
     }
 
+    public StopType getStopType() {
+        return stopType;
+    }
+
+    public String getParentStationID() {
+        return parentStationID;
+    }
+
+    public boolean isPlatform() {
+        return stopType.isPlatform(parentStationID);
+    }
+
 
 //    public int getMinimumTransferTime() {
 //        return minimumTransferTime;
 //    }
 
-    public Station getParentStation() {
-        return parentStation;
-    }
+//    public Station getParentStation() {
+//        return parentStation;
+//    }
 
 //    public List<Pathway> getFootpaths() {
 //        return footpaths;

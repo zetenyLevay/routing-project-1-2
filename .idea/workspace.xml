@@ -5,9 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Station.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/PathwaysCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/PathwaysCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/StopsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/BooleanTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/BooleanTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/CSAResourcesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/CSAResourcesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/SingleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/SingleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Trip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,33 +32,37 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2xrOwDmAB9a2FmLYoXsZKe6gqNB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
