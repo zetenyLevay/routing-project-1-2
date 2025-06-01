@@ -1,28 +1,27 @@
 package routing.routingEngineModels.csamodel.CSAAPImodel;
 
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
 public class ResultantRouteCSA {
-    private final int arrivalTime;
+    private final LocalTime arrivalTime;
     private final List<RouteSegmentCSA> segments;
 
-    private ResultantRouteCSA(int arrivalTime, List<RouteSegmentCSA> segments) {
+    private ResultantRouteCSA(LocalTime arrivalTime, List<RouteSegmentCSA> segments) {
         this.arrivalTime = arrivalTime;
         this.segments = segments;
-
-
     }
 
-    public static ResultantRouteCSA create(int arrivalTime, List<RouteSegmentCSA> segments) {
+    public static ResultantRouteCSA create(LocalTime arrivalTime, List<RouteSegmentCSA> segments) {
         return new ResultantRouteCSA(arrivalTime, segments);
     }
 
     public static ResultantRouteCSA notFound() {
-        return new ResultantRouteCSA(Integer.MAX_VALUE, Collections.emptyList());
+        return new ResultantRouteCSA(LocalTime.MAX, Collections.emptyList());
     }
 
-    public int getArrivalTime() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
 
@@ -31,8 +30,6 @@ public class ResultantRouteCSA {
     }
 
     public boolean isFound() {
-        return arrivalTime != Integer.MAX_VALUE;
+        return !arrivalTime.equals(LocalTime.MAX);
     }
-
-
 }

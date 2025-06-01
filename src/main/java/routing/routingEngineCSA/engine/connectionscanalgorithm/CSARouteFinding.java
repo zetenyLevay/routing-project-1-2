@@ -2,26 +2,25 @@ package routing.routingEngineCSA.engine.connectionscanalgorithm;
 
 import routing.routingEngineCSA.engine.cache.classloader.ConnectionsCache;
 import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
+import routing.routingEngineCSA.engine.util.TimeConverter;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
 import routing.routingEngineModels.csamodel.CSAAPImodel.ResultantRouteCSA;
 import routing.routingEngineModels.csamodel.CSAAPImodel.RouteSegmentCSA;
 import routing.routingEngineModels.Connection;
 import routing.routingEngineModels.Stop.Stop;
-import routing.routingEngineModels.csamodel.pathway.Pathway;
 
+import java.time.LocalTime;
 import java.util.*;
 
-public class  CSARouteFinding {
-    private final Map<Stop, Integer> earliestArrival;
+public class CSARouteFinding {
+    private final Map<Stop, LocalTime> earliestArrival;
     private final Map<Stop, Connection> parentConnection;
-    private final Map<Stop, Pathway> parentFootpath;
     private final List<Connection> sortedConnections;
     private final CSAQuery csaQuery;
 
     public CSARouteFinding(CSAQuery csaQuery) {
         this.earliestArrival = new HashMap<>();
         this.parentConnection = new HashMap<>();
-        this.parentFootpath = new HashMap<>();
         this.sortedConnections = ConnectionsCache.getSortedConnections();
         this.csaQuery = csaQuery;
     }
@@ -33,12 +32,12 @@ public class  CSARouteFinding {
     }
 
     private void initialize() {
-        StopsCache.getAllStops().forEach(stop -> {
-            earliestArrival.put(stop, Integer.MAX_VALUE);
+        LocalTime maxTime = LocalTime.MAX;
+        for (Stop stop : StopsCache.getAllStops()) {
+            earliestArrival.put(stop, maxTime);
             parentConnection.put(stop, null);
-            parentFootpath.put(stop, null);
-        });
-        earliestArrival.put(csaQuery.getDepartureStop(), csaQuery.translateTime(csaQuery.getDepartureTime()));
+        }
+        earliestArrival.put(csaQuery.getDepartureStop(), csaQuery.getDepartureTime());
     }
 
     private void processConnections() {
@@ -49,22 +48,18 @@ public class  CSARouteFinding {
             if (shouldTerminateSearch(conn)) break;
             if (canBoardAtStop(conn) && improvesArrivalTime(conn)) {
                 updateConnection(conn);
-                processTransfers(conn);
+                updateTransferReachability(conn); // All transfers assumed instantaneous
             }
         }
     }
 
     private int findFirstRelevantConnectionIndex() {
-        int low = 0;
-        int high = sortedConnections.size() - 1;
-        int result = sortedConnections.size();
-        int departureTime = csaQuery.translateTime(csaQuery.getDepartureTime());
+        int low = 0, high = sortedConnections.size() - 1, result = sortedConnections.size();
+        LocalTime departureTime = csaQuery.getDepartureTime();
 
         while (low <= high) {
             int mid = (low + high) >>> 1;
-            int depTime = sortedConnections.get(mid).getDepTime();
-
-            if (depTime >= departureTime) {
+            if (TimeConverter.isBeforeOrEqual(departureTime, sortedConnections.get(mid).getDepTime())) {
                 result = mid;
                 high = mid - 1;
             } else {
@@ -75,36 +70,39 @@ public class  CSARouteFinding {
     }
 
     private boolean shouldTerminateSearch(Connection conn) {
-        return earliestArrival.get(csaQuery.getArrivalStop()) <= conn.getDepTime();
+        return TimeConverter.isBeforeOrEqual(
+                earliestArrival.get(csaQuery.getArrivalStop()), conn.getDepTime()
+        );
     }
 
     private boolean canBoardAtStop(Connection conn) {
-        return conn.getDepTime() >= earliestArrival.get(conn.getDepStop());
+        return TimeConverter.isBeforeOrEqual(
+                earliestArrival.get(conn.getDepStop()), conn.getDepTime()
+        );
     }
 
     private boolean improvesArrivalTime(Connection conn) {
-        return conn.getArrTime() < earliestArrival.get(conn.getArrStop());
+        return conn.getArrTime().isBefore(earliestArrival.get(conn.getArrStop()));
     }
 
     private void updateConnection(Connection conn) {
         earliestArrival.put(conn.getArrStop(), conn.getArrTime());
         parentConnection.put(conn.getArrStop(), conn);
-        parentFootpath.put(conn.getArrStop(), null);
     }
 
-    private void processTransfers(Connection conn) {
-        for (Pathway pathway : conn.getArrStop().getFootpaths()) {
-            int newArrival = conn.getArrTime() + pathway.getTraversalTime();
-            if (newArrival < earliestArrival.get(pathway.getToStop())) {
-                earliestArrival.put(pathway.getToStop(), newArrival);
-                parentConnection.put(pathway.getToStop(), conn);
-                parentFootpath.put(pathway.getToStop(), pathway);
+    // Update reachable stops due to instant transfers
+    private void updateTransferReachability(Connection conn) {
+        LocalTime arrivalTime = conn.getArrTime();
+        for (Stop stop : StopsCache.getAllStops()) {
+            if (arrivalTime.isBefore(earliestArrival.get(stop))) {
+                earliestArrival.put(stop, arrivalTime);
+                parentConnection.put(stop, conn);
             }
         }
     }
 
     private ResultantRouteCSA reconstructRoute() {
-        if (earliestArrival.get(csaQuery.getArrivalStop()) == Integer.MAX_VALUE) {
+        if (earliestArrival.get(csaQuery.getArrivalStop()).equals(LocalTime.MAX)) {
             return ResultantRouteCSA.notFound();
         }
 
@@ -112,27 +110,14 @@ public class  CSARouteFinding {
         Stop current = csaQuery.getArrivalStop();
 
         while (!current.equals(csaQuery.getDepartureStop())) {
-            segments.add(buildSegment(current));
-            current = getPreviousStop(current);
+            Connection conn = parentConnection.get(current);
+            segments.add(RouteSegmentCSA.forTransit(conn));
+            current = conn.getDepStop();
         }
 
         Collections.reverse(segments);
-        return ResultantRouteCSA.create(earliestArrival.get(csaQuery.getArrivalStop()), segments);
-    }
-
-    private RouteSegmentCSA buildSegment(Stop current) {
-        Pathway pathway = parentFootpath.get(current);
-        if (pathway == null) {
-            Connection conn = parentConnection.get(current);
-            return RouteSegmentCSA.forTransit(conn);
-        } else {
-            Connection precedingConn = parentConnection.get(current);
-            return RouteSegmentCSA.forTransfer(pathway, precedingConn);
-        }
-    }
-
-    private Stop getPreviousStop(Stop current) {
-        Pathway pathway = parentFootpath.get(current);
-        return pathway != null ? pathway.getFromStop() : parentConnection.get(current).getDepStop();
+        return ResultantRouteCSA.create(
+                earliestArrival.get(csaQuery.getArrivalStop()), segments
+        );
     }
 }

@@ -9,15 +9,15 @@ public class Request
 {
     private final Coordinates departFrom;
     private final Coordinates arriveAt;
-    private final int time;
+    private final LocalTime time;
 
     public Request(Coordinates start, Coordinates end, LocalTime time) {
-        this.time = time.toSecondOfDay();
+        this.time = time;
         this.departFrom = start;
         this.arriveAt = end;
     }
 
-    public int getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return this.time;
     }
 

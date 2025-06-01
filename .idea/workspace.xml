@@ -6,22 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphStructure/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/ConnectionsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/PathwaysCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/PathwaysCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/StopsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/BooleanTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/BooleanTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/CSAResourcesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/CSAResourcesTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/SingleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/tests/SingleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Trip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

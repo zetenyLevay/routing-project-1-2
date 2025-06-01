@@ -7,6 +7,7 @@ import routing.routingEngineModels.Trip;
 import routing.routingEngineCSA.engine.connectionscanalgorithm.ConnectionSort;
 
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.*;
 
 public class ConnectionsCache {
@@ -22,16 +23,15 @@ public class ConnectionsCache {
             String lastTripId = null;
             Trip currentTrip = null;
             Stop lastStop = null;
-            int lastDep = -1;
+            LocalTime lastDep = null;
 
             while (rs.next()) {
                 String tripId = rs.getString("trip_id");
                 String stopId = rs.getString("stop_id");
                 String arrStr = rs.getString("arrival_time");
                 String depStr = rs.getString("departure_time");
-                int arr = TimeConverter.timeToSeconds(arrStr);
-                int dep = TimeConverter.timeToSeconds(depStr);
-
+                LocalTime arr = TimeConverter.parseGTFSTime(arrStr);
+                LocalTime dep = TimeConverter.parseGTFSTime(depStr);
 
                 Stop stop = StopsCache.getStop(stopId);
 
@@ -43,7 +43,6 @@ public class ConnectionsCache {
                 } else {
                     Connection c = new Connection(currentTrip, lastStop, stop, lastDep, arr);
                     connections.add(c);
-                    currentTrip.getConnections().add(c);
                     lastStop = stop;
                     lastDep = dep;
                 }
@@ -56,6 +55,6 @@ public class ConnectionsCache {
     }
 
     public static List<Connection> getSortedConnections() {
-        return SORTED_CONNECTIONS;
+        return Collections.unmodifiableList(SORTED_CONNECTIONS);
     }
 }
