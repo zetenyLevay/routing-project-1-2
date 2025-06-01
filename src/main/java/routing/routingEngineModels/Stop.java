@@ -8,14 +8,16 @@ public class Stop {
     private final String stopID;
     private final String stopName;
     private final Coordinates stopCoordinates;
-    private final int minimumTransferTime = 120;
-    private final List<Pathway> footpaths;
+//    private final int minimumTransferTime = 120;
+    private final Station parentStation;
+//    private final List<Pathway> footpaths;
 
-    public Stop(String stopID, String stopName, Coordinates stopCoordinates, List<Pathway> footpaths) {
+    public Stop(String stopID, String stopName, Coordinates stopCoordinates, List<Pathway> footpaths, Station parentStation) {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
-        this.footpaths = footpaths;
+//        this.footpaths = footpaths;
+        this.parentStation = parentStation;
     }
 
     public double getLatitude() {
@@ -35,11 +37,17 @@ public class Stop {
     }
 
 
-    public int getMinimumTransferTime() {
-        return minimumTransferTime;
+//    public int getMinimumTransferTime() {
+//        return minimumTransferTime;
+//    }
+
+    public Station getParentStation() {
+        return parentStation;
     }
 
-    public List<Pathway> getFootpaths() {
-        return footpaths;
-    }
+//    public List<Pathway> getFootpaths() {
+//        return footpaths;
+//    }
+
+
 }
