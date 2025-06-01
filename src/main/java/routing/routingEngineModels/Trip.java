@@ -7,13 +7,13 @@ import java.util.List;
 public class Trip {
     private final String tripID;
     private final Route route;
-    private final List<Connection> connections;
+//    private final List<Connection> connections;
     private final String headSign;
 
     public Trip(String tripID, Route route, List<Connection> connections, String headSign) {
         this.tripID = tripID;
         this.route = route;
-        this.connections = connections;
+//        this.connections = connections;
         this.headSign = headSign;
     }
 
@@ -25,9 +25,9 @@ public class Trip {
         return route;
     }
 
-    public List<Connection> getConnections() {
-        return connections;
-    }
+//    public List<Connection> getConnections() {
+//        return connections;
+//    }
 
     public String getHeadSign() {
         return headSign;

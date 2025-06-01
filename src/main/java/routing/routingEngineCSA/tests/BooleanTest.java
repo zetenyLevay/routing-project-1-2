@@ -3,7 +3,7 @@ package routing.routingEngineCSA.tests;
 import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
 import routing.routingEngineCSA.engine.cache.masterloader.MasterLoader;
 import routing.routingEngineCSA.engine.connectionscanalgorithm.CSARouteFinding;
-import routing.routingEngineModels.Stop;
+import routing.routingEngineModels.Stop.Stop;
 import routing.routingEngineModels.csamodel.CSAAPImodel.CSAQuery;
 import routing.routingEngineModels.csamodel.CSAAPImodel.ResultantRouteCSA;
 import routing.routingEngineModels.csamodel.CSAAPImodel.RouteSegmentCSA;
