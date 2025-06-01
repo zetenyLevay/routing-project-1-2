@@ -1,10 +1,6 @@
 package routing.routingEngineModels.Stop;
 
 import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.Station;
-import routing.routingEngineModels.csamodel.pathway.Pathway;
-
-import java.util.List;
 
 public class Stop {
     private final String stopID;

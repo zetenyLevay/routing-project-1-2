@@ -32,7 +32,6 @@ public class ConnectionsCache {
                 int arr = TimeConverter.timeToSeconds(arrStr);
                 int dep = TimeConverter.timeToSeconds(depStr);
 
-
                 Stop stop = StopsCache.getStop(stopId);
 
                 if (!tripId.equals(lastTripId)) {
@@ -43,7 +42,6 @@ public class ConnectionsCache {
                 } else {
                     Connection c = new Connection(currentTrip, lastStop, stop, lastDep, arr);
                     connections.add(c);
-                    currentTrip.getConnections().add(c);
                     lastStop = stop;
                     lastDep = dep;
                 }

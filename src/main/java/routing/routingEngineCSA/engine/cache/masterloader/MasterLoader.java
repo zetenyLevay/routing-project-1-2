@@ -20,9 +20,9 @@ public class MasterLoader {
         StopsCache.init();
         displayLoaded("stops");
 
-        displayLoading("pathways");
-        PathwaysCache.init();
-        displayLoaded("pathways");
+//        displayLoading("pathways");
+//        PathwaysCache.init();
+//        displayLoaded("pathways");
 
         displayLoading("trips");
         TripsCache.init();

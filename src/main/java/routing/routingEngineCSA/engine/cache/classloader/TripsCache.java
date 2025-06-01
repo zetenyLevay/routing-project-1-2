@@ -20,7 +20,7 @@ public class TripsCache {
                 String routeId = rs.getString("route_id");
                 String headsign = rs.getString("trip_headsign");
                 Route route = RoutesCache.getRoute(routeId);
-                TRIPS.put(id, new Trip(id, route, new ArrayList<>(), headsign));
+                TRIPS.put(id, new Trip(id, route, headsign));
             }
         } catch (SQLException e) {
             e.printStackTrace();

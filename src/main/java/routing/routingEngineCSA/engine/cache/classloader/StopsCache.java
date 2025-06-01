@@ -22,7 +22,9 @@ public class StopsCache {
                 double lat = rs.getDouble("stop_lat");
                 double lon = rs.getDouble("stop_lon");
                 Coordinates coord = new Coordinates(lat, lon);
-                STOPS.put(id, new Stop(id, name, coord, new ArrayList<>()));
+                int locationType = rs.getInt("location_type");
+                String parentStation = rs.getString("parent_station");
+                STOPS.put(id, new Stop(id, name, coord, locationType, parentStation));
             }
         } catch (SQLException e) {
             e.printStackTrace();

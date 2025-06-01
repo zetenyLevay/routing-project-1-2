@@ -2,15 +2,13 @@ package routing.routingEngineModels;
 
 import routing.routingEngineModels.csamodel.route.Route;
 
-import java.util.List;
-
 public class Trip {
     private final String tripID;
     private final Route route;
 //    private final List<Connection> connections;
     private final String headSign;
 
-    public Trip(String tripID, Route route, List<Connection> connections, String headSign) {
+    public Trip(String tripID, Route route, String headSign) {
         this.tripID = tripID;
         this.route = route;
 //        this.connections = connections;
