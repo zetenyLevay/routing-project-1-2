@@ -1,31 +1,48 @@
 package routing.routingEngineModels;
 
 public class RouteStep {
-    // {Mode of transpotr, startCoord, endCoord, Time}
-    private String modeOfTransport;
-    private Coordinates startCoord;
-    private Coordinates endCoord;
-    private double time;
 
-    public RouteStep(String modeOfTransport, Coordinates startCoord, Coordinates endCoord, double time) {
+    // {Mode of transpotr, startCoord, toCoord, numOfMinutes}
+    private String modeOfTransport;
+    // private Coordinates startCoord;
+    private Coordinates toCoord;
+    private double numOfMinutes;
+    private String startTime;
+    private String stopStr;
+
+    public RouteStep(String modeOfTransport, Coordinates toCoord, double numOfMinutes, String startTime, String stopStr) {
         this.modeOfTransport = modeOfTransport;
-        this.startCoord = startCoord;
-        this.endCoord = endCoord;
-        this.time = time;
+        this.toCoord = toCoord;
+        this.numOfMinutes = numOfMinutes;
+        this.startTime = startTime;
+        this.stopStr = stopStr;
     }
+
+    //for walking steps 
+    public RouteStep(String modeOfTransport, Coordinates toCoord, String startTime) {
+        this.modeOfTransport = modeOfTransport;
+        this.toCoord = toCoord;
+        this.startTime = startTime;
+    }
+
     public String getModeOfTransport() {
         return modeOfTransport;
     }
-    public Coordinates getStartCoord() {
-        return startCoord;
-    }   
-    public Coordinates getEndCoord() {
-        return endCoord;
+
+    public Coordinates getToCoord() {
+        return toCoord;
     }
-    public double getTime() {
-        return time;
+
+    public double getNumOfMinutes() {
+        return numOfMinutes;
     }
-    public void setModeOfTransport(String modeOfTransport) {
-        this.modeOfTransport = modeOfTransport;
+
+    public String getStartTime() {
+        return startTime;
     }
+
+    public String getStopStr() {
+        return stopStr;
+    }
+
 }
