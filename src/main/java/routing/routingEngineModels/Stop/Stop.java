@@ -15,9 +15,16 @@ public class Stop {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
-//        this.footpaths = footpaths;
         this.stopType = StopType.getNameFromCode(code);
         this.parentStationID = parentStationID;
+    }
+
+    public Stop(String stopId2, String stopName2, Coordinates coordinates) {
+        this.stopID = stopId2;
+        this.stopName = stopName2;
+        this.stopCoordinates = coordinates;
+        this.stopType = null;
+        this.parentStationID = null;
     }
 
     public double getLatitude() {
@@ -47,19 +54,5 @@ public class Stop {
     public boolean isPlatform() {
         return stopType.isPlatform(parentStationID);
     }
-
-
-//    public int getMinimumTransferTime() {
-//        return minimumTransferTime;
-//    }
-
-//    public Station getParentStation() {
-//        return parentStation;
-//    }
-
-//    public List<Pathway> getFootpaths() {
-//        return footpaths;
-//    }
-
 
 }

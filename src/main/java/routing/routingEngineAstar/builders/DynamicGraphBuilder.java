@@ -57,9 +57,9 @@ public class DynamicGraphBuilder {
         // Get walking connections (footpaths)
         Map<String, Integer> footpaths = footpathBuilder.findFootpathConnections(fromStop);
         for (Map.Entry<String, Integer> footpath : footpaths.entrySet()) {
-            // Create a walking RouteStep using the walking constructor
+            // Create a walking RouteStep
             RouteStep walkingStep = createWalkingRouteStep(
-                fromStop.getStopID(), 
+                fromStop, 
                 footpath.getKey(), 
                 footpath.getValue(),
                 currentTime
@@ -77,18 +77,16 @@ public class DynamicGraphBuilder {
     /**
      * Creates a walking route step
      */
-    private RouteStep createWalkingRouteStep(String fromStopId, String toStopId, 
+    private RouteStep createWalkingRouteStep(Stop fromStop, String toStopId, 
                                            int walkingSeconds, String startTime) {
-        // Get destination stop coordinates
+        // Get destination stop
         Stop toStop = getStopById(toStopId);
         if (toStop == null) {
             return null;
         }
         
-        Coordinates toCoord = new Coordinates(toStop.getLatitude(), toStop.getLongitude());
-        
-        // Use the walking constructor (modeOfTransport, toCoord, startTime)
-        return new RouteStep("WALK", toCoord, startTime);
+        // Use the walking constructor that takes Stop object and walking time
+        return new RouteStep("WALK", toStop, startTime, walkingSeconds);
     }
     
     /**
@@ -108,9 +106,7 @@ public class DynamicGraphBuilder {
                     double lat = rs.getDouble("stop_lat");
                     double lon = rs.getDouble("stop_lon");
                     Coordinates coordinates = new Coordinates(lat, lon);
-                    int stopTypeInt = rs.getInt("stop_type");
-                    String parentStationId = rs.getString("parent_station_id");
-                    return new Stop(stopId, stopName, coordinates, stopTypeInt, parentStationId);
+                    return new Stop(stopId, stopName, coordinates);
                 }
             }
         } catch (SQLException e) {
@@ -118,29 +114,6 @@ public class DynamicGraphBuilder {
         }
         
         return null;
-    }
-    
-    /**
-     * Adds seconds to a time string
-     */
-    private String addSecondsToTime(String timeStr, int secondsToAdd) {
-        try {
-            String[] parts = timeStr.split(":");
-            int hours = Integer.parseInt(parts[0]);
-            int minutes = Integer.parseInt(parts[1]);
-            int seconds = Integer.parseInt(parts[2]);
-            
-            int totalSeconds = hours * 3600 + minutes * 60 + seconds + secondsToAdd;
-            
-            int newHours = (totalSeconds / 3600) % 24;
-            int newMinutes = (totalSeconds % 3600) / 60;
-            int newSecs = totalSeconds % 60;
-            
-            return String.format("%02d:%02d:%02d", newHours, newMinutes, newSecs);
-            
-        } catch (Exception e) {
-            return timeStr; // Return original time if parsing fails
-        }
     }
     
     /**

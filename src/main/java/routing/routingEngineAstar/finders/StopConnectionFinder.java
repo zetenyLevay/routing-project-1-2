@@ -56,7 +56,8 @@ public class StopConnectionFinder {
             ORDER BY st1.departure_time, st2.arrival_time
             """;
 
-        try (Connection conn = dbManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = dbManager.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, fromStop.getStopID());
             stmt.setString(2, currentTime);
@@ -92,24 +93,23 @@ public class StopConnectionFinder {
         String departureTime = rs.getString("from_departure");
         String arrivalTime = rs.getString("to_arrival");
 
-        // Get destination stop coordinates
+        // Get destination stop
         Stop toStop = getStopById(toStopId);
         if (toStop == null) {
             return null;
         }
 
-        Coordinates toCoord = new Coordinates(toStop.getLatitude(), toStop.getLongitude());
-
         // Calculate duration in minutes
         double durationMinutes = calculateDurationMinutes(departureTime, arrivalTime);
 
-        // Create mode of transport string (route name or type)
+        // Create mode of transport string
         String modeOfTransport = routeShortName != null ? routeShortName : "Transit";
 
         // Create stop description
         String stopStr = toStop.getStopName() + " (" + toStopId + ")";
 
-        return new RouteStep(modeOfTransport, toCoord, durationMinutes, departureTime, stopStr);
+        // Use the updated constructor
+        return new RouteStep(modeOfTransport, toStop, durationMinutes, departureTime, arrivalTime, stopStr);
     }
 
     /**
@@ -118,7 +118,8 @@ public class StopConnectionFinder {
     private Stop getStopById(String stopId) {
         String query = "SELECT stop_id, stop_name, stop_lat, stop_lon FROM stops WHERE stop_id = ?";
 
-        try (Connection conn = dbManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = dbManager.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, stopId);
 
@@ -128,9 +129,7 @@ public class StopConnectionFinder {
                     double lat = rs.getDouble("stop_lat");
                     double lon = rs.getDouble("stop_lon");
                     Coordinates coordinates = new Coordinates(lat, lon);
-                    int stopTypeInt = rs.getInt("stop_type");
-                    String parentStationId = rs.getString("parent_station_id");
-                    return new Stop(stopId, stopName, coordinates, stopTypeInt, parentStationId);
+                    return new Stop(stopId, stopName, coordinates);
                 }
             }
         } catch (SQLException e) {

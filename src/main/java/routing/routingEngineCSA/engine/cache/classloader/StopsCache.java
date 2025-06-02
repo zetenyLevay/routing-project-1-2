@@ -1,13 +1,16 @@
 package routing.routingEngineCSA.engine.cache.classloader;
 
-import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.Stop.Stop;
-
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.Stop.Stop;
 
 public class StopsCache {
     private static final Map<String, Stop> STOPS = new HashMap<>();
@@ -22,9 +25,9 @@ public class StopsCache {
                 double lat = rs.getDouble("stop_lat");
                 double lon = rs.getDouble("stop_lon");
                 Coordinates coord = new Coordinates(lat, lon);
-                int locationType = rs.getInt("location_type");
-                String parentStation = rs.getString("parent_station");
-                STOPS.put(id, new Stop(id, name, coord, locationType, parentStation));
+                // int locationType = rs.getInt("location_type");
+                // String parentStation = rs.getString("parent_station");
+                STOPS.put(id, new Stop(id, name, coord));
             }
         } catch (SQLException e) {
             e.printStackTrace();
