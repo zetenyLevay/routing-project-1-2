@@ -1,6 +1,7 @@
 package closureAnalysis;
 
 import closureAnalysis.calculations.CentralityCalculator;
+import closureAnalysis.data.graph.StopEdge;
 import closureAnalysis.data.graph.StopGraph;
 import closureAnalysis.data.graph.StopNode;
 import closureAnalysis.data.enums.TransportType;
@@ -11,8 +12,10 @@ import closureAnalysis.data.readers.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class StopEvaluator {
 
@@ -53,34 +56,43 @@ public class StopEvaluator {
                 .sorted(Comparator.comparingDouble(StopNode::getStopWorth).reversed())
                 .limit(10)
                 .forEach(node -> System.out.println("Node : " + node.getStopWorth() + "Label: " + node.getId()));
+
     }
 
-    public void evaluate(StopGraph stopGraph, Connection conn) throws SQLException {
+    public void evaluate(StopGraph stopGraph, Connection conn) {
 
         long preloadTime = System.currentTimeMillis();
+
         transportTypeFinder.preload(conn);
         poiFinder.preload();
+
         long eTime = System.currentTimeMillis();
         long dTime = eTime - preloadTime;
         System.out.println("Preload time: " + dTime + "ms");
 
         System.out.println("Starting closeness calculation...");
         long closenessStart = System.currentTimeMillis();
+
         cc.calculateClosenessCentrality(stopGraph);
+
         long closenessEnd = System.currentTimeMillis();
         long closenessduration = closenessEnd - closenessStart;
         System.out.println("Finished closeness: " + closenessduration + "ms");
 
         System.out.println("Starting Betweenness calculation...");
         long betweennessStart = System.currentTimeMillis();
+
         cc.calculateBetweennessCentrality(stopGraph);
+
         long betweennessEnd = System.currentTimeMillis();
         long betweennessduration = betweennessEnd - betweennessStart;
         System.out.println("Finished betweenness: " + betweennessduration + "ms");
 
         System.out.println("Starting normalization...");
         long normalizationStart = System.currentTimeMillis();
+
         centralityNormalizer(stopGraph);
+
         long normalizationEnd = System.currentTimeMillis();
         long normalizationduration = normalizationEnd - normalizationStart;
         System.out.println("Finished normalization: " + normalizationduration + "ms");
@@ -93,6 +105,8 @@ public class StopEvaluator {
 
         List<StopNode> stops = stopGraph.getStopNodes();
 
+
+        // USE ALL THE THREADS
         stops.parallelStream().forEach(stopNode -> {
             coordFinder.find(stopNode);
             poiFinder.find(stopNode);
@@ -155,7 +169,10 @@ public class StopEvaluator {
         System.out.println("Finished evaluation in " + elapsedTime + " ms");
     }
 
-    // we do a min-max normalization on centrality
+    /**
+     * min-max normalization on centrality (might do this with the others)
+     * @param stopGraph
+     */
     private void centralityNormalizer(StopGraph stopGraph) {
         double maxCloseness = stopGraph.getStopNodes().stream()
                 .max(Comparator.comparingDouble(StopNode::getClosenessCentrality))
@@ -187,6 +204,10 @@ public class StopEvaluator {
 
     }
 
+    /**
+     * using weighted sum we check the combined centrality measures of a stop
+     * @param node stop we are chekcing
+     */
     private void centralityEvaluator(StopNode node) {
 
         double ALPHA = 0.75;

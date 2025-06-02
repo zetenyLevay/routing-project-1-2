@@ -5,6 +5,9 @@ import routing.routingEngineModels.Coordinates;
 
 import java.sql.*;
 
+/**
+ * finds the coordinates of a stop, used because we want to avoid doing this in original graph building, since query there is already bloated
+ */
 public class CoordinateFinder implements Finder {
     @Override
     public void find(StopNode input) {

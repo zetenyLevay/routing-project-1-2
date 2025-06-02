@@ -6,6 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/Dijkstra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/Dijkstra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/StopEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/StopEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/CentralityCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/CentralityCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/DistanceCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/DistanceCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/EdgeWeightCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/calculations/EdgeWeightCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopEdge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/graph/StopNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/NearbyPOIs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/NearbyPOIs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/PointOfInterest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/models/PointOfInterest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/CoordinateFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/CoordinateFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/Finder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/Finder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/POIFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/TransportTypeFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/data/readers/TransportTypeFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/closureAnalysis/kdtree/KDTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/closureAnalysis/kdtree/KDTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/StopType.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,20 +53,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BulkTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BulkTest.executor": "Run",
+    "Application.StopEvaluator.executor": "Run",
+    "Application.StopGraph.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
