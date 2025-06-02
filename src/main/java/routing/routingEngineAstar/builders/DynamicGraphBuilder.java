@@ -1,14 +1,20 @@
 package routing.routingEngineAstar.builders;
 
-import graphStructure.Graph;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import routing.db.DBConnectionManager;
-import routing.routingEngineModels.Stop.Stop;
-import routing.routingEngineModels.RouteStep;
 import routing.routingEngineAstar.finders.StopConnectionFinder;
 import routing.routingEngineAstar.validators.TimeConstraintValidator;
-
-import java.sql.SQLException;
-import java.util.*;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.RouteStep;
+import routing.routingEngineModels.Stop.Stop;
 
 /**
  * Builds the graph dynamically during A* search with time constraints
@@ -101,7 +107,10 @@ public class DynamicGraphBuilder {
                     String stopName = rs.getString("stop_name");
                     double lat = rs.getDouble("stop_lat");
                     double lon = rs.getDouble("stop_lon");
-                    return new Stop(stopId, stopName, lat, lon);
+                    Coordinates coordinates = new Coordinates(lat, lon);
+                    int stopTypeInt = rs.getInt("stop_type");
+                    String parentStationId = rs.getString("parent_station_id");
+                    return new Stop(stopId, stopName, coordinates, stopTypeInt, parentStationId);
                 }
             }
         } catch (SQLException e) {

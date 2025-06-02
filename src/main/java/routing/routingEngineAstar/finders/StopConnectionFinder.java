@@ -1,33 +1,37 @@
 package routing.routingEngineAstar.finders;
 
-import routing.db.DBConnectionManager;
-import routing.routingEngineModels.Stop.Stop;
-import routing.routingEngineModels.RouteStep;
-import routing.routingEngineModels.Coordinates;
-import routing.routingEngineAstar.validators.TimeConstraintValidator;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.*;
-import java.util.*;
+import routing.db.DBConnectionManager;
+import routing.routingEngineAstar.validators.TimeConstraintValidator;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.RouteStep;
+import routing.routingEngineModels.Stop.Stop;
 
 /**
  * Finds valid connections from a given stop based on time constraints
  */
 public class StopConnectionFinder {
-    
+
     private final DBConnectionManager dbManager;
     private final TimeConstraintValidator timeValidator;
-    
+
     public StopConnectionFinder(DBConnectionManager dbManager) {
         this.dbManager = dbManager;
         this.timeValidator = new TimeConstraintValidator();
     }
-    
+
     /**
      * Finds all valid route steps from a given stop after a specific time
      */
     public List<RouteStep> findValidConnections(Stop fromStop, String currentTime) {
         List<RouteStep> validSteps = new ArrayList<>();
-        
+
         String query = """
             SELECT DISTINCT 
                 st1.stop_id as from_stop_id,
@@ -51,18 +55,17 @@ public class StopConnectionFinder {
                 AND st1.departure_time >= ?
             ORDER BY st1.departure_time, st2.arrival_time
             """;
-        
-        try (Connection conn = dbManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+
+        try (Connection conn = dbManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, fromStop.getStopID());
             stmt.setString(2, currentTime);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String fromDeparture = rs.getString("from_departure");
                     String toArrival = rs.getString("to_arrival");
-                    
+
                     // Validate time constraint
                     if (timeValidator.isValidTimeConnection(currentTime, fromDeparture)) {
                         RouteStep step = createRouteStep(rs);
@@ -72,14 +75,14 @@ public class StopConnectionFinder {
                     }
                 }
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Error finding connections from stop " + fromStop.getStopID() + ": " + e.getMessage());
         }
-        
+
         return validSteps;
     }
-    
+
     /**
      * Creates a RouteStep from database result set
      */
@@ -88,53 +91,55 @@ public class StopConnectionFinder {
         String routeShortName = rs.getString("route_short_name");
         String departureTime = rs.getString("from_departure");
         String arrivalTime = rs.getString("to_arrival");
-        
+
         // Get destination stop coordinates
         Stop toStop = getStopById(toStopId);
         if (toStop == null) {
             return null;
         }
-        
+
         Coordinates toCoord = new Coordinates(toStop.getLatitude(), toStop.getLongitude());
-        
+
         // Calculate duration in minutes
         double durationMinutes = calculateDurationMinutes(departureTime, arrivalTime);
-        
+
         // Create mode of transport string (route name or type)
         String modeOfTransport = routeShortName != null ? routeShortName : "Transit";
-        
+
         // Create stop description
         String stopStr = toStop.getStopName() + " (" + toStopId + ")";
-        
+
         return new RouteStep(modeOfTransport, toCoord, durationMinutes, departureTime, stopStr);
     }
-    
+
     /**
      * Gets a stop by ID from the database
      */
     private Stop getStopById(String stopId) {
         String query = "SELECT stop_id, stop_name, stop_lat, stop_lon FROM stops WHERE stop_id = ?";
-        
-        try (Connection conn = dbManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+
+        try (Connection conn = dbManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, stopId);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String stopName = rs.getString("stop_name");
                     double lat = rs.getDouble("stop_lat");
                     double lon = rs.getDouble("stop_lon");
-                    return new Stop(stopId, stopName, lat, lon);
+                    Coordinates coordinates = new Coordinates(lat, lon);
+                    int stopTypeInt = rs.getInt("stop_type");
+                    String parentStationId = rs.getString("parent_station_id");
+                    return new Stop(stopId, stopName, coordinates, stopTypeInt, parentStationId);
                 }
             }
         } catch (SQLException e) {
             System.err.println("Error getting stop by ID: " + e.getMessage());
         }
-        
+
         return null;
     }
-    
+
     /**
      * Calculates duration in minutes between two times
      */
@@ -142,18 +147,18 @@ public class StopConnectionFinder {
         try {
             int startSeconds = timeToSeconds(startTime);
             int endSeconds = timeToSeconds(endTime);
-            
+
             // Handle day rollover
             if (endSeconds < startSeconds) {
                 endSeconds += 24 * 3600;
             }
-            
+
             return (endSeconds - startSeconds) / 60.0;
         } catch (Exception e) {
             return 0.0;
         }
     }
-    
+
     /**
      * Converts time string to seconds since midnight
      */
@@ -162,11 +167,11 @@ public class StopConnectionFinder {
         if (parts.length != 3) {
             throw new IllegalArgumentException("Invalid time format: " + time);
         }
-        
+
         int hours = Integer.parseInt(parts[0]);
         int minutes = Integer.parseInt(parts[1]);
         int seconds = Integer.parseInt(parts[2]);
-        
+
         return hours * 3600 + minutes * 60 + seconds;
     }
 }
