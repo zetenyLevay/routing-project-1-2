@@ -1,8 +1,8 @@
 package routing.routingEngineModels.csamodel.CSAAPImodel;
 
 public enum RouteSegmentTypeCSA {
-    TRANSIT(0,"Transit"),
-    TRANSFER(1,"Transfer");
+    TRANSIT(0,"TRANSFER WITHIN SAME STATION"),
+    TRANSFER(1,"TRANSFER TO DIFFERENT STATION");
 
     private final int code;
     private final String name;
