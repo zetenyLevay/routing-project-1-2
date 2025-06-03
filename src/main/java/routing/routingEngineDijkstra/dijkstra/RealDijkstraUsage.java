@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra;
+package routing.routingEngineDijkstra.dijkstra;
 
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.RouteStep;
@@ -7,12 +7,12 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-public class RealAStarUsage {
+public class RealDijkstraUsage {
     public static void main(String[] args) {
-        GTFSCache.init();
+        GTFSCacheDijkstra.init();
 
-        Map<String, StopDijkstra> stops = GTFSCache.getStopsMap();
-        Map<String, List<AStarRouter.Connection>> connections = GTFSCache.getConnectionsMap();
+        Map<String, StopDijkstra> stops = GTFSCacheDijkstra.getStopsMap();
+        Map<String, List<DijkstraRouter.Connection>> connections = GTFSCacheDijkstra.getConnectionsMap();
 
         StopDijkstra start = stops.get("004521");
         StopDijkstra end = stops.get("F04785");
@@ -23,7 +23,7 @@ public class RealAStarUsage {
         }
 
         LocalTime departure = LocalTime.of(8, 0, 0);
-        FinalRoute route = AStarRouter.findShortestPath(stops, connections, start, end, departure);
+        FinalRoute route = DijkstraRouter.findShortestPath(stops, connections, start, end, departure);
 
         if (route == null) {
             System.out.println("NO_ROUTE_FOUND|" + start.getStopID() + "|" + end.getStopID());

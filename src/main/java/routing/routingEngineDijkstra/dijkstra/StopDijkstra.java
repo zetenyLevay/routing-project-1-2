@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra;
+package routing.routingEngineDijkstra.dijkstra;
 
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.Stop.Stop;

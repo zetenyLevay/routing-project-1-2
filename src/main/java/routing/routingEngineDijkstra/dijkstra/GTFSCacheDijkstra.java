@@ -1,13 +1,13 @@
-package routing.routingEngineDijkstra;
+package routing.routingEngineDijkstra.dijkstra;
 
 import routing.routingEngineModels.Coordinates;
 
 import java.sql.*;
 import java.util.*;
 
-public class GTFSCache {
+public class GTFSCacheDijkstra {
     private static final Map<String, StopDijkstra> STOPS = new HashMap<>();
-    private static final Map<String, List<AStarRouter.Connection>> CONNECTIONS = new HashMap<>();
+    private static final Map<String, List<DijkstraRouter.Connection>> CONNECTIONS = new HashMap<>();
 
     public static void init() {
         loadStops();
@@ -60,8 +60,8 @@ public class GTFSCache {
                 int depTime = parseTimeToSeconds(rs.getString("departure_time"));
                 int arrTime = parseTimeToSeconds(rs.getString("arrival_time"));
 
-                AStarRouter.Connection connection =
-                        new AStarRouter.Connection(fromId, toId, tripId, depTime, arrTime);
+                DijkstraRouter.Connection connection =
+                        new DijkstraRouter.Connection(fromId, toId, tripId, depTime, arrTime);
 
                 CONNECTIONS
                         .computeIfAbsent(fromId, k -> new ArrayList<>())
@@ -88,7 +88,7 @@ public class GTFSCache {
         return Collections.unmodifiableCollection(STOPS.values());
     }
 
-    public static Map<String, List<AStarRouter.Connection>> getConnectionsMap() {
+    public static Map<String, List<DijkstraRouter.Connection>> getConnectionsMap() {
         return Collections.unmodifiableMap(CONNECTIONS);
     }
 

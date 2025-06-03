@@ -1,6 +1,6 @@
-package routing.routingEngineDijkstra;
+package routing.routingEngineDijkstra.badAStar;
 
-public enum StopTypeDijkstra {
+public enum StopTypeAStar {
     STOP(0),           // Regular stop
     STATION(1),        // Station
     ENTRANCE_EXIT(2),  // Entrance or exit
@@ -10,7 +10,7 @@ public enum StopTypeDijkstra {
 
     private final int code;
 
-    StopTypeDijkstra(int code) {
+    StopTypeAStar(int code) {
         this.code = code;
     }
 
@@ -18,8 +18,8 @@ public enum StopTypeDijkstra {
         return code;
     }
 
-    public static StopTypeDijkstra fromCode(int code) {
-        for (StopTypeDijkstra type : values()) {
+    public static StopTypeAStar fromCode(int code) {
+        for (StopTypeAStar type : values()) {
             if (type.code == code) {
                 return type;
             }

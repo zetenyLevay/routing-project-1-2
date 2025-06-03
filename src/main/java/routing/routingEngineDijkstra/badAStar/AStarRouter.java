@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra;
+package routing.routingEngineDijkstra.badAStar;
 
 import routing.routingEngineCSA.engine.util.StraightLineCalculator;
 import routing.routingEngineModels.*;
@@ -7,12 +7,12 @@ import java.util.*;
 
 public class AStarRouter {
     static class Node implements Comparable<Node> {
-        StopDijkstra stop;
+        StopAStar stop;
         int currentTime;
         double fScore;
         FinalRoute route;
 
-        public Node(StopDijkstra stop, int currentTime, double fScore, FinalRoute route) {
+        public Node(StopAStar stop, int currentTime, double fScore, FinalRoute route) {
             this.stop = stop;
             this.currentTime = currentTime;
             this.fScore = fScore;
@@ -26,10 +26,10 @@ public class AStarRouter {
     }
 
     public static FinalRoute findShortestPath(
-            Map<String, StopDijkstra> stops,
+            Map<String, StopAStar> stops,
             Map<String, List<Connection>> connections,
-            StopDijkstra startStop,
-            StopDijkstra endStop,
+            StopAStar startStop,
+            StopAStar endStop,
             LocalTime departureTime) {
 
         PriorityQueue<Node> openSet = new PriorityQueue<>();
@@ -54,7 +54,7 @@ public class AStarRouter {
 
             for (Connection conn : connections.getOrDefault(current.stop.getStopID(), Collections.emptyList())) {
                 if (conn.departureTime >= current.currentTime) {
-                    StopDijkstra toStop = stops.get(conn.toStopId);
+                    StopAStar toStop = stops.get(conn.toStopId);
                     int newArrivalTime = conn.arrivalTime;
 
                     if (newArrivalTime < gScore.getOrDefault(toStop.getStopID(), Integer.MAX_VALUE)) {
@@ -87,7 +87,7 @@ public class AStarRouter {
                 }
             }
 
-            for (StopDijkstra neighborStop : stops.values()) {
+            for (StopAStar neighborStop : stops.values()) {
                 if (neighborStop.getStopID().equals(current.stop.getStopID())) continue;
 
                 if (current.stop.isPlatform() && neighborStop.isPlatform() &&
@@ -129,7 +129,7 @@ public class AStarRouter {
         return null;
     }
 
-    private static double calculateHeuristic(StopDijkstra fromStop, Coordinates endCoords) {
+    private static double calculateHeuristic(StopAStar fromStop, Coordinates endCoords) {
         return StraightLineCalculator.calculateWalkingTimeSeconds(fromStop, endCoords);
     }
 
