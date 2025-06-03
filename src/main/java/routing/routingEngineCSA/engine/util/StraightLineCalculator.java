@@ -11,7 +11,7 @@ public class StraightLineCalculator {
     private static final int EARTH_RADIUS_M = 6_371_000;
     private static final int SECONDS_PER_HOUR = 3600;
 
-    private static int haversineDistanceMeters(Stop stop, Coordinates coordinates) {
+    public static int haversineDistanceMeters(Stop stop, Coordinates coordinates) {
         double lat1 = Math.toRadians(stop.getLatitude());
         double lat2 = Math.toRadians(coordinates.getLatitude());
         double deltaLat = Math.toRadians(coordinates.getLatitude() - stop.getLatitude());

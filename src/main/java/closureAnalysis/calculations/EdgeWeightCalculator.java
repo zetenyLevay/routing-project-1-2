@@ -14,8 +14,8 @@ import closureAnalysis.data.graph.StopNode;
 
 public class EdgeWeightCalculator {
 
-    double ALPHA = 0;
-    double BETA = 1;
+    double ALPHA = 0.1;
+    double BETA = 0.9;
     int count = 0;
 
     /**
