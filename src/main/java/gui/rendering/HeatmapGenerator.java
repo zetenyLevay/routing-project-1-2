@@ -1,12 +1,15 @@
-package gui;
+package gui.rendering;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import gui.data.GeographicBounds;
+import gui.data.LocationPoint;
 
-class HeatmapGenerator { 
+
+public class HeatmapGenerator { 
     private final BufferedImage baseMapImage;
     private final GeographicBounds mapBounds;
     private final List<LocationPoint> dataPoints;

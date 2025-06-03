@@ -1,4 +1,4 @@
-package gui;
+package gui.components;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 
-class UserInterfaceBuilder {    //Builds control panel with button and text fields. Sets the layput
+public class UserInterfaceBuilder {    //Builds control panel with button and text fields. Sets the layput
     public static JPanel createControlPanel(JTextField startField, JTextField endField, 
                                           MapDisplay mapDisplay) {
         JToggleButton heatmapToggle = new JToggleButton("Show Heatmap", true);

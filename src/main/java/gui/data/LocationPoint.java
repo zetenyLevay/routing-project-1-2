@@ -1,4 +1,4 @@
-package gui;
+package gui.data;
 
 public class LocationPoint {    //class for geographic points
     private final double latitude;

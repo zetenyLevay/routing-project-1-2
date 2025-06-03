@@ -1,4 +1,4 @@
-package gui;
+package gui.data;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class BusStopDataLoader {        //Load bus stop location data from CSV file. Converts coordinate strings to LocationPoint objects
+public class BusStopDataLoader {        //Load bus stop location data from CSV file. Converts coordinate strings to LocationPoint objects
     public static List<LocationPoint> loadFromCsvFile(String csvFilePath) {
         List<LocationPoint> busStopsList = new ArrayList<>();
         String csvSeparatorRegex = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";

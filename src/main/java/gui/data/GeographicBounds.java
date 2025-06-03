@@ -1,6 +1,6 @@
-package gui;
+package gui.data;
 
-class GeographicBounds {      //Define boundries
+public class GeographicBounds {      //Define boundries
     private final double northLatitude;
     private final double southLatitude;
     private final double westLongitude;

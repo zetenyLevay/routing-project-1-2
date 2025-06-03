@@ -14,6 +14,13 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import gui.components.MapDisplay;
+import gui.components.UserInterfaceBuilder;
+import gui.data.BusStopDataLoader;
+import gui.data.GeographicBounds;
+import gui.data.LocationPoint;
+import gui.transform.CoordinateConverter;
+
 public class MapUI {
     public static void main(String[] args) throws IOException {
               MapUI.create();
