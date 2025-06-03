@@ -24,6 +24,9 @@ public class StopNode {
     private  Coordinates coordinates;
     private TransportType transportType;
     private NearbyPOIs nearbyPOIs;
+    private double transportWorth;
+    private double poiWorth;
+    public double centralityWorth;
     private double stopWorth; // Higher the better
     public StopNode(String id) {
         this.id = id;
@@ -92,5 +95,23 @@ public class StopNode {
     }
     public void setStopWorth(double stopWorth) {
         this.stopWorth = stopWorth;
+    }
+    public double getPoiWorth() {
+        return poiWorth;
+    }
+    public void setPoiWorth(double poiWorth) {
+        this.poiWorth = poiWorth;
+    }
+    public double getTransportWorth() {
+        return transportWorth;
+    }
+    public void setTransportWorth(double transportWorth) {
+        this.transportWorth = transportWorth;
+    }
+    public double getCentralityWorth() {
+        return centralityWorth;
+    }
+    public void setCentralityWorth(double centralityWorth) {
+        this.centralityWorth = centralityWorth;
     }
 }
