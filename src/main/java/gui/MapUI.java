@@ -1,18 +1,11 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-
-import javax.swing.JFrame;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -22,6 +15,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MapUI {
+    public static void main(String[] args) throws IOException {
+              MapUI.create();
+    }
+    
     public static void create() {
         List<LocationPoint> busStopData = BusStopDataLoader.loadFromCsvFile("data/stops.csv");
 
