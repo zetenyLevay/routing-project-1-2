@@ -24,81 +24,96 @@ import javax.swing.*;
 public class MapUI {
 
     public static void create() {
-        List<GeoPosition> stopCoordinates = loadStopCoordinatesFromCSV("data/stops.csv");
+        List<LocationPoint> busStopLocations = loadBusStopLocationsFromFile("data/stops.csv");
 
-        double northernLatitude = convertDegreesMinutesSeconds(47, 31, 35.08);
-        double southernLatitude = convertDegreesMinutesSeconds(47, 28, 5.16);
-        double westernLongitude = convertDegreesMinutesSeconds(18, 58, 50.07);
-        double easternLongitude = convertDegreesMinutesSeconds(19, 7, 26.23);
+        double mapTopLatitude = convertDegreesMinutesSeconds(47, 31, 35.08);
+        double mapBottomLatitude = convertDegreesMinutesSeconds(47, 28, 5.16);
+        double mapLeftLongitude = convertDegreesMinutesSeconds(18, 58, 50.07);
+        double mapRightLongitude = convertDegreesMinutesSeconds(19, 7, 26.23);
 
         SwingUtilities.invokeLater(() -> {
             try {
-                OfflineMapPanel mapPanel = new OfflineMapPanel(
-                        southernLatitude, northernLatitude,
-                        westernLongitude, easternLongitude,
-                        stopCoordinates
+                MapPanel mainMapPanel = new MapPanel(
+                        mapBottomLatitude, mapTopLatitude,
+                        mapLeftLongitude, mapRightLongitude,
+                        busStopLocations
                 );
 
-                JTextField startCoordinatesField = new JTextField("Start (lat,lon)", 20);
-                JTextField endCoordinatesField = new JTextField("End (lat,lon)", 20);
+                JTextField startAddressField = new JTextField("Start (lat,lon)", 20);
+                JTextField endAddressField = new JTextField("End (lat,lon)", 20);
 
-                JToggleButton heatmapToggleButton = new JToggleButton("Show Heatmap", true);
-                heatmapToggleButton.addActionListener(event ->
-                        mapPanel.setShowHeatmap(heatmapToggleButton.isSelected()));
+                JToggleButton showHeatmapButton = new JToggleButton("Show Heatmap", true);
+                showHeatmapButton.addActionListener(buttonClick ->
+                        mainMapPanel.setHeatmapVisible(showHeatmapButton.isSelected()));
 
-                JPanel inputPanel = new JPanel(new BorderLayout());
-                inputPanel.add(startCoordinatesField, BorderLayout.WEST);
-                inputPanel.add(endCoordinatesField, BorderLayout.CENTER);
-                inputPanel.add(heatmapToggleButton, BorderLayout.EAST);
+                JButton zoomInButton = new JButton("+");
+                JButton zoomOutButton = new JButton("-");
 
-                JPanel mainPanel = new JPanel(new BorderLayout());
-                mainPanel.add(inputPanel, BorderLayout.NORTH);
-                mainPanel.add(new JScrollPane(mapPanel), BorderLayout.CENTER);
+                zoomInButton.addActionListener(buttonClick -> mainMapPanel.changeZoom(1.5));
+                zoomOutButton.addActionListener(buttonClick -> mainMapPanel.changeZoom(0.9));
 
-                JFrame mapFrame = new JFrame("Offline Map Viewer");
-                mapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                mapFrame.setContentPane(mainPanel);
-                mapFrame.pack();
-                mapFrame.setLocationRelativeTo(null);
-                mapFrame.setVisible(true);
-            } catch (IOException exception) {
-                exception.printStackTrace();
+                JPanel topControlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                topControlPanel.add(new JLabel("Start:"));
+                topControlPanel.add(startAddressField);
+                topControlPanel.add(new JLabel("End:"));
+                topControlPanel.add(endAddressField);
+                topControlPanel.add(zoomInButton);
+                topControlPanel.add(zoomOutButton);
+                topControlPanel.add(showHeatmapButton);
+
+                JPanel wholeApplicationPanel = new JPanel(new BorderLayout());
+                wholeApplicationPanel.add(topControlPanel, BorderLayout.NORTH);
+                wholeApplicationPanel.add(new JScrollPane(mainMapPanel), BorderLayout.CENTER);
+
+                JFrame mainWindow = new JFrame("Offline Map Viewer");
+                mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                mainWindow.setContentPane(wholeApplicationPanel);
+                mainWindow.pack();
+                mainWindow.setLocationRelativeTo(null);
+                mainWindow.setVisible(true);
+                
+            } catch (IOException fileError) {
+                fileError.printStackTrace();
             }
         });
     }
 
-    private static List<GeoPosition> loadStopCoordinatesFromCSV(String csvFilePath) {
-        List<GeoPosition> stopCoordinates = new ArrayList<>();
-        String csvDelimiterPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+    private static List<LocationPoint> loadBusStopLocationsFromFile(String csvFileName) {
+        List<LocationPoint> busStopLocations = new ArrayList<>();
+        String csvSeparatorPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(csvFilePath))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(csvFileName))) {
             fileReader.readLine();
-            String line;
-            while ((line = fileReader.readLine()) != null) {
-                String[] columns = line.split(csvDelimiterPattern, -1);
-                if (columns.length < 4) continue;
+            
+            String currentLine;
+            while ((currentLine = fileReader.readLine()) != null) {
+                String[] csvColumns = currentLine.split(csvSeparatorPattern, -1);
+                
+                if (csvColumns.length < 4) continue;
+                
                 try {
-                    double latitude = Double.parseDouble(columns[2]);
-                    double longitude = Double.parseDouble(columns[3]);
-                    stopCoordinates.add(new GeoPosition(latitude, longitude));
-                } catch (NumberFormatException ignored) {}
+                    double busStopLatitude = Double.parseDouble(csvColumns[2]);
+                    double busStopLongitude = Double.parseDouble(csvColumns[3]);
+                    busStopLocations.add(new LocationPoint(busStopLatitude, busStopLongitude));
+                } catch (NumberFormatException numberError) {
+                }
             }
-        } catch (IOException exception) {
-            System.err.println(exception.getMessage());
+        } catch (IOException fileError) {
+            System.err.println("Error reading CSV file: " + fileError.getMessage());
         }
 
-        return stopCoordinates;
+        return busStopLocations;
     }
 
     private static double convertDegreesMinutesSeconds(int degrees, int minutes, double seconds) {
         return degrees + minutes / 60.0 + seconds / 3600.0;
     }
 
-    public static class GeoPosition {
+    public static class LocationPoint {
         private final double latitude;
         private final double longitude;
 
-        public GeoPosition(double latitude, double longitude) {
+        public LocationPoint(double latitude, double longitude) {
             this.latitude = latitude;
             this.longitude = longitude;
         }
@@ -112,253 +127,197 @@ public class MapUI {
         }
     }
 
-    public static class OfflineMapPanel extends JPanel {
-        private final BufferedImage baseMapImage;
-        private final List<GeoPosition> stopCoordinates;
-        private final double minimumLatitude;
-        private final double maximumLatitude;
-        private final double minimumLongitude;
-        private final double maximumLongitude;
-        private double zoomFactor;
-        private double offsetX;
-        private double offsetY;
-        private Point dragStartPoint;
-        private BufferedImage heatmapOverlayImage;
-        private boolean showHeatmap = true;
+    public static class MapPanel extends JPanel {
+        private final BufferedImage mapBackgroundImage;
+        private final List<LocationPoint> busStopLocations;
+        private final double mapMinimumLatitude;
+        private final double mapMaximumLatitude;
+        private final double mapMinimumLongitude;
+        private final double mapMaximumLongitude;
+        private double currentZoomLevel;
+        private double mapHorizontalOffset;
+        private double mapVerticalOffset;
+        private Point mouseLastPosition;
+        private BufferedImage heatmapImage;
+        private boolean isHeatmapVisible = true;
+        private final double minimumAllowedZoom;
 
-        public OfflineMapPanel(double minLat, double maxLat, double minLon, double maxLon, List<GeoPosition> stops) throws IOException {
-            this.minimumLatitude = minLat;
-            this.maximumLatitude = maxLat;
-            this.minimumLongitude = minLon;
-            this.maximumLongitude = maxLon;
-            this.stopCoordinates = stops;
-            this.baseMapImage = loadMapImage();
-            this.heatmapOverlayImage = generateHeatmap();
-            setupInitialView();
-            setupMouseInteractions();
+        public MapPanel(double minLatitude, double maxLatitude, double minLongitude, double maxLongitude, 
+                       List<LocationPoint> busStops) throws IOException {
+            this.mapMinimumLatitude = minLatitude;
+            this.mapMaximumLatitude = maxLatitude;
+            this.mapMinimumLongitude = minLongitude;
+            this.mapMaximumLongitude = maxLongitude;
+            this.busStopLocations = busStops;
+            this.mapBackgroundImage = loadMapImageFromResources();
+            this.heatmapImage = createHeatmapFromBusStops();
+            setupInitialViewSettings();
+            this.minimumAllowedZoom = Math.max(0.3, this.currentZoomLevel * 0.5);
+            setupMouseControlsForMapNavigation();
         }
 
-        public void setShowHeatmap(boolean shouldDisplayHeatmap) {
-            this.showHeatmap = shouldDisplayHeatmap;
+        public void setHeatmapVisible(boolean shouldShowHeatmap) {
+            this.isHeatmapVisible = shouldShowHeatmap;
             repaint();
         }
 
-        private BufferedImage loadMapImage() throws IOException {
-            try (InputStream inputStream = MapUI.class.getResourceAsStream("/mapImage.jpg")) {
-                if (inputStream == null) throw new FileNotFoundException("mapImage.jpg not found");
-                return ImageIO.read(inputStream);
+        public void changeZoom(double zoomMultiplier) {
+            double oldZoomLevel = currentZoomLevel;
+            currentZoomLevel *= zoomMultiplier;
+            currentZoomLevel = Math.max(minimumAllowedZoom, Math.min(currentZoomLevel, 10));
+            double panelCenterX = getWidth() / 2.0;
+            double panelCenterY = getHeight() / 2.0;
+            mapHorizontalOffset = panelCenterX - (panelCenterX - mapHorizontalOffset) * (currentZoomLevel / oldZoomLevel);
+            mapVerticalOffset = panelCenterY - (panelCenterY - mapVerticalOffset) * (currentZoomLevel / oldZoomLevel);
+            revalidate();
+            repaint();
+        }
+
+        private BufferedImage loadMapImageFromResources() throws IOException {
+            try (InputStream imageStream = MapUI.class.getResourceAsStream("/mapImage.jpg")) {
+                if (imageStream == null) {
+                    throw new FileNotFoundException("Map image file 'mapImage.jpg' not found in resources");
+                }
+                return ImageIO.read(imageStream);
             }
         }
 
-        private void setupInitialView() {
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int screenWidth = screenSize.width - 50;
-            int screenHeight = screenSize.height - 50;
-
-            double scaleWidth = (double) screenWidth / baseMapImage.getWidth();
-            double scaleHeight = (double) screenHeight / baseMapImage.getHeight();
-
-            zoomFactor = Math.min(1.0, Math.min(scaleWidth, scaleHeight));
-            setPreferredSize(new Dimension((int)(baseMapImage.getWidth() * zoomFactor), (int)(baseMapImage.getHeight() * zoomFactor)));
-
-            offsetX = offsetY = 0;
+        private void setupInitialViewSettings() {
+            Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
+            int availableScreenWidth = screenDimensions.width - 50;
+            int availableScreenHeight = screenDimensions.height - 50;
+            double widthScaleFactor = (double) availableScreenWidth / mapBackgroundImage.getWidth();
+            double heightScaleFactor = (double) availableScreenHeight / mapBackgroundImage.getHeight();
+            currentZoomLevel = Math.min(1.0, Math.min(widthScaleFactor, heightScaleFactor));
+            int panelWidth = (int)(mapBackgroundImage.getWidth() * currentZoomLevel);
+            int panelHeight = (int)(mapBackgroundImage.getHeight() * currentZoomLevel);
+            setPreferredSize(new Dimension(panelWidth, panelHeight));
+            mapHorizontalOffset = 0;
+            mapVerticalOffset = 0;
         }
 
-        private void setupMouseInteractions() {
-            addMouseWheelListener(event -> {
-                double previousZoom = zoomFactor;
-                zoomFactor *= event.getWheelRotation() < 0 ? 1.1 : 0.9;
-                zoomFactor = Math.max(previousZoom / 4, Math.min(previousZoom * 4, zoomFactor));
-
-                double mouseX = event.getX();
-                double mouseY = event.getY();
-
-                offsetX = mouseX - (mouseX - offsetX) * (zoomFactor / previousZoom);
-                offsetY = mouseY - (mouseY - offsetY) * (zoomFactor / previousZoom);
-
+        private void setupMouseControlsForMapNavigation() {
+            addMouseWheelListener(wheelEvent -> {
+                double oldZoomLevel = currentZoomLevel;
+                if (wheelEvent.getWheelRotation() < 0) {
+                    currentZoomLevel *= 1.1;
+                } else {
+                    currentZoomLevel *= 0.9;
+                }
+                currentZoomLevel = Math.max(minimumAllowedZoom, Math.min(oldZoomLevel * 4, currentZoomLevel));
+                double mouseX = wheelEvent.getX();
+                double mouseY = wheelEvent.getY();
+                mapHorizontalOffset = mouseX - (mouseX - mapHorizontalOffset) * (currentZoomLevel / oldZoomLevel);
+                mapVerticalOffset = mouseY - (mouseY - mapVerticalOffset) * (currentZoomLevel / oldZoomLevel);
                 revalidate();
                 repaint();
             });
 
-            MouseAdapter dragAdapter = new MouseAdapter() {
-                public void mousePressed(MouseEvent event) {
-                    dragStartPoint = event.getPoint();
+            MouseAdapter panningMouseHandler = new MouseAdapter() {
+                public void mousePressed(MouseEvent mouseEvent) {
+                    mouseLastPosition = mouseEvent.getPoint();
                 }
 
-                public void mouseDragged(MouseEvent event) {
-                    Point currentPoint = event.getPoint();
-                    offsetX += currentPoint.x - dragStartPoint.x;
-                    offsetY += currentPoint.y - dragStartPoint.y;
-                    dragStartPoint = currentPoint;
+                public void mouseDragged(MouseEvent mouseEvent) {
+                    Point currentMousePosition = mouseEvent.getPoint();
+                    mapHorizontalOffset += currentMousePosition.x - mouseLastPosition.x;
+                    mapVerticalOffset += currentMousePosition.y - mouseLastPosition.y;
+                    mouseLastPosition = currentMousePosition;
                     repaint();
                 }
             };
 
-            addMouseListener(dragAdapter);
-            addMouseMotionListener(dragAdapter);
+            addMouseListener(panningMouseHandler);
+            addMouseMotionListener(panningMouseHandler);
         }
 
-        private BufferedImage generateHeatmap() {
-            int imageWidth = baseMapImage.getWidth();
-            int imageHeight = baseMapImage.getHeight();
-            int[][] heatValues = new int[imageWidth][imageHeight];
-            double influenceRadius = 120.0;
-            int radiusPixels = (int) Math.ceil(influenceRadius);
+        private BufferedImage createHeatmapFromBusStops() {
+            int imageWidth = mapBackgroundImage.getWidth();
+            int imageHeight = mapBackgroundImage.getHeight();
+            int[][] heatIntensityGrid = new int[imageWidth][imageHeight];
+            double heatInfluenceRadius = 120.0;
+            int radiusInPixels = (int) Math.ceil(heatInfluenceRadius);
 
-            for (GeoPosition position : stopCoordinates) {
-                Point2D pixel = convertGeoToPixel(position);
-                int centerX = (int) Math.round(pixel.getX());
-                int centerY = (int) Math.round(pixel.getY());
+            for (LocationPoint busStopLocation : busStopLocations) {
+                Point2D pixelPosition = convertLocationToPixelPosition(busStopLocation);
+                int centerPixelX = (int) Math.round(pixelPosition.getX());
+                int centerPixelY = (int) Math.round(pixelPosition.getY());
 
-                for (int dy = -radiusPixels; dy <= radiusPixels; dy++) {
-                    for (int dx = -radiusPixels; dx <= radiusPixels; dx++) {
-                        int x = centerX + dx;
-                        int y = centerY + dy;
-                        if (x >= 0 && x < imageWidth && y >= 0 && y < imageHeight) {
-                            double distanceSquared = (dx + 0.5) * (dx + 0.5) + (dy + 0.5) * (dy + 0.5);
-                            if (distanceSquared <= influenceRadius * influenceRadius) {
-                                heatValues[x][y]++;
+                for (int deltaY = -radiusInPixels; deltaY <= radiusInPixels; deltaY++) {
+                    for (int deltaX = -radiusInPixels; deltaX <= radiusInPixels; deltaX++) {
+                        int pixelX = centerPixelX + deltaX;
+                        int pixelY = centerPixelY + deltaY;
+
+                        if (pixelX >= 0 && pixelX < imageWidth && pixelY >= 0 && pixelY < imageHeight) {
+                            double distanceSquared = (deltaX + 0.5) * (deltaX + 0.5) + (deltaY + 0.5) * (deltaY + 0.5);
+                            if (distanceSquared <= heatInfluenceRadius * heatInfluenceRadius) {
+                                heatIntensityGrid[pixelX][pixelY]++;
                             }
                         }
                     }
                 }
             }
 
-            int maxHeatValue = Arrays.stream(heatValues).flatMapToInt(Arrays::stream).max().orElse(0);
-            Color[] heatmapColors = new Color[maxHeatValue + 1];
-            for (int i = 1; i <= maxHeatValue; i++) {
-                float hue = 1.0f - Math.min(i, 10) / 10.0f;
-                heatmapColors[i] = Color.getHSBColor(hue, 1.0f, 1.0f);
-            }
-
-            BufferedImage heatmap = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
-            for (int y = 0; y < imageHeight; y++) {
-                for (int x = 0; x < imageWidth; x++) {
-                    int value = heatValues[x][y];
-                    if (value <= 1) continue;
-                    Color color = heatmapColors[Math.min(value, maxHeatValue)];
-                    int rgba = (color.getRGB() & 0x00FFFFFF) | (180 << 24);
-                    heatmap.setRGB(x, y, rgba);
+            int maximumHeatValue = 0;
+            for (int x = 0; x < imageWidth; x++) {
+                for (int y = 0; y < imageHeight; y++) {
+                    if (heatIntensityGrid[x][y] > maximumHeatValue) {
+                        maximumHeatValue = heatIntensityGrid[x][y];
+                    }
                 }
             }
 
-            return heatmap;
+            Color[] heatLevelColors = new Color[maximumHeatValue + 1];
+            for (int heatLevel = 1; heatLevel <= maximumHeatValue; heatLevel++) {
+                float colorHue = 1.0f - Math.min(heatLevel, 10) / 10.0f;
+                heatLevelColors[heatLevel] = Color.getHSBColor(colorHue, 1.0f, 1.0f);
+            }
+
+            BufferedImage heatmapResult = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+            for (int y = 0; y < imageHeight; y++) {
+                for (int x = 0; x < imageWidth; x++) {
+                    int heatValue = heatIntensityGrid[x][y];
+                    if (heatValue <= 1) continue;
+                    Color pixelColor = heatLevelColors[Math.min(heatValue, maximumHeatValue)];
+                    int colorWithTransparency = (pixelColor.getRGB() & 0x00FFFFFF) | (180 << 24);
+                    heatmapResult.setRGB(x, y, colorWithTransparency);
+                }
+            }
+
+            return heatmapResult;
         }
 
         @Override
         protected void paintComponent(Graphics graphics) {
             super.paintComponent(graphics);
-            Graphics2D g2d = (Graphics2D) graphics;
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-            AffineTransform previousTransform = g2d.getTransform();
-            g2d.translate(offsetX, offsetY);
-            g2d.scale(zoomFactor, zoomFactor);
-
-            g2d.drawImage(baseMapImage, 0, 0, null);
-            if (showHeatmap) g2d.drawImage(heatmapOverlayImage, 0, 0, null);
-
-            g2d.setColor(Color.RED);
-            for (GeoPosition position : stopCoordinates) {
-                Point2D pixel = convertGeoToPixel(position);
-                g2d.fill(new Ellipse2D.Double(pixel.getX() - 2, pixel.getY() - 2, 4, 4));
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            AffineTransform originalTransform = graphics2D.getTransform();
+            graphics2D.translate(mapHorizontalOffset, mapVerticalOffset);
+            graphics2D.scale(currentZoomLevel, currentZoomLevel);
+            graphics2D.drawImage(mapBackgroundImage, 0, 0, null);
+            if (isHeatmapVisible) {
+                graphics2D.drawImage(heatmapImage, 0, 0, null);
             }
-
-            g2d.setTransform(previousTransform);
+            graphics2D.setColor(Color.RED);
+            for (LocationPoint busStopLocation : busStopLocations) {
+                Point2D pixelPosition = convertLocationToPixelPosition(busStopLocation);
+                double dotX = pixelPosition.getX() - 2;
+                double dotY = pixelPosition.getY() - 2;
+                graphics2D.fill(new Ellipse2D.Double(dotX, dotY, 4, 4));
+            }
+            graphics2D.setTransform(originalTransform);
         }
 
-        private Point2D convertGeoToPixel(GeoPosition geoPosition) {
-            double xRatio = (geoPosition.getLongitude() - minimumLongitude) / (maximumLongitude - minimumLongitude);
-            double yRatio = (maximumLatitude - geoPosition.getLatitude()) / (maximumLatitude - minimumLatitude);
-            return new Point2D.Double(xRatio * baseMapImage.getWidth(), yRatio * baseMapImage.getHeight());
+        private Point2D convertLocationToPixelPosition(LocationPoint location) {
+            double horizontalRatio = (location.getLongitude() - mapMinimumLongitude) / 
+                                   (mapMaximumLongitude - mapMinimumLongitude);
+            double verticalRatio = (mapMaximumLatitude - location.getLatitude()) / 
+                                 (mapMaximumLatitude - mapMinimumLatitude);
+            double pixelX = horizontalRatio * mapBackgroundImage.getWidth();
+            double pixelY = verticalRatio * mapBackgroundImage.getHeight();
+            return new Point2D.Double(pixelX, pixelY);
         }
     }
 }
-
-
-
-//Old imlemetation. Here just for reference.
-
-// public class MapUI {
-
-//     /**
-//      * Creates the MapUI and draws
-//      */
-//     public static void create() {
-//         JXMapViewer mapViewer = new JXMapViewer();
-//         TileFactory tileFactory = new DefaultTileFactory(new OSMTileFactoryInfo());
-//         mapViewer.setTileFactory(tileFactory);
-//         mapViewer.setZoom(5);
-//         mapViewer.setAddressLocation(new GeoPosition(47.4979, 19.0402));    //Budapest location
-
-//         ZoomHandler zoomHandler = new ZoomHandler(mapViewer);
-
-//         mapViewer.addMouseWheelListener(e -> {
-//             int rotation = e.getWheelRotation();
-//             if (rotation < 0) {
-//                 zoomHandler.zoomIn();
-//             } else if (rotation > 0) {
-//                 zoomHandler.zoomOut();
-//             }
-//         });
-
-//         //so we can drag around the map
-//         PanMouseInputListener panListener = new PanMouseInputListener(mapViewer);
-//         mapViewer.addMouseListener(panListener);
-//         mapViewer.addMouseMotionListener(panListener);
-
-//         //load and display stops
-//         //TODO: put this in a seperate class
-//         List<GeoPosition> stops = new ArrayList<>();
-//         String filePath = "data/stops.csv";
-//         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-//             reader.readLine();
-
-//             String line;
-//             while ((line = reader.readLine()) != null) {
-//                 String[] parts = line.split(",");
-//                 try {
-//                     double lat = Double.parseDouble(parts[2]);
-//                     double lon = Double.parseDouble(parts[3]);
-//                     stops.add(new GeoPosition(lat, lon));
-//                 } catch (Exception e) {
-//                     System.out.println("Skipping invalid line: " + line);
-//                 }
-//             }
-//         } catch (IOException e) {
-//             System.out.println("Error loading stops: " + e.getMessage());
-//         }
-
-//         mapViewer.setOverlayPainter((Graphics2D g, JXMapViewer map, int w, int h) -> {
-//             g.setColor(Color.BLUE);
-
-//             for (GeoPosition stop : stops) {
-//                 Point point = new Point((int) map.convertGeoPositionToPoint(stop).getX(),
-//                         (int) map.convertGeoPositionToPoint(stop).getY());
-//                 g.fillOval(point.x - 5, point.y - 5, 8, 8);
-//             }
-//         });
-
-//         //make layered pane and sets up map
-//         JLayeredPane layeredPane = new JLayeredPane();
-//         layeredPane.setPreferredSize(new Dimension(800, 600));
-//         mapViewer.setBounds(0, 0, 800, 600);
-//         layeredPane.add(mapViewer, JLayeredPane.DEFAULT_LAYER);
-
-//         //create adn add control panel - this will also handle all buttons and control panel items
-//         ControlPanel controlPanel = ControlPanel.create(mapViewer);
-//         controlPanel.setBounds(0, 0, 800, 600);
-//         layeredPane.add(controlPanel, JLayeredPane.PALETTE_LAYER);
-
-//         //create frame
-//         JFrame frame = new JFrame("Map Viewer");
-//         frame.add(layeredPane);
-//         frame.setSize(800, 600);
-//         frame.setLocationRelativeTo(null);
-//         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//         frame.setVisible(true);
-
-//     }
-
-// }

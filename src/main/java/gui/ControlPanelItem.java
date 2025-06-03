@@ -1,8 +1,8 @@
-package gui;
+// package gui;
 
-import javax.swing.*;
+// import javax.swing.*;
 
-// note to self: we might not even need this...
-public interface ControlPanelItem {
-    Object getPanel();
-}
+// // note to self: we might not even need this...
+// public interface ControlPanelItem {
+//     Object getPanel();
+// }
