@@ -7,7 +7,7 @@ public class Stop {
     private final String stopName;
     private final Coordinates stopCoordinates;
 //    private final int minimumTransferTime = 120;
-    private final StopType stopType;
+//    private final StopType stopType;
     private final String parentStationID;
 //    private final List<Pathway> footpaths;
 
@@ -16,7 +16,7 @@ public class Stop {
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
 //        this.footpaths = footpaths;
-        this.stopType = StopType.getNameFromCode(code);
+//        this.stopType = StopType.getNameFromCode(code);
         this.parentStationID = parentStationID;
     }
 
@@ -36,17 +36,17 @@ public class Stop {
         return this.stopID;
     }
 
-    public StopType getStopType() {
-        return stopType;
-    }
+//    public StopType getStopType() {
+//        return stopType;
+//    }
 
     public String getParentStationID() {
         return parentStationID;
     }
 
-    public boolean isPlatform() {
-        return stopType.isPlatform(parentStationID);
-    }
+//    public boolean isPlatform() {
+//        return stopType.isPlatform(parentStationID);
+//    }
 
 
 //    public int getMinimumTransferTime() {

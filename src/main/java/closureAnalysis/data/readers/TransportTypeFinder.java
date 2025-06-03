@@ -8,8 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransportTypeFinder implements Finder {
-    private Map<String, TransportType> transportData;
+    private Map<String, TransportType> transportData;  // each stop id gets a transport type
 
+    /**
+     * due to large query we seperate this from main query as not to cause too much delay
+     * @param conn
+     */
     public void preload(Connection conn) {
         transportData = new HashMap<>();
         String query = "SELECT s.stop_id, r.route_type\n " +
