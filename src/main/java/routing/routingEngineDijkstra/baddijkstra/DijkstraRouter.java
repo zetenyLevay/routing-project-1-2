@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra.dijkstra;
+package routing.routingEngineDijkstra.baddijkstra;
 
 import routing.routingEngineCSA.engine.util.StraightLineCalculator;
 import routing.routingEngineModels.*;

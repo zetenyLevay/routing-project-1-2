@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra.dijkstra;
+package routing.routingEngineDijkstra.baddijkstra;
 
 public enum StopTypeDijkstra {
     STOP(0),           // Regular stop

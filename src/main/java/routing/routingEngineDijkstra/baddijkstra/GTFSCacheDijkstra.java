@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra.dijkstra;
+package routing.routingEngineDijkstra.baddijkstra;
 
 import routing.routingEngineModels.Coordinates;
 
