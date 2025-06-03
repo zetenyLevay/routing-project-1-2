@@ -7,8 +7,8 @@ import java.time.LocalTime;
 
 public class StraightLineCalculator {
 
-    private static final int AVERAGE_SPEED_MMS = 1389;
-    private static final int EARTH_RADIUS_M = 6_371_000;
+    public static final int AVERAGE_SPEED_MMS = 1389;
+    public static final int EARTH_RADIUS_M = 6_371_000;
     private static final int SECONDS_PER_HOUR = 3600;
 
     public static int haversineDistanceMeters(Stop stop, Coordinates coordinates) {

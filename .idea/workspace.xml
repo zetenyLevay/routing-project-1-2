@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="" />
+    <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/baddijkstra/DijkstraRouter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/baddijkstra/GTFSCacheDijkstra.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/baddijkstra/RealDijkstraUsage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/baddijkstra/StopDijkstra.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/baddijkstra/StopTypeDijkstra.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -33,34 +41,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BulkTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RealAStarUsage.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RealDijkstraUsage.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BulkTest.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.RealAStarUsage.executor": "Run",
+    "Application.RealDijkstraUsage.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="routing.routingEngineDijkstra.newDijkstra.model.input" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.RealAStarUsage">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="BulkTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routing.routingEngineCSA.engine.tests.BulkTest" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="routing.routingEngineCSA.engine.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.routingEngineDijkstra.newDijkstra.tests.Main" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.routingEngineDijkstra.newDijkstra.tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -96,6 +125,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.RealAStarUsage" />
         <item itemvalue="Application.RealDijkstraUsage" />
         <item itemvalue="Application.BulkTest" />
@@ -119,6 +149,7 @@
       <updated>1748259054103</updated>
       <workItem from="1748259055255" duration="2846000" />
       <workItem from="1748692963585" duration="7762000" />
+      <workItem from="1748960781290" duration="11952000" />
     </task>
     <servers />
   </component>
