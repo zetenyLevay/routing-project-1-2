@@ -13,7 +13,7 @@ public class CoordinateFinder implements Finder {
     public void find(StopNode input) {
 
         try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:data/june2ndBudapestGTFS.db");
             String query = "select stop_lat, stop_lon\n" +
                     "from stops \n" +
                     "where stop_id = ?";
