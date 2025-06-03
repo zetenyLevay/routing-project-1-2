@@ -27,8 +27,8 @@ import routing.routingEngineModels.utils.TimeAndGeoUtils;
 public class RoutingEngineAstar {
 
     private static final int MAX_WAIT_SECONDS = 1800;          // 1/2 hour
-    private static final double INITIAL_WALK_RADIUS_M = 100; // 1 km
-    private static final double SEARCH_RADIUS = 182; // ~600 ft
+    // private static final double INITIAL_WALK_RADIUS_M = 1000; // 1 km
+    private static final double SEARCH_RADIUS = 1000; // ~600 ft
     private static final boolean DEBUG = true;                 // Enable/disable debug output
     private static final double WALKING_SPEED_MPS = 1.3889;    // ~5 km/h in m/s
 
@@ -42,11 +42,11 @@ public class RoutingEngineAstar {
         );
 
         // Example: Vörösmarty tér → Köbánya-Kispest at 08:00:00
-        double sourceLat = 47.5017970;
-        double sourceLon = 19.0466351;
-        double destLat =   47.5021252;
-        double destLon =   19.0490330;
-        String startTime = "16:16:00";
+        double sourceLat = 47.5091742924609; 
+        double sourceLon = 19.003668560505577;
+        double destLat =   47.51860724748304; 
+        double destLon =   19.09381377595606;
+        String startTime = "17:00:00";
 
         System.out.println("Testing route finding...");
         List<RouteStep> route = router.findRoute(sourceLat, sourceLon, destLat, destLon, startTime);
