@@ -1,12 +1,17 @@
+// CLIWrite.java
 package parsers;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.List;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONWriter;
 
+import routing.routingEngineModels.RouteStep;
+
 public class CLIWrite {
+
     private JSONWriter<OutputStreamWriter> responseWriter;
 
     public CLIWrite() {
@@ -15,7 +20,7 @@ public class CLIWrite {
 
     /**
      * Sends a successful JSON response.
-     * 
+     *
      * @param value the value to include in the "ok" response.
      * @throws IOException if an I/O error occurs.
      */
@@ -27,7 +32,7 @@ public class CLIWrite {
 
     /**
      * Sends an error JSON response.
-     * 
+     *
      * @param message the error message.
      * @throws IOException if an I/O error occurs.
      */
@@ -37,5 +42,14 @@ public class CLIWrite {
         responseWriter.getWriter().flush();
     }
 
-    //TODO: maybe see if the
+    public void writeRouteSteps(List<RouteStep> route) throws IOException {
+        for (int i = 0; i < route.size(); i++) {
+            System.out.println(route.get(i));
+            System.out.println("-------------------");
+            // responseWriter.write(route.get(i));
+            //  responseWriter.getWriter().write('\n');
+       
+        }
+      
+    }
 }

@@ -26,7 +26,7 @@ import routing.routingEngineModels.utils.TimeAndGeoUtils;
  *
  * Changes:
  * 1. If A* finds no transit steps, fall back to a single “WALK” step.
- * 2. Merge any consecutive WALK legs in the final route into one direct walk
+ * 2. Merge any consecutive walk legs in the final route into one direct walk
  *    (so you don’t walk to an intermediate stop and then walk again).
  */
 public class RoutingEngineAstar {
@@ -34,8 +34,8 @@ public class RoutingEngineAstar {
     private static final int MAX_WAIT_SECONDS = 1800;           // 1/2 hour
     private static final double INITIAL_WALK_RADIUS_M = 100;    // 100 m
     private static final double SEARCH_RADIUS = 1000;           // ~1 km
-    private static final boolean DEBUG = true;                  // Enable/disable debug output
-    private static final double WALKING_SPEED_MPS = 1.3889 /2.5;     // ~5 km/h in m/s
+    private static final boolean DEBUG = false;                  // Enable/disable debug output
+    private static final double WALKING_SPEED_MPS = 1.3889 ;     // ~5 km/h in m/s
 
     private final DBConnectionManager dbManager;
     private final Map<String, Stop> allStops;
@@ -47,10 +47,10 @@ public class RoutingEngineAstar {
         );
 
         // Example: two farther‐apart points
-        double sourceLat = 47.498333190458226;
-        double sourceLon = 19.074383183671998;
-        double destLat   = 47.49563896935584;
-        double destLon   = 19.035322782272477;
+        double sourceLat = 47.498333190458226; //source point
+        double sourceLon = 19.074383183671998; //source point 2
+        double destLat   = 47.49563896935584; // destination point
+        double destLon   = 19.035322782272477; // destination point 2
         String startTime = "18:54:00";
 
         System.out.println("Testing route finding...");
@@ -171,7 +171,7 @@ public class RoutingEngineAstar {
         int walkingSeconds = (int) Math.ceil(distance / WALKING_SPEED_MPS);
 
         // Create and return a single walking step
-        RouteStep walkStep = new RouteStep("WALK", virtualDestStop, startTime, walkingSeconds);
+        RouteStep walkStep = new RouteStep("walk", virtualDestStop, startTime, walkingSeconds);
         route.add(walkStep);
 
         return route;
@@ -200,7 +200,7 @@ public class RoutingEngineAstar {
             );
             if (walkDistance > 10) { // Only add if more than 10 m
                 int walkingSeconds = (int) Math.ceil(walkDistance / WALKING_SPEED_MPS);
-                RouteStep initialWalk = new RouteStep("WALK", boardingStop, startTime, walkingSeconds);
+                RouteStep initialWalk = new RouteStep("walk", boardingStop, startTime, walkingSeconds);
                 completeRoute.add(initialWalk);
                 debug("Added initial walking step: " +
                       String.format("%.1f", walkDistance) + " m to " + boardingStop.getStopName());
@@ -225,7 +225,7 @@ public class RoutingEngineAstar {
             int finalWalkingSeconds = (int) Math.ceil(finalWalkDistance / WALKING_SPEED_MPS);
             String lastArrivalTime = lastTransitStep.getArrivalTime();
 
-            RouteStep finalWalk = new RouteStep("WALK", virtualDestStop, lastArrivalTime, finalWalkingSeconds);
+            RouteStep finalWalk = new RouteStep("walk", virtualDestStop, lastArrivalTime, finalWalkingSeconds);
             completeRoute.add(finalWalk);
             debug("Added final walking step: " +
                   String.format("%.1f", finalWalkDistance) +
@@ -236,15 +236,15 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Scans the route and merges any consecutive WALK legs into a single direct walk.
+     * Scans the route and merges any consecutive walk legs into a single direct walk.
      *
-     * For each maximal run of consecutive WALK steps (indices [j..k]), it:
+     * For each maximal run of consecutive walk steps (indices [j..k]), it:
      *  - Computes fromCoords = (if j == 0) (sourceLat, sourceLon)
      *                   else the ToStop coordinates of step (j-1).
      *  - Computes toCoords   = the ToStop coordinates of step k.
      *  - departureTime = departureTime of step j.
      *  - duration = ceil( haversine(fromCoords, toCoords) / WALKING_SPEED_MPS ).
-     *  - Replaces the entire run [j..k] with one new WALK step.
+     *  - Replaces the entire run [j..k] with one new walk step.
      */
     private List<RouteStep> mergeConsecutiveWalks(List<RouteStep> route,
                                                   double sourceLat, double sourceLon,
@@ -259,7 +259,7 @@ public class RoutingEngineAstar {
 
         while (i < n) {
             RouteStep step = route.get(i);
-            if (!step.getModeOfTransport().equals("WALK")) {
+            if (!step.getModeOfTransport().equals("walk")) {
                 // Non-walking step—copy as is
                 merged.add(step);
                 i++;
@@ -268,9 +268,9 @@ public class RoutingEngineAstar {
 
             // Found the start of a run of WALKs
             int j = i;
-            // Find k = last index of this consecutive run of WALK
+            // Find k = last index of this consecutive run of walk
             int k = j;
-            while (k + 1 < n && route.get(k + 1).getModeOfTransport().equals("WALK")) {
+            while (k + 1 < n && route.get(k + 1).getModeOfTransport().equals("walk")) {
                 k++;
             }
 
@@ -299,8 +299,8 @@ public class RoutingEngineAstar {
             double totalDistance = TimeAndGeoUtils.haversineMeters(fromLat, fromLon, toLat, toLon);
             int walkingSeconds = (int) Math.ceil(totalDistance / WALKING_SPEED_MPS);
 
-            // Create a single merged WALK step
-            RouteStep mergedWalk = new RouteStep("WALK", finalStopInRun, departureTime, walkingSeconds);
+            // Create a single merged walk step
+            RouteStep mergedWalk = new RouteStep("walk", finalStopInRun, departureTime, walkingSeconds);
             merged.add(mergedWalk);
 
             // Advance i to k+1 (skip over the entire run)

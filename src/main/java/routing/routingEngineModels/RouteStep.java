@@ -11,10 +11,11 @@ public class RouteStep {
     private String departureTime; // Add this field
     private String arrivalTime;   // Add this field
     private String stopStr;
+    private RouteInfo routeInfo; 
 
-    // Constructor for transit steps
+    // Constructor for transit
     public RouteStep(String modeOfTransport, Stop toStop, double numOfMinutes, 
-                     String departureTime, String arrivalTime, String stopStr) {
+                     String departureTime, String arrivalTime, String stopStr, RouteInfo routeInfo) {
         this.modeOfTransport = modeOfTransport;
         this.toStop = toStop;
         this.toCoord = new Coordinates(toStop.getLatitude(), toStop.getLongitude());
@@ -23,6 +24,7 @@ public class RouteStep {
         this.arrivalTime = arrivalTime;
         this.startTime = departureTime; // Keep for backward compatibility
         this.stopStr = stopStr;
+        this.routeInfo = routeInfo; 
     }
 
     // Constructor for walking steps
@@ -35,6 +37,7 @@ public class RouteStep {
         this.arrivalTime = addSecondsToTime(startTime, walkingSeconds);
         this.numOfMinutes = walkingSeconds / 60.0;
         this.stopStr = toStop.getStopName() + " (" + toStop.getStopID() + ")";
+        this.routeInfo = null; // No route info for walking steps
     }
 
     // Getters
@@ -93,7 +96,13 @@ public class RouteStep {
 
     @Override
     public String toString() {
-        return String.format("%s to %s (dep: %s, arr: %s)", 
-                           modeOfTransport, stopStr, departureTime, arrivalTime);
+        if (this.modeOfTransport.equals("walk")) {
+            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":%s}",
+                                 modeOfTransport, toCoord, numOfMinutes, startTime);
+        }else{
+            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":%s}",
+                                 modeOfTransport, toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString());
+        }
+       
     }
 }

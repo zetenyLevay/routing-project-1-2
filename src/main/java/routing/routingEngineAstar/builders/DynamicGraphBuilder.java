@@ -86,7 +86,7 @@ public class DynamicGraphBuilder {
         }
         
         // Use the walking constructor that takes Stop object and walking time
-        return new RouteStep("WALK", toStop, startTime, walkingSeconds);
+        return new RouteStep("walk", toStop, startTime, walkingSeconds);
     }
     
     /**

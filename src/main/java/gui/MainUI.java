@@ -12,6 +12,7 @@ public class MainUI {
 
         //{"load":"/Users/jakelockitch/Downloads/budapest_gtfs.zip"}
         //{"load":"budapest_gtfs.zip"}
+        //{"load":"data/budapest_gtfs.zip"}
         //NOTE: you have to be explicit about the path to the GTFS file
         //    RequestHandler rh = new RequestHandler();
         //    rh.run();

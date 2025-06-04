@@ -2,12 +2,15 @@ package parsers;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
+
+import routing.db.DBConnectionManager;
+import routing.routingEngineAstar.RoutingEngineAstar;
 import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.RouteStep;
 
 public class RequestHandler {
 
@@ -48,35 +51,39 @@ public class RequestHandler {
                 } else if (request.containsKey("load")) {
 
                     String selectedFile = (String) request.get("load");
-                    try{
-                    ZipToSQLite.run(selectedFile);
+                    System.out.println(selectedFile);
+                    try {
+                        ZipToSQLite.run(selectedFile);
                         cliWrite.sendOk("loaded");
                     } catch (Exception e) {
 
                         cliWrite.sendError(e.getMessage());
                         break;
                     }
-                }
-                //TODO: double check this is how it works?
+                } //TODO: double check this is how it works?
                 else if (request.containsKey("routeFrom")) {
 
                     Coordinates startPoint = new Coordinates((String) request.get("routeFrom"));
                     Coordinates endPoint = new Coordinates((String) request.get("to"));
                     String startingAtStr = (String) request.get("startingAt");
 
-                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
-                    LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
-
+                    // DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
+                    // LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
                     //TODO: this part should be part of the CLIWrite!!! (the printing)
-
 //                     System.out.println(request.get("routeFrom"));
-                    System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtTime);
-                    // // {"routeFrom": "41.40338, 2.17403","to": "41.4032, 2.1283","startingAt": "10:05"}
+                    System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtStr);
+
+                    RoutingEngineAstar router = new RoutingEngineAstar(
+                            new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
+                    );
+
+                    List<RouteStep> route = router.findRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), startingAtStr);
+                    cliWrite.writeRouteSteps(route);
+                    // // {"routeFrom": "47.498333190458226, 19.074383183671998","to": "47.49563896935584, 19.035322782272477","startingAt": "18:54:00"}
                     // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
 
                     // Dijkstra.run(journey);
                     // CSA.run(journey);
-
                 } else {
                     cliWrite.sendError("Bad request");
                 }
@@ -89,19 +96,16 @@ public class RequestHandler {
                 //make bash scripts , msys2 for windows, git bash
                 // run basic hello worlds file containing {"ping":kkf}
 
-
                 /**
                  * {"load":filenameString}
                  * {"routeFrom":sourcePoint,"to":targetPoint,"startingAt":timeString}
-                 * Anything else gives an error
-                 * {"error": error message}
-
-
-
-
-
+                 * Anything else gives an error {"error": error message}
+                 *
+                 *
+                 *
+                 *
+                 *
                  */
-
                 //CI gitlab actions to run tests automatically when pushing, check if theyre enabled.
                 //java tests
             }
