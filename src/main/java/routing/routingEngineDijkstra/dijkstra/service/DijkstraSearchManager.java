@@ -1,7 +1,7 @@
-package routing.routingEngineDijkstra.newDijkstra.service;
+package routing.routingEngineDijkstra.dijkstra.service;
 
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraStop;
-import routing.routingEngineDijkstra.newDijkstra.service.PathReconstructionService.SearchNode;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraStop;
+import routing.routingEngineDijkstra.dijkstra.service.PathReconstructionService.SearchNode;
 
 import java.util.*;
 

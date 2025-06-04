@@ -1,31 +1,32 @@
 package routing.routingEngineModels;
 
-public class RouteStep {
-    // {Mode of transpotr, startCoord, endCoord, Time}
-    private String modeOfTransport;
-    private Coordinates startCoord;
-    private Coordinates endCoord;
-    private double time;
+import java.time.LocalTime;
 
-    public RouteStep(String modeOfTransport, Coordinates startCoord, Coordinates endCoord, double time) {
-        this.modeOfTransport = modeOfTransport;
-        this.startCoord = startCoord;
-        this.endCoord = endCoord;
-        this.time = time;
+public class RouteStep {
+    private final String mode;
+    private final Coordinates to;
+    private final double duration;
+    private final LocalTime startTime;
+    private final String stop;
+    private final RouteInfo route;
+
+    public RouteStep(String mode, Coordinates to, double duration, LocalTime startTime) {
+        this(mode, to, duration, startTime, null, null);
     }
-    public String getModeOfTransport() {
-        return modeOfTransport;
+
+    public RouteStep(String mode, Coordinates to, double duration, LocalTime startTime, String stop, RouteInfo route) {
+        this.mode = mode;
+        this.to = to;
+        this.duration = duration;
+        this.startTime = startTime;
+        this.stop = stop;
+        this.route = route;
     }
-    public Coordinates getStartCoord() {
-        return startCoord;
-    }   
-    public Coordinates getEndCoord() {
-        return endCoord;
-    }
-    public double getTime() {
-        return time;
-    }
-    public void setModeOfTransport(String modeOfTransport) {
-        this.modeOfTransport = modeOfTransport;
-    }
+
+    public String getMode() { return mode; }
+    public Coordinates getTo() { return to; }
+    public double getDuration() { return duration; }
+    public LocalTime getStartTime() { return startTime; }
+    public String getStop() { return stop; }
+    public RouteInfo getRoute() { return route; }
 }

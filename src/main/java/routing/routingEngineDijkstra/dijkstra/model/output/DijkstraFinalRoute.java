@@ -1,21 +1,21 @@
-package routing.routingEngineDijkstra.newDijkstra.model.output;
+package routing.routingEngineDijkstra.dijkstra.model.output;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FinalRoute {
-    private final List<RouteStep> routeSteps;
+public class DijkstraFinalRoute {
+    private final List<DijkstraRouteStep> routeSteps;
     private final double totalDistance;
     private final double totalTime;
 
-    public FinalRoute(List<RouteStep> routeSteps, double totalDistance, double totalTime) {
+    public DijkstraFinalRoute(List<DijkstraRouteStep> routeSteps, double totalDistance, double totalTime) {
         this.routeSteps = Collections.unmodifiableList(new ArrayList<>(routeSteps));
         this.totalDistance = totalDistance;
         this.totalTime = totalTime;
     }
 
-    public List<RouteStep> getRouteSteps() {
+    public List<DijkstraRouteStep> getRouteSteps() {
         return routeSteps;
     }
 

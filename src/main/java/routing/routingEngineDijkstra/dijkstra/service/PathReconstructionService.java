@@ -1,9 +1,9 @@
-package routing.routingEngineDijkstra.newDijkstra.service;
+package routing.routingEngineDijkstra.dijkstra.service;
 
-import routing.routingEngineDijkstra.newDijkstra.algorithm.DijkstraRouter.Journey;
-import routing.routingEngineDijkstra.newDijkstra.algorithm.DijkstraRouter.JourneyLeg;
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraConnection;
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraStop;
+import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter.Journey;
+import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter.JourneyLeg;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraConnection;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraStop;
 
 import java.util.*;
 

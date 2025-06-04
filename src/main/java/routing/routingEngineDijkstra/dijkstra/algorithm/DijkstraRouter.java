@@ -1,11 +1,11 @@
-package routing.routingEngineDijkstra.newDijkstra.algorithm;
+package routing.routingEngineDijkstra.dijkstra.algorithm;
 
-import routing.routingEngineDijkstra.newDijkstra.model.input.*;
-import routing.routingEngineDijkstra.newDijkstra.model.output.FinalRoute;
-import routing.routingEngineDijkstra.newDijkstra.model.output.InputJourney;
-import routing.routingEngineDijkstra.newDijkstra.model.output.RouteStep;
-import routing.routingEngineDijkstra.newDijkstra.service.*;
-import routing.routingEngineDijkstra.newDijkstra.service.PathReconstructionService.SearchNode;
+import routing.routingEngineDijkstra.dijkstra.model.input.*;
+import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraFinalRoute;
+import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraInputJourney;
+import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraRouteStep;
+import routing.routingEngineDijkstra.dijkstra.service.*;
+import routing.routingEngineDijkstra.dijkstra.service.PathReconstructionService.SearchNode;
 
 import java.time.LocalTime;
 import java.util.*;
@@ -118,7 +118,7 @@ public class DijkstraRouter {
         }
     }
 
-    public FinalRoute findRoute(InputJourney inputJourney) {
+    public DijkstraFinalRoute findRoute(DijkstraInputJourney inputJourney) {
         DijkstraStop fromStop = walkingService.findClosestStop(inputJourney.getStart(), stops.values());
         DijkstraStop toStop = walkingService.findClosestStop(inputJourney.getEnd(), stops.values());
 
@@ -127,47 +127,47 @@ public class DijkstraRouter {
 
         if (journey == null) return null;
 
-        List<RouteStep> steps = new ArrayList<>();
+        List<DijkstraRouteStep> steps = new ArrayList<>();
         int adjustedStartTime = departureSec;
 
         if (!isSameCoordinate(inputJourney.getStart(), fromStop)) {
             int distance = walkingService.getDistance(inputJourney.getStart(), fromStop);
             double duration = distance / 1.389;
-            steps.add(new RouteStep("WALK", inputJourney.getStart(), toCoord(fromStop), duration));
+            steps.add(new DijkstraRouteStep("WALK", inputJourney.getStart(), toCoord(fromStop), duration));
             adjustedStartTime += duration;
         }
 
         for (JourneyLeg leg : journey.legs) {
             String mode = leg.isWalking ? "WALK" : leg.routeId;
             if (leg.isWalking) {
-                steps.add(new RouteStep(mode, toCoord(leg.from), toCoord(leg.to), leg.getDuration()));
+                steps.add(new DijkstraRouteStep(mode, toCoord(leg.from), toCoord(leg.to), leg.getDuration()));
             } else {
                 DijkstraRouteInfo info = routeInfo.get(leg.routeId);
-                steps.add(new RouteStep(mode, toCoord(leg.from), toCoord(leg.to), leg.getDuration(), leg.to.name, info));
+                steps.add(new DijkstraRouteStep(mode, toCoord(leg.from), toCoord(leg.to), leg.getDuration(), leg.to.name, info));
             }
         }
 
-        Coordinates endCoord = inputJourney.getEnd();
-        Coordinates toStopCoord = toCoord(toStop);
+        DijkstraCoordinates endCoord = inputJourney.getEnd();
+        DijkstraCoordinates toStopCoord = toCoord(toStop);
 
         if (!isSameCoordinate(endCoord, toStopCoord)) {
             int walkDist = walkingService.getDistance(toStop, endCoord);
             double walkTime = walkDist / 1.389;
-            steps.add(new RouteStep("WALK", toStopCoord, endCoord, walkTime));
+            steps.add(new DijkstraRouteStep("WALK", toStopCoord, endCoord, walkTime));
         }
 
-        double totalTime = steps.stream().mapToDouble(RouteStep::getTime).sum();
+        double totalTime = steps.stream().mapToDouble(DijkstraRouteStep::getTime).sum();
         double totalDistance = steps.stream().mapToDouble(step -> walkingService.getDistance(step.getStartCoord(), step.getEndCoord())).sum();
-        return new FinalRoute(steps, totalDistance, totalTime);
+        return new DijkstraFinalRoute(steps, totalDistance, totalTime);
     }
 
-    private boolean isSameCoordinate(Coordinates a, DijkstraStop b) {
+    private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraStop b) {
         return a.getLatitude() == b.lat && a.getLongitude() == b.lon;
     }
-    private Coordinates toCoord(DijkstraStop stop) {
-        return new Coordinates(stop.lat, stop.lon);
+    private DijkstraCoordinates toCoord(DijkstraStop stop) {
+        return new DijkstraCoordinates(stop.lat, stop.lon);
     }
-    private boolean isSameCoordinate(Coordinates a, Coordinates b) {
+    private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraCoordinates b) {
         return a.getLatitude() == b.getLatitude() && a.getLongitude() == b.getLongitude();
     }
 

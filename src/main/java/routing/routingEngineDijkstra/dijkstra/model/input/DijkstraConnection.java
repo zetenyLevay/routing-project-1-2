@@ -1,4 +1,4 @@
-package routing.routingEngineDijkstra.newDijkstra.model.input;
+package routing.routingEngineDijkstra.dijkstra.model.input;
 
 public class DijkstraConnection {
     public final DijkstraStop from;

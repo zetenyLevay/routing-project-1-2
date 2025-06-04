@@ -1,18 +1,18 @@
-package routing.routingEngineDijkstra.newDijkstra.model.input;
+package routing.routingEngineDijkstra.dijkstra.model.input;
 
 import java.util.Objects;
 
-public class Coordinates {
+public class DijkstraCoordinates {
     private final double latitude;
     private final double longitude;
 
-    public Coordinates(double latitude, double longitude) {
+    public DijkstraCoordinates(double latitude, double longitude) {
         validateCoordinates(latitude, longitude);
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Coordinates(String coord) {
+    public DijkstraCoordinates(String coord) {
         String[] parts = coord.split(",");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid coordinate format. Expected 'lat,lon'");
@@ -40,7 +40,7 @@ public class Coordinates {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Coordinates that = (Coordinates) obj;
+        DijkstraCoordinates that = (DijkstraCoordinates) obj;
         return Double.compare(that.latitude, latitude) == 0 &&
                 Double.compare(that.longitude, longitude) == 0;
     }

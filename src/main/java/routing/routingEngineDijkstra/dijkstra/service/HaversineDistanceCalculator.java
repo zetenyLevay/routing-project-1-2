@@ -1,7 +1,7 @@
-package routing.routingEngineDijkstra.newDijkstra.service;
+package routing.routingEngineDijkstra.dijkstra.service;
 
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraStop;
-import routing.routingEngineDijkstra.newDijkstra.model.input.Coordinates;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraStop;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraCoordinates;
 
 public class HaversineDistanceCalculator implements DistanceCalculator {
     private static final int EARTH_RADIUS_M = 6_371_000;
@@ -12,17 +12,17 @@ public class HaversineDistanceCalculator implements DistanceCalculator {
     }
 
     @Override
-    public int calculateDistanceMeters(Coordinates from, DijkstraStop to) {
+    public int calculateDistanceMeters(DijkstraCoordinates from, DijkstraStop to) {
         return calculateDistanceMeters(from.getLatitude(), from.getLongitude(), to.lat, to.lon);
     }
 
     @Override
-    public int calculateDistanceMeters(DijkstraStop from, Coordinates to) {
+    public int calculateDistanceMeters(DijkstraStop from, DijkstraCoordinates to) {
         return calculateDistanceMeters(from.lat, from.lon, to.getLatitude(), to.getLongitude());
     }
 
     @Override
-    public int calculateDistanceMeters(Coordinates from, Coordinates to) {
+    public int calculateDistanceMeters(DijkstraCoordinates from, DijkstraCoordinates to) {
         return calculateDistanceMeters(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude());
     }
 

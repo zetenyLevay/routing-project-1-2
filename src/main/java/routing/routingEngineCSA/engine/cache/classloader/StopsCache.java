@@ -4,7 +4,6 @@ import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.Stop.Stop;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class StopsCache {
                 Coordinates coord = new Coordinates(lat, lon);
                 int locationType = rs.getInt("location_type");
                 String parentStation = rs.getString("parent_station");
-                STOPS.put(id, new Stop(id, name, coord, locationType, parentStation));
+                STOPS.put(id, new Stop(id, name, coord));
             }
         } catch (SQLException e) {
             e.printStackTrace();

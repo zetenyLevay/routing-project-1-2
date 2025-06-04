@@ -1,8 +1,8 @@
-package routing.routingEngineDijkstra.newDijkstra.service;
+package routing.routingEngineDijkstra.dijkstra.service;
 
-import routing.routingEngineDijkstra.newDijkstra.model.input.Coordinates;
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraConnection;
-import routing.routingEngineDijkstra.newDijkstra.model.input.DijkstraStop;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraCoordinates;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraConnection;
+import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraStop;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -33,21 +33,21 @@ public class WalkingTransferService {
                 null, "WALK", "Walk to " + to.name);
     }
 
-    public DijkstraStop findClosestStop(Coordinates coord, Collection<DijkstraStop> candidates) {
+    public DijkstraStop findClosestStop(DijkstraCoordinates coord, Collection<DijkstraStop> candidates) {
         return candidates.stream()
                 .min(Comparator.comparingDouble(stop -> distanceCalculator.calculateDistanceMeters(coord, stop)))
                 .orElseThrow();
     }
 
-    public int getDistance(DijkstraStop from, Coordinates to) {
+    public int getDistance(DijkstraStop from, DijkstraCoordinates to) {
         return distanceCalculator.calculateDistanceMeters(from.lat, from.lon, to.getLatitude(), to.getLongitude());
     }
 
-    public int getDistance(Coordinates from, DijkstraStop to) {
+    public int getDistance(DijkstraCoordinates from, DijkstraStop to) {
         return distanceCalculator.calculateDistanceMeters(from.getLatitude(), from.getLongitude(), to.lat, to.lon);
     }
 
-    public int getDistance(Coordinates from, Coordinates to) {
+    public int getDistance(DijkstraCoordinates from, DijkstraCoordinates to) {
         return distanceCalculator.calculateDistanceMeters(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude());
     }
 
