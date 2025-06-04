@@ -9,6 +9,7 @@ import java.util.Map;
 import com.leastfixedpoint.json.JSONWriter;
 
 import routing.routingEngineModels.RouteStep;
+import routing.routingEngineModels.aStarModel.WholeRoute;
 
 public class CLIWrite {
 
@@ -43,13 +44,13 @@ public class CLIWrite {
     }
 
     public void writeRouteSteps(List<RouteStep> route) throws IOException {
-        for (int i = 0; i < route.size(); i++) {
-            System.out.println(route.get(i));
-            System.out.println("-------------------");
-            // responseWriter.write(route.get(i));
-            //  responseWriter.getWriter().write('\n');
-       
-        }
+        // JSON obj = JSON.parse(route);
+        // JsonObject outer = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        // System.out.println(route);
+        // // responseWriter.write(route);
+        responseWriter.write(Map.of("ok", route.toString()));
+
       
     }
 }

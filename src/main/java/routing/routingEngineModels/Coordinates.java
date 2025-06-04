@@ -31,9 +31,9 @@ public class Coordinates {
 
 
     public String toString() {
-        return "Coordinate{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        return "{" +
+                "\"lat\":" + latitude +
+                ",\"lon\":" + longitude +
+                "}";
     }
 }

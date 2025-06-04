@@ -97,10 +97,10 @@ public class RouteStep {
     @Override
     public String toString() {
         if (this.modeOfTransport.equals("walk")) {
-            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":%s}",
+            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
                                  modeOfTransport, toCoord, numOfMinutes, startTime);
         }else{
-            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":%s}",
+            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
                                  modeOfTransport, toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString());
         }
        

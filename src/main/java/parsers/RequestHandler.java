@@ -70,14 +70,15 @@ public class RequestHandler {
                     // DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
                     // LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
                     //TODO: this part should be part of the CLIWrite!!! (the printing)
-//                     System.out.println(request.get("routeFrom"));
+                    //System.out.println(request.get("routeFrom"));
                     System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtStr);
 
                     RoutingEngineAstar router = new RoutingEngineAstar(
                             new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
                     );
-
+                    System.out.println("running engine");
                     List<RouteStep> route = router.findRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), startingAtStr);
+                    System.out.println("route found");
                     cliWrite.writeRouteSteps(route);
                     // // {"routeFrom": "47.498333190458226, 19.074383183671998","to": "47.49563896935584, 19.035322782272477","startingAt": "18:54:00"}
                     // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
