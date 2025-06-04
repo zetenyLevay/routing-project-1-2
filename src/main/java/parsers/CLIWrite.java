@@ -9,7 +9,6 @@ import java.util.Map;
 import com.leastfixedpoint.json.JSONWriter;
 
 import routing.routingEngineModels.RouteStep;
-import routing.routingEngineModels.aStarModel.WholeRoute;
 
 public class CLIWrite {
 
