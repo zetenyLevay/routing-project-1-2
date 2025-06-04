@@ -1,5 +1,6 @@
 package heatmap;
 
+import routing.api.RoutingStrategy;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.Stop.Stop;
 import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
@@ -9,10 +10,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class HeatmapGenerator {
-    private final Router router;
+    private final RoutingStrategy routingStrategy;
 
-    public HeatmapGenerator(Router router) {
-        this.router = router;
+    public HeatmapGenerator(RoutingStrategy routingStrategy) {
+        this.routingStrategy = routingStrategy;
         StopsCache.init();
     }
 
@@ -22,7 +23,7 @@ public class HeatmapGenerator {
         StopsCache.getAllStops().parallelStream()
                 .filter(stop -> !stop.equals(originStop))
                 .forEach(targetStop -> {
-                    FinalRoute route = router.findRoute(originStop, targetStop, LocalTime.of(8,0));
+                    FinalRoute route = routingStrategy.findRoute(originStop, targetStop, LocalTime.of(8,0));
                     if (route != null) {
                         travelTimes.put(targetStop, route.getTotalTime());
                     }

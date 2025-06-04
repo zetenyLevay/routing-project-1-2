@@ -1,6 +1,6 @@
 package routing.routingEngineDijkstra.api;
 
-import heatmap.Router;
+import routing.api.RoutingStrategy;
 import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
 import routing.routingEngineDijkstra.dijkstra.converters.DijkstraModelConverter;
 import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraFinalRoute;
@@ -10,7 +10,7 @@ import routing.routingEngineModels.Stop.Stop;
 
 import java.time.LocalTime;
 
-public class DijkstraRoutePlanner implements Router {
+public class DijkstraRoutePlanner implements RoutingStrategy {
     private final DijkstraRouter router;
 
     public DijkstraRoutePlanner(DijkstraRouter router) {
