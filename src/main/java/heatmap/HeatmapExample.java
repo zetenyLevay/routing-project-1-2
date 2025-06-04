@@ -1,30 +1,30 @@
-// package heatmap;
+package heatmap;
 
-// import routing.routingEngineModels.Stop.Stop;
+import heatmap.HeatmapData;
+import heatmap.TravelTimeHeatmapAPI;
+import routing.api.Router;
+import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
+import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
+import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 
-// import java.awt.*;
+import java.sql.SQLException;
+import java.util.Map;
 
-// public class HeatmapExample {
-//    public static void main(String[] args) {
-//        Router router = new MyRouterImplementation(); //myrouterimplementation to be replaced by whatever algo is made
-//        Heatmap heatmap = new Heatmap(router);
+public class HeatmapExample {
+    public static void main(String[] args) throws SQLException {
+        // 1. Initialize the routing system
+        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
+        Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
 
-//        HeatmapData data = heatmap.createHeatmap("stop_id_123");
+        // 2. Create the heatmap API (cache initializes automatically)
+        TravelTimeHeatmapAPI heatmapAPI = new TravelTimeHeatmapAPI(router);
 
-//        System.out.println("Heatmap from: " + data.getOriginStop().getStopName());
-//        System.out.println("Time range: " + data.getMinTime() + "s to " + data.getMaxTime() + "s");
+        // 3. Generate heatmap for a specific stop
+        HeatmapData heatmap = heatmapAPI.generateHeatmap("002133");
 
-//        data.getStopColors().entrySet().stream()
-//                .limit(5)
-//                .forEach(entry -> {
-//                    Stop stop = entry.getKey();
-//                    Color color = entry.getValue();
-//                    System.out.printf("Stop: %-20s | Time: %-6.1fs | Color: RGB(%d,%d,%d)%n",
-//                            stop.getStopName(),
-//                            data.getTravelTimes().get(stop),
-//                            color.getRed(),
-//                            color.getGreen(),
-//                            color.getBlue());
-//                });
-//    }
-// }
+        // Get all travel times
+        Map<String, Double> allTimes = heatmapAPI.getAllTravelTimes(heatmap);
+        allTimes.forEach((stopId, time) ->
+                System.out.println(stopId + ": " + time + " minutes"));
+    }
+}

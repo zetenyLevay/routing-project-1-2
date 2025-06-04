@@ -1,20 +1,20 @@
 package heatmap;
 
-import routing.api.RoutingStrategy;
+import routing.api.Router;
 import routing.routingEngineModels.Stop.Stop;
 
 public class Heatmap {
     private final HeatmapGenerator generator;
 
-    public Heatmap(RoutingStrategy routingStrategy) {
-        this.generator = new HeatmapGenerator(routingStrategy);
+    public Heatmap(Router router) {
+        this.generator = new HeatmapGenerator(router);
     }
 
-    public HeatmapData createHeatmap(Stop originStop) {
-        return generator.generateHeatmap(originStop);
+    public HeatmapData createFromStop(Stop originStop) {
+        return generator.generate(originStop);
     }
 
-    public HeatmapData createHeatmap(String originStopId) {
-        return generator.generateHeatmap(originStopId);
+    public HeatmapData createFromStopId(String originStopId) {
+        return generator.generate(originStopId);
     }
 }

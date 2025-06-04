@@ -10,7 +10,7 @@ import java.util.Comparator;
 public class WalkingTransferService {
 
 
-    private static final double AVERAGE_WALKING_SPEED_MS = 1.389; // 5 km/h
+    private static final double AVERAGE_WALKING_SPEED_MS = 1.389;
     private final DistanceCalculator distanceCalculator;
     private final int maxWalkingDistanceMeters;
 

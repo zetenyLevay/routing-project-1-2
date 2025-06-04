@@ -36,6 +36,8 @@ public class Stop {
         return this.stopID;
     }
 
+    public Coordinates getCoordinates() {return  this.stopCoordinates;}
+
 //    public StopType getStopType() {
 //        return stopType;
 //    }

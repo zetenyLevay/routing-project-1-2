@@ -7,9 +7,40 @@
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/Heatmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/Heatmap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/api/RoutingStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/api/RouteFinder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/CachingTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/AgenciesCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/ConnectionsCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/PathwaysCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/RouteInfoCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/RoutesCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/StopsCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/classloader/TripsCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/cache/masterloader/MasterLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/CSARouteFinding.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/connectionscanalgorithm/ConnectionSort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/tests/BulkTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/StraightLineCalculator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/engine/util/TimeConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineCSA/gtfsparser/DataConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Connection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Stop/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Trip.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/CSAQuery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/ResultantRouteCSA.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentCSA.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/CSAAPImodel/RouteSegmentTypeCSA.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/MainAPImodel/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/MainAPImodel/ResultantRoute.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/MainAPImodel/RouteStep.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/Pathway.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/pathway/PathwayType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/route/Route.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/route/RouteInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/csamodel/route/RouteType.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,25 +71,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BulkTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RealAStarUsage.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RealDijkstraUsage.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BulkTest.executor": "Run",
+    "Application.HeatmapExample.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MapUI.executor": "Run",
+    "Application.RealAStarUsage.executor": "Run",
+    "Application.RealDijkstraUsage.executor": "Run",
+    "Application.RoutingExample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
@@ -70,13 +103,13 @@
       <recent name="routing.routingEngineDijkstra.newDijkstra.model.input" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="BulkTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.routingEngineCSA.engine.tests.BulkTest" />
+  <component name="RunManager" selected="Application.HeatmapExample">
+    <configuration name="HeatmapExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="heatmap.HeatmapExample" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="routing.routingEngineCSA.engine.tests.*" />
+          <option name="PATTERN" value="heatmap.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -123,12 +156,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RealDijkstraUsage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.routingEngineDijkstra.dijkstra.RealDijkstraUsage" />
+    <configuration name="RoutingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.tests.RoutingExample" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="routing.routingEngineDijkstra.dijkstra.*" />
+          <option name="PATTERN" value="routing.tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -138,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HeatmapExample" />
+        <item itemvalue="Application.RoutingExample" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.RealAStarUsage" />
-        <item itemvalue="Application.RealDijkstraUsage" />
-        <item itemvalue="Application.BulkTest" />
       </list>
     </recent_temporary>
   </component>
