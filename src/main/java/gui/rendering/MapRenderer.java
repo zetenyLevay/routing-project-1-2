@@ -37,12 +37,14 @@ public class MapRenderer {
 
         graphics2D.drawImage(baseMapImage, 0, 0, null);
 
-        graphics2D.setColor(Color.RED);
+        graphics2D.setColor(Color.GREEN);
+        double dotDiameter = 12;
+        double radius = dotDiameter / 2; // = 6
         for (LocationPoint busStop : busStopPoints) {
             Point2D pixelPosition = viewTransform.convertLocationToPixel(busStop);
-            double dotX = pixelPosition.getX() - 4;
-            double dotY = pixelPosition.getY() - 4;
-            graphics2D.fill(new Ellipse2D.Double(dotX, dotY, 8, 8));
+            double dotX = pixelPosition.getX() - radius;
+            double dotY = pixelPosition.getY() - radius;
+            graphics2D.fill(new Ellipse2D.Double(dotX, dotY, dotDiameter, dotDiameter));
         }
 
         graphics2D.setTransform(originalTransform);
