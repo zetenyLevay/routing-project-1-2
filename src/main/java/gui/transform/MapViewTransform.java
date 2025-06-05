@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-public class MapViewTransform {      //Zoom and move the map
+public class MapViewTransform {
     private final BufferedImage baseMapImage;
     private final GeographicBounds mapBounds;
     private double zoomLevel;
@@ -92,6 +92,21 @@ public class MapViewTransform {      //Zoom and move the map
         double pixelX = horizontalRatio * baseMapImage.getWidth();
         double pixelY = verticalRatio * baseMapImage.getHeight();
         return new Point2D.Double(pixelX, pixelY);
+    }
+
+    public Point geoToScreen(double latitude, double longitude) {
+        double horizontalRatio = (longitude - mapBounds.getWestLongitude()) / 
+                               (mapBounds.getEastLongitude() - mapBounds.getWestLongitude());
+        double verticalRatio = (mapBounds.getNorthLatitude() - latitude) / 
+                             (mapBounds.getNorthLatitude() - mapBounds.getSouthLatitude());
+
+        double mapX = horizontalRatio * baseMapImage.getWidth();
+        double mapY = verticalRatio * baseMapImage.getHeight();
+
+        int screenX = (int)(mapX * zoomLevel + horizontalOffset);
+        int screenY = (int)(mapY * zoomLevel + verticalOffset);
+
+        return new Point(screenX, screenY);
     }
 
     public Dimension getPreferredSize() {
