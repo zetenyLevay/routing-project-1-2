@@ -1,8 +1,11 @@
 package heatmap;
 
+import routing.api.Router;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.Stop.Stop;
-import routing.routingEngineCSA.engine.cache.classloader.StopsCache;
+import heatmap.StopsCache;
+
+import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,29 +14,34 @@ public class HeatmapGenerator {
 
     public HeatmapGenerator(Router router) {
         this.router = router;
-        StopsCache.init();
+        StopsCache.init(); // Load stops once
     }
 
-    public HeatmapData generateHeatmap(Stop originStop) {
+    public HeatmapData generate(Stop originStop) {
         Map<Stop, Double> travelTimes = new ConcurrentHashMap<>();
 
-        StopsCache.getAllStops().parallelStream()
+        StopsCache.getAllStops().values().parallelStream()
                 .filter(stop -> !stop.equals(originStop))
                 .forEach(targetStop -> {
-                    FinalRoute route = router.findRoute(originStop, targetStop);
+                    FinalRoute route = router.findRoute(
+                            originStop.getCoordinates(),
+                            targetStop.getCoordinates(),
+                            LocalTime.of(8, 0)
+                    );
                     if (route != null) {
-                        travelTimes.put(targetStop, route.getTotalTime());
+                        travelTimes.put(targetStop, (double) route.getTotalTime());
                     }
                 });
 
         return new HeatmapData(originStop, travelTimes);
     }
 
-    public HeatmapData generateHeatmap(String originStopId) {
+
+    public HeatmapData generate(String originStopId) {
         Stop originStop = StopsCache.getStop(originStopId);
         if (originStop == null) {
             throw new IllegalArgumentException("Stop not found: " + originStopId);
         }
-        return generateHeatmap(originStop);
+        return generate(originStop);
     }
 }
