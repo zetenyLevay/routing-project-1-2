@@ -3,7 +3,6 @@ package heatmap;
 import routing.api.Router;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.Stop.Stop;
-import heatmap.StopsCache;
 
 import java.time.LocalTime;
 import java.util.Map;
@@ -14,7 +13,7 @@ public class HeatmapGenerator {
 
     public HeatmapGenerator(Router router) {
         this.router = router;
-        StopsCache.init(); // Load stops once
+        StopsCache.init();
     }
 
     public HeatmapData generate(Stop originStop) {
@@ -28,20 +27,24 @@ public class HeatmapGenerator {
                             targetStop.getCoordinates(),
                             LocalTime.of(8, 0)
                     );
-                    if (route != null) {
-                        travelTimes.put(targetStop, (double) route.getTotalTime());
-                    }
+                    if (route != null) {travelTimes.put(targetStop, (double) route.getTotalTime());}
                 });
+
+
+
 
         return new HeatmapData(originStop, travelTimes);
     }
 
 
     public HeatmapData generate(String originStopId) {
-        Stop originStop = StopsCache.getStop(originStopId);
+
+
+            Stop originStop = StopsCache.getStop(originStopId);
         if (originStop == null) {
-            throw new IllegalArgumentException("Stop not found: " + originStopId);
+                throw new IllegalArgumentException("Stop not found: " +originStopId);
         }
         return generate(originStop);
+
     }
 }

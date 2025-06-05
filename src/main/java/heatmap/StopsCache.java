@@ -12,7 +12,6 @@ public class StopsCache {
     private final Map<String, Stop> stopsMap;
     private static final String DB_PATH = "jdbc:sqlite::resource:gtfs.db";
 
-    // Private constructor for singleton pattern
     private StopsCache() {
         this.stopsMap = Collections.synchronizedMap(new HashMap<>());
         loadStopsFromDatabase();
@@ -37,8 +36,6 @@ public class StopsCache {
                 String name = rs.getString("stop_name");
                 double lat = rs.getDouble("stop_lat");
                 double lon = rs.getDouble("stop_lon");
-
-                // Create Stop with just the required parameters
                 Stop stop = new Stop(id, name, new Coordinates(lat, lon));
                 stopsMap.put(id, stop);
             }
@@ -56,7 +53,6 @@ public class StopsCache {
     }
 
     public static void init() {
-        // Trigger initialization if not already done
         getInstance();
     }
 

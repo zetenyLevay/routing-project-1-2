@@ -8,11 +8,10 @@ import routing.routingEngineModels.Stop.Stop;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DijkstraModelConverter {
 
-    // Convert from normal models to Dijkstra models
+    //really regretting this
     public static DijkstraInputJourney toDijkstraInputJourney(InputJourney inputJourney) {
         return new DijkstraInputJourney(
                 toDijkstraCoordinates(inputJourney.getStart()),
@@ -33,8 +32,6 @@ public class DijkstraModelConverter {
                 stop.getLongitude()
         );
     }
-
-    // Convert from Dijkstra models to normal models
     public static FinalRoute toFinalRoute(DijkstraFinalRoute dijkstraFinalRoute, LocalTime journeyStartTime) {
         List<RouteStep> routeSteps = new ArrayList<>();
         LocalTime currentTime = journeyStartTime;

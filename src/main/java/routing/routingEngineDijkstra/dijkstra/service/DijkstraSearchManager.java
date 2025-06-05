@@ -23,7 +23,7 @@ public class DijkstraSearchManager {
     public SearchNode getNextNode() {
         while (!queue.isEmpty()) {
             SearchNode current = queue.poll();
-            // Skip outdated nodes (lazy deletion)
+            //lazy
             if (current.time <= earliestArrival.getOrDefault(current.stop, Integer.MAX_VALUE)) {
                 return current;
             }

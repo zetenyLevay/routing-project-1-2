@@ -27,9 +27,8 @@ public class DijkstraRouter {
         this.walkingService = new WalkingTransferService(new HaversineDistanceCalculator(), maxWalkingDistanceMeters);
         this.reconstructionService = new PathReconstructionService();
         this.routeInfo = routeInfo;
-        this.maxReasonableJourneyTime = 4 * 3600; // 4 hours max
+        this.maxReasonableJourneyTime = 4 * 3600; //if you travel more than 4 hrs in a city youre mad
 
-        // Pre-compute walking connections once during initialization
         precomputeWalkingConnections();
     }
 
@@ -39,7 +38,6 @@ public class DijkstraRouter {
 
             for (DijkstraStop to : stops.values()) {
                 if (!from.equals(to) && walkingService.canWalkBetween(from, to)) {
-                    // Create template walking connection (departure time will be set during search)
                     int walkTime = walkingService.calculateWalkTime(from, to);
                     DijkstraConnection walkConn = new DijkstraConnection(
                             from, to, 0, walkTime, null, "WALK", "Walk to " + to.name
@@ -68,12 +66,9 @@ public class DijkstraRouter {
         while (!searchManager.isEmpty()) {
             SearchNode current = searchManager.getNextNode();
             if (current == null) break;
-
-            // Early termination for unreasonably long journeys
             if (current.time > departureTimeSec + maxReasonableJourneyTime) {
                 break;
             }
-
             if (current.stop.equals(end)) {
                 return reconstructionService.reconstructJourney(current, departureTimeSec);
             }
@@ -88,15 +83,14 @@ public class DijkstraRouter {
 
         for (DijkstraConnection conn : connections) {
             DijkstraConnection actualConnection;
-
             if ("WALK".equals(conn.routeId)) {
-                // For walking connections, adjust departure time to current time
+
                 actualConnection = new DijkstraConnection(
                         conn.from, conn.to, current.time, current.time + conn.getDuration(),
                         conn.tripId, conn.routeId, conn.headSign
                 );
             } else {
-                // For transit connections, only use if departure time is valid
+
                 if (conn.departureTime < current.time) continue;
                 actualConnection = conn;
             }
@@ -161,15 +155,12 @@ public class DijkstraRouter {
         List<DijkstraRouteStep> steps = new ArrayList<>();
         int adjustedStartTime = departureSec;
 
-        // Add initial walking step if needed
         if (!isSameCoordinate(inputJourney.getStart(), fromStop)) {
             int distance = walkingService.getDistance(inputJourney.getStart(), fromStop);
             double duration = distance / 1.389;
             steps.add(new DijkstraRouteStep("WALK", inputJourney.getStart(), toCoord(fromStop), duration));
             adjustedStartTime += duration;
         }
-
-        // Add journey legs
         for (JourneyLeg leg : journey.legs) {
             String mode = leg.isWalking ? "WALK" : leg.routeId;
             if (leg.isWalking) {
@@ -180,8 +171,6 @@ public class DijkstraRouter {
                         leg.getDuration(), leg.to.name, info));
             }
         }
-
-        // Add final walking step if needed
         DijkstraCoordinates endCoord = inputJourney.getEnd();
         DijkstraCoordinates toStopCoord = toCoord(toStop);
 
@@ -202,11 +191,9 @@ public class DijkstraRouter {
     private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraStop b) {
         return a.getLatitude() == b.lat && a.getLongitude() == b.lon;
     }
-
     private DijkstraCoordinates toCoord(DijkstraStop stop) {
         return new DijkstraCoordinates(stop.lat, stop.lon);
     }
-
     private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraCoordinates b) {
         return a.getLatitude() == b.getLatitude() && a.getLongitude() == b.getLongitude();
     }
