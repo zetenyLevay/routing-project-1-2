@@ -15,11 +15,11 @@ import java.util.Random;
 public class RoutingExample {
     public static void main(String[] args) {
         try {
-            DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(1000);
+            DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(300);
             DijkstraRoutePlanner strategy = new DijkstraRoutePlanner(dijkstraRouter);
             Router router = new Router(strategy);
 
-            int testCount = 6100;
+            int testCount = 50;
             Random random = new Random(42);
 
             double minLat = 47.3, maxLat = 47.6;

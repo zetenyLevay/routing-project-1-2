@@ -21,9 +21,10 @@ public class BusStopDataLoader {        //Load bus stop location data from CSV f
                 if (csvColumns.length < 4) continue;
                 
                 try {
+                   String stopId = csvColumns[0];
                     double latitude = Double.parseDouble(csvColumns[2]);
                     double longitude = Double.parseDouble(csvColumns[3]);
-                    busStopsList.add(new LocationPoint(latitude, longitude));
+                    busStopsList.add(new LocationPoint(latitude, longitude, stopId));
                 } catch (NumberFormatException ignored) {
                 }
             }

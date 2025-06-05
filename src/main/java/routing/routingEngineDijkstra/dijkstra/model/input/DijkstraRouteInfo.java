@@ -13,3 +13,4 @@ public class DijkstraRouteInfo {
         this.headSign = headSign;
     }
 }
+//what could possibly go wrong with having public attributes he asked

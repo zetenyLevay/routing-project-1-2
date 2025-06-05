@@ -35,7 +35,9 @@ public class HeatmapData {
             } else {
                 float normalized = (float) ((time - minTime) / (maxTime - minTime));
                 normalized = Math.max(0, Math.min(1, normalized));
-                stopColors.put(stop, ColorGradient.getGreenToRedGradient(normalized));
+        double gamma = 0.8; 
+        double adjusted = Math.pow(normalized, gamma);
+        stopColors.put(stop, ColorGradient.getGreenToRedGradient((float) adjusted));
             }
         });
     }

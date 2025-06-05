@@ -12,7 +12,6 @@ public class TravelTimeHeatmapAPI {
     private final HeatmapGenerator heatmapGenerator;
 
     public TravelTimeHeatmapAPI(Router router) {
-        // Initialize cache if not already loaded
         StopsCache.init();
         this.heatmapGenerator = new HeatmapGenerator(router);
     }
