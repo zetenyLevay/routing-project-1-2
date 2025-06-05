@@ -1,8 +1,12 @@
 package routing.routingEngineModels;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import routing.routingEngineModels.Stop.Stop;
 
 public class RouteStep {
+
     private String modeOfTransport;
     private Coordinates toCoord;
     private Stop toStop; // Add this field
@@ -11,11 +15,11 @@ public class RouteStep {
     private String departureTime; // Add this field
     private String arrivalTime;   // Add this field
     private String stopStr;
-    private RouteInfo routeInfo; 
+    private RouteInfo routeInfo;
 
     // Constructor for transit
-    public RouteStep(String modeOfTransport, Stop toStop, double numOfMinutes, 
-                     String departureTime, String arrivalTime, String stopStr, RouteInfo routeInfo) {
+    public RouteStep(String modeOfTransport, Stop toStop, double numOfMinutes,
+            String departureTime, String arrivalTime, String stopStr, RouteInfo routeInfo) {
         this.modeOfTransport = modeOfTransport;
         this.toStop = toStop;
         this.toCoord = new Coordinates(toStop.getLatitude(), toStop.getLongitude());
@@ -24,7 +28,7 @@ public class RouteStep {
         this.arrivalTime = arrivalTime;
         this.startTime = departureTime; // Keep for backward compatibility
         this.stopStr = stopStr;
-        this.routeInfo = routeInfo; 
+        this.routeInfo = routeInfo;
     }
 
     // Constructor for walking steps
@@ -80,29 +84,49 @@ public class RouteStep {
             int hours = Integer.parseInt(parts[0]);
             int minutes = Integer.parseInt(parts[1]);
             int seconds = Integer.parseInt(parts[2]);
-            
+
             int totalSeconds = hours * 3600 + minutes * 60 + seconds + secondsToAdd;
-            
+
             int newHours = totalSeconds / 3600;
             int newMinutes = (totalSeconds % 3600) / 60;
             int newSecs = totalSeconds % 60;
-            
+
             return String.format("%02d:%02d:%02d", newHours, newMinutes, newSecs);
-            
+
         } catch (Exception e) {
             return timeStr;
         }
     }
 
-    @Override
-    public String toString() {
-        if (this.modeOfTransport.equals("walk")) {
-            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
-                                 modeOfTransport, toCoord, numOfMinutes, startTime);
-        }else{
-            return String.format("{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
-                                 modeOfTransport, toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString());
-        }
-       
+@Override
+public String toString() {
+    if (modeOfTransport.equals("walk")) {
+        return String.format(
+            "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
+            modeOfTransport, toCoord, numOfMinutes, startTime
+        );
+    } else {
+        return String.format(
+            "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
+            modeOfTransport, toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString()
+        );
     }
+}
+
+public Map<String,Object> toJSON() {
+    Map<String,Object> json = new HashMap<>();
+    json.put("mode", modeOfTransport);
+
+    json.put("to", toCoord.toJSON());
+
+    json.put("duration", numOfMinutes);
+    json.put("startTime", startTime);
+
+    if (!modeOfTransport.equals("walk")) {
+        json.put("stop", stopStr);
+        json.put("route", routeInfo.toJSON());
+    }
+    return json;
+}
+
 }
