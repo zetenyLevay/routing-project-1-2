@@ -19,4 +19,8 @@ public class DijkstraConnection {
         this.routeId = routeId;
         this.headSign = headSign;
     }
+
+    public int getDuration() {
+        return arrivalTime - departureTime;
+    }
 }

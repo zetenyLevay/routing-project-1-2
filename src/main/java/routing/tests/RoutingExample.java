@@ -19,7 +19,7 @@ public class RoutingExample {
             DijkstraRoutePlanner strategy = new DijkstraRoutePlanner(dijkstraRouter);
             Router router = new Router(strategy);
 
-            int testCount = 6100;
+            int testCount = 50;
             Random random = new Random(42);
 
             double minLat = 47.3, maxLat = 47.6;

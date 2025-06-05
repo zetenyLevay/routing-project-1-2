@@ -14,9 +14,7 @@ public class DijkstraSearchManager {
         this.earliestArrival = new HashMap<>();
     }
 
-
-
-        public void initialize(DijkstraStop startStop, int departureTime) {
+    public void initialize(DijkstraStop startStop, int departureTime) {
         SearchNode startNode = new SearchNode(startStop, departureTime, null, null);
         queue.add(startNode);
         earliestArrival.put(startStop, departureTime);
@@ -25,15 +23,13 @@ public class DijkstraSearchManager {
     public SearchNode getNextNode() {
         while (!queue.isEmpty()) {
             SearchNode current = queue.poll();
+            // Skip outdated nodes (lazy deletion)
             if (current.time <= earliestArrival.getOrDefault(current.stop, Integer.MAX_VALUE)) {
                 return current;
             }
-
-
         }
         return null;
     }
-
 
     public boolean tryAddNode(SearchNode newNode) {
         int currentBest = earliestArrival.getOrDefault(newNode.stop, Integer.MAX_VALUE);
@@ -44,8 +40,6 @@ public class DijkstraSearchManager {
         }
         return false;
     }
-
-
 
     public boolean isEmpty() {
         return queue.isEmpty();
