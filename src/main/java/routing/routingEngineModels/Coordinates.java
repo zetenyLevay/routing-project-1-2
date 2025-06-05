@@ -10,14 +10,13 @@ public class Coordinates {
     }
 
     public Coordinates(String coord) {
-        String[] parts = (coord).split(",");
+        // you can keep this around if you like, but it will no longer be used.
+        String[] parts = coord.split(",");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid coordinate format. Expected 'lat,lon'");
         }
-        String lat = parts[0].trim();
-        String lon = parts[1].trim();
-        this.latitude = Double.parseDouble(lat);
-        this.longitude = Double.parseDouble(lon);
+        this.latitude = Double.parseDouble(parts[0].trim());
+        this.longitude = Double.parseDouble(parts[1].trim());
     }
 
     public double getLatitude() {
@@ -28,12 +27,12 @@ public class Coordinates {
         return this.longitude;
     }
 
-
-
+    @Override
     public String toString() {
-        return "{" +
-                "\"lat\":" + latitude +
-                ",\"lon\":" + longitude +
-                "}";
+        // nobody else relies on toString(), so you can leave this as is or simplify.
+        return "{"
+             + "\"lat\":" + latitude
+             + ",\"lon\":" + longitude
+             + "}";
     }
 }

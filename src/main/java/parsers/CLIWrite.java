@@ -47,7 +47,7 @@ public class CLIWrite {
         // JsonObject outer = JsonParser.parseString(jsonString).getAsJsonObject();
 
         // System.out.println(route);
-        // // responseWriter.write(route);
+        responseWriter.write(route);
         responseWriter.write(Map.of("ok", route.toString()));
 
       
