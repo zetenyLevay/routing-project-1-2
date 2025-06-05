@@ -16,23 +16,15 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class MapRenderer {         //draws eveerything on the map
+public class MapRenderer {
     private final BufferedImage baseMapImage;
-    private final BufferedImage heatmapOverlay;
     private final List<LocationPoint> busStopPoints;
     private final MapViewTransform viewTransform;
-    private boolean isHeatmapEnabled = false;
 
-    public MapRenderer(BufferedImage baseMapImage, BufferedImage heatmapOverlay, 
-                      List<LocationPoint> busStopPoints, MapViewTransform viewTransform) {
+    public MapRenderer(BufferedImage baseMapImage, List<LocationPoint> busStopPoints, MapViewTransform viewTransform) {
         this.baseMapImage = baseMapImage;
-        this.heatmapOverlay = heatmapOverlay;
         this.busStopPoints = busStopPoints;
         this.viewTransform = viewTransform;
-    }
-
-    public void setHeatmapEnabled(boolean enabled) {
-        this.isHeatmapEnabled = enabled;
     }
 
     public void render(Graphics2D graphics2D) {
@@ -43,26 +35,8 @@ public class MapRenderer {         //draws eveerything on the map
         graphics2D.translate(viewTransform.getHorizontalOffset(), viewTransform.getVerticalOffset());
         graphics2D.scale(viewTransform.getZoomLevel(), viewTransform.getZoomLevel());
 
-        renderBaseMap(graphics2D);
-        
-        if (isHeatmapEnabled) {
-            renderHeatmap(graphics2D);
-        }
-        
-        renderBusStops(graphics2D);
-
-        graphics2D.setTransform(originalTransform);
-    }
-
-    private void renderBaseMap(Graphics2D graphics2D) {
         graphics2D.drawImage(baseMapImage, 0, 0, null);
-    }
 
-    private void renderHeatmap(Graphics2D graphics2D) {
-        graphics2D.drawImage(heatmapOverlay, 0, 0, null);
-    }
-
-    private void renderBusStops(Graphics2D graphics2D) {
         graphics2D.setColor(Color.RED);
         for (LocationPoint busStop : busStopPoints) {
             Point2D pixelPosition = viewTransform.convertLocationToPixel(busStop);
@@ -70,5 +44,7 @@ public class MapRenderer {         //draws eveerything on the map
             double dotY = pixelPosition.getY() - 4;
             graphics2D.fill(new Ellipse2D.Double(dotX, dotY, 8, 8));
         }
+
+        graphics2D.setTransform(originalTransform);
     }
 }

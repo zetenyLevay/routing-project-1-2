@@ -31,6 +31,7 @@ public class MapUI {
     public static void main(String[] args) throws IOException {
         MapUI.create();
     }
+
     public static void create() {
         List<LocationPoint> busStopData = BusStopDataLoader.loadFromCsvFile("data/stops.csv");
         double northBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(47, 31, 35.08);
@@ -53,10 +54,16 @@ public class MapUI {
         final TravelTimeHeatmapAPI finalHeatmapAPI = heatmapAPI;
         SwingUtilities.invokeLater(() -> {
             try {
-                JTextField startCoordinateInput = new JTextField("Start (lat,lon)", 20);
-                JTextField endCoordinateInput = new JTextField("End (lat,lon)", 20);
+                JTextField startCoordinateInput = new JTextField("(lat,lon)", 20);
+                JTextField endCoordinateInput = new JTextField("(lat,lon)", 20);
                 MapDisplay mapDisplayPanel = new MapDisplay(
                     mapBoundaries, busStopData, startCoordinateInput, endCoordinateInput);
+                JScrollPane scrollPane = new JScrollPane(mapDisplayPanel);
+                scrollPane.getViewport().addMouseWheelListener(e -> {
+                    mapDisplayPanel.dispatchEvent(
+                        SwingUtilities.convertMouseEvent(scrollPane.getViewport(), e, mapDisplayPanel)
+                    );
+                });
                 JPanel controlPanel;
                 if (finalHeatmapAPI != null) {
                     controlPanel = UserInterfaceBuilder.createControlPanel(
@@ -67,7 +74,7 @@ public class MapUI {
                 }
                 JPanel applicationPanel = new JPanel(new BorderLayout());
                 applicationPanel.add(controlPanel, BorderLayout.NORTH);
-                applicationPanel.add(new JScrollPane(mapDisplayPanel), BorderLayout.CENTER);
+                applicationPanel.add(scrollPane, BorderLayout.CENTER);
                 JFrame mainWindow = UserInterfaceBuilder.createMainWindow(applicationPanel);
                 mainWindow.setVisible(true);
             } catch (IOException fileError) {

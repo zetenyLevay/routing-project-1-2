@@ -19,7 +19,6 @@ import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 import gui.interaction.CoordinateSelectionManager;
 import gui.interaction.MapInteractionHandler;
-import gui.rendering.HeatmapGenerator;
 import gui.rendering.MapRenderer;
 import gui.transform.MapViewTransform;
 
@@ -29,7 +28,6 @@ public class MapDisplay extends JPanel {
     private final MapViewTransform viewTransform;
     private final CoordinateSelectionManager selectionManager;
     private final BufferedImage baseMapImage;
-    private final BufferedImage heatmapOverlay;
     private final List<LocationPoint> busStopPoints;
 
     private Map<String, Color> travelTimeHeatmapColors = new HashMap<>();
@@ -39,18 +37,13 @@ public class MapDisplay extends JPanel {
                       JTextField startField, JTextField endField) throws IOException {
         this.baseMapImage = loadMapImageFromResources();
         this.busStopPoints = busStops;
-        HeatmapGenerator heatmapGenerator = new HeatmapGenerator(baseMapImage, bounds, busStops);
-        this.heatmapOverlay = heatmapGenerator.generateHeatmap();
         this.viewTransform = new MapViewTransform(baseMapImage, bounds);
         this.selectionManager = new CoordinateSelectionManager(startField, endField);
-        this.mapRenderer = new MapRenderer(baseMapImage, heatmapOverlay, busStopPoints, viewTransform);
+        this.mapRenderer = new MapRenderer(baseMapImage, busStopPoints, viewTransform);
         this.interactionHandler = new MapInteractionHandler(viewTransform, selectionManager, this);
         setupComponent();
-    }
-
-    public void toggleHeatatmapVisibility(boolean isVisible) {
-        mapRenderer.setHeatmapEnabled(isVisible);
-        repaint();
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void adjustZoom(double zoomMultiplier) {
@@ -153,5 +146,9 @@ public class MapDisplay extends JPanel {
         g2d.fillOval(legendX, legendY + 65, 12, 12);
         g2d.setColor(Color.BLACK);
         g2d.drawString("Long", legendX + 20, legendY + 75);
+    }
+
+    public List<LocationPoint> getBusStopPoints() {
+        return busStopPoints;
     }
 }

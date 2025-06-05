@@ -84,13 +84,6 @@ public class UserInterfaceBuilder {
             }
         });
 
-        JButton clearHeatmapButton = new JButton("Clear Heatmap");
-        clearHeatmapButton.addActionListener(e -> mapDisplay.clearTravelTimeHeatmap());
-
-        JToggleButton heatmapToggle = new JToggleButton("Show Base Heatmap", true);
-        heatmapToggle.addActionListener(e ->
-            mapDisplay.toggleHeatatmapVisibility(heatmapToggle.isSelected()));
-
         JButton zoomInButton = new JButton("+");
         JButton zoomOutButton = new JButton("-");
         zoomInButton.addActionListener(e -> mapDisplay.adjustZoom(1.5));
@@ -103,19 +96,13 @@ public class UserInterfaceBuilder {
         controlPanel.add(endField);
         controlPanel.add(zoomInButton);
         controlPanel.add(zoomOutButton);
-        controlPanel.add(heatmapToggle);
         controlPanel.add(generateHeatmapButton);
-        controlPanel.add(clearHeatmapButton);
 
         return controlPanel;
     }
 
     public static JPanel createControlPanelWithoutHeatmap(JTextField startField, JTextField endField,
                                                           MapDisplay mapDisplay) {
-        JToggleButton heatmapToggle = new JToggleButton("Show Base Heatmap", true);
-        heatmapToggle.addActionListener(e ->
-            mapDisplay.toggleHeatatmapVisibility(heatmapToggle.isSelected()));
-
         JButton zoomInButton = new JButton("+");
         JButton zoomOutButton = new JButton("-");
         zoomInButton.addActionListener(e -> mapDisplay.adjustZoom(1.5));
@@ -128,7 +115,6 @@ public class UserInterfaceBuilder {
         controlPanel.add(endField);
         controlPanel.add(zoomInButton);
         controlPanel.add(zoomOutButton);
-        controlPanel.add(heatmapToggle);
 
         JButton disabledHeatmapButton = new JButton("Travel Heatmap (Unavailable)");
         disabledHeatmapButton.setEnabled(false);
