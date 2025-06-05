@@ -2,7 +2,7 @@ package gui;
 
 import java.io.IOException;
 
-import parsers.ZipToSQLite;
+import parsers.RequestHandler;
 
 public class MainUI {
 
@@ -14,9 +14,10 @@ public class MainUI {
         //{"load":"budapest_gtfs.zip"}
         //{"load":"data/budapest_gtfs.zip"}
         //NOTE: you have to be explicit about the path to the GTFS file
-        //    RequestHandler rh = new RequestHandler();
-        //    rh.run();
-        ZipToSQLite zts = new ZipToSQLite();
-        zts.run("data/budapest_gtfs.zip");
+           RequestHandler rh = new RequestHandler();
+           rh.run();
+           
+        // ZipToSQLite zts = new ZipToSQLite();
+        // zts.run("data/budapest_gtfs.zip");
     }
 }

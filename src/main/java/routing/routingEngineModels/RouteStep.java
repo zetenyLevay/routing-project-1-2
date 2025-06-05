@@ -98,35 +98,41 @@ public class RouteStep {
         }
     }
 
-@Override
-public String toString() {
-    if (modeOfTransport.equals("walk")) {
-        return String.format(
-            "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
-            modeOfTransport, toCoord, numOfMinutes, startTime
-        );
-    } else {
-        return String.format(
-            "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
-            modeOfTransport, toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString()
-        );
+    @Override
+    public String toString() {
+        if (modeOfTransport.equals("walk")) {
+            return String.format(
+                    "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
+                    modeOfTransport, toCoord, numOfMinutes, startTime
+            );
+        } else {
+            return String.format(
+                    "{\"mode\":\"ride\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
+                    toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString()
+            );
+        }
     }
-}
 
-public Map<String,Object> toJSON() {
-    Map<String,Object> json = new HashMap<>();
-    json.put("mode", modeOfTransport);
+    public Map<String, Object> toJSON() {
+        Map<String, Object> json = new HashMap<>();
 
-    json.put("to", toCoord.toJSON());
+        if (modeOfTransport.equals("walk")) {
+            json.put("mode", modeOfTransport);
+        }
+        else {
+            json.put("mode", "ride");
+        }
+        
+        json.put("to", toCoord.toJSON());
 
-    json.put("duration", numOfMinutes);
-    json.put("startTime", startTime);
+        json.put("duration", numOfMinutes);
+        json.put("startTime", startTime);
 
-    if (!modeOfTransport.equals("walk")) {
-        json.put("stop", stopStr);
-        json.put("route", routeInfo.toJSON());
+        if (!modeOfTransport.equals("walk")) {
+            json.put("stop", stopStr);
+            json.put("route", routeInfo.toJSON());
+        }
+        return json;
     }
-    return json;
-}
 
 }
