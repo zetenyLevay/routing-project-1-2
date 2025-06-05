@@ -6,6 +6,13 @@ import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraCoordinates;
 public class HaversineDistanceCalculator implements DistanceCalculator {
     private static final int EARTH_RADIUS_M = 6_371_000;
 
+    // Fast approximation for initial filtering
+    public int estimateQuickDistance(double lat1, double lon1, double lat2, double lon2) {
+        double x = (lon2 - lon1) * Math.cos(Math.toRadians((lat1 + lat2) / 2));
+        double y = (lat2 - lat1);
+        return (int) (Math.sqrt(x*x + y*y) * 111319.491); // meters per degree
+    }
+
     @Override
     public int calculateDistanceMeters(DijkstraStop from, DijkstraStop to) {
         return calculateDistanceMeters(from.lat, from.lon, to.lat, to.lon);

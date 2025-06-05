@@ -23,4 +23,11 @@ public class DijkstraConnection {
     public int getDuration() {
         return arrivalTime - departureTime;
     }
+
+    public DijkstraConnection withUpdatedTimes(int newDepartureTime) {
+        return new DijkstraConnection(
+                from, to, newDepartureTime, newDepartureTime + getDuration(),
+                tripId, routeId, headSign
+        );
+    }
 }

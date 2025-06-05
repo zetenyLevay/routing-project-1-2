@@ -17,6 +17,7 @@ public class DijkstraRouter {
     private final PathReconstructionService reconstructionService;
     private final Map<String, DijkstraRouteInfo> routeInfo;
     private final int maxReasonableJourneyTime;
+    private final HaversineDistanceCalculator distanceCalculator;
 
     public DijkstraRouter(Map<String, DijkstraStop> stops,
                           Map<String, List<DijkstraConnection>> outgoingConnections,
@@ -24,7 +25,8 @@ public class DijkstraRouter {
                           int maxWalkingDistanceMeters) {
         this.stops = stops;
         this.outgoingConnections = new HashMap<>(outgoingConnections);
-        this.walkingService = new WalkingTransferService(new HaversineDistanceCalculator(), maxWalkingDistanceMeters);
+        this.distanceCalculator = new HaversineDistanceCalculator();
+        this.walkingService = new WalkingTransferService(distanceCalculator, maxWalkingDistanceMeters);
         this.reconstructionService = new PathReconstructionService();
         this.routeInfo = routeInfo;
         this.maxReasonableJourneyTime = 4 * 3600; //if you travel more than 4 hrs in a city youre mad
@@ -33,19 +35,32 @@ public class DijkstraRouter {
     }
 
     private void precomputeWalkingConnections() {
-        for (DijkstraStop from : stops.values()) {
-            List<DijkstraConnection> connections = this.outgoingConnections.computeIfAbsent(from.id, k -> new ArrayList<>());
+        stops.values().parallelStream().forEach(from -> {
+            List<DijkstraConnection> connections = new ArrayList<>();
 
             for (DijkstraStop to : stops.values()) {
-                if (!from.equals(to) && walkingService.canWalkBetween(from, to)) {
-                    int walkTime = walkingService.calculateWalkTime(from, to);
-                    DijkstraConnection walkConn = new DijkstraConnection(
-                            from, to, 0, walkTime, null, "WALK", "Walk to " + to.name
-                    );
-                    connections.add(walkConn);
+                if (!from.equals(to) &&
+                        distanceCalculator.estimateQuickDistance(from.lat, from.lon, to.lat, to.lon)
+                                <= walkingService.getMaxWalkingDistance()) {
+
+                    if (walkingService.canWalkBetween(from, to)) {
+                        int walkTime = walkingService.calculateWalkTime(from, to);
+                        connections.add(new DijkstraConnection(
+                                from, to, 0, walkTime, null, "WALK", "Walk to " + to.name
+                        ));
+                    }
                 }
             }
-        }
+
+            if (!connections.isEmpty()) {
+                synchronized (outgoingConnections) {
+                    outgoingConnections.merge(from.id, connections, (oldList, newList) -> {
+                        oldList.addAll(newList);
+                        return oldList;
+                    });
+                }
+            }
+        });
     }
 
     public Journey findShortestJourney(String fromStopId, String toStopId, LocalTime departureTime) {
@@ -79,24 +94,34 @@ public class DijkstraRouter {
     }
 
     private void processConnections(SearchNode current, DijkstraSearchManager searchManager) {
-        List<DijkstraConnection> connections = outgoingConnections.getOrDefault(current.stop.id, Collections.emptyList());
+        List<DijkstraConnection> connections = outgoingConnections.get(current.stop.id);
+        if (connections == null) return;
 
-        for (DijkstraConnection conn : connections) {
-            DijkstraConnection actualConnection;
+        for (int i = 0; i < connections.size(); i++) { // faster than iterator
+            DijkstraConnection conn = connections.get(i);
+            int arrivalTime;
+
             if ("WALK".equals(conn.routeId)) {
-
-                actualConnection = new DijkstraConnection(
-                        conn.from, conn.to, current.time, current.time + conn.getDuration(),
-                        conn.tripId, conn.routeId, conn.headSign
-                );
+                arrivalTime = current.time + conn.getDuration();
             } else {
-
                 if (conn.departureTime < current.time) continue;
-                actualConnection = conn;
+                arrivalTime = conn.arrivalTime;
             }
 
-            SearchNode newNode = new SearchNode(actualConnection.to, actualConnection.arrivalTime, current, actualConnection);
-            searchManager.tryAddNode(newNode);
+            if (arrivalTime < searchManager.getEarliestArrival(conn.to)) {
+                DijkstraConnection actualConnection;
+                if ("WALK".equals(conn.routeId)) {
+                    actualConnection = new DijkstraConnection(
+                            conn.from, conn.to, current.time, arrivalTime,
+                            conn.tripId, conn.routeId, conn.headSign
+                    );
+                } else {
+                    actualConnection = conn;
+                }
+
+                SearchNode newNode = new SearchNode(actualConnection.to, arrivalTime, current, actualConnection);
+                searchManager.tryAddNode(newNode);
+            }
         }
     }
 
