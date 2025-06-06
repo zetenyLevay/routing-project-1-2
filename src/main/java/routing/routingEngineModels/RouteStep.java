@@ -103,12 +103,12 @@ public class RouteStep {
         if (modeOfTransport.equals("walk")) {
             return String.format(
                     "{\"mode\":\"%s\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\"}",
-                    modeOfTransport, toCoord, numOfMinutes, startTime
+                    modeOfTransport, toCoord, numOfMinutes, startTime.substring(0, 5)
             );
         } else {
             return String.format(
                     "{\"mode\":\"ride\",\"to\":\"%s\",\"duration\":\"%.2f\",\"startTime\":\"%s\",\"stop\":%s,\"route\":\"%s\"}",
-                    toCoord, numOfMinutes, departureTime, stopStr, routeInfo.toString()
+                    toCoord, numOfMinutes, departureTime.substring(0, 5), stopStr, routeInfo.toString()
             );
         }
     }
@@ -126,7 +126,7 @@ public class RouteStep {
         json.put("to", toCoord.toJSON());
 
         json.put("duration", numOfMinutes);
-        json.put("startTime", startTime);
+        json.put("startTime", startTime.substring(0, 5));
 
         if (!modeOfTransport.equals("walk")) {
             json.put("stop", stopStr);
