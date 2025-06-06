@@ -5,18 +5,24 @@ import routing.routingEngineDijkstra.dijkstra.model.input.DijkstraStop;
 import java.util.*;
 
 public class GridIndex {
-    private final Map<String, List<DijkstraStop>> gridCells = new HashMap<>();
+    private final Map<String, DijkstraStop[]> gridCells = new HashMap<>();
     private final double cellSizeDegrees;
     private final int maxWalkingDistanceMeters;
+    private final Map<String, String> stopToCellMap = new HashMap<>();
 
     public GridIndex(Collection<DijkstraStop> stops, int maxWalkingDistanceMeters) {
         this.maxWalkingDistanceMeters = maxWalkingDistanceMeters;
         this.cellSizeDegrees = (maxWalkingDistanceMeters * 2) / 111320.0;
 
+        Map<String, List<DijkstraStop>> tempCells = new HashMap<>();
         for (DijkstraStop stop : stops) {
             String cellKey = getCellKey(stop.lat, stop.lon);
-            gridCells.computeIfAbsent(cellKey, k -> new ArrayList<>()).add(stop);
+            tempCells.computeIfAbsent(cellKey, k -> new ArrayList<>()).add(stop);
+            stopToCellMap.put(stop.id, cellKey);
         }
+
+        tempCells.forEach((key, list) ->
+                gridCells.put(key, list.toArray(new DijkstraStop[0])));
     }
 
     private String getCellKey(double lat, double lon) {
@@ -25,18 +31,38 @@ public class GridIndex {
         return latCell + "," + lonCell;
     }
 
+    public boolean areStopsNearby(DijkstraStop stop1, DijkstraStop stop2) {
+        String cell1 = stopToCellMap.get(stop1.id);
+        String cell2 = stopToCellMap.get(stop2.id);
+
+        if (cell1.equals(cell2)) return true;
+
+        String[] parts1 = cell1.split(",");
+        String[] parts2 = cell2.split(",");
+        int lat1 = Integer.parseInt(parts1[0]);
+        int lon1 = Integer.parseInt(parts1[1]);
+        int lat2 = Integer.parseInt(parts2[0]);
+        int lon2 = Integer.parseInt(parts2[1]);
+
+        return Math.abs(lat1 - lat2) <= 1 && Math.abs(lon1 - lon2) <= 1;
+    }
+
     public List<DijkstraStop> getNearbyStops(DijkstraStop stop) {
         List<DijkstraStop> nearbyStops = new ArrayList<>();
-        int searchRadius = 1;
+        String baseCellKey = stopToCellMap.get(stop.id);
 
-        for (int latOffset = -searchRadius; latOffset <= searchRadius; latOffset++) {
-            for (int lonOffset = -searchRadius; lonOffset <= searchRadius; lonOffset++) {
-                String cellKey = getCellKey(
-                        stop.lat + (latOffset * cellSizeDegrees),
-                        stop.lon + (lonOffset * cellSizeDegrees)
-                );
-                if (gridCells.containsKey(cellKey)) {
-                    nearbyStops.addAll(gridCells.get(cellKey));
+        if (baseCellKey != null) {
+            String[] parts = baseCellKey.split(",");
+            int baseLat = Integer.parseInt(parts[0]);
+            int baseLon = Integer.parseInt(parts[1]);
+
+            for (int latOffset = -1; latOffset <= 1; latOffset++) {
+                for (int lonOffset = -1; lonOffset <= 1; lonOffset++) {
+                    String cellKey = (baseLat + latOffset) + "," + (baseLon + lonOffset);
+                    DijkstraStop[] cellStops = gridCells.get(cellKey);
+                    if (cellStops != null) {
+                        Collections.addAll(nearbyStops, cellStops);
+                    }
                 }
             }
         }

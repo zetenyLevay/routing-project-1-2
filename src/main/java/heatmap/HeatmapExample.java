@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class HeatmapExample {
     public static void main(String[] args) throws SQLException {
-        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
+        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(300);
         Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
 
         TravelTimeHeatmapAPI heatmapAPI = new TravelTimeHeatmapAPI(router);

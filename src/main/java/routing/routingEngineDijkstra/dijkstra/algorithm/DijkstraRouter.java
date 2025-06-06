@@ -18,6 +18,7 @@ public class DijkstraRouter {
     private final Map<String, DijkstraRouteInfo> routeInfo;
     private final int maxReasonableJourneyTime;
     private final HaversineDistanceCalculator distanceCalculator;
+    private final Map<String, DijkstraConnection[]> connectionArrayCache = new HashMap<>();
 
     public DijkstraRouter(Map<String, DijkstraStop> stops,
                           Map<String, List<DijkstraConnection>> outgoingConnections,
@@ -33,38 +34,50 @@ public class DijkstraRouter {
         );
         this.reconstructionService = new PathReconstructionService();
         this.routeInfo = routeInfo;
-        this.maxReasonableJourneyTime = 4 * 3600; //if you travel more than 4 hrs in a city youre mad
+        this.maxReasonableJourneyTime = 4 * 3600;
 
         precomputeWalkingConnections();
+        precomputeConnectionArrays();
+    }
+
+    private void precomputeConnectionArrays() {
+        outgoingConnections.forEach((stopId, connections) -> {
+            connections.sort(Comparator.comparingInt(c ->
+                    "WALK".equals(c.routeId) ? 0 : c.departureTime));
+            connectionArrayCache.put(stopId, connections.toArray(new DijkstraConnection[0]));
+        });
     }
 
     private void precomputeWalkingConnections() {
-        stops.values().parallelStream().forEach(from -> {
-            List<DijkstraConnection> connections = new ArrayList<>();
+        stops.values().parallelStream()
+                .filter(stop -> !outgoingConnections.containsKey(stop.id) ||
+                        outgoingConnections.get(stop.id).stream().noneMatch(c -> "WALK".equals(c.routeId)))
+                .forEach(from -> {
+                    List<DijkstraConnection> connections = new ArrayList<>();
 
-            for (DijkstraStop to : stops.values()) {
-                if (!from.equals(to) &&
-                        distanceCalculator.estimateQuickDistance(from.lat, from.lon, to.lat, to.lon)
-                                <= walkingService.getMaxWalkingDistance()) {
+                    for (DijkstraStop to : stops.values()) {
+                        if (!from.equals(to) &&
+                                distanceCalculator.estimateQuickDistance(from.lat, from.lon, to.lat, to.lon)
+                                        <= walkingService.getMaxWalkingDistance()) {
 
-                    if (walkingService.canWalkBetween(from, to)) {
-                        int walkTime = walkingService.calculateWalkTime(from, to);
-                        connections.add(new DijkstraConnection(
-                                from, to, 0, walkTime, null, "WALK", "Walk to " + to.name
-                        ));
+                            if (walkingService.canWalkBetween(from, to)) {
+                                int walkTime = walkingService.calculateWalkTime(from, to);
+                                connections.add(new DijkstraConnection(
+                                        from, to, 0, walkTime, null, "WALK", "Walk to " + to.name
+                                ));
+                            }
+                        }
                     }
-                }
-            }
 
-            if (!connections.isEmpty()) {
-                synchronized (outgoingConnections) {
-                    outgoingConnections.merge(from.id, connections, (oldList, newList) -> {
-                        oldList.addAll(newList);
-                        return oldList;
-                    });
-                }
-            }
-        });
+                    if (!connections.isEmpty()) {
+                        synchronized (outgoingConnections) {
+                            outgoingConnections.merge(from.id, connections, (oldList, newList) -> {
+                                oldList.addAll(newList);
+                                return oldList;
+                            });
+                        }
+                    }
+                });
     }
 
     public Journey findShortestJourney(String fromStopId, String toStopId, LocalTime departureTime) {
@@ -98,34 +111,40 @@ public class DijkstraRouter {
     }
 
     private void processConnections(SearchNode current, DijkstraSearchManager searchManager) {
-        List<DijkstraConnection> connections = outgoingConnections.get(current.stop.id);
+        DijkstraConnection[] connections = connectionArrayCache.get(current.stop.id);
         if (connections == null) return;
 
-        for (int i = 0; i < connections.size(); i++) { // faster than iterator
-            DijkstraConnection conn = connections.get(i);
+        for (DijkstraConnection conn : connections) {
             int arrivalTime;
 
             if ("WALK".equals(conn.routeId)) {
                 arrivalTime = current.time + conn.getDuration();
             } else {
                 if (conn.departureTime < current.time) continue;
+
+                if (conn.departureTime > current.time + 1800) {
+                    continue;
+                }
+
                 arrivalTime = conn.arrivalTime;
             }
 
-            if (arrivalTime < searchManager.getEarliestArrival(conn.to)) {
-                DijkstraConnection actualConnection;
-                if ("WALK".equals(conn.routeId)) {
-                    actualConnection = new DijkstraConnection(
-                            conn.from, conn.to, current.time, arrivalTime,
-                            conn.tripId, conn.routeId, conn.headSign
-                    );
-                } else {
-                    actualConnection = conn;
-                }
-
-                SearchNode newNode = new SearchNode(actualConnection.to, arrivalTime, current, actualConnection);
-                searchManager.tryAddNode(newNode);
+            if (arrivalTime >= searchManager.getEarliestArrival(conn.to)) {
+                continue;
             }
+
+            DijkstraConnection actualConnection;
+            if ("WALK".equals(conn.routeId)) {
+                actualConnection = new DijkstraConnection(
+                        conn.from, conn.to, current.time, arrivalTime,
+                        conn.tripId, conn.routeId, conn.headSign
+                );
+            } else {
+                actualConnection = conn;
+            }
+
+            SearchNode newNode = new SearchNode(actualConnection.to, arrivalTime, current, actualConnection);
+            searchManager.tryAddNode(newNode);
         }
     }
 
