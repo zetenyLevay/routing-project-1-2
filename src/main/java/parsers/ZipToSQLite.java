@@ -1,3 +1,5 @@
+// ── File: parsers/ZipToSQLite.java ──────────────────────────────────────
+
 package parsers;
 
 import java.io.File;
@@ -30,51 +32,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * ZipToSQLite.java
  *
- * This class provides functionality to load GTFS data from a ZIP file into an SQLite database.
- * It can also validate existing SQLite databases.
+ * This class provides functionality to load GTFS data from a ZIP file into an SQLite database,
+ * or to validate an existing SQLite .db file.  The run(...) method now returns the actual
+ * database filename that got loaded (e.g. "budapest_gtfs.db"), so that the caller can construct
+ * a JDBC URL at runtime.
  *
  * Usage:
- *   ZipToSQLite.run("path/to/some-gtfs.zip");
+ *   String dbName = ZipToSQLite.run("path/to/some-gtfs.zip");
  */
 public class ZipToSQLite {
 
-
     /**
-     * Main method to run the ZipToSQLite functionality.
-     * It accepts a file name as an argument, which can be a .db or .zip file.
-     *
-     * @param fileName The name of the file to process
-     * @throws IOException if there is an error reading the file
-     * @throws SQLException if there is an error with the SQLite database
+     * Main method to run the ZipToSQLite functionality from the command line.
+     * It accepts a single argument (either .zip or .db).  On success, prints {"ok":"loaded"}.
+     * On error, prints {"error":"…"} and exits.
      */
-    public static void run(String fileName) throws IOException, SQLException {
-        File f = new File(fileName);
-
-        if (!f.exists() || !f.isFile()) {
-            throw new IOException("File not found: " + fileName);
-        }
-
-        String lc = fileName.toLowerCase();
-        if (lc.endsWith(".db")) {
-            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + fileName)) {
-            }
-            return;
-        }
-
-        if (lc.endsWith(".zip")) {
-            String dbName = computeDbName(f.getName());
-            boolean dbAlreadyExisted = new File(dbName).exists();
-
-            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbName)) {
-                configureDatabase(conn);
-                processZipFile(fileName, conn, dbAlreadyExisted);
-            }
-            return;
-        }
-
-        throw new IllegalArgumentException("Unsupported file type: " + fileName);
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in, "UTF-8");
         ObjectMapper mapper = new ObjectMapper();
@@ -89,6 +61,7 @@ public class ZipToSQLite {
             if (line.isEmpty()) {
                 continue;
             }
+
             JsonNode root;
             try {
                 root = mapper.readTree(line);
@@ -122,29 +95,10 @@ public class ZipToSQLite {
             }
 
             String lc = filename.toLowerCase();
-
-            if (lc.endsWith(".db")) {
+            if (lc.endsWith(".db") || lc.endsWith(".zip")) {
                 try {
-                    run(filename);
-                    System.out.println("{\"ok\":\"loaded\"}");
-                    continue;
-                } catch (IOException ioe) {
-
-                    String msg = escapeForJson(ioe.getMessage());
-                    System.out.println("{\"error\":\"" + msg + "\"}");
-                    System.exit(1);
-                    return;
-                } catch (SQLException sqle) {
-                    String msg = escapeForJson(sqle.getMessage());
-                    System.out.println("{\"error\":\"" + msg + "\"}");
-                    System.exit(1);
-                    return;
-                }
-            }
-
-            if (lc.endsWith(".zip")) {
-                try {
-                    run(filename);
+                    // run(...) now returns the name of the .db that was loaded/validated
+                    String actualDbName = run(filename);
                     System.out.println("{\"ok\":\"loaded\"}");
                     continue;
                 } catch (IOException ioe) {
@@ -165,8 +119,47 @@ public class ZipToSQLite {
     }
 
     /**
-     * Safely escape any backslashes or quotes inside an exception message
-     * so that we can embed it in JSON.
+     * Load a .zip or .db file.  If .db, just validate connectivity; if .zip, create/overwrite
+     * the corresponding .db file and populate its tables.  Returns the filename of the .db
+     * (for .zip, it's the computed name; for .db input, it's the same as the input filename).
+     *
+     * @param fileName  path to a .zip or .db
+     * @return          the actual .db filename on disk
+     * @throws IOException   if I/O fails or input is missing
+     * @throws SQLException  if any SQLite error occurs
+     */
+    public static String run(String fileName) throws IOException, SQLException {
+        File f = new File(fileName);
+        if (!f.exists() || !f.isFile()) {
+            throw new IOException("File not found: " + fileName);
+        }
+
+        String lc = fileName.toLowerCase();
+        if (lc.endsWith(".db")) {
+            // Just validate opening the database; no further action
+            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + fileName)) {
+                // if this succeeds, the DB is valid
+            }
+            return fileName;
+        }
+
+        if (lc.endsWith(".zip")) {
+            String dbName = computeDbName(f.getName());
+            boolean dbAlreadyExisted = new File(dbName).exists();
+
+            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbName)) {
+                configureDatabase(conn);
+                processZipFile(fileName, conn, dbAlreadyExisted);
+            }
+            return dbName;
+        }
+
+        throw new IllegalArgumentException("Unsupported file type: " + fileName);
+    }
+
+    /**
+     * Safely escape any backslashes or quotes inside an exception message so that we can embed
+     * it in JSON.
      */
     private static String escapeForJson(String raw) {
         if (raw == null) return "";
@@ -195,8 +188,7 @@ public class ZipToSQLite {
     }
 
     /**
-     * If the .db already existed on disk, do nothing. Otherwise, open the ZIP
-     * and process every CSV/TXT entry.
+     * If the .db already existed on disk, do nothing. Otherwise, open the ZIP and process every CSV/TXT entry.
      */
     private static void processZipFile(String zipPath, Connection conn, boolean dbExisted)
             throws IOException, SQLException {
@@ -207,7 +199,6 @@ public class ZipToSQLite {
             processZipEntries(zipFile, conn);
         }
     }
-
 
     private static void processZipEntries(ZipFile zipFile, Connection conn)
             throws IOException, SQLException {
@@ -225,7 +216,6 @@ public class ZipToSQLite {
             // Otherwise, skip silently
         }
     }
-
 
     private static void processCsvEntry(ZipFile zipFile, ZipEntry entry, String entryName, Connection conn)
             throws IOException, SQLException {
@@ -249,7 +239,6 @@ public class ZipToSQLite {
         }
     }
 
-
     private static String sanitizeTableName(String entryName) {
         String fileName = entryName.contains("/")
                 ? entryName.substring(entryName.lastIndexOf('/') + 1)
@@ -263,11 +252,6 @@ public class ZipToSQLite {
     /**
      * Create a new table with the given name and headers. If the table already exists,
      * it will be dropped first. All columns are created as TEXT.
-     *
-     * @param conn      The SQLite connection
-     * @param tableName The name of the table to create
-     * @param headers   The list of column headers
-     * @throws SQLException if there is an error executing the SQL statements
      */
     private static void createTable(Connection conn, String tableName, List<String> headers)
             throws SQLException {
@@ -289,13 +273,6 @@ public class ZipToSQLite {
     /**
      * Inserts the CSV data into the specified table. It uses a prepared statement
      * to batch insert rows for better performance.
-     *
-     * @param conn      The SQLite connection
-     * @param tableName The name of the table to insert data into
-     * @param headers   The list of column headers
-     * @param parser    The CSVParser containing the CSV data
-     * @return The number of rows inserted
-     * @throws SQLException if there is an error executing the SQL statements
      */
     private static int insertCsvData(Connection conn, String tableName, List<String> headers, CSVParser parser)
             throws SQLException {

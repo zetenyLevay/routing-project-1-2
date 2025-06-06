@@ -1,3 +1,5 @@
+// ── File: parsers/RequestHandler.java ──────────────────────────────────
+
 package parsers;
 
 import java.io.EOFException;
@@ -12,19 +14,30 @@ import routing.routingEngineAstar.RoutingEngineAstar;
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.RouteStep;
 
+/**
+ * RequestHandler.java
+ *
+ * This class reads JSON‐Line commands from stdin and writes JSON responses to stdout.
+ * After a successful "load" command, it stores the new JDBC URL in `currentJdbcUrl`.
+ * All subsequent "routeFrom"/"to"/"startingAt" commands use that URL.
+ */
 public class RequestHandler {
 
     private final CLIRead cliRead;
     private final CLIWrite cliWrite;
 
+    /**
+     * The full JDBC URL of the currently loaded SQLite database, e.g. "jdbc:sqlite:budapest_gtfs.db".
+     * Null if no database has been loaded yet.
+     */
+    private String currentJdbcUrl = null;
+
     public RequestHandler() {
-        this.cliRead  = new CLIRead();
+        this.cliRead = new CLIRead();
         this.cliWrite = new CLIWrite();
     }
 
     public void run() throws IOException {
-        // System.err.println("Starting");
-
         while (true) {
             Object json;
             try {
@@ -61,7 +74,10 @@ public class RequestHandler {
 
                 String selectedFile = (String) loadObj;
                 try {
-                    ZipToSQLite.run(selectedFile);
+                    // ZipToSQLite.run(...) now returns the .db filename it created/validated
+                    String dbFilename = ZipToSQLite.run(selectedFile);
+                    // Build the full JDBC URL and store it
+                    this.currentJdbcUrl = "jdbc:sqlite:" + dbFilename;
                     cliWrite.sendOk("loaded");
                 } catch (Exception e) {
                     cliWrite.sendError(e.getMessage());
@@ -72,6 +88,12 @@ public class RequestHandler {
 
             // --- routeFrom / to / startingAt ---
             if (request.containsKey("routeFrom")) {
+                // Must have loaded a database first
+                if (this.currentJdbcUrl == null) {
+                    cliWrite.sendError("No database loaded");
+                    continue;
+                }
+
                 // 1) Check that routeFrom is a Map<?,?>
                 Object routeFromObj = request.get("routeFrom");
                 if (!(routeFromObj instanceof Map<?, ?>)) {
@@ -125,16 +147,9 @@ public class RequestHandler {
                 }
 
                 try {
-                    // System.out.println(
-                    //     "SP: " + startPoint + 
-                    //     "  EP: " + endPoint + 
-                    //     "  ST: " + startingAtStr
-                    // );
-
-                    RoutingEngineAstar router = new RoutingEngineAstar(
-                        new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
-                    );
-                    // System.out.println("running engine");
+                    // Instantiate a new RoutingEngineAstar using the current JDBC URL
+                    DBConnectionManager connMgr = new DBConnectionManager(this.currentJdbcUrl);
+                    RoutingEngineAstar router = new RoutingEngineAstar(connMgr);
 
                     List<RouteStep> route = router.findRoute(
                         startPoint.getLatitude(),
@@ -143,9 +158,7 @@ public class RequestHandler {
                         endPoint.getLongitude(),
                         startingAtStr
                     );
-                    // System.out.println("route found");
                     cliWrite.writeRouteSteps(route);
-
                 } catch (Exception e) {
                     cliWrite.sendError(e.getMessage());
                 }
