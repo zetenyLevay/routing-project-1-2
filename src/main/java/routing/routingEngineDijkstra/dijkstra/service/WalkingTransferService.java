@@ -12,10 +12,14 @@ public class WalkingTransferService {
     private final DistanceCalculator distanceCalculator;
     private final int maxWalkingDistanceMeters;
     private final Map<DijkstraStop, List<DijkstraStop>> nearbyStopsCache = new HashMap<>();
+    private final GridIndex gridIndex;
 
-    public WalkingTransferService(DistanceCalculator distanceCalculator, int maxWalkingDistanceMeters) {
+    public WalkingTransferService(DistanceCalculator distanceCalculator,
+                                  int maxWalkingDistanceMeters,
+                                  Collection<DijkstraStop> allStops) {
         this.distanceCalculator = distanceCalculator;
         this.maxWalkingDistanceMeters = maxWalkingDistanceMeters;
+        this.gridIndex = new GridIndex(allStops, maxWalkingDistanceMeters);
     }
     public void precomputeNearbyStops(Collection<DijkstraStop> stops) {
         for (DijkstraStop stop : stops) {
@@ -29,7 +33,10 @@ public class WalkingTransferService {
     }
 
     public List<DijkstraStop> getNearbyStops(DijkstraStop stop) {
-        return nearbyStopsCache.getOrDefault(stop, Collections.emptyList());
+        return gridIndex.getNearbyStops(stop).stream()
+                .filter(s -> !s.equals(stop))
+                .filter(s -> canWalkBetween(stop, s))
+                .collect(Collectors.toList());
     }
 
     public boolean canWalkBetween(DijkstraStop from, DijkstraStop to) {

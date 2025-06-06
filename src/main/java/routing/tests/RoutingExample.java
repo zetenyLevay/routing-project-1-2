@@ -15,7 +15,7 @@ import java.util.Random;
 public class RoutingExample {
     public static void main(String[] args) {
         try {
-            DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(300);
+            DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
             DijkstraRoutePlanner strategy = new DijkstraRoutePlanner(dijkstraRouter);
             Router router = new Router(strategy);
 

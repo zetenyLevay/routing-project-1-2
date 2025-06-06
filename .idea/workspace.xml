@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/algorithm/DijkstraRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/algorithm/DijkstraRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/tests/RoutingExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/tests/RoutingExample.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,8 +140,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.RoutingExample" />
-        <item itemvalue="Application.HeatmapExample" />
         <item itemvalue="Application.MapUI" />
+        <item itemvalue="Application.HeatmapExample" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.RealAStarUsage" />
       </list>
@@ -165,6 +168,7 @@
       <workItem from="1749037722199" duration="7738000" />
       <workItem from="1749112599276" duration="6165000" />
       <workItem from="1749125551070" duration="312000" />
+      <workItem from="1749203243323" duration="874000" />
     </task>
     <servers />
   </component>

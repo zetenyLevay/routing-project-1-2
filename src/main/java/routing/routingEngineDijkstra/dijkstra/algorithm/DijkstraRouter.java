@@ -26,7 +26,11 @@ public class DijkstraRouter {
         this.stops = stops;
         this.outgoingConnections = new HashMap<>(outgoingConnections);
         this.distanceCalculator = new HaversineDistanceCalculator();
-        this.walkingService = new WalkingTransferService(distanceCalculator, maxWalkingDistanceMeters);
+        this.walkingService = new WalkingTransferService(
+                distanceCalculator,
+                maxWalkingDistanceMeters,
+                stops.values()
+        );
         this.reconstructionService = new PathReconstructionService();
         this.routeInfo = routeInfo;
         this.maxReasonableJourneyTime = 4 * 3600; //if you travel more than 4 hrs in a city youre mad
