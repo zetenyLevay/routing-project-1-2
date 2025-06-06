@@ -23,7 +23,7 @@ public class RequestHandler {
     }
 
     public void run() throws IOException {
-        System.err.println("Starting");
+        // System.err.println("Starting");
 
         while (true) {
             Object json;
@@ -125,16 +125,16 @@ public class RequestHandler {
                 }
 
                 try {
-                    System.out.println(
-                        "SP: " + startPoint + 
-                        "  EP: " + endPoint + 
-                        "  ST: " + startingAtStr
-                    );
+                    // System.out.println(
+                    //     "SP: " + startPoint + 
+                    //     "  EP: " + endPoint + 
+                    //     "  ST: " + startingAtStr
+                    // );
 
                     RoutingEngineAstar router = new RoutingEngineAstar(
                         new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
                     );
-                    System.out.println("running engine");
+                    // System.out.println("running engine");
 
                     List<RouteStep> route = router.findRoute(
                         startPoint.getLatitude(),
@@ -143,7 +143,7 @@ public class RequestHandler {
                         endPoint.getLongitude(),
                         startingAtStr
                     );
-                    System.out.println("route found");
+                    // System.out.println("route found");
                     cliWrite.writeRouteSteps(route);
 
                 } catch (Exception e) {
