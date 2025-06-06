@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
@@ -18,6 +19,10 @@ import closureAnalysis.data.models.Stop;
 import heatmap.HeatmapData;
 import heatmap.StopsCache;
 import heatmap.TravelTimeHeatmapAPI;
+import routing.api.Router;
+import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
+import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
+import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 import routing.routingEngineModels.Coordinates;
 
 
@@ -101,8 +106,8 @@ public class UserInterfaceBuilder {
         return controlPanel;
     }
 
-    public static JPanel createControlPanelWithoutHeatmap(JTextField startField, JTextField endField,
-                                                          MapDisplay mapDisplay) {
+        public static JPanel createControlPanelWithoutHeatmap(JTextField startField, JTextField endField,
+                                                        MapDisplay mapDisplay) {
         JButton zoomInButton = new JButton("+");
         JButton zoomOutButton = new JButton("-");
         zoomInButton.addActionListener(e -> mapDisplay.adjustZoom(1.5));
@@ -116,11 +121,77 @@ public class UserInterfaceBuilder {
         controlPanel.add(zoomInButton);
         controlPanel.add(zoomOutButton);
 
-        JButton disabledHeatmapButton = new JButton("Travel Heatmap (Unavailable)");
-        disabledHeatmapButton.setEnabled(false);
-        disabledHeatmapButton.setToolTipText("Travel-time heatmap system failed to initialize");
-        controlPanel.add(disabledHeatmapButton);
-
+        JButton heatmapButton = new JButton("Generate Heatmap");
+        heatmapButton.addActionListener(e -> {
+            try {
+                String startCoords = startField.getText();
+                if (startCoords.equals("Start (lat,lon)") || startCoords.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(mapDisplay,
+                        "Please select a start point on the map or enter coordinates");
+                    return;
+                }
+                String[] coords = startCoords.split(",");
+                if (coords.length != 2) {
+                    JOptionPane.showMessageDialog(mapDisplay,
+                        "Invalid coordinate format. Use: lat,lon");
+                    return;
+                }
+                double lat = Double.parseDouble(coords[0].trim());
+                double lon = Double.parseDouble(coords[1].trim());
+                
+                heatmapButton.setText("Initializing...");
+                heatmapButton.setEnabled(false);
+                
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
+                        Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
+                        TravelTimeHeatmapAPI heatmapAPI = new TravelTimeHeatmapAPI(router);
+                        
+                        String nearestStopId = findNearestStopId(lat, lon);
+                        if (nearestStopId == null) {
+                            throw new Exception("No nearby bus stop found for the selected coordinates");
+                        }
+                        
+                        HeatmapData heatmap = heatmapAPI.generateHeatmap(nearestStopId);
+                        Map<String, Color> stopColors = heatmapAPI.getAllStopColors(heatmap);
+                        SwingUtilities.invokeLater(() -> {
+                            mapDisplay.applyTravelTimeHeatmap(stopColors);
+                            JOptionPane.showMessageDialog(mapDisplay,
+                                String.format("Heatmap generated! Travel times from %.1f to %.1f minutes",
+                                    heatmap.getMinTime(), heatmap.getMaxTime()));
+                        });
+                        return null;
+                    }
+                    
+                    @Override
+                    protected void done() {
+                        try {
+                            get();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(mapDisplay,
+                                "Error: " + ex.getMessage());
+                            ex.printStackTrace();
+                        } finally {
+                            heatmapButton.setText("Generate Heatmap");
+                            heatmapButton.setEnabled(true);
+                        }
+                    }
+                };
+                worker.execute();
+                
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(mapDisplay,
+                    "Invalid coordinate format. Please enter numbers only.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(mapDisplay,
+                    "Error: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
+        
+        controlPanel.add(heatmapButton);
         return controlPanel;
     }
 

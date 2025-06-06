@@ -40,18 +40,7 @@ public class MapUI {
         double eastBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(19, 7, 26.23);
         GeographicBounds mapBoundaries = new GeographicBounds(
             southBoundary, northBoundary, westBoundary, eastBoundary);
-        TravelTimeHeatmapAPI heatmapAPI = null;
-        try {
-            DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
-            Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
-            heatmapAPI = new TravelTimeHeatmapAPI(router);
-            System.out.println("Travel-time heatmap system initialized successfully");
-            System.out.println("Loaded " + StopsCache.getCacheSize() + " bus stops from database");
-        } catch (Exception e) {
-            System.err.println("Warning: Could not initialize travel-time heatmap system: " + e.getMessage());
-            e.printStackTrace();
-        }
-        final TravelTimeHeatmapAPI finalHeatmapAPI = heatmapAPI;
+        
         SwingUtilities.invokeLater(() -> {
             try {
                 JTextField startCoordinateInput = new JTextField("(lat,lon)", 20);
@@ -64,14 +53,9 @@ public class MapUI {
                         SwingUtilities.convertMouseEvent(scrollPane.getViewport(), e, mapDisplayPanel)
                     );
                 });
-                JPanel controlPanel;
-                if (finalHeatmapAPI != null) {
-                    controlPanel = UserInterfaceBuilder.createControlPanel(
-                        startCoordinateInput, endCoordinateInput, mapDisplayPanel, finalHeatmapAPI);
-                } else {
-                    controlPanel = UserInterfaceBuilder.createControlPanelWithoutHeatmap(
-                        startCoordinateInput, endCoordinateInput, mapDisplayPanel);
-                }
+                JPanel controlPanel = UserInterfaceBuilder.createControlPanelWithoutHeatmap(
+                    startCoordinateInput, endCoordinateInput, mapDisplayPanel);
+                
                 JPanel applicationPanel = new JPanel(new BorderLayout());
                 applicationPanel.add(controlPanel, BorderLayout.NORTH);
                 applicationPanel.add(scrollPane, BorderLayout.CENTER);
