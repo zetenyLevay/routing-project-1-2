@@ -1,17 +1,8 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import gui.components.MapDisplay;
@@ -20,12 +11,6 @@ import gui.data.BusStopDataLoader;
 import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 import gui.transform.CoordinateConverter;
-import heatmap.StopsCache;
-import heatmap.TravelTimeHeatmapAPI;
-import routing.api.Router;
-import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
-import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
-import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 
 public class MapUI {
     public static void main(String[] args) throws IOException {

@@ -1,15 +1,9 @@
 package gui.rendering;
 
-import javax.swing.*;
-
 import gui.data.LocationPoint;
 import gui.transform.MapViewTransform;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;

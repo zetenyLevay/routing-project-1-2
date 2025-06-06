@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,37 +29,34 @@ public class MapDisplay extends JPanel {
     private final BufferedImage baseMapImage;
     private final List<LocationPoint> busStopPoints;
 
-    private Map<String, Color> travelTimeHeatmapColors = new HashMap<>();
-    private boolean travelTimeHeatmapEnabled = false;
+    private Map<String, Color> heatmapStopColors = new HashMap<>();
+    private boolean isHeatmapVisible = false;
 
-    public MapDisplay(GeographicBounds bounds, List<LocationPoint> busStops,
-                      JTextField startField, JTextField endField) throws IOException {
+    public MapDisplay(GeographicBounds mapBounds, List<LocationPoint> busStops,
+                      JTextField startCoordinateField, JTextField endCoordinateField) throws IOException {
         this.baseMapImage = loadMapImageFromResources();
         this.busStopPoints = busStops;
-        this.viewTransform = new MapViewTransform(baseMapImage, bounds);
-        this.selectionManager = new CoordinateSelectionManager(startField, endField);
+        this.viewTransform = new MapViewTransform(baseMapImage, mapBounds);
+        this.selectionManager = new CoordinateSelectionManager(startCoordinateField, endCoordinateField);
         this.mapRenderer = new MapRenderer(baseMapImage, busStopPoints, viewTransform);
         this.interactionHandler = new MapInteractionHandler(viewTransform, selectionManager, this);
-        setupComponent();
-        setFocusable(true);
-        requestFocusInWindow();
+        initializeComponent();
     }
 
-    public void adjustZoom(double zoomMultiplier) {
-        viewTransform.adjustZoom(zoomMultiplier, getWidth() / 2.0, getHeight() / 2.0);
-        revalidate();
-        repaint();
+    public void adjustZoom(double zoomFactor) {
+        viewTransform.adjustZoom(zoomFactor, getWidth() / 2.0, getHeight() / 2.0);
+        refreshDisplay();
     }
 
     public void applyTravelTimeHeatmap(Map<String, Color> stopColors) {
-        this.travelTimeHeatmapColors = new HashMap<>(stopColors);
-        this.travelTimeHeatmapEnabled = true;
+        this.heatmapStopColors = new HashMap<>(stopColors);
+        this.isHeatmapVisible = true;
         repaint();
     }
 
     public void clearTravelTimeHeatmap() {
-        this.travelTimeHeatmapColors.clear();
-        this.travelTimeHeatmapEnabled = false;
+        this.heatmapStopColors.clear();
+        this.isHeatmapVisible = false;
         repaint();
     }
 
@@ -73,79 +69,120 @@ public class MapDisplay extends JPanel {
         }
     }
 
-    private void setupComponent() {
+    private void initializeComponent() {
         setPreferredSize(viewTransform.getPreferredSize());
         addMouseWheelListener(interactionHandler);
         addMouseListener(interactionHandler);
         addMouseMotionListener(interactionHandler);
+        setFocusable(true);
+        requestFocusInWindow();
+    }
+
+    private void refreshDisplay() {
+        revalidate();
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        mapRenderer.render((Graphics2D) graphics);
-        if (travelTimeHeatmapEnabled && !travelTimeHeatmapColors.isEmpty()) {
-            renderTravelTimeHeatmap((Graphics2D) graphics);
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        
+        mapRenderer.render(graphics2D);
+        
+        if (isHeatmapVisible && !heatmapStopColors.isEmpty()) {
+            renderHeatmapOverlay(graphics2D);
         }
     }
 
-    private void renderTravelTimeHeatmap(Graphics2D g2d) {
-        RenderingHints originalHints = g2d.getRenderingHints();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    private void renderHeatmapOverlay(Graphics2D graphics2D) {
+        enableAntialiasing(graphics2D);
+        drawHeatmapStops(graphics2D);
+        drawHeatmapLegend(graphics2D);
+    }
+
+    private void enableAntialiasing(Graphics2D graphics2D) {
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    }
+
+    private void drawHeatmapStops(Graphics2D graphics2D) {
         for (LocationPoint busStop : busStopPoints) {
             String stopId = busStop.getStopId();
-            Color heatmapColor = travelTimeHeatmapColors.get(stopId);
-            if (heatmapColor != null) {
-                Point screenPoint = viewTransform.geoToScreen(
+            Color stopColor = heatmapStopColors.get(stopId);
+            
+            if (stopColor != null) {
+                Point screenPosition = viewTransform.geoToScreen(
                     busStop.getLatitude(),
                     busStop.getLongitude()
                 );
-                if (screenPoint != null && isPointVisible(screenPoint)) {
-                    g2d.setColor(heatmapColor);
-                    int radius = 8;
-                    g2d.fillOval(screenPoint.x - radius, screenPoint.y - radius,
-                                 radius * 2, radius * 2);
-                    g2d.setColor(Color.BLACK);
-                    g2d.setStroke(new BasicStroke(1));
-                    g2d.drawOval(screenPoint.x - radius, screenPoint.y - radius,
-                                 radius * 2, radius * 2);
+                
+                if (screenPosition != null && isPointOnScreen(screenPosition)) {
+                    drawColoredStop(graphics2D, screenPosition, stopColor);
                 }
             }
         }
-        g2d.setRenderingHints(originalHints);
-        drawHeatmapLegend(g2d);
     }
 
-    private boolean isPointVisible(Point point) {
+    private boolean isPointOnScreen(Point point) {
         return point.x >= 0 && point.x < getWidth() &&
                point.y >= 0 && point.y < getHeight();
     }
 
-    private void drawHeatmapLegend(Graphics2D g2d) {
-        if (!travelTimeHeatmapEnabled || travelTimeHeatmapColors.isEmpty()) {
+    private void drawColoredStop(Graphics2D graphics2D, Point screenPosition, Color stopColor) {
+        int stopRadius = 8;
+        int stopDiameter = stopRadius * 2;
+        
+        graphics2D.setColor(stopColor);
+        graphics2D.fillOval(screenPosition.x - stopRadius, screenPosition.y - stopRadius,
+                           stopDiameter, stopDiameter);
+        
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.setStroke(new BasicStroke(1));
+        graphics2D.drawOval(screenPosition.x - stopRadius, screenPosition.y - stopRadius,
+                           stopDiameter, stopDiameter);
+    }
+
+    private void drawHeatmapLegend(Graphics2D graphics2D) {
+        if (!isHeatmapVisible || heatmapStopColors.isEmpty()) {
             return;
         }
+
+        int legendWidth = 140;
+        int legendHeight = 80;
         int legendX = getWidth() - 150;
         int legendY = 20;
-        g2d.setColor(new Color(255, 255, 255, 200));
-        g2d.fillRect(legendX - 5, legendY - 5, 140, 80);
-        g2d.setColor(Color.BLACK);
-        g2d.drawRect(legendX - 5, legendY - 5, 140, 80);
-        g2d.setFont(new Font("Arial", Font.BOLD, 12));
-        g2d.drawString("Travel Time", legendX, legendY + 15);
-        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
-        g2d.setColor(Color.GREEN);
-        g2d.fillOval(legendX, legendY + 25, 12, 12);
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("Short", legendX + 20, legendY + 35);
-        g2d.setColor(Color.YELLOW);
-        g2d.fillOval(legendX, legendY + 45, 12, 12);
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("Medium", legendX + 20, legendY + 55);
-        g2d.setColor(Color.RED);
-        g2d.fillOval(legendX, legendY + 65, 12, 12);
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("Long", legendX + 20, legendY + 75);
+        
+        drawLegendBackground(graphics2D, legendX, legendY, legendWidth, legendHeight);
+        drawLegendTitle(graphics2D, legendX, legendY);
+        drawLegendItems(graphics2D, legendX, legendY);
+    }
+
+    private void drawLegendBackground(Graphics2D graphics2D, int x, int y, int width, int height) {
+        graphics2D.setColor(new Color(255, 255, 255, 200));
+        graphics2D.fillRect(x - 5, y - 5, width, height);
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.drawRect(x - 5, y - 5, width, height);
+    }
+
+    private void drawLegendTitle(Graphics2D graphics2D, int x, int y) {
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.setFont(new Font("Arial", Font.BOLD, 12));
+        graphics2D.drawString("Travel Time", x, y + 15);
+    }
+
+    private void drawLegendItems(Graphics2D graphics2D, int x, int y) {
+        graphics2D.setFont(new Font("Arial", Font.PLAIN, 10));
+        
+        drawLegendItem(graphics2D, x, y + 25, Color.GREEN, "Short");
+        drawLegendItem(graphics2D, x, y + 45, Color.YELLOW, "Medium");
+        drawLegendItem(graphics2D, x, y + 65, Color.RED, "Long");
+    }
+
+    private void drawLegendItem(Graphics2D graphics2D, int x, int y, Color color, String label) {
+        graphics2D.setColor(color);
+        graphics2D.fillOval(x, y, 12, 12);
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.drawString(label, x + 20, y + 10);
     }
 
     public List<LocationPoint> getBusStopPoints() {
