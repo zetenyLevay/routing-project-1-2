@@ -125,7 +125,8 @@ public class RouteStep {
         
         json.put("to", toCoord.toJSON());
 
-        json.put("duration", numOfMinutes);
+        String twoDecimals = String.format("%.2f", numOfMinutes);
+        json.put("duration", twoDecimals);
         json.put("startTime", startTime.substring(0, 5));
 
         if (!modeOfTransport.equals("walk")) {
