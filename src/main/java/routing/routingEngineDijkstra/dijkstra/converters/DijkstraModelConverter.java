@@ -1,10 +1,9 @@
 package routing.routingEngineDijkstra.dijkstra.converters;
 
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.dijkstra.model.input.*;
 import routing.routingEngineDijkstra.dijkstra.model.output.*;
 import routing.routingEngineModels.*;
-import routing.routingEngineModels.Stop.Stop;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
