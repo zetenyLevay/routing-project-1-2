@@ -1,14 +1,16 @@
 package routing.routingEngineDijkstra.api;
 
+import java.time.LocalTime;
+
 import routing.api.RoutingStrategy;
+import routing.routingEngineDijkstra.adiModels.Stop.Stop;
 import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
 import routing.routingEngineDijkstra.dijkstra.converters.DijkstraModelConverter;
 import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraFinalRoute;
 import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraInputJourney;
-import routing.routingEngineModels.*;
-import routing.routingEngineModels.Stop.Stop;
-
-import java.time.LocalTime;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.FinalRoute;
+import routing.routingEngineModels.InputJourney;
 
 public class DijkstraRoutePlanner implements RoutingStrategy {
     private final DijkstraRouter router;

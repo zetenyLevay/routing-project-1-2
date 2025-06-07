@@ -1,4 +1,4 @@
-package routing.routingEngineModels.Stop;
+package routing.routingEngineDijkstra.adiModels.Stop;
 
 import routing.routingEngineModels.Coordinates;
 

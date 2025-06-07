@@ -1,4 +1,4 @@
-package routing.routingEngineModels;
+package routing.routingEngineDijkstra.adiModels;
 
 public class RouteInfo {
     private final String operator;

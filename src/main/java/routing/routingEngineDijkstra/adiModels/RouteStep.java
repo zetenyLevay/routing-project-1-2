@@ -1,6 +1,8 @@
-package routing.routingEngineModels;
+package routing.routingEngineDijkstra.adiModels;
 
 import java.time.LocalTime;
+
+import routing.routingEngineModels.Coordinates;
 
 public class RouteStep {
     private final String mode;
