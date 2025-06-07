@@ -14,9 +14,16 @@ import closureAnalysis.data.graph.StopNode;
 
 public class EdgeWeightCalculator {
 
-    double ALPHA = 0;
-    double BETA = 1;
+    double ALPHA = 0.1;
+    double BETA = 0.9;
     int count = 0;
+
+    /**
+     *
+     * @param from
+     * @param to
+     * @return the edge's weight between from and to
+     */
 
     public double calculateEdgeWeight(StopNode from, StopNode to) {
 
@@ -48,7 +55,12 @@ public class EdgeWeightCalculator {
         return to.getDistanceTraveled() - from.getDistanceTraveled();
     }
 
-
+    /**
+     *
+     * @param from
+     * @param to
+     * @return the list of StopInstances within the same trip
+     */
 
     private List<StopInstance> neighboringInstances(StopNode from, StopNode to){
         List<StopInstance> neighboringInstances = new ArrayList<>();

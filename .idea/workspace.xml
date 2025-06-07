@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/GridIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/GridIndex.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +15,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -36,10 +38,18 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.BulkTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HeatmapExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RealAStarUsage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RealDijkstraUsage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RoutingExample.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -51,6 +61,88 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="routing.routingEngineDijkstra.newDijkstra.model.input" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.HeatmapExample">
+    <configuration name="HeatmapExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="heatmap.HeatmapExample" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="heatmap.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.routingEngineDijkstra.dijkstra.tests.Main" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.routingEngineDijkstra.api.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.MapUI" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RealAStarUsage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.routingEngineDijkstra.badAStar.RealAStarUsage" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.routingEngineDijkstra.badAStar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RoutingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="routing.tests.RoutingExample" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="routing.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.HeatmapExample" />
+        <item itemvalue="Application.RoutingExample" />
+        <item itemvalue="Application.MapUI" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.RealAStarUsage" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -69,6 +161,11 @@
       <updated>1748259054103</updated>
       <workItem from="1748259055255" duration="2846000" />
       <workItem from="1748692963585" duration="7762000" />
+      <workItem from="1748960781290" duration="11952000" />
+      <workItem from="1749037722199" duration="7738000" />
+      <workItem from="1749112599276" duration="6165000" />
+      <workItem from="1749125551070" duration="312000" />
+      <workItem from="1749203243323" duration="4171000" />
     </task>
     <servers />
   </component>

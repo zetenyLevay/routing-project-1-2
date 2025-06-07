@@ -28,6 +28,10 @@ public class POIFinder implements Finder {
 
     private KDTree poiTree = new KDTree();
 
+    /**
+     * we preload all the Points of interests, since we dont want to query again and again for each stop
+     */
+
     public void preload() {
         String query = "SELECT ogc_fid, category, xcoord, ycoord FROM added_geom_info";
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:data/ClosureAnalysis/countyBuildingsAsPoints.sqlite");
@@ -51,6 +55,11 @@ public class POIFinder implements Finder {
             e.printStackTrace();
         }
     }
+
+    /**
+     * using kdTree (k dimensional tree) in our case k is 2, we find all pois nearby
+     * @param stop
+     */
      public void find(StopNode stop) {
 
 
@@ -65,48 +74,6 @@ public class POIFinder implements Finder {
              }
          }
 
-        /*
-         for (PointOfInterest poi : allPOIs) {
-             double dist = calculator.calculateDistance(stopCoords, poi.getCoordinates());
-             if (dist <= SMALLRADIUS) {
-                 closePOIs.add(poi);
-             } else if (dist <= BIGRADIUS) {
-                 farPOIs.add(poi);
-             }
-         }
-
-         */
-
          stop.setNearbyPOIs(new NearbyPOIs( closePOIs, farPOIs));
-    }
-    public static void main(String[] args) {
-        POIFinder finder = new POIFinder();
-
-        finder.preload();
-
-        StopNode testNode = new StopNode("008137");
-        testNode.setCoordinates(new Coordinates(47.510571, 19.056072));
-
-        finder.find(testNode);
-
-        double farValue = 0;
-        NearbyPOIs test =  testNode.getNearbyPOIs();
-        System.out.println(testNode.getNearbyPOIs().getFarPointOfInterest().size());
-
-        for(PointOfInterest poi : test.getFarPointOfInterest()){
-            System.out.println(poi.toString());
-            System.out.println(poi.getType());
-            System.out.println(poi.getType().value);
-            farValue += poi.getType().value;
-        }
-        System.out.println(farValue);
-
-
-
-
-
-
-
-
     }
 }

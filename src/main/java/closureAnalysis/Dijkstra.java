@@ -22,11 +22,13 @@ import closureAnalysis.data.graph.StopEdge;
 import closureAnalysis.data.graph.StopGraph;
 import closureAnalysis.data.graph.StopNode;
 
+/**
+ * As the name suggests Dijkstra
+ * As the name does NOT suggest, also includes Brandes' algorithm (needed for betwenness)
+ */
 public class Dijkstra {
 
     public long totalTime;
-
-
     public DijkstraResult dijkstra(StopGraph graph, StopNode startNode) {
 
         Instant start = Instant.now();
@@ -45,7 +47,6 @@ public class Dijkstra {
         distances.put(startNode, 0.0);
         sigma.put(startNode, 1);
 
-
         PriorityQueue<StopNode> queue = new PriorityQueue<>(
                 Comparator.comparingDouble(node -> distances.getOrDefault(node, Double.MAX_VALUE))
         );
@@ -55,9 +56,6 @@ public class Dijkstra {
 
         while (!queue.isEmpty()) {
             StopNode current = queue.poll();
-
-
-
 
             if (visited.contains(current)) {
                 continue;
@@ -131,6 +129,13 @@ public class Dijkstra {
 
     }
 
+    /**
+     *
+     * @param dist default dijkstra result
+     * @param sigma number of shortests paths from node s to v
+     * @param pred all the steps we need to take to get to the node
+     * @param stack reverse the order of pred basically
+     */
     public record DijkstraResult(Map<StopNode, Double> dist, Map<StopNode, Integer> sigma, Map<StopNode, List<StopNode>> pred,
                           Stack<StopNode> stack) {
     }

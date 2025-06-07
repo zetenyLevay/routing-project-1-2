@@ -3,6 +3,9 @@ package closureAnalysis.data.models;
 import closureAnalysis.data.enums.POIType;
 import routing.routingEngineModels.Coordinates;
 
+/**
+ * Using our buildings database a point of interest is anything near a stop, these can have different types as seen in POIType ENUM
+ */
 public class PointOfInterest {
     private String id;
     private POIType type;

@@ -5,12 +5,15 @@ import routing.routingEngineModels.Coordinates;
 
 import java.sql.*;
 
+/**
+ * finds the coordinates of a stop, used because we want to avoid doing this in original graph building, since query there is already bloated
+ */
 public class CoordinateFinder implements Finder {
     @Override
     public void find(StopNode input) {
 
         try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:data/june2ndBudapestGTFS.db");
             String query = "select stop_lat, stop_lon\n" +
                     "from stops \n" +
                     "where stop_id = ?";

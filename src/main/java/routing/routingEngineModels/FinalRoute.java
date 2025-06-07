@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 public class FinalRoute{
 
-    private ArrayList<RouteStep> routeSteps;
+    private ArrayList<AdiRouteStep> routeSteps;
     private double totalDistance;
     private double totalTime;
 
-    public FinalRoute(ArrayList<RouteStep> routeSteps, double totalDistance, double totalTime) {
+    public FinalRoute(ArrayList<AdiRouteStep> routeSteps, double totalDistance, double totalTime) {
         this.routeSteps = routeSteps;
         this.totalDistance = totalDistance;
         this.totalTime = totalTime;
     }
 
-    public ArrayList<RouteStep> getRouteSteps() {
+    public ArrayList<AdiRouteStep> getRouteSteps() {
         return this.routeSteps;
     }
 

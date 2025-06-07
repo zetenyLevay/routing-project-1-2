@@ -2,6 +2,9 @@ package closureAnalysis.data.models;
 
 import java.util.List;
 
+/**
+ * This class is for ease of access of close and far points of interests
+ */
 public class NearbyPOIs {
     List<PointOfInterest> closePointsOfInterest;
     List<PointOfInterest> farPointsOfInterest;

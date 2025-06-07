@@ -18,12 +18,12 @@ public class Graph {
 
 
     // Maps each Stop to the list of outgoing RouteSteps
-    private final Map<Stop, List<RouteStep>> graph = new HashMap<>();
+    private final Map<AdiStop, List<AdiRouteStep>> graph = new HashMap<>();
 
     /**
      * Adds a stop (node) to the graph if not already present.
      */
-    public void addStop(Stop stop) {
+    public void addStop(AdiStop stop) {
         graph.putIfAbsent(stop, new ArrayList<>());
     }
 
@@ -31,14 +31,14 @@ public class Graph {
      * Adds a RouteStep (edge) originating from the given stop.
      * Ensures the 'from' stop exists in the graph.
      */
-    public void addRouteStep(Stop from, RouteStep step) {
+    public void addRouteStep(AdiStop from, AdiRouteStep step) {
         graph.computeIfAbsent(from, k -> new ArrayList<>()).add(step);
     }
 
     /**
      * Retrieves all RouteSteps (edges) outgoing from the given stop.
      */
-    public List<RouteStep> getRouteStepsFrom(Stop stop) {
+    public List<AdiRouteStep> getRouteStepsFrom(AdiStop stop) {
         return Collections.unmodifiableList(
             graph.getOrDefault(stop, List.of())
         );
@@ -47,7 +47,7 @@ public class Graph {
     /**
      * Returns all stops (nodes) in the graph.
      */
-    public List<Stop> getStops() {
+    public List<AdiStop> getStops() {
         return Collections.unmodifiableList(new ArrayList<>(graph.keySet()));
     }
 
