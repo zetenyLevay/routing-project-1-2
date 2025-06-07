@@ -22,7 +22,7 @@ public class Router {
         return strategy.findRoute(inputJourney);
     }
 
-    public FinalRoute findRoute(Stop from, Stop to, LocalTime startTime) {
+    public FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime) {
         return strategy.findRoute(from, to, startTime);
     }
 

@@ -219,11 +219,11 @@ public class UserInterfaceBuilder {
     }
 
     private static String findNearestStopId(double latitude, double longitude) {
-        Map<String, routing.routingEngineModels.Stop.Stop> allStops = StopsCache.getAllStops();
+        Map<String, routing.routingEngineModels.AdiStop.Stop> allStops = StopsCache.getAllStops();
         String nearestStopId = null;
         double minimumDistance = Double.MAX_VALUE;
         
-        for (routing.routingEngineModels.Stop.Stop stop : allStops.values()) {
+        for (routing.routingEngineModels.AdiStop.Stop stop : allStops.values()) {
             Coordinates stopCoordinates = stop.getCoordinates();
             double distance = calculateDistance(latitude, longitude,
                                               stopCoordinates.getLatitude(),

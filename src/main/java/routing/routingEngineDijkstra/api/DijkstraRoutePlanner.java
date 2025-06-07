@@ -3,7 +3,7 @@ package routing.routingEngineDijkstra.api;
 import java.time.LocalTime;
 
 import routing.api.RoutingStrategy;
-import routing.routingEngineDijkstra.adiModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
 import routing.routingEngineDijkstra.dijkstra.converters.DijkstraModelConverter;
 import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraFinalRoute;
@@ -31,7 +31,7 @@ public class DijkstraRoutePlanner implements RoutingStrategy {
         return DijkstraModelConverter.toFinalRoute(dijkstraResult, inputJourney.getStartTime());
     }
 
-    public FinalRoute findRoute(Stop from, Stop to, LocalTime startTime) {
+    public FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime) {
         InputJourney inputJourney = new InputJourney(
                 new Coordinates(from.getLatitude(), from.getLongitude()),
                 new Coordinates(to.getLatitude(), to.getLongitude()),

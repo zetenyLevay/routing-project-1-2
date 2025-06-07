@@ -16,8 +16,8 @@ public class HeatmapGenerator {
         StopsCache.init();
     }
 
-    public HeatmapData generate(Stop originStop) {
-        Map<Stop, Double> travelTimes = new ConcurrentHashMap<>();
+    public HeatmapData generate(AdiStop originStop) {
+        Map<AdiStop, Double> travelTimes = new ConcurrentHashMap<>();
 
         StopsCache.getAllStops().values().parallelStream()
                 .filter(stop -> !stop.equals(originStop))
@@ -40,7 +40,7 @@ public class HeatmapGenerator {
     public HeatmapData generate(String originStopId) {
 
 
-            Stop originStop = StopsCache.getStop(originStopId);
+            AdiStop originStop = StopsCache.getStop(originStopId);
         if (originStop == null) {
                 throw new IllegalArgumentException("Stop not found: " +originStopId);
         }

@@ -20,13 +20,13 @@ public class NLCHeatmapAPI {
     }
 
     public int getNLCValue(NLCHeatmapData heatmapData, String stopId) {
-        Stop stop = StopsCache.getStop(stopId);
+        AdiStop stop = StopsCache.getStop(stopId);
         if (stop == null) return -1;
         return heatmapData.getNlcValues().getOrDefault(stop, 0);
     }
 
     public Color getStopColor(NLCHeatmapData heatmapData, String stopId) {
-        Stop stop = StopsCache.getStop(stopId);
+        AdiStop stop = StopsCache.getStop(stopId);
         if (stop == null) return Color.GRAY;
         return heatmapData.getStopColors().getOrDefault(stop, Color.GRAY);
     }

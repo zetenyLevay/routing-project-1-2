@@ -2,7 +2,7 @@ package routing.routingEngineDijkstra.adiModels.Stop;
 
 import routing.routingEngineModels.Coordinates;
 
-public class Stop {
+public class AdiStop {
     private final String stopID;
     private final String stopName;
     private final Coordinates stopCoordinates;
@@ -11,7 +11,7 @@ public class Stop {
 //    private final String parentStationID;
 //    private final List<Pathway> footpaths;
 
-    public Stop(String stopID, String stopName, Coordinates stopCoordinates) {
+    public AdiStop(String stopID, String stopName, Coordinates stopCoordinates) {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;

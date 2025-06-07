@@ -13,16 +13,16 @@ public class NLCHeatmapGenerator {
     private static final int NEIGHBOR_RADIUS_METERS = 400;
     private final HaversineDistanceCalculator distanceCalculator = new HaversineDistanceCalculator();
 
-    public NLCHeatmapData generate(Stop closedStop) {
-        Map<String, Stop> stopMap = StopsCache.getAllStops();
-        Collection<Stop> allStops = stopMap.values();
-        Map<Stop, Integer> nlcValues = new ConcurrentHashMap<>();
+    public NLCHeatmapData generate(AdiStop closedStop) {
+        Map<String, AdiStop> stopMap = StopsCache.getAllStops();
+        Collection<AdiStop> allStops = stopMap.values();
+        Map<AdiStop, Integer> nlcValues = new ConcurrentHashMap<>();
 
-        for (Stop s : allStops) {
+        for (AdiStop s : allStops) {
             if (s.equals(closedStop)) continue;
             int count = 0;
 
-            for (Stop neighbor : allStops) {
+            for (AdiStop neighbor : allStops) {
                 if (neighbor.equals(s) || neighbor.equals(closedStop)) continue;
 
                 int distToS = distanceCalculator.calculateDistanceMeters(

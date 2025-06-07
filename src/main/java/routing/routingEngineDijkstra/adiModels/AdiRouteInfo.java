@@ -1,12 +1,12 @@
 package routing.routingEngineDijkstra.adiModels;
 
-public class RouteInfo {
+public class AdiRouteInfo {
     private final String operator;
     private final String shortName;
     private final String longName;
     private final String headSign;
 
-    public RouteInfo(String operator, String shortName, String longName, String headSign) {
+    public AdiRouteInfo(String operator, String shortName, String longName, String headSign) {
         this.operator = operator;
         this.shortName = shortName;
         this.longName = longName;

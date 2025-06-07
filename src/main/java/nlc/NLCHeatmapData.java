@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NLCHeatmapData {
-    private final Stop closedStop;
-    private final Map<Stop, Integer> nlcValues;
-    private final Map<Stop, Color> stopColors;
+    private final AdiStop closedStop;
+    private final Map<AdiStop, Integer> nlcValues;
+    private final Map<AdiStop, Color> stopColors;
     private int maxValue;
 
-    public NLCHeatmapData(Stop closedStop, Map<Stop, Integer> nlcValues) {
+    public NLCHeatmapData(AdiStop closedStop, Map<AdiStop, Integer> nlcValues) {
         this.closedStop = closedStop;
         this.nlcValues = new HashMap<>(nlcValues);
         this.stopColors = new HashMap<>();
@@ -32,7 +32,7 @@ public class NLCHeatmapData {
         });
     }
 
-    public Stop getClosedStop() { return closedStop; }
-    public Map<Stop, Integer> getNlcValues() { return nlcValues; }
-    public Map<Stop, Color> getStopColors() { return stopColors; }
+    public AdiStop getClosedStop() { return closedStop; }
+    public Map<AdiStop, Integer> getNlcValues() { return nlcValues; }
+    public Map<AdiStop, Color> getStopColors() { return stopColors; }
 }

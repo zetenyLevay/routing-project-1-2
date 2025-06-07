@@ -7,5 +7,5 @@ import java.time.LocalTime;
 
 public interface RoutingStrategy {
     FinalRoute findRoute(InputJourney inputJourney);
-    FinalRoute findRoute(Stop from, Stop to, LocalTime startTime);
+    FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime);
 }

@@ -17,7 +17,7 @@ public class TravelTimeHeatmapAPI {
     }
 
     public HeatmapData generateHeatmap(String originStopId) {
-        Stop origin = StopsCache.getStop(originStopId);
+        AdiStop origin = StopsCache.getStop(originStopId);
         if (origin == null) {
             throw new IllegalArgumentException("Stop not found: " + originStopId);
         }
@@ -25,13 +25,13 @@ public class TravelTimeHeatmapAPI {
     }
 
     public double getTravelTime(HeatmapData heatmap, String targetStopId) {
-        Stop target = StopsCache.getStop(targetStopId);
+        AdiStop target = StopsCache.getStop(targetStopId);
         if (target == null) return -1.0;
         return heatmap.getTravelTimes().getOrDefault(target, -1.0);
     }
 
     public Color getStopColor(HeatmapData heatmap, String targetStopId) {
-        Stop target = StopsCache.getStop(targetStopId);
+        AdiStop target = StopsCache.getStop(targetStopId);
         if (target == null) return Color.GRAY;
         return heatmap.getStopColors().getOrDefault(target, Color.GRAY);
     }

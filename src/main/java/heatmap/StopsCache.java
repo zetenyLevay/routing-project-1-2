@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class StopsCache {
     private static StopsCache instance;
-    private final Map<String, Stop> stopsMap;
+    private final Map<String, AdiStop> stopsMap;
     private static final String DB_PATH = "jdbc:sqlite::resource:gtfs.db";
 
     private StopsCache() {
@@ -36,7 +36,7 @@ public class StopsCache {
                 String name = rs.getString("stop_name");
                 double lat = rs.getDouble("stop_lat");
                 double lon = rs.getDouble("stop_lon");
-                Stop stop = new Stop(id, name, new Coordinates(lat, lon));
+                AdiStop stop = new AdiStop(id, name, new Coordinates(lat, lon));
                 stopsMap.put(id, stop);
             }
         } catch (SQLException e) {
@@ -44,11 +44,11 @@ public class StopsCache {
         }
     }
 
-    public static Stop getStop(String stopId) {
+    public static AdiStop getStop(String stopId) {
         return getInstance().stopsMap.get(stopId);
     }
 
-    public static Map<String, Stop> getAllStops() {
+    public static Map<String, AdiStop> getAllStops() {
         return Collections.unmodifiableMap(getInstance().stopsMap);
     }
 
