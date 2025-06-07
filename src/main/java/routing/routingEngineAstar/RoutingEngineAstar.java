@@ -24,18 +24,17 @@ import routing.routingEngineModels.utils.TimeAndGeoUtils;
 /**
  * AStarRouter with dynamic graph building and time constraints.
  *
- * Changes:
- * 1. If A* finds no transit steps, fall back to a single “WALK” step.
+ * Changes: 1. If A* finds no transit steps, fall back to a single “WALK” step.
  * 2. Merge any consecutive walk legs in the final route into one direct walk
- *    (so you don’t walk to an intermediate stop and then walk again).
+ * (so you don’t walk to an intermediate stop and then walk again).
  */
 public class RoutingEngineAstar {
 
-    private static final int MAX_WAIT_SECONDS = 1800;           // 1/2 hour
-    private static final double INITIAL_WALK_RADIUS_M = 100;    // 100 m
+    private static final int MAX_WAIT_SECONDS = 3600 * (1 / 6);     // 20 mins
+    private static final double INITIAL_WALK_RADIUS_M = 1000;    // 1000 m
     private static final double SEARCH_RADIUS = 1000;           // ~1 km
     private static final boolean DEBUG = false;                  // Enable/disable debug output
-    private static final double WALKING_SPEED_MPS = 1.3889 ;     // ~5 km/h in m/s
+    private static final double WALKING_SPEED_MPS = 1.3889;     // ~5 km/h in m/s
 
     private final DBConnectionManager dbManager;
     private final Map<String, Stop> allStops;
@@ -43,14 +42,14 @@ public class RoutingEngineAstar {
 
     public static void main(String[] args) {
         RoutingEngineAstar router = new RoutingEngineAstar(
-            new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
+                new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
         );
 
         // Example: two farther‐apart points
         double sourceLat = 47.498333190458226; //source point
         double sourceLon = 19.074383183671998; //source point 2
-        double destLat   = 47.49563896935584; // destination point
-        double destLon   = 19.035322782272477; // destination point 2
+        double destLat = 47.49563896935584; // destination point
+        double destLon = 19.035322782272477; // destination point 2
         String startTime = "18:54:00";
 
         System.out.println("Testing route finding...");
@@ -73,10 +72,11 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Main routing method – finds a sequence of RouteStep from source to destination.
+     * Main routing method – finds a sequence of RouteStep from source to
+     * destination.
      */
     public List<RouteStep> findRoute(double sourceLat, double sourceLon,
-                                     double destLat, double destLon, String startTime) {
+            double destLat, double destLon, String startTime) {
         debug("Finding route from (" + sourceLat + ", " + sourceLon
                 + ") to (" + destLat + ", " + destLon + ") at " + startTime);
 
@@ -84,14 +84,14 @@ public class RoutingEngineAstar {
         double directDistance = TimeAndGeoUtils.haversineMeters(
                 sourceLat, sourceLon, destLat, destLon);
         if (directDistance <= INITIAL_WALK_RADIUS_M) {
-            debug("Destination within walking distance (" +
-                  String.format("%.1f", directDistance) + " m). Walk directly.");
+            debug("Destination within walking distance ("
+                    + String.format("%.1f", directDistance) + " m). Walk directly.");
             return createDirectWalkingRoute(sourceLat, sourceLon, destLat, destLon, startTime);
         }
 
         // 2) Find nearby stops within SEARCH_RADIUS of source and destination.
         List<Stop> startStops = findNearbyStops(sourceLat, sourceLon, SEARCH_RADIUS);
-        List<Stop> endStops   = findNearbyStops(destLat,   destLon,   SEARCH_RADIUS);
+        List<Stop> endStops = findNearbyStops(destLat, destLon, SEARCH_RADIUS);
 
         debug("Found " + startStops.size() + " possible start stops and "
                 + endStops.size() + " possible end stops");
@@ -132,7 +132,7 @@ public class RoutingEngineAstar {
 
         // 3) Run A* to get both the list of RouteStep and the actual boarding stop.
         AStarResult result = runAStar(
-            startStops, endStops, startTime, sourceLat, sourceLon, destLat, destLon
+                startStops, endStops, startTime, sourceLat, sourceLon, destLat, destLon
         );
 
         List<RouteStep> transitRoute = result.steps;
@@ -140,17 +140,17 @@ public class RoutingEngineAstar {
 
         // If A* found no transit path, fall back to walking the entire distance.
         if (transitRoute.isEmpty()) {
-            debug("No transit route found; falling back to walking the entire " +
-                  String.format("%.1f", directDistance) + " m.");
+            debug("No transit route found; falling back to walking the entire "
+                    + String.format("%.1f", directDistance) + " m.");
             return createDirectWalkingRoute(sourceLat, sourceLon, destLat, destLon, startTime);
         }
 
         // 4) Wrap transit steps with walking‐to and walking‐from, then merge consecutive walks.
         List<RouteStep> withWalks = addWalkingSteps(
-            transitRoute, boardingStop,
-            sourceLat, sourceLon,
-            destLat, destLon,
-            startTime
+                transitRoute, boardingStop,
+                sourceLat, sourceLon,
+                destLat, destLon,
+                startTime
         );
         return mergeConsecutiveWalks(withWalks, sourceLat, sourceLon, destLat, destLon);
     }
@@ -159,7 +159,7 @@ public class RoutingEngineAstar {
      * Creates a direct walking route when source and destination are close.
      */
     private List<RouteStep> createDirectWalkingRoute(double sourceLat, double sourceLon,
-                                                     double destLat, double destLon, String startTime) {
+            double destLat, double destLon, String startTime) {
         List<RouteStep> route = new ArrayList<>();
 
         // Create a virtual destination stop
@@ -178,14 +178,15 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Adds an initial walking step to the given boardingStop, then all transit steps,
-     * then a final walking step from the last alight stop to the destination.
+     * Adds an initial walking step to the given boardingStop, then all transit
+     * steps, then a final walking step from the last alight stop to the
+     * destination.
      */
     private List<RouteStep> addWalkingSteps(List<RouteStep> transitRoute,
-                                            Stop boardingStop,
-                                            double sourceLat, double sourceLon,
-                                            double destLat, double destLon,
-                                            String startTime) {
+            Stop boardingStop,
+            double sourceLat, double sourceLon,
+            double destLat, double destLon,
+            String startTime) {
         if (transitRoute.isEmpty()) {
             return transitRoute;
         }
@@ -195,15 +196,15 @@ public class RoutingEngineAstar {
         // 1) Walk from source to the actual boarding stop
         if (boardingStop != null) {
             double walkDistance = TimeAndGeoUtils.haversineMeters(
-                sourceLat, sourceLon,
-                boardingStop.getLatitude(), boardingStop.getLongitude()
+                    sourceLat, sourceLon,
+                    boardingStop.getLatitude(), boardingStop.getLongitude()
             );
             if (walkDistance > 10) { // Only add if more than 10 m
                 int walkingSeconds = (int) Math.ceil(walkDistance / WALKING_SPEED_MPS);
                 RouteStep initialWalk = new RouteStep("walk", boardingStop, startTime, walkingSeconds);
                 completeRoute.add(initialWalk);
-                debug("Added initial walking step: " +
-                      String.format("%.1f", walkDistance) + " m to " + boardingStop.getStopName());
+                debug("Added initial walking step: "
+                        + String.format("%.1f", walkDistance) + " m to " + boardingStop.getStopName());
             }
         }
 
@@ -215,8 +216,8 @@ public class RoutingEngineAstar {
         Stop lastTransitStop = lastTransitStep.getToStop();
 
         double finalWalkDistance = TimeAndGeoUtils.haversineMeters(
-            lastTransitStop.getLatitude(), lastTransitStop.getLongitude(),
-            destLat, destLon
+                lastTransitStop.getLatitude(), lastTransitStop.getLongitude(),
+                destLat, destLon
         );
         if (finalWalkDistance > 10) { // Only add if more than 10 m
             Coordinates destCoords = new Coordinates(destLat, destLon);
@@ -227,28 +228,28 @@ public class RoutingEngineAstar {
 
             RouteStep finalWalk = new RouteStep("walk", virtualDestStop, lastArrivalTime, finalWalkingSeconds);
             completeRoute.add(finalWalk);
-            debug("Added final walking step: " +
-                  String.format("%.1f", finalWalkDistance) +
-                  " m from " + lastTransitStop.getStopName());
+            debug("Added final walking step: "
+                    + String.format("%.1f", finalWalkDistance)
+                    + " m from " + lastTransitStop.getStopName());
         }
 
         return completeRoute;
     }
 
     /**
-     * Scans the route and merges any consecutive walk legs into a single direct walk.
+     * Scans the route and merges any consecutive walk legs into a single direct
+     * walk.
      *
-     * For each maximal run of consecutive walk steps (indices [j..k]), it:
-     *  - Computes fromCoords = (if j == 0) (sourceLat, sourceLon)
-     *                   else the ToStop coordinates of step (j-1).
-     *  - Computes toCoords   = the ToStop coordinates of step k.
-     *  - departureTime = departureTime of step j.
-     *  - duration = ceil( haversine(fromCoords, toCoords) / WALKING_SPEED_MPS ).
-     *  - Replaces the entire run [j..k] with one new walk step.
+     * For each maximal run of consecutive walk steps (indices [j..k]), it: -
+     * Computes fromCoords = (if j == 0) (sourceLat, sourceLon) else the ToStop
+     * coordinates of step (j-1). - Computes toCoords = the ToStop coordinates
+     * of step k. - departureTime = departureTime of step j. - duration = ceil(
+     * haversine(fromCoords, toCoords) / WALKING_SPEED_MPS ). - Replaces the
+     * entire run [j..k] with one new walk step.
      */
     private List<RouteStep> mergeConsecutiveWalks(List<RouteStep> route,
-                                                  double sourceLat, double sourceLon,
-                                                  double destLat,   double destLon) {
+            double sourceLat, double sourceLon,
+            double destLat, double destLon) {
         if (route.isEmpty()) {
             return route;
         }
@@ -311,11 +312,12 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * A small container for the result of runAStar:
-     * - steps: the sequence of RouteStep (in forward order)
-     * - firstBoardStop: the Stop where the first step boards
+     * A small container for the result of runAStar: - steps: the sequence of
+     * RouteStep (in forward order) - firstBoardStop: the Stop where the first
+     * step boards
      */
     private static class AStarResult {
+
         final List<RouteStep> steps;
         final Stop firstBoardStop;
 
@@ -328,7 +330,8 @@ public class RoutingEngineAstar {
     /**
      * Implements A* to find the optimal chain of RouteStep from any of the
      * startStops to any of the endStops, beginning no earlier than `startTime`.
-     * Returns both the list of RouteStep and the Stop where the first step boards.
+     * Returns both the list of RouteStep and the Stop where the first step
+     * boards.
      */
     private AStarResult runAStar(
             List<Stop> startStops,
@@ -362,8 +365,8 @@ public class RoutingEngineAstar {
             String sid = startStop.getStopID();
 
             double walkDistance = TimeAndGeoUtils.haversineMeters(
-                sourceLat, sourceLon,
-                startStop.getLatitude(), startStop.getLongitude()
+                    sourceLat, sourceLon,
+                    startStop.getLatitude(), startStop.getLongitude()
             );
             int walkingSeconds = (int) Math.ceil(walkDistance / WALKING_SPEED_MPS);
             int arrival = startTimeSec + walkingSeconds;
@@ -389,16 +392,14 @@ public class RoutingEngineAstar {
             }
 
             // If this stop is one of the endStops, reconstruct the path
-            if (endStopIds.contains(currId)) {
+            if (endStopIds.contains(currId) && cameFrom.containsKey(currId)) {
                 debug("Reached end stop " + currId
                         + " at time " + secondsToTime(currArrSec));
 
                 // Reconstruct the list of RouteSteps
                 List<RouteStep> path = reconstructPath(currId, cameFrom, cameStep);
 
-                // Determine the stop where we boarded the first RouteStep:
-                //   - path.get(0) is the first transit RouteStep (toStop is its destination).
-                //   - cameFrom.get( path.get(0).getToStop().getStopID() ) is the ID of the stop we departed from.
+                // We know path is non-empty here
                 String firstToId = path.get(0).getToStop().getStopID();
                 String firstFromId = cameFrom.get(firstToId);
                 Stop firstBoardStop = allStops.get(firstFromId);
@@ -521,6 +522,7 @@ public class RoutingEngineAstar {
      * Node used in the A* PriorityQueue.
      */
     private class Node implements Comparable<Node> {
+
         final Stop stop;
         final int arrivalTime;   // seconds since midnight
         final double fScore;
@@ -538,7 +540,8 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Loads all stops from the GTFS `stops` table into a HashMap, keyed by stop_id.
+     * Loads all stops from the GTFS `stops` table into a HashMap, keyed by
+     * stop_id.
      */
     private Map<String, Stop> loadAllStops() {
         Map<String, Stop> stops = new HashMap<>();
@@ -549,10 +552,7 @@ public class RoutingEngineAstar {
             """;
 
         try (
-            Connection conn = dbManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery()
-        ) {
+                Connection conn = dbManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String stopId = rs.getString("stop_id");
                 String stopName = rs.getString("stop_name");
@@ -572,7 +572,8 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Finds all stops within `radiusM` meters of (lat, lon), using straight‐line (haversine) distance.
+     * Finds all stops within `radiusM` meters of (lat, lon), using
+     * straight‐line (haversine) distance.
      */
     private List<Stop> findNearbyStops(double lat, double lon, double radiusM) {
         List<Stop> nearbyStops = new ArrayList<>();
@@ -588,7 +589,7 @@ public class RoutingEngineAstar {
                 nearbyStops.add(stop);
                 if (DEBUG && nearbyStops.size() <= 5) {
                     debug("  • Candidate: " + stop.getStopID() + " at "
-                          + String.format("%.1f", distance) + " m");
+                            + String.format("%.1f", distance) + " m");
                 }
             }
         }
@@ -598,7 +599,8 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Delegates to DynamicGraphBuilder to get valid RouteSteps from a stop at a given time.
+     * Delegates to DynamicGraphBuilder to get valid RouteSteps from a stop at a
+     * given time.
      */
     public List<RouteStep> getConnectionsForStop(Stop stop, String currentTime) {
         return graphBuilder.getValidRouteSteps(stop, currentTime);
