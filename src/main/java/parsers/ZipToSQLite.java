@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +20,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -222,22 +225,25 @@ public class ZipToSQLite {
         String tableName = sanitizeTableName(entryName);
 
         try (InputStream is = zipFile.getInputStream(entry);
-             Reader r = new InputStreamReader(is, "UTF-8");
-             CSVParser parser = CSVParser.parse(r, CSVFormat.DEFAULT
-                     .withFirstRecordAsHeader()
-                     .withIgnoreEmptyLines(true)
-                     .withTrim())) {
+            Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+            CSVParser parser = CSVParser.parse(r, CSVFormat.DEFAULT
+                    .withFirstRecordAsHeader()
+                    .withIgnoreEmptyLines(true)
+                    .withTrim())) {
 
-            List<String> headers = parser.getHeaderNames();
-            if (headers.isEmpty()) {
-                createTable(conn, tableName, headers);
-                return;
-            }
+            // ←— **NEW**: Strip any leading BOMs or stray spaces before sanitizing
+            List<String> rawHeaders = parser.getHeaderNames();
+            List<String> headers = rawHeaders.stream()
+                .map(h -> h.replaceAll("^[\\uFEFF\\s]+", ""))  // drop BOMs or leading whitespace
+                .map(h -> h.trim())                             // trim any other stray spaces
+                .collect(Collectors.toList());
 
+            // …then continue exactly as before:
             createTable(conn, tableName, headers);
             insertCsvData(conn, tableName, headers, parser);
         }
     }
+
 
     private static String sanitizeTableName(String entryName) {
         String fileName = entryName.contains("/")
