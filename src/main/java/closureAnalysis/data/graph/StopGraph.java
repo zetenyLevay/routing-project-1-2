@@ -71,6 +71,7 @@ public class StopGraph {
                 String stopId = rs.getString("stop_id");
                 String arrivalTime = rs.getString("arrival_time");
                 String departureTime = rs.getString("departure_time");
+
                 int stopSequence = rs.getInt("stop_sequence");
                 int distanceTraveled = rs.getInt("shape_dist_traveled");
 
