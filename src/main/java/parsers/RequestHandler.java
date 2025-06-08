@@ -1,5 +1,3 @@
-// ── File: parsers/RequestHandler.java ──────────────────────────────────
-
 package parsers;
 
 import java.io.EOFException;
