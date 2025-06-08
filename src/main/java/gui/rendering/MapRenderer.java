@@ -32,7 +32,7 @@ public class MapRenderer {
         graphics2D.drawImage(baseMapImage, 0, 0, null);
 
         graphics2D.setColor(Color.GREEN);
-        double dotDiameter = 12;
+        double dotDiameter = 6;
         double radius = dotDiameter / 2; // = 6
         for (LocationPoint busStop : busStopPoints) {
             Point2D pixelPosition = viewTransform.convertLocationToPixel(busStop);
