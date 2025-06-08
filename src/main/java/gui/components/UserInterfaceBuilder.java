@@ -12,9 +12,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import gui.interaction.NLCHandler;
 import heatmap.HeatmapData;
 import heatmap.StopsCache;
 import heatmap.TravelTimeHeatmapAPI;
+import javax.swing.Box;
 import routing.api.Router;
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
@@ -34,7 +36,8 @@ public class UserInterfaceBuilder {
         JButton zoomOutButton = createZoomButton("-", 0.9, mapDisplay);
 
         return buildControlPanel(startCoordinateField, endCoordinateField, 
-                               zoomInButton, zoomOutButton, generateHeatmapButton);
+                               zoomInButton, zoomOutButton, generateHeatmapButton, 
+                               null, null, null, mapDisplay);
     }
 
     public static JPanel createControlPanelWithoutHeatmap(JTextField startCoordinateField, JTextField endCoordinateField,
@@ -42,9 +45,14 @@ public class UserInterfaceBuilder {
         JButton heatmapButton = createLazyHeatmapButton(startCoordinateField, mapDisplay);
         JButton zoomInButton = createZoomButton("+", 1.5, mapDisplay);
         JButton zoomOutButton = createZoomButton("-", 0.9, mapDisplay);
+        
+        JTextField stopIdField = NLCHandler.createStopIdField();
+        JButton nlcButton = NLCHandler.createNLCButton(stopIdField, mapDisplay);
+        JButton clearButton = NLCHandler.createClearButton(stopIdField, mapDisplay);
 
         return buildControlPanel(startCoordinateField, endCoordinateField, 
-                               zoomInButton, zoomOutButton, heatmapButton);
+                               zoomInButton, zoomOutButton, heatmapButton, 
+                               stopIdField, nlcButton, clearButton, mapDisplay);
     }
 
     private static JButton createHeatmapButton(JTextField startCoordinateField, MapDisplay mapDisplay, 
@@ -67,8 +75,11 @@ public class UserInterfaceBuilder {
     }
 
     private static JPanel buildControlPanel(JTextField startField, JTextField endField,
-                                          JButton zoomInButton, JButton zoomOutButton, JButton actionButton) {
+                                          JButton zoomInButton, JButton zoomOutButton, JButton actionButton,
+                                          JTextField stopIdField, JButton nlcButton, JButton clearButton, 
+                                          MapDisplay mapDisplay) {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
         controlPanel.add(new JLabel("Start:"));
         controlPanel.add(startField);
         controlPanel.add(new JLabel("End:"));
@@ -76,6 +87,15 @@ public class UserInterfaceBuilder {
         controlPanel.add(zoomInButton);
         controlPanel.add(zoomOutButton);
         controlPanel.add(actionButton);
+        
+        if (stopIdField != null && nlcButton != null && clearButton != null) {
+            controlPanel.add(Box.createHorizontalStrut(20));
+            controlPanel.add(new JLabel("Out of Service:"));
+            controlPanel.add(stopIdField);
+            controlPanel.add(nlcButton);
+            controlPanel.add(clearButton);
+        }
+        
         return controlPanel;
     }
 
@@ -213,7 +233,7 @@ public class UserInterfaceBuilder {
     }
 
     private static void showErrorMessage(MapDisplay mapDisplay, String message) {
-        JOptionPane.showMessageDialog(mapDisplay, message);
+        JOptionPane.showMessageDialog(mapDisplay, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private static void resetButton(JButton button) {
