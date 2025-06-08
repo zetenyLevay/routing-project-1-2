@@ -4,9 +4,11 @@ package nlc;
 import java.awt.Color;
 import java.util.Map;
 
+//TODO: FIX NLC LOGIC
+
 public class NLCHeatmapExample {
     public static void main(String[] args) {
-        String closedStopId = "008620";
+        String closedStopId = "MERGED_008490";
 
         NLCHeatmapAPI api = new NLCHeatmapAPI();
         NLCHeatmapData heatmapData = api.generateHeatmap(closedStopId);

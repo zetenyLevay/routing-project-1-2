@@ -12,6 +12,8 @@ import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
 
+//TODO: FIX WALKING LOGIC
+
 public class DijkstraRoutePlanner implements RoutingStrategy {
     private final DijkstraRouter router;
 

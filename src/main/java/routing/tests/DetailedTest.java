@@ -10,26 +10,31 @@ import routing.routingEngineModels.InputJourney;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+//TODO: FIX CLI READING LOGIC
 
 public class DetailedTest {
     public static void main(String[] args) {
         try {
-            // Read JSON input from stdin (all in one line)
-            Scanner scanner = new Scanner(System.in);
-            String jsonInput = scanner.nextLine().trim();
-
-            // Parse input
-            InputJourney journey = RouteFormatter.parseInput(jsonInput);
-
-            // Initialize router
             DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
             Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
+            for (int i =0 ; i < 3; i ++) {
+                // Read JSON input from stdin (all in one line)
+                Scanner scanner = new Scanner(System.in);
+                String jsonInput = scanner.nextLine().trim();
 
-            // Find route
-            FinalRoute route = router.findRoute(journey);
+                // Parse input
+                InputJourney journey = RouteFormatter.parseInput(jsonInput);
 
-            // Format and print result
-            System.out.println(RouteFormatter.formatResult(route, journey.getStartTime()));
+                // Initialize router
+
+
+                // Find route
+                FinalRoute route = router.findRoute(journey);
+
+                // Format and print result
+                System.out.println(RouteFormatter.formatResult(route, journey.getStartTime()));
+            }
+
 
         } catch (IllegalArgumentException e) {
             System.out.println("{\"error\":\"Invalid input format\"}");
