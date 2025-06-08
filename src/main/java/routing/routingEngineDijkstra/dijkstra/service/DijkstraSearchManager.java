@@ -26,18 +26,18 @@ public class DijkstraSearchManager {
         while (!queue.isEmpty()) {
             SearchNode current = queue.poll();
 
-//            if (processedStops.contains(current.stop.id)) {
-//                continue;
-//            }
-//
-//            if (current.time <= earliestArrival.getOrDefault(current.stop.id, Integer.MAX_VALUE)) {
-//                processedStops.add(current.stop.id);
-//                return current;
-//            }
-            if (current.time != earliestArrival.get(current.stop.id)) {
-                continue; // stale path—ignore
+            if (processedStops.contains(current.stop.id)) {
+                continue;
             }
-            return current;
+
+            if (current.time <= earliestArrival.getOrDefault(current.stop.id, Integer.MAX_VALUE)) {
+                processedStops.add(current.stop.id);
+                return current;
+            }
+//            if (current.time != earliestArrival.get(current.stop.id)) {
+//                continue; // stale path—ignore
+//            }
+//            return current;
 
         }
         return null;

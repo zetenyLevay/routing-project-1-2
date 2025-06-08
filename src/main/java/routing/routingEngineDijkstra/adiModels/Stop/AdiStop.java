@@ -12,14 +12,12 @@ public class AdiStop {
 //    private final StopType stopType;
 //    private final String parentStationID;
 //    private final List<Pathway> footpaths;
-    private final StopType stopType;
     private final Object parentStationID;
 
     public AdiStop(String stopID, String stopName, Coordinates stopCoordinates, StopType stopType, Object parentStationID) {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
-        this.stopType = stopType;
         this.parentStationID = parentStationID;
     }
 
@@ -27,7 +25,6 @@ public class AdiStop {
         this.stopID = stopId2;
         this.stopName = stopName2;
         this.stopCoordinates = coordinates;
-        this.stopType = null;
         this.parentStationID = null;
     }
     public double getLatitude() {
