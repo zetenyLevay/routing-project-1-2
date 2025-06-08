@@ -1,8 +1,8 @@
 package heatmap;
 
 import routing.api.Router;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.FinalRoute;
-import routing.routingEngineModels.Stop.Stop;
 
 import java.time.LocalTime;
 import java.util.Map;

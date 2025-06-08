@@ -1,7 +1,7 @@
 package heatmap;
 
 import routing.api.Router;
-import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import heatmap.StopsCache;
 
 import java.awt.Color;

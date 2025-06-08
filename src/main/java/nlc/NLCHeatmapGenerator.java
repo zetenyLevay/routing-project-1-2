@@ -1,9 +1,9 @@
 package nlc;
 
 import heatmap.StopsCache;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.dijkstra.service.HaversineDistanceCalculator;
 import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.Stop.Stop;
 
 import java.util.Collection;
 import java.util.Map;

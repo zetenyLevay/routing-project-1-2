@@ -1,5 +1,7 @@
 package routing.routingEngineDijkstra.formatter;
 
+import routing.routingEngineDijkstra.adiModels.AdiRouteInfo;
+import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
 import routing.routingEngineModels.*;
 
 import java.time.LocalTime;
@@ -47,11 +49,11 @@ public class RouteFormatter {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"ok\":[");
 
-        List<RouteStep> steps = route.getRouteSteps();
+        List<AdiRouteStep> steps = route.getRouteSteps();
         LocalTime currentTime = startTime;
         boolean first = true;
 
-        for (RouteStep step : steps) {
+        for (AdiRouteStep step : steps) {
             if (!first) {
                 builder.append(",");
             }
@@ -65,7 +67,7 @@ public class RouteFormatter {
         return builder.toString();
     }
 
-    private static String formatRouteStep(RouteStep step, LocalTime startTime) {
+    private static String formatRouteStep(AdiRouteStep step, LocalTime startTime) {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
         builder.append("\"mode\":\"").append(step.getMode()).append("\",");
@@ -83,7 +85,7 @@ public class RouteFormatter {
         return builder.toString();
     }
 
-    private static String formatRouteInfo(RouteInfo routeInfo) {
+    private static String formatRouteInfo(AdiRouteInfo routeInfo) {
         if (routeInfo == null) {
             return "null";
         }

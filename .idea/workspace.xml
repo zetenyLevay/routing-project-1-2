@@ -25,6 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -36,28 +39,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.BulkTest.executor": "Run",
-    "Application.DetailedTest.executor": "Run",
-    "Application.HeatmapExample.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MapUI.executor": "Debug",
-    "Application.RealAStarUsage.executor": "Run",
-    "Application.RealDijkstraUsage.executor": "Run",
-    "Application.RoutingExample.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BulkTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DetailedTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HeatmapExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MapUI.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.RealAStarUsage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RealDijkstraUsage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RoutingExample.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="routing.routingEngineModels" />
@@ -69,7 +72,7 @@
       <recent name="routing.routingEngineDijkstra.newDijkstra.model.input" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DetailedTest">
+  <component name="RunManager" selected="Application.RoutingExample">
     <configuration name="DetailedTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="routing.tests.DetailedTest" />
       <module name="bcs1600" />
@@ -137,8 +140,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DetailedTest" />
         <item itemvalue="Application.RoutingExample" />
+        <item itemvalue="Application.DetailedTest" />
         <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.HeatmapExample" />
         <item itemvalue="Application.Main" />

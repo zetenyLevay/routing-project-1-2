@@ -1,8 +1,8 @@
 package routing.api;
 
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
-import routing.routingEngineModels.Stop.Stop;
 import java.time.LocalTime;
 
 public interface RoutingStrategy {

@@ -1,7 +1,7 @@
 package nlc;
 
 import heatmap.StopsCache;
-import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 public class NLCHeatmap {
     private final NLCHeatmapGenerator generator = new NLCHeatmapGenerator();
