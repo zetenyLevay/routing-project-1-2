@@ -1,13 +1,12 @@
 package nlc;
 
-import heatmap.StopsCache;
-import routing.routingEngineDijkstra.dijkstra.service.HaversineDistanceCalculator;
-import routing.routingEngineModels.Coordinates;
-import routing.routingEngineDijkstra.adiModels.*;
-import routing.routingEngineDijkstra.adiModels.Stop.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import heatmap.StopsCache;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
+import routing.routingEngineDijkstra.dijkstra.service.HaversineDistanceCalculator;
 
 public class NLCHeatmapGenerator {
     private static final int NEIGHBOR_RADIUS_METERS = 400;

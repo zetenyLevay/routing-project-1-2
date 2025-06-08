@@ -13,6 +13,8 @@ import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
+//TODO: FIX WALKING LOGIC
+
 public class DijkstraRoutePlanner implements RoutingStrategy {
     private final DijkstraRouter router;
 

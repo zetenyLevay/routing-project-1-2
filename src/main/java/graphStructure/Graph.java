@@ -5,10 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import routing.routingEngineModels.RouteStep;
-import routing.routingEngineModels.Stop.Stop;
-import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 
 /**

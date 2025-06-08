@@ -1,8 +1,7 @@
 package heatmap;
 
 import routing.api.Router;
-import routing.routingEngineDijkstra.adiModels.*;
-import routing.routingEngineDijkstra.adiModels.Stop.*;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 public class Heatmap {
     private final HeatmapGenerator generator;

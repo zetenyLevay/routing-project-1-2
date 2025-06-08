@@ -1,5 +1,7 @@
 package routing.routingEngineDijkstra.dijkstra.converters;
 
+import routing.routingEngineDijkstra.adiModels.AdiRouteInfo;
+import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.adiModels.*;
 import routing.routingEngineDijkstra.dijkstra.model.input.*;

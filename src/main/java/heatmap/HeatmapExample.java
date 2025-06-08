@@ -19,6 +19,6 @@ public class HeatmapExample {
         HeatmapData heatmap = heatmapAPI.generateHeatmap("002133");
         Map<String, Double> allTimes = heatmapAPI.getAllTravelTimes(heatmap);
         allTimes.forEach((stopId, time) ->
-                System.out.println(stopId + ": " + time + " minutes"));
+                System.out.println(stopId + ": " + time + " seconds"));
     }
 }
