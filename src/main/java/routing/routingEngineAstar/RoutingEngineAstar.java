@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import parsers.ZipToSQLite;
 import routing.db.DBConnectionManager;
 import routing.routingEngineAstar.builders.DynamicGraphBuilder;
 import routing.routingEngineModels.Coordinates;
@@ -69,8 +70,18 @@ public class RoutingEngineAstar {
         debug("Loaded " + allStops.size() + " stops");
 
         this.graphBuilder = new DynamicGraphBuilder(dbManager);
+
+        // ensure our stop_times indexes exist
+        try (Connection conn = dbManager.getConnection()) {
+            ZipToSQLite.createIndexes("stop_times.txt", conn);
+        } catch (SQLException e) {
+            // either log or rethrow as unchecked
+            throw new RuntimeException("Unable to create indexes", e);
+        }
+
     }
 
+// {"routeFrom":{"lat":50.850781642439834,"lon":5.69112308868195},"startingAt":"21:13","to":{"lat":50.838823893023566,"lon":5.712222386520314}}
     /**
      * Main routing method – finds a sequence of RouteStep from source to
      * destination.

@@ -240,22 +240,27 @@ public class ZipToSQLite {
             createTable(conn, tableName, headers);
             insertCsvData(conn, tableName, headers, parser);
 
-            // ── new: add indexes on stop_times ──
-            if ("stop_times".equals(tableName)) {
-                try (Statement st = conn.createStatement()) {
-                    // lookup by stop_id
-                    st.executeUpdate(
-                            "CREATE INDEX IF NOT EXISTS idx_stop_times_stop_id "
-                            + "ON stop_times (stop_id);"
-                    );
-                    // retrieve stops in order per trip
-                    st.executeUpdate(
-                            "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq "
-                            + "ON stop_times (trip_id, stop_sequence);"
-                    );
-                }
-            }
+            // createIndexes(tableName, conn);
 
+        }
+    }
+
+    public static void createIndexes(String entryName, Connection conn) throws SQLException {
+         String tableName = sanitizeTableName(entryName);
+        // ── new: add indexes on stop_times ──
+        if ("stop_times".equals(tableName)) {
+            try (Statement st = conn.createStatement()) {
+                // lookup by stop_id
+                st.executeUpdate(
+                        "CREATE INDEX IF NOT EXISTS idx_stop_times_stop_id "
+                        + "ON stop_times (stop_id);"
+                );
+                // retrieve stops in order per trip
+                st.executeUpdate(
+                        "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq "
+                        + "ON stop_times (trip_id, stop_sequence);"
+                );
+            }
         }
     }
 
