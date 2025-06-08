@@ -19,10 +19,10 @@ public class MapUI {
 
     public static void create() {
         List<LocationPoint> busStopData = BusStopDataLoader.loadFromCsvFile("data/stops.csv");
-        double northBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(47, 31, 35.08);
-        double southBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(47, 28, 5.16);
-        double westBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(18, 58, 50.07);
-        double eastBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(19, 7, 26.23);
+        double northBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(47, 39, 9.36);
+        double southBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(47, 20, 8.50);
+        double westBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(18, 41, 15.29);
+        double eastBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(19, 28, 30.60);
         GeographicBounds mapBoundaries = new GeographicBounds(
             southBoundary, northBoundary, westBoundary, eastBoundary);
         

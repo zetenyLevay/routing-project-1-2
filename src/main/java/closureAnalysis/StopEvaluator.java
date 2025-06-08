@@ -9,244 +9,152 @@ import closureAnalysis.data.models.NearbyPOIs;
 import closureAnalysis.data.models.PointOfInterest;
 import closureAnalysis.data.readers.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StopEvaluator {
 
     CentralityCalculator cc = new CentralityCalculator();
     Finder coordFinder = new CoordinateFinder();
-    POIFinder poiFinder = new POIFinder();
-    TransportTypeFinder transportTypeFinder = new TransportTypeFinder();
 
+    double ALPHA = 0.5;
+    double GAMMA = 0.33;
+    double OMEGA = 0.33;
+    double BETA = 0.33;
+
+
+
+    public Map<String, Double> doEverything(){
+        StopGraph graph = new StopGraph();
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:data/june2ndBudapestGTFS.db");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        graph = graph.buildStopGraph(conn);
+
+
+        TransportTypeFinder transportTypeFinder = new TransportTypeFinder();
+        POIFinder poiFinder = new POIFinder();
+        NameFinder nameFinder = new NameFinder();
+        transportTypeFinder.preload(conn);
+        poiFinder.preload();
+        nameFinder.preload(conn);
+
+
+        preprocess(graph, transportTypeFinder, poiFinder, nameFinder);
+        assignCentralityValue(graph.getStopNodes(), ALPHA);
+        double sum = BETA + GAMMA + OMEGA;
+
+        double betaNorm = BETA / sum;
+        double omegaNorm = OMEGA / sum;
+        double gammaNorm = GAMMA / sum;
+
+        stopEvaluation(graph, betaNorm, omegaNorm, gammaNorm);
+
+        List<StopNode> stopNodes = graph.getStopNodes();
+
+        Map<String, Double> stopValues = new HashMap<>();
+        for (StopNode stopNode : stopNodes) {
+            stopValues.putIfAbsent(stopNode.getId(), stopNode.getStopWorth());
+        }
+        return stopValues;
+    }
 
 
     public static void main(String[] args) throws SQLException {
         StopEvaluator stopEvaluator = new StopEvaluator();
-        StopGraph graph = new StopGraph();
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
-        long totalStart = System.currentTimeMillis();
-        long sTime = System.currentTimeMillis();
-        graph = graph.buildStopGraph(conn);
-        long eTime = System.currentTimeMillis();
-        long dTime = eTime - sTime;
-        System.out.println("Building stop graph took :" + dTime + "ms");
-
-        stopEvaluator.evaluate(graph, conn);
-
-        long totalEnd = System.currentTimeMillis();
-        long totalTime = totalEnd - totalStart;
-        long totalTimeNoGraph = totalTime - dTime;
-
-        System.out.println("Evaluation took :" + totalTime + "ms");
-        System.out.println("Total time without building graph: " + totalTimeNoGraph + "ms");
-
-        System.out.println("Bottom ten:");
-        graph.getStopNodes().stream()
-                .sorted(Comparator.comparingDouble(StopNode::getStopWorth))
-                .limit(10)
-                .forEach(node -> System.out.println("Node : " + node.getStopWorth() + "Label: " + node.getId()));
-        System.out.println("Top ten:");
-        graph.getStopNodes().stream()
-                .sorted(Comparator.comparingDouble(StopNode::getStopWorth).reversed())
-                .limit(10)
-                .forEach(node -> System.out.println("Node : " + node.getStopWorth() + "Label: " + node.getId()));
-
+        Map<String, Double> stopValues = stopEvaluator.doEverything();
+        System.out.println(stopValues);
     }
 
-    public void evaluate(StopGraph stopGraph, Connection conn) {
+    public void exportStopScores(StopGraph graph, String filename) {
+        try (PrintWriter writer = new PrintWriter(new File(filename))) {
+            writer.println("stop_id,poiWorth,centralityWorth,transportWorth");
+            for (StopNode node : graph.getStopNodes()) {
+                writer.printf(Locale.US, "%s,%.4f,%.4f,%.4f\n",
+                        node.getId(),
+                        node.getPoiWorth(),
+                        node.getCentralityWorth(),
+                        node.getTransportWorth()
+                );
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void preprocess(StopGraph stopGraph, TransportTypeFinder transportTypeFinder, POIFinder poiFinder, NameFinder nameFinder) {
+        Normalizer normalizer = new Normalizer();
 
-        long preloadTime = System.currentTimeMillis();
-
-        transportTypeFinder.preload(conn);
-        poiFinder.preload();
-
-        long eTime = System.currentTimeMillis();
-        long dTime = eTime - preloadTime;
-        System.out.println("Preload time: " + dTime + "ms");
-
-        System.out.println("Starting closeness calculation...");
-        long closenessStart = System.currentTimeMillis();
 
         cc.calculateClosenessCentrality(stopGraph);
-
-        long closenessEnd = System.currentTimeMillis();
-        long closenessduration = closenessEnd - closenessStart;
-        System.out.println("Finished closeness: " + closenessduration + "ms");
-
-        System.out.println("Starting Betweenness calculation...");
-        long betweennessStart = System.currentTimeMillis();
-
         cc.calculateBetweennessCentrality(stopGraph);
-
-        long betweennessEnd = System.currentTimeMillis();
-        long betweennessduration = betweennessEnd - betweennessStart;
-        System.out.println("Finished betweenness: " + betweennessduration + "ms");
-
-        System.out.println("Starting normalization...");
-        long normalizationStart = System.currentTimeMillis();
-
-        centralityNormalizer(stopGraph);
-
-        long normalizationEnd = System.currentTimeMillis();
-        long normalizationduration = normalizationEnd - normalizationStart;
-        System.out.println("Finished normalization: " + normalizationduration + "ms");
-
-        int count = 0;
-
-        System.out.println("Starting Evaluation...");
-        long startTime = System.currentTimeMillis();
-
-
+        normalizer.centralityNormalizer(stopGraph);
         List<StopNode> stops = stopGraph.getStopNodes();
-
 
         // USE ALL THE THREADS
         stops.parallelStream().forEach(stopNode -> {
             coordFinder.find(stopNode);
             poiFinder.find(stopNode);
             transportTypeFinder.find(stopNode);
-            transportTypeEvaluator(stopNode);
-            poiEvaluator(stopNode);
-            centralityEvaluator(stopNode);
+            nameFinder.find(stopNode);
+            assignPoiValue(stopNode);
+            assignTransportValue(stopNode);
         });
 
-/*
-        for (StopNode stopNode : stopGraph.getStopNodes()) {
-
-            //long coordStart = System.currentTimeMillis();
-            coordFinder.find(stopNode);
-            //long coordEnd = System.currentTimeMillis();
-           // long coordDuration = coordEnd - coordStart;
-           // System.out.println("Coord took: " + coordDuration + " ms");
-            //long poiStart = System.currentTimeMillis();
-            poiFinder.find(stopNode);
-           // long poiEnd = System.currentTimeMillis();
-           // long poiDuration = poiEnd - poiStart;
-           // System.out.println("Poi took: " + poiDuration + " ms");
-            //long transportStart = System.currentTimeMillis();
-            transportTypeFinder.find(stopNode);
-           // long transportEnd = System.currentTimeMillis();
-            //long transportDuration = transportEnd - transportStart;
-           // System.out.println("Transport took: " + transportDuration + " ms");
-
-           // long transPortEvaluatorStart = System.currentTimeMillis();
-            transportTypeEvaluator(stopNode);
-            //long transPortEvaluatorEnd = System.currentTimeMillis();
-            //long transPortEvaluatorDuration = transPortEvaluatorEnd - transPortEvaluatorStart;
-           // System.out.println("Transport Evaluation took: " + transPortEvaluatorDuration + " ms");
-            //long poiEvaluatorStart = System.currentTimeMillis();
-            poiEvaluator(stopNode);
-            //long poiEvaluatorEnd = System.currentTimeMillis();
-           // long poiEvaluatorDuration = poiEvaluatorEnd - poiEvaluatorStart;
-           // System.out.println("Poi Evaluation took: " + poiEvaluatorDuration + " ms");
-           // long centralityCalculatorStart = System.currentTimeMillis();
-            centralityEvaluator(stopNode);
-            //long centralityCalculatorEnd = System.currentTimeMillis();
-           // long centralityCalculatorDuration = centralityCalculatorEnd - centralityCalculatorStart;
-           // System.out.println("Centrality took: " + centralityCalculatorDuration + " ms");
-           // count++;
-           // System.out.println("Nodes done: " + count);
-
-
-
-
-
-            //System.out.println("This stops: " + stopNode.getId() +  " worth: "  + stopNode.getStopWorth() );
-
-        }
-
- */
-
-
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-        System.out.println("Finished evaluation in " + elapsedTime + " ms");
+        normalizer.poiNormalizer(stopGraph);
+        normalizer.transportNormalizer(stopGraph);
     }
+
+    public void evaluate(StopGraph stopGraph, double alpha, double beta, double gamma, double omega,
+                         TransportTypeFinder transportTypeFinder, POIFinder poiFinder) {
+
+
+
+    }
+
+
 
     /**
-     * min-max normalization on centrality (might do this with the others)
-     * @param stopGraph
+     * using geometric mean the combined centrality measures of a stop (this punishes
+     * @param stops stop we are chekcing
      */
-    private void centralityNormalizer(StopGraph stopGraph) {
-        double maxCloseness = stopGraph.getStopNodes().stream()
-                .max(Comparator.comparingDouble(StopNode::getClosenessCentrality))
-                .map(StopNode::getClosenessCentrality)
-                .orElse(Double.NaN);
-        double maxBetweenness = stopGraph.getStopNodes().stream()
-                .max(Comparator.comparingDouble(StopNode::getBetweennessCentrality))
-                .map(StopNode::getBetweennessCentrality)
-                .orElse(Double.NaN);
-        double minCloseness = stopGraph.getStopNodes().stream()
-                .min(Comparator.comparingDouble(StopNode::getClosenessCentrality))
-                .map(StopNode::getClosenessCentrality)
-                .orElse(Double.NaN);
-        double minBetweenness = stopGraph.getStopNodes().stream()
-                .min(Comparator.comparingDouble(StopNode::getBetweennessCentrality))
-                .map(StopNode::getBetweennessCentrality)
-                .orElse(Double.NaN);
+    private void assignCentralityValue(List<StopNode> stops, double alpha) {
 
-        for (StopNode stopNode : stopGraph.getStopNodes()) {
-            double closeness = stopNode.getClosenessCentrality();
-            double betweenness = stopNode.getBetweennessCentrality();
-
-            double normalizedCloseness = (closeness - minCloseness) / (maxCloseness - minCloseness);
-            double normalizedBetweenness = (betweenness - minBetweenness) / (maxBetweenness - minBetweenness);
-
-            stopNode.setClosenessCentrality(normalizedCloseness);
-            stopNode.setBetweennessCentrality(normalizedBetweenness);
-        }
+        stops.parallelStream().forEach(node -> {
+            double closeness = node.getClosenessCentrality();
+            double betweenness = node.getBetweennessCentrality();
+            double value = alpha * betweenness + (1 - alpha) * closeness;
+            node.setCentralityWorth(value);
+        });
 
     }
 
-    /**
-     * using weighted sum we check the combined centrality measures of a stop
-     * @param node stop we are chekcing
-     */
-    private void centralityEvaluator(StopNode node) {
+    private void assignTransportValue(StopNode node) {
 
-        double ALPHA = 0.75;
-
-        double worth = node.getStopWorth();
-        double closeness = node.getClosenessCentrality();
-        double betweenness = node.getBetweennessCentrality();
-
-        double value = (ALPHA * betweenness + (1-ALPHA) * closeness) * 100; // weighted sum
-        double value2 = (Math.sqrt(closeness*betweenness))*100; // geometric mean
-
-        //System.out.println("Centrality value: " + value);
-
-        worth += value;
-        node.setStopWorth(worth);
-
-    }
-
-    private void transportTypeEvaluator(StopNode node) {
-        double worth = node.getStopWorth();
         TransportType transportType = node.getTransportType();
 
         double yearlyPassCount = transportType.yearlyPassengers;
         double stopCount = transportType.stopCount;
 
-        double base = (yearlyPassCount/stopCount) * 100;
+        double base = (yearlyPassCount/stopCount);
 
-        //System.out.println("Transport type value: " + base);
 
-        worth += base;
 
-        node.setStopWorth(worth);
+        node.setTransportWorth(base);
 
     }
 
-    private void poiEvaluator(StopNode node) {
+    private void assignPoiValue(StopNode node) {
         NearbyPOIs a = node.getNearbyPOIs();
-
-        double worth = node.getStopWorth();
         double closeValue = 0;
         double farValue = 0;
 
@@ -261,12 +169,35 @@ public class StopEvaluator {
             farValue += (poi.getType().value * 0.5) / 250;
 
         }
+        double totalValue = closeValue + farValue;
 
-        //System.out.println("POI value close: " + closeValue);
-        //System.out.println("POI value far: " + farValue);
+        node.setPoiWorth(totalValue);
+    }
 
-        worth += farValue;
-        worth += closeValue;
-        node.setStopWorth(worth);
+    private void stopEvaluation(StopGraph graph, double beta, double gamma, double omega) {
+        List<StopNode> stops = graph.getStopNodes();
+
+
+
+        stops.parallelStream().forEach(stopNode -> {
+            assignPoiValue(stopNode);
+            assignTransportValue(stopNode);
+        });
+
+        Normalizer normalizer = new Normalizer();
+        normalizer.transportNormalizer(graph);
+        normalizer.poiNormalizer(graph);
+
+
+
+        stops.parallelStream().forEach(node -> {
+            double poiWorth = node.getPoiWorth();
+            double centralityWorth = node.getCentralityWorth();
+            double transportWorth = node.getTransportWorth();
+
+            double finalWorth = beta * poiWorth + omega * centralityWorth + gamma * transportWorth;
+
+            node.setStopWorth(finalWorth);
+        });
     }
 }
