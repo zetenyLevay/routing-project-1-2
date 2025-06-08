@@ -33,7 +33,7 @@ public class UserInterfaceBuilder {
                                             MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
         JButton generateHeatmapButton = createHeatmapButton(startCoordinateField, mapDisplay, heatmapAPI);
         JButton zoomInButton = createZoomButton("+", 1.5, mapDisplay);
-        JButton zoomOutButton = createZoomButton("-", 0.9, mapDisplay);
+        JButton zoomOutButton = createZoomButton("-", 1.5, mapDisplay);
 
         return buildControlPanel(startCoordinateField, endCoordinateField, 
                                zoomInButton, zoomOutButton, generateHeatmapButton, 
