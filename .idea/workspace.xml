@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3529e917-2c4a-4258-8695-0462277c8f62" name="Changes" comment="">
+    <list default="true" id="362628ce-4d17-4af4-a0e2-f2eb336b1bac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/converters/DijkstraModelConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/converters/DijkstraModelConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DijkstraSearchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DijkstraSearchManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/InputJourney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/InputJourney.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +21,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.HeatmapExample.executor": "Run",
     "git-widget-placeholder": "a-star",
     "node.js.selected.package.tslint": "(autodetect)"
   }

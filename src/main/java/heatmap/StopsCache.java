@@ -1,7 +1,7 @@
 package heatmap;
 
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.Stop.Stop;
 import java.sql.*;
 import java.util.Collections;
 import java.util.HashMap;
