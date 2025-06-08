@@ -3,8 +3,8 @@ package nlc;
 import heatmap.StopsCache;
 import routing.routingEngineDijkstra.dijkstra.service.HaversineDistanceCalculator;
 import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.Stop.Stop;
-
+import routing.routingEngineDijkstra.adiModels.*;
+import routing.routingEngineDijkstra.adiModels.Stop.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

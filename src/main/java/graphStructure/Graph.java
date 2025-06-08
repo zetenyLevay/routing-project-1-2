@@ -7,6 +7,8 @@ import java.util.Map;
 
 import routing.routingEngineModels.RouteStep;
 import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
+import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
 
 
 /**

@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import closureAnalysis.calculations.EdgeWeightCalculator;
-import com.sun.javafx.geom.Edge;
 import javafx.util.Pair;
 
 /**

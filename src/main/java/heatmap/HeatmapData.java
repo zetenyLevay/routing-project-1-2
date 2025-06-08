@@ -1,6 +1,7 @@
 package heatmap;
 
-import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.*;
+import routing.routingEngineDijkstra.adiModels.Stop.*;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;

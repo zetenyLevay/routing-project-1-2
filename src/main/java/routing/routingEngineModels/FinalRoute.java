@@ -1,23 +1,27 @@
 //list of RouteSteps
 
 package routing.routingEngineModels;
-//import Routing.RoutingEngineModels.RouteStep;
+
 
 import java.util.ArrayList;
 
 public class FinalRoute{
 
-    private ArrayList<AdiRouteStep> routeSteps;
+    private ArrayList<RouteStep> routeSteps;
     private double totalDistance;
     private double totalTime;
 
-    public FinalRoute(ArrayList<AdiRouteStep> routeSteps, double totalDistance, double totalTime) {
+    public FinalRoute(ArrayList<RouteStep> routeSteps, double totalDistance, double totalTime) {
         this.routeSteps = routeSteps;
         this.totalDistance = totalDistance;
         this.totalTime = totalTime;
     }
 
-    public ArrayList<AdiRouteStep> getRouteSteps() {
+    public FinalRoute(Object routeSteps2, double totalDistance2, double totalTime2) {
+        //TODO Auto-generated constructor stub
+    }
+
+    public ArrayList<RouteStep> getRouteSteps() {
         return this.routeSteps;
     }
 

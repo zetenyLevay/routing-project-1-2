@@ -1,12 +1,14 @@
 package routing.routingEngineDijkstra.dijkstra.converters;
 
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
+import routing.routingEngineDijkstra.adiModels.*;
 import routing.routingEngineDijkstra.dijkstra.model.input.*;
 import routing.routingEngineDijkstra.dijkstra.model.output.*;
 import routing.routingEngineModels.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DijkstraModelConverter {
 
@@ -43,7 +45,7 @@ public class DijkstraModelConverter {
         }
 
         return new FinalRoute(
-                new ArrayList<>(routeSteps),
+                new ArrayList<Object>(routeSteps),
                 dijkstraFinalRoute.getTotalDistance(),
                 dijkstraFinalRoute.getTotalTime()
         );

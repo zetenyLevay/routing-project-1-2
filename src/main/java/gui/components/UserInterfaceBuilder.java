@@ -20,6 +20,7 @@ import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
 import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
 import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 import routing.routingEngineModels.Coordinates;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 
 public class UserInterfaceBuilder {
@@ -219,11 +220,11 @@ public class UserInterfaceBuilder {
     }
 
     private static String findNearestStopId(double latitude, double longitude) {
-        Map<String, routing.routingEngineModels.AdiStop.Stop> allStops = StopsCache.getAllStops();
+        Map<String, AdiStop> allStops = StopsCache.getAllStops();
         String nearestStopId = null;
         double minimumDistance = Double.MAX_VALUE;
         
-        for (routing.routingEngineModels.AdiStop.Stop stop : allStops.values()) {
+        for (AdiStop stop : allStops.values()) {
             Coordinates stopCoordinates = stop.getCoordinates();
             double distance = calculateDistance(latitude, longitude,
                                               stopCoordinates.getLatitude(),
