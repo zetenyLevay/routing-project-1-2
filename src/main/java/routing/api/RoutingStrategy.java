@@ -1,11 +1,11 @@
 package routing.api;
 
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
-import routing.routingEngineModels.Stop.Stop;
 import java.time.LocalTime;
 
 public interface RoutingStrategy {
     FinalRoute findRoute(InputJourney inputJourney);
-    FinalRoute findRoute(Stop from, Stop to, LocalTime startTime);
+    FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime);
 }

@@ -1,9 +1,9 @@
 package routing.api;
 
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
-import routing.routingEngineModels.Stop.Stop;
 
 import java.time.LocalTime;
 
@@ -22,7 +22,7 @@ public class Router {
         return strategy.findRoute(inputJourney);
     }
 
-    public FinalRoute findRoute(Stop from, Stop to, LocalTime startTime) {
+    public FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime) {
         return strategy.findRoute(from, to, startTime);
     }
 

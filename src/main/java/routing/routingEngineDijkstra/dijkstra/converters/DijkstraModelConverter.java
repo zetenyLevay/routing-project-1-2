@@ -1,10 +1,11 @@
 package routing.routingEngineDijkstra.dijkstra.converters;
 
+import routing.routingEngineDijkstra.adiModels.AdiRouteInfo;
+import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.dijkstra.model.input.*;
 import routing.routingEngineDijkstra.dijkstra.model.output.*;
 import routing.routingEngineModels.*;
-import routing.routingEngineModels.Stop.Stop;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class DijkstraModelConverter {
         return new DijkstraCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
-    public static DijkstraStop toDijkstraStop(Stop stop) {
+    public static DijkstraStop toDijkstraStop(AdiStop stop) {
         return new DijkstraStop(
                 stop.getStopID(),
                 stop.getStopName(),
@@ -33,12 +34,12 @@ public class DijkstraModelConverter {
         );
     }
     public static FinalRoute toFinalRoute(DijkstraFinalRoute dijkstraFinalRoute, LocalTime journeyStartTime) {
-        List<RouteStep> routeSteps = new ArrayList<>();
+        List<AdiRouteStep> routeSteps = new ArrayList<>();
         LocalTime currentTime = journeyStartTime;
 
         for (Object step : dijkstraFinalRoute.getRouteSteps()) {
             DijkstraRouteStep dijkstraStep = (DijkstraRouteStep) step;
-            RouteStep convertedStep = toRouteStep(dijkstraStep, currentTime);
+            AdiRouteStep convertedStep = toRouteStep(dijkstraStep, currentTime);
             routeSteps.add(convertedStep);
             currentTime = currentTime.plusSeconds((long)(dijkstraStep.getTime() * 60));
         }
@@ -50,19 +51,19 @@ public class DijkstraModelConverter {
         );
     }
 
-    public static RouteStep toRouteStep(DijkstraRouteStep dijkstraStep, LocalTime startTime) {
+    public static AdiRouteStep toRouteStep(DijkstraRouteStep dijkstraStep, LocalTime startTime) {
         Coordinates to = toCoordinates(dijkstraStep.getEndCoord());
         double duration = dijkstraStep.getTime();
 
         if ("WALK".equalsIgnoreCase(dijkstraStep.getModeOfTransport())) {
-            return new RouteStep(
+            return new AdiRouteStep(
                     "walk",
                     to,
                     duration,
                     startTime
             );
         } else {
-            return new RouteStep(
+            return new AdiRouteStep(
                     "ride",
                     to,
                     duration,
@@ -77,9 +78,9 @@ public class DijkstraModelConverter {
         return new Coordinates(dijkstraCoordinates.getLatitude(), dijkstraCoordinates.getLongitude());
     }
 
-    public static RouteInfo toRouteInfo(DijkstraRouteInfo dijkstraRouteInfo) {
+    public static AdiRouteInfo toRouteInfo(DijkstraRouteInfo dijkstraRouteInfo) {
         if (dijkstraRouteInfo == null) return null;
-        return new RouteInfo(
+        return new AdiRouteInfo(
                 dijkstraRouteInfo.operator,
                 dijkstraRouteInfo.shortName,
                 dijkstraRouteInfo.longName,

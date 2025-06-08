@@ -1,7 +1,7 @@
 package heatmap;
 
 import routing.api.Router;
-import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 public class Heatmap {
     private final HeatmapGenerator generator;
@@ -10,7 +10,7 @@ public class Heatmap {
         this.generator = new HeatmapGenerator(router);
     }
 
-    public HeatmapData createFromStop(Stop originStop) {
+    public HeatmapData createFromStop(AdiStop originStop) {
         return generator.generate(originStop);
     }
 

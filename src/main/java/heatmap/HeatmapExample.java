@@ -12,13 +12,13 @@ import java.util.Map;
 
 public class HeatmapExample {
     public static void main(String[] args) throws SQLException {
-        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(500);
+        DijkstraRouter dijkstraRouter = GTFSDatabaseParser.createRouterFromGTFS(300);
         Router router = new Router(new DijkstraRoutePlanner(dijkstraRouter));
 
         TravelTimeHeatmapAPI heatmapAPI = new TravelTimeHeatmapAPI(router);
         HeatmapData heatmap = heatmapAPI.generateHeatmap("002133");
         Map<String, Double> allTimes = heatmapAPI.getAllTravelTimes(heatmap);
         allTimes.forEach((stopId, time) ->
-                System.out.println(stopId + ": " + time + " minutes"));
+                System.out.println(stopId + ": " + time + " seconds"));
     }
 }

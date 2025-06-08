@@ -1,18 +1,18 @@
 package heatmap;
 
-import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HeatmapData {
-    private final Stop originStop;
-    private final Map<Stop, Double> travelTimes;
-    private final Map<Stop, Color> stopColors;
+    private final AdiStop originStop;
+    private final Map<AdiStop, Double> travelTimes;
+    private final Map<AdiStop, Color> stopColors;
     private double minTime;
     private double maxTime;
 
-    public HeatmapData(Stop originStop, Map<Stop, Double> travelTimes) {
+    public HeatmapData(AdiStop originStop, Map<AdiStop, Double> travelTimes) {
         this.originStop = originStop;
         this.travelTimes = new HashMap<>(travelTimes);
         this.stopColors = new HashMap<>();
@@ -42,9 +42,9 @@ public class HeatmapData {
         });
     }
 
-    public Stop getOriginStop() { return originStop; }
-    public Map<Stop, Double> getTravelTimes() { return travelTimes; }
-    public Map<Stop, Color> getStopColors() { return stopColors; }
+    public AdiStop getOriginStop() { return originStop; }
+    public Map<AdiStop, Double> getTravelTimes() { return travelTimes; }
+    public Map<AdiStop, Color> getStopColors() { return stopColors; }
     public double getMinTime() { return minTime; }
     public double getMaxTime() { return maxTime; }
 }

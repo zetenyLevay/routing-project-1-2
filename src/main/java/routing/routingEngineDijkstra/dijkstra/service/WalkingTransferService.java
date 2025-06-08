@@ -12,11 +12,17 @@ public class WalkingTransferService {
     private final DistanceCalculator distanceCalculator;
     private final int maxWalkingDistanceMeters;
     private final Map<DijkstraStop, List<DijkstraStop>> nearbyStopsCache = new HashMap<>();
+    private final GridIndex gridIndex;
+    private final Map<String, Integer> distanceCache = new HashMap<>();
 
-    public WalkingTransferService(DistanceCalculator distanceCalculator, int maxWalkingDistanceMeters) {
+    public WalkingTransferService(DistanceCalculator distanceCalculator,
+                                  int maxWalkingDistanceMeters,
+                                  Collection<DijkstraStop> allStops) {
         this.distanceCalculator = distanceCalculator;
         this.maxWalkingDistanceMeters = maxWalkingDistanceMeters;
+        this.gridIndex = new GridIndex(allStops, maxWalkingDistanceMeters);
     }
+
     public void precomputeNearbyStops(Collection<DijkstraStop> stops) {
         for (DijkstraStop stop : stops) {
             nearbyStopsCache.put(stop,
@@ -29,16 +35,34 @@ public class WalkingTransferService {
     }
 
     public List<DijkstraStop> getNearbyStops(DijkstraStop stop) {
-        return nearbyStopsCache.getOrDefault(stop, Collections.emptyList());
+        return gridIndex.getNearbyStops(stop).stream()
+                .filter(s -> !s.equals(stop))
+                .filter(s -> canWalkBetween(stop, s))
+                .collect(Collectors.toList());
     }
 
     public boolean canWalkBetween(DijkstraStop from, DijkstraStop to) {
-        return distanceCalculator.calculateDistanceMeters(from, to) <= maxWalkingDistanceMeters;
+        String cacheKey = from.id + "-" + to.id;
+        Integer cachedDistance = distanceCache.get(cacheKey);
+
+        if (cachedDistance == null) {
+            cachedDistance = distanceCalculator.calculateDistanceMeters(from, to);
+            distanceCache.put(cacheKey, cachedDistance);
+        }
+
+        return cachedDistance <= maxWalkingDistanceMeters;
     }
 
     public int calculateWalkTime(DijkstraStop from, DijkstraStop to) {
-        int distance = distanceCalculator.calculateDistanceMeters(from, to);
-        return (int) Math.round(distance / AVERAGE_WALKING_SPEED_MS);
+        String cacheKey = from.id + "-" + to.id;
+        Integer cachedDistance = distanceCache.get(cacheKey);
+
+        if (cachedDistance == null) {
+            cachedDistance = distanceCalculator.calculateDistanceMeters(from, to);
+            distanceCache.put(cacheKey, cachedDistance);
+        }
+
+        return (int) Math.round(cachedDistance / AVERAGE_WALKING_SPEED_MS);
     }
 
     public DijkstraConnection createWalkingConnection(DijkstraStop from, DijkstraStop to, int startTime) {
@@ -65,6 +89,7 @@ public class WalkingTransferService {
     public int getDistance(DijkstraCoordinates from, DijkstraCoordinates to) {
         return distanceCalculator.calculateDistanceMeters(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude());
     }
+
     public int getMaxWalkingDistance() {
         return maxWalkingDistanceMeters;
     }
