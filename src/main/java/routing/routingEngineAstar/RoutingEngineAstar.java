@@ -30,7 +30,7 @@ import routing.routingEngineModels.utils.TimeAndGeoUtils;
  */
 public class RoutingEngineAstar {
 
-    private static final int MAX_WAIT_SECONDS = 3600 * (1 / 2);     // 30 mins
+    private static final int MAX_WAIT_SECONDS = 1800;     // 30 mins
     private static final double INITIAL_WALK_RADIUS_M = 1000;    // 300 m
     private static final double SEARCH_RADIUS = 1000;           // ~1 km
     private static final boolean DEBUG = false;                  // Enable/disable debug output
