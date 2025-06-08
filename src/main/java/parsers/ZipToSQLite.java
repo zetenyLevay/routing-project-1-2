@@ -1,5 +1,4 @@
 // ── File: parsers/ZipToSQLite.java ──────────────────────────────────────
-
 package parsers;
 
 import java.io.File;
@@ -32,20 +31,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * ZipToSQLite.java
  *
- * This class provides functionality to load GTFS data from a ZIP file into an SQLite database,
- * or to validate an existing SQLite .db file.  The run(...) method now returns the actual
- * database filename that got loaded (e.g. "budapest_gtfs.db"), so that the caller can construct
- * a JDBC URL at runtime.
+ * This class provides functionality to load GTFS data from a ZIP file into an
+ * SQLite database, or to validate an existing SQLite .db file. The run(...)
+ * method now returns the actual database filename that got loaded (e.g.
+ * "budapest_gtfs.db"), so that the caller can construct a JDBC URL at runtime.
  *
- * Usage:
- *   String dbName = ZipToSQLite.run("path/to/some-gtfs.zip");
+ * Usage: String dbName = ZipToSQLite.run("path/to/some-gtfs.zip");
  */
 public class ZipToSQLite {
 
     /**
      * Main method to run the ZipToSQLite functionality from the command line.
-     * It accepts a single argument (either .zip or .db).  On success, prints {"ok":"loaded"}.
-     * On error, prints {"error":"…"} and exits.
+     * It accepts a single argument (either .zip or .db). On success, prints
+     * {"ok":"loaded"}. On error, prints {"error":"…"} and exits.
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in, "UTF-8");
@@ -119,14 +117,15 @@ public class ZipToSQLite {
     }
 
     /**
-     * Load a .zip or .db file.  If .db, just validate connectivity; if .zip, create/overwrite
-     * the corresponding .db file and populate its tables.  Returns the filename of the .db
-     * (for .zip, it's the computed name; for .db input, it's the same as the input filename).
+     * Load a .zip or .db file. If .db, just validate connectivity; if .zip,
+     * create/overwrite the corresponding .db file and populate its tables.
+     * Returns the filename of the .db (for .zip, it's the computed name; for
+     * .db input, it's the same as the input filename).
      *
-     * @param fileName  path to a .zip or .db
-     * @return          the actual .db filename on disk
-     * @throws IOException   if I/O fails or input is missing
-     * @throws SQLException  if any SQLite error occurs
+     * @param fileName path to a .zip or .db
+     * @return the actual .db filename on disk
+     * @throws IOException if I/O fails or input is missing
+     * @throws SQLException if any SQLite error occurs
      */
     public static String run(String fileName) throws IOException, SQLException {
         File f = new File(fileName);
@@ -158,17 +157,20 @@ public class ZipToSQLite {
     }
 
     /**
-     * Safely escape any backslashes or quotes inside an exception message so that we can embed
-     * it in JSON.
+     * Safely escape any backslashes or quotes inside an exception message so
+     * that we can embed it in JSON.
      */
     private static String escapeForJson(String raw) {
-        if (raw == null) return "";
+        if (raw == null) {
+            return "";
+        }
         return raw.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     /**
-     * Given "foo.zip" (or "foo.BERLIN.ZIP"), returns "foo.db" (dropping everything after the last dot).
-     * If there is no dot at all, just returns zipName + ".db".
+     * Given "foo.zip" (or "foo.BERLIN.ZIP"), returns "foo.db" (dropping
+     * everything after the last dot). If there is no dot at all, just returns
+     * zipName + ".db".
      */
     private static String computeDbName(String zipName) {
         if (!zipName.contains(".")) {
@@ -188,7 +190,8 @@ public class ZipToSQLite {
     }
 
     /**
-     * If the .db already existed on disk, do nothing. Otherwise, open the ZIP and process every CSV/TXT entry.
+     * If the .db already existed on disk, do nothing. Otherwise, open the ZIP
+     * and process every CSV/TXT entry.
      */
     private static void processZipFile(String zipPath, Connection conn, boolean dbExisted)
             throws IOException, SQLException {
@@ -221,26 +224,40 @@ public class ZipToSQLite {
             throws IOException, SQLException {
         String tableName = sanitizeTableName(entryName);
 
-        try (InputStream is = zipFile.getInputStream(entry);
-            Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
-            CSVParser parser = CSVParser.parse(r, CSVFormat.DEFAULT
-                    .withFirstRecordAsHeader()
-                    .withIgnoreEmptyLines(true)
-                    .withTrim())) {
+        try (InputStream is = zipFile.getInputStream(entry); Reader r = new InputStreamReader(is, StandardCharsets.UTF_8); CSVParser parser = CSVParser.parse(r, CSVFormat.DEFAULT
+                .withFirstRecordAsHeader()
+                .withIgnoreEmptyLines(true)
+                .withTrim())) {
 
             // ←— **NEW**: Strip any leading BOMs or stray spaces before sanitizing
             List<String> rawHeaders = parser.getHeaderNames();
             List<String> headers = rawHeaders.stream()
-                .map(h -> h.replaceAll("^[\\uFEFF\\s]+", ""))  // drop BOMs or leading whitespace
-                .map(h -> h.trim())                             // trim any other stray spaces
-                .collect(Collectors.toList());
+                    .map(h -> h.replaceAll("^[\\uFEFF\\s]+", "")) // drop BOMs or leading whitespace
+                    .map(h -> h.trim()) // trim any other stray spaces
+                    .collect(Collectors.toList());
 
             // …then continue exactly as before:
             createTable(conn, tableName, headers);
             insertCsvData(conn, tableName, headers, parser);
+
+            // ── new: add indexes on stop_times ──
+            if ("stop_times".equals(tableName)) {
+                try (Statement st = conn.createStatement()) {
+                    // lookup by stop_id
+                    st.executeUpdate(
+                            "CREATE INDEX IF NOT EXISTS idx_stop_times_stop_id "
+                            + "ON stop_times (stop_id);"
+                    );
+                    // retrieve stops in order per trip
+                    st.executeUpdate(
+                            "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq "
+                            + "ON stop_times (trip_id, stop_sequence);"
+                    );
+                }
+            }
+
         }
     }
-
 
     private static String sanitizeTableName(String entryName) {
         String fileName = entryName.contains("/")
@@ -253,8 +270,8 @@ public class ZipToSQLite {
     }
 
     /**
-     * Create a new table with the given name and headers. If the table already exists,
-     * it will be dropped first. All columns are created as TEXT.
+     * Create a new table with the given name and headers. If the table already
+     * exists, it will be dropped first. All columns are created as TEXT.
      */
     private static void createTable(Connection conn, String tableName, List<String> headers)
             throws SQLException {
@@ -262,7 +279,9 @@ public class ZipToSQLite {
         ddl.append("DROP TABLE IF EXISTS ").append(tableName).append(";");
         ddl.append("CREATE TABLE ").append(tableName).append(" (");
         for (int i = 0; i < headers.size(); i++) {
-            if (i > 0) ddl.append(", ");
+            if (i > 0) {
+                ddl.append(", ");
+            }
             String col = headers.get(i).replaceAll("[^A-Za-z0-9_]", "_");
             ddl.append(col).append(" TEXT");
         }
@@ -274,15 +293,17 @@ public class ZipToSQLite {
     }
 
     /**
-     * Inserts the CSV data into the specified table. It uses a prepared statement
-     * to batch insert rows for better performance.
+     * Inserts the CSV data into the specified table. It uses a prepared
+     * statement to batch insert rows for better performance.
      */
     private static int insertCsvData(Connection conn, String tableName, List<String> headers, CSVParser parser)
             throws SQLException {
         StringBuilder insertSql = new StringBuilder();
         insertSql.append("INSERT INTO ").append(tableName).append(" (");
         for (int i = 0; i < headers.size(); i++) {
-            if (i > 0) insertSql.append(", ");
+            if (i > 0) {
+                insertSql.append(", ");
+            }
             insertSql.append(headers.get(i).replaceAll("[^A-Za-z0-9_]", "_"));
         }
         insertSql.append(") VALUES (")
@@ -317,17 +338,18 @@ public class ZipToSQLite {
     }
 
     /**
-     * Heuristic: read the first line of the entry. If it contains commas or any of
-     * the words "agency", "route", "stop", "trip" (case‐insensitive), and there is at
-     * least one more non‐empty line, treat it as a CSV. Otherwise, return false.
+     * Heuristic: read the first line of the entry. If it contains commas or any
+     * of the words "agency", "route", "stop", "trip" (case‐insensitive), and
+     * there is at least one more non‐empty line, treat it as a CSV. Otherwise,
+     * return false.
      */
     private static boolean isCSVformat(ZipFile zipFile, ZipEntry entry) {
-        try (InputStream is = zipFile.getInputStream(entry);
-             Reader r = new InputStreamReader(is, "UTF-8");
-             java.io.BufferedReader br = new java.io.BufferedReader(r)) {
+        try (InputStream is = zipFile.getInputStream(entry); Reader r = new InputStreamReader(is, "UTF-8"); java.io.BufferedReader br = new java.io.BufferedReader(r)) {
 
             String firstLine = br.readLine();
-            if (firstLine == null) return false;
+            if (firstLine == null) {
+                return false;
+            }
             String lower = firstLine.toLowerCase();
             if (firstLine.contains(",")
                     || lower.contains("agency")
