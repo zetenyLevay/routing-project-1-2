@@ -149,6 +149,7 @@ public class RoutingEngineAstar {
                 startTime
         );
         return routeBuilder.mergeConsecutiveWalks(withWalks, sourceLat, sourceLon, destLat, destLon);
+        
     }   
 
     /**
