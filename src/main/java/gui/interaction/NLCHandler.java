@@ -28,6 +28,7 @@ public class NLCHandler {
         JButton clearButton = new JButton("Clear Everyting");
         clearButton.addActionListener(e -> {
             mapDisplay.clearTravelTimeHeatmap();
+            mapDisplay.clearRouteLines();
             stopIdField.setText("(stop ID)");
         });
         return clearButton;

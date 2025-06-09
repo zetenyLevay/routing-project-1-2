@@ -20,6 +20,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import closureAnalysis.StopEvaluator;
+import gui.MapLine;
 import gui.interaction.NLCHandler;
 import heatmap.HeatmapData;
 import heatmap.StopsCache;
@@ -37,7 +38,8 @@ public class UserInterfaceBuilder {
     private static final String DB_URL = "jdbc:sqlite:budapest_gtfs.db";
     private final static DBConnectionManager dbManager = new DBConnectionManager(DB_URL);
     private static final RoutingEngineAstar routingEngine = new RoutingEngineAstar(dbManager);
-
+    private static JTextField startField;
+    private static JTextField endField;
 
     public static JPanel createControlPanel(JTextField startField, JTextField endField, MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
         JButton heatmapButton = heatmapAPI != null
@@ -86,18 +88,61 @@ public class UserInterfaceBuilder {
     private static JButton createShowRouteButton(JTextField startField, JTextField endField, MapDisplay mapDisplay) {
         JButton button = new JButton("Show Route");
         button.addActionListener(e -> {
-            String startText = startField.getText();
-            String endText = endField.getText();
-            // you’ll want real parsing/validation here
-            double sourceLat = Double.parseDouble(startText.split(",")[0].trim());
-            double sourceLon = Double.parseDouble(startText.split(",")[1].trim());
-            double targetLat = Double.parseDouble(endText.split(",")[0].trim());
-            double targetLon = Double.parseDouble(endText.split(",")[1].trim());
-            String startTime = "08:00:00";
-            System.out.println("Finding route from " + sourceLat + "," + sourceLon
-                    + " to " + targetLat + "," + targetLon + " at " + startTime);
-            List<RouteStep> route = routingEngine.findRoute(sourceLat, sourceLon, targetLat, targetLon, startTime);
-            System.out.println(route);
+            try {
+                String startText = startField.getText();
+                String endText = endField.getText();
+
+                if (startText.trim().isEmpty() || endText.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(mapDisplay,
+                            "Please enter both start and end coordinates",
+                            "Input Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Parse coordinates
+                String[] startParts = startText.split(",");
+                String[] endParts = endText.split(",");
+
+                if (startParts.length != 2 || endParts.length != 2) {
+                    JOptionPane.showMessageDialog(mapDisplay,
+                            "Coordinates must be in format: lat,lon",
+                            "Format Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                double sourceLat = Double.parseDouble(startParts[0].trim());
+                double sourceLon = Double.parseDouble(startParts[1].trim());
+                double targetLat = Double.parseDouble(endParts[0].trim());
+                double targetLon = Double.parseDouble(endParts[1].trim());
+
+                String startTime = "08:00:00"; //TODO: change in a but
+                System.out.println("Finding route from " + sourceLat + "," + sourceLon
+                        + " to " + targetLat + "," + targetLon + " at " + startTime);
+                List<RouteStep> route = routingEngine.findRoute(sourceLat, sourceLon, targetLat, targetLon, startTime);
+                System.out.println(route);
+
+                if (route.isEmpty()) {
+                    JOptionPane.showMessageDialog(mapDisplay,
+                            "No route found between the specified coordinates",
+                            "Route Not Found",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                List<MapLine> mapLines = MapLine.routeToLine(route, sourceLat, sourceLon);
+
+                mapDisplay.drawRouteLines(mapLines);
+                mapDisplay.repaint(); 
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(mapDisplay,
+                        "Error: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
         return button;
     }
@@ -215,7 +260,7 @@ public class UserInterfaceBuilder {
                 SwingUtilities.invokeLater(() -> {
                     mapDisplay.applyTravelTimeHeatmap(colors);
                     JOptionPane.showMessageDialog(mapDisplay,
-                            String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
+                            String.format("Heatmap from %.1f to %.1f seconds", data.getMinTime(), data.getMaxTime()));
                 });
                 return null;
             }

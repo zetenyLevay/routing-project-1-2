@@ -1,11 +1,16 @@
 package gui.transform;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+import gui.MapLine;
 import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 public class MapViewTransform {
     private final BufferedImage baseMapImage;
@@ -127,6 +132,8 @@ public class MapViewTransform {
         return new Point(screenX, screenY);
     }
 
+     
+
     private double calculateHorizontalRatio(double longitude) {
         return (longitude - mapBounds.getWestLongitude()) / 
                (mapBounds.getEastLongitude() - mapBounds.getWestLongitude());
@@ -153,5 +160,9 @@ public class MapViewTransform {
     
     public double getVerticalOffset() { 
         return verticalOffset; 
+    }
+
+    public static void drawLineToMap(List<MapLine> lineList){
+        
     }
 }

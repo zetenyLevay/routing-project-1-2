@@ -20,4 +20,5 @@ public class Main {
 
     //Budapest super edgecase:
     //{"routeFrom":{"lat":47.567101,"lon":18.909322},"to":{"lat":47.568488,"lon":19.275036},"startingAt":"18:54:00"}
+    //{"load":"data/budapest_gtfs.zip"}
 }
