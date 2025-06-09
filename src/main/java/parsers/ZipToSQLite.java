@@ -15,18 +15,9 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * ZipToSQLite.java
@@ -45,76 +36,7 @@ public class ZipToSQLite {
      * It accepts a single argument (either .zip or .db). On success, prints
      * {"ok":"loaded"}. On error, prints {"error":"…"} and exits.
      */
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in, "UTF-8");
-        ObjectMapper mapper = new ObjectMapper();
 
-        while (true) {
-            if (!scanner.hasNextLine()) {
-                scanner.close();
-                break;
-            }
-
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) {
-                continue;
-            }
-
-            JsonNode root;
-            try {
-                root = mapper.readTree(line);
-            } catch (JsonProcessingException e) {
-                System.out.println("{\"error\":\"Bad JSON input\"}");
-                System.exit(1);
-                return;
-            } catch (IOException e) {
-                System.out.println("{\"error\":\"Bad JSON input\"}");
-                System.exit(1);
-                return;
-            }
-
-            if (!root.isObject()) {
-                System.out.println("{\"error\":\"Bad request\"}");
-                continue;
-            }
-
-            JsonNode loadNode = root.get("load");
-            if (loadNode == null || !loadNode.isTextual()) {
-                System.out.println("{\"error\":\"Bad request\"}");
-                continue;
-            }
-
-            String filename = loadNode.asText().trim();
-            File f = new File(filename);
-            if (!f.exists() || !f.isFile()) {
-                System.out.println("{\"error\":\"File not found\"}");
-                System.exit(1);
-                return;
-            }
-
-            String lc = filename.toLowerCase();
-            if (lc.endsWith(".db") || lc.endsWith(".zip")) {
-                try {
-                    // run(...) now returns the name of the .db that was loaded/validated
-                    String actualDbName = run(filename);
-                    System.out.println("{\"ok\":\"loaded\"}");
-                    continue;
-                } catch (IOException ioe) {
-                    String msg = escapeForJson(ioe.getMessage());
-                    System.out.println("{\"error\":\"" + msg + "\"}");
-                    System.exit(1);
-                    return;
-                } catch (SQLException sqle) {
-                    String msg = escapeForJson(sqle.getMessage());
-                    System.out.println("{\"error\":\"" + msg + "\"}");
-                    System.exit(1);
-                    return;
-                }
-            }
-
-            System.out.println("{\"error\":\"Bad request\"}");
-        }
-    }
 
     /**
      * Load a .zip or .db file. If .db, just validate connectivity; if .zip,
@@ -135,24 +57,34 @@ public class ZipToSQLite {
 
         String lc = fileName.toLowerCase();
         if (lc.endsWith(".db")) {
-            // Just validate opening the database; no further action
             try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + fileName)) {
-                // if this succeeds, the DB is valid
+                // validated
             }
             return fileName;
         }
 
         if (lc.endsWith(".zip")) {
             String dbName = computeDbName(f.getName());
-            boolean dbAlreadyExisted = new File(dbName).exists();
-
+            boolean existed = new File(dbName).exists();
             try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbName)) {
                 configureDatabase(conn);
-                processZipFile(fileName, conn, dbAlreadyExisted);
+                if (!existed) {
+                    try (ZipFile zipFile = new ZipFile(fileName)) {
+                        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                        while (entries.hasMoreElements()) {
+                            ZipEntry entry = entries.nextElement();
+                            if (entry.isDirectory()) continue;
+                            String nameLower = entry.getName().toLowerCase();
+                            if ((nameLower.endsWith(".txt") || nameLower.endsWith(".csv"))
+                                    && isCSVformat(zipFile, entry)) {
+                                processCsvEntry(zipFile, entry, entry.getName(), conn);
+                            }
+                        }
+                    }
+                }
             }
             return dbName;
         }
-
         throw new IllegalArgumentException("Unsupported file type: " + fileName);
     }
 
@@ -220,28 +152,20 @@ public class ZipToSQLite {
         }
     }
 
-    private static void processCsvEntry(ZipFile zipFile, ZipEntry entry, String entryName, Connection conn)
+   private static void processCsvEntry(ZipFile zipFile, ZipEntry entry, String entryName, Connection conn)
             throws IOException, SQLException {
         String tableName = sanitizeTableName(entryName);
+        try (InputStream is = zipFile.getInputStream(entry);
+             Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 
-        try (InputStream is = zipFile.getInputStream(entry); Reader r = new InputStreamReader(is, StandardCharsets.UTF_8); CSVParser parser = CSVParser.parse(r, CSVFormat.DEFAULT
-                .withFirstRecordAsHeader()
-                .withIgnoreEmptyLines(true)
-                .withTrim())) {
-
-            // ←— **NEW**: Strip any leading BOMs or stray spaces before sanitizing
-            List<String> rawHeaders = parser.getHeaderNames();
-            List<String> headers = rawHeaders.stream()
-                    .map(h -> h.replaceAll("^[\\uFEFF\\s]+", "")) // drop BOMs or leading whitespace
-                    .map(h -> h.trim()) // trim any other stray spaces
-                    .collect(Collectors.toList());
-
-            // …then continue exactly as before:
+            // Use new CSV parser
+            ParseCSV.Result csv = ParseCSV.parse(r);
+            List<String> headers = csv.getHeaders();
             createTable(conn, tableName, headers);
-            insertCsvData(conn, tableName, headers, parser);
-
+            insertCsvData(conn, tableName, headers, csv.getRecords());
         }
     }
+
 
     public static void createIndexes(String entryName, Connection conn) throws SQLException {
          String tableName = sanitizeTableName(entryName);
@@ -298,31 +222,25 @@ public class ZipToSQLite {
      * Inserts the CSV data into the specified table. It uses a prepared
      * statement to batch insert rows for better performance.
      */
-    private static int insertCsvData(Connection conn, String tableName, List<String> headers, CSVParser parser)
+    private static int insertCsvData(Connection conn, String tableName,
+                                     List<String> headers, List<String[]> records)
             throws SQLException {
-        StringBuilder insertSql = new StringBuilder();
-        insertSql.append("INSERT INTO ").append(tableName).append(" (");
+        StringBuilder sql = new StringBuilder();
+        sql.append("INSERT INTO ").append(tableName).append(" (");
         for (int i = 0; i < headers.size(); i++) {
-            if (i > 0) {
-                insertSql.append(", ");
-            }
-            insertSql.append(headers.get(i).replaceAll("[^A-Za-z0-9_]", "_"));
+            if (i > 0) sql.append(", ");
+            sql.append(headers.get(i).replaceAll("[^A-Za-z0-9_]", "_"));
         }
-        insertSql.append(") VALUES (")
-                .append(String.join(",", Collections.nCopies(headers.size(), "?")))
-                .append(");");
+        sql.append(") VALUES (")
+           .append(String.join(",", Collections.nCopies(headers.size(), "?")))
+           .append(");");
 
         conn.setAutoCommit(false);
         int count = 0;
-        try (PreparedStatement ps = conn.prepareStatement(insertSql.toString())) {
-            for (CSVRecord rec : parser) {
-                if (rec.size() != headers.size()) {
-                    // Skip rows with the wrong number of fields
-                    continue;
-                }
-                for (int i = 0; i < headers.size(); i++) {
-                    String val = rec.get(i);
-                    ps.setString(i + 1, (val == null ? "" : val.trim()));
+        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            for (String[] rec : records) {
+                for (int i = 0; i < rec.length; i++) {
+                    ps.setString(i + 1, rec[i] == null ? "" : rec[i]);
                 }
                 ps.addBatch();
                 count++;
@@ -338,6 +256,7 @@ public class ZipToSQLite {
         }
         return count;
     }
+
 
     /**
      * Heuristic: read the first line of the entry. If it contains commas or any
