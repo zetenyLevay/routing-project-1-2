@@ -199,7 +199,7 @@ public class UserInterfaceBuilder {
                 SwingUtilities.invokeLater(() -> {
                     mapDisplay.applyTravelTimeHeatmap(colors);
                     JOptionPane.showMessageDialog(mapDisplay,
-                            String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
+                            String.format("Heatmap from %.1f to %.1f seconds", data.getMinTime(), data.getMaxTime()));
                 });
                 return null;
             }
