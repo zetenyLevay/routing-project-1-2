@@ -1,11 +1,11 @@
 package nlc;
 
-import heatmap.StopsCache;
-import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
-
 import java.awt.Color;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import heatmap.StopsCache;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 public class NLCHeatmapAPI {
     private final NLCHeatmap heatmap;

@@ -2,31 +2,40 @@ package parsers;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONSyntaxError;
-import routing.routingEngineModels.Coordinates;
 
+import routing.db.DBConnectionManager;
+import routing.routingEngineAstar.RoutingEngineAstar;
+import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.RouteStep;
+
+/**
+ * RequestHandler.java
+ *
+ * This class reads JSON‐Line commands from stdin and writes JSON responses to stdout.
+ * After a successful "load" command, it stores the new JDBC URL in `currentJdbcUrl`.
+ * All subsequent "routeFrom"/"to"/"startingAt" commands use that URL.
+ */
 public class RequestHandler {
 
-    private CLIRead cliRead;
-    private CLIWrite cliWrite;
+    private final CLIRead cliRead;
+    private final CLIWrite cliWrite;
+
+    /**
+     * The full JDBC URL of the currently loaded SQLite database, e.g. "jdbc:sqlite:budapest_gtfs.db".
+     * Null if no database has been loaded yet.
+     */
+    private String currentJdbcUrl = null;
 
     public RequestHandler() {
-        cliRead = new CLIRead();
-        cliWrite = new CLIWrite();
+        this.cliRead = new CLIRead();
+        this.cliWrite = new CLIWrite();
     }
 
-    //TODO: needs to be able to speak to the routing engine
-    /**
-     * Processes incoming JSON requests in a loop.
-     *
-     * @throws IOException if an I/O error occurs.
-     */
     public void run() throws IOException {
-        System.err.println("Starting");
         while (true) {
             Object json;
             try {
@@ -39,82 +48,139 @@ public class RequestHandler {
                 break;
             }
 
-            if (json instanceof Map<?, ?>) {
-                Map<?, ?> request = (Map<?, ?>) json;
-
-                if (request.containsKey("ping")) {
-                    cliWrite.sendOk(Map.of("pong", request.get("ping")));
-                    continue;
-                } else if (request.containsKey("load")) {
-
-                    String selectedFile = (String) request.get("load");
-                    try{
-                    ZipToSQLite.run(selectedFile);
-                        cliWrite.sendOk("loaded");
-                    } catch (Exception e) {
-
-                        cliWrite.sendError(e.getMessage());
-                        break;
-                    }
-                }
-                //TODO: double check this is how it works?
-                else if (request.containsKey("routeFrom")) {
-
-                    Coordinates startPoint = new Coordinates((String) request.get("routeFrom"));
-                    Coordinates endPoint = new Coordinates((String) request.get("to"));
-                    String startingAtStr = (String) request.get("startingAt");
-
-                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:mm");
-                    LocalTime startingAtTime = LocalTime.parse(startingAtStr, fmt);
-
-                    //TODO: this part should be part of the CLIWrite!!! (the printing)
-
-//                     System.out.println(request.get("routeFrom"));
-                    System.out.println("SP: " + startPoint.toString() + " EP: " + endPoint.toString() + " ST: " + startingAtTime);
-                    // // {"routeFrom": "41.40338, 2.17403","to": "41.4032, 2.1283","startingAt": "10:05"}
-                    // InputJourney journey = new InputJourney(startPoint, endPoint, startingTime);
-
-                    // Dijkstra.run(journey);
-                    // CSA.run(journey);
-
-                } else {
-                    cliWrite.sendError("Bad request");
-                }
-                // ... process other requests here
-                //the switch statement deciding which transporation to use.
-                //load 
-                //make ping pong like test cases
-                //be able to convert from json to 
-                //you need to turn the json into java objects
-                //make bash scripts , msys2 for windows, git bash
-                // run basic hello worlds file containing {"ping":kkf}
-
-
-                /**
-                 * {"load":filenameString}
-                 * {"routeFrom":sourcePoint,"to":targetPoint,"startingAt":timeString}
-                 * Anything else gives an error
-                 * {"error": error message}
-
-
-
-
-
-                 */
-
-                //CI gitlab actions to run tests automatically when pushing, check if theyre enabled.
-                //java tests
+            if (!(json instanceof Map<?, ?>)) {
+                cliWrite.sendError("Bad request");
+                continue;
             }
 
+            @SuppressWarnings("unchecked")
+            Map<?, ?> request = (Map<?, ?>) json;
+
+            // --- ping / pong ---
+            if (request.containsKey("ping")) {
+                cliWrite.sendOk(Map.of("pong", request.get("ping")));
+                continue;
+            }
+
+            // --- load filename ---
+            if (request.containsKey("load")) {
+                Object loadObj = request.get("load");
+                if (!(loadObj instanceof String)) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+
+                String selectedFile = (String) loadObj;
+                try {
+                    // ZipToSQLite.run(...) now returns the .db filename it created/validated
+                    String dbFilename = ZipToSQLite.run(selectedFile);
+                    // Build the full JDBC URL and store it
+                    this.currentJdbcUrl = "jdbc:sqlite:" + dbFilename;
+                    cliWrite.sendOk("loaded");
+                } catch (Exception e) {
+                    cliWrite.sendError(e.getMessage());
+                    break;
+                }
+                continue;
+            }
+
+            // --- routeFrom / to / startingAt ---
+            if (request.containsKey("routeFrom")) {
+                // Must have loaded a database first
+                if (this.currentJdbcUrl == null) {
+                    cliWrite.sendError("No database loaded");
+                    continue;
+                }
+
+                // 1) Check that routeFrom is a Map<?,?>
+                Object routeFromObj = request.get("routeFrom");
+                if (!(routeFromObj instanceof Map<?, ?>)) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+                @SuppressWarnings("unchecked")
+                Map<?, ?> routeFromMap = (Map<?, ?>) routeFromObj;
+
+                // 2) Extract lat / lon from routeFromMap
+                Double fromLat, fromLon;
+                try {
+                    fromLat = extractDouble(routeFromMap.get("lat"));
+                    fromLon = extractDouble(routeFromMap.get("lon"));
+                } catch (Exception e) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+                Coordinates startPoint = new Coordinates(fromLat, fromLon);
+
+                // 3) Check that 'to' is a Map<?,?>
+                Object toObj = request.get("to");
+                if (!(toObj instanceof Map<?, ?>)) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+                @SuppressWarnings("unchecked")
+                Map<?, ?> toMap = (Map<?, ?>) toObj;
+
+                // 4) Extract lat / lon from toMap
+                Double toLat, toLon;
+                try {
+                    toLat = extractDouble(toMap.get("lat"));
+                    toLon = extractDouble(toMap.get("lon"));
+                } catch (Exception e) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+                Coordinates endPoint = new Coordinates(toLat, toLon);
+
+                // 5) Extract startingAt (must be a String "HH:mm" or "HH:mm:ss")
+                Object startAtObj = request.get("startingAt");
+                if (!(startAtObj instanceof String)) {
+                    cliWrite.sendError("Bad request");
+                    continue;
+                }
+                String startingAtStr = (String) startAtObj;
+                // If it’s in "HH:mm" form, append ":00" so that findRoute can accept "HH:mm:ss"
+                if (startingAtStr.matches("^\\d{1,2}:\\d{2}$")) {
+                    startingAtStr = startingAtStr + ":00";
+                }
+
+                try {
+                    // Instantiate a new RoutingEngineAstar using the current JDBC URL
+                    DBConnectionManager connMgr = new DBConnectionManager(this.currentJdbcUrl);
+                    RoutingEngineAstar router = new RoutingEngineAstar(connMgr);
+
+                    List<RouteStep> route = router.findRoute(
+                        startPoint.getLatitude(),
+                        startPoint.getLongitude(),
+                        endPoint.getLatitude(),
+                        endPoint.getLongitude(),
+                        startingAtStr
+                    );
+                    cliWrite.writeRouteSteps(route);
+                } catch (Exception e) {
+                    cliWrite.sendError(e.getMessage());
+                }
+
+                continue;
+            }
+
+            // --- anything else ---
+            cliWrite.sendError("Bad request");
         }
     }
 
-    // /**
-    //  * Main method to run the request handler.
-    //  *
-    //  * @param args command-line arguments.
-    //  * @throws IOException if an I/O error occurs.
-    //  */
+    /**
+     * Helper: take an Object from JSON and coerce it to Double.
+     * If it’s not a Number, throws IllegalArgumentException.
+     */
+    private Double extractDouble(Object o) {
+        if (o instanceof Number) {
+            return ((Number) o).doubleValue();
+        } else {
+            throw new IllegalArgumentException("Expected a numeric latitude/longitude");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         new RequestHandler().run();
     }

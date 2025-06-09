@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -20,219 +20,259 @@ import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 public class ZipToSQLite {
 
-
-
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in, "UTF-8");
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) continue;
 
-        run("data/june2ndBudapestGTFS.zip");
+            String fileName;
+            try {
+                // very simple JSON parse: {"load":"path/to/zip"}
+                int p = line.indexOf("\"load\"");
+                int c = line.indexOf(':', p);
+                int q1 = line.indexOf('"', c + 1);
+                int q2 = line.indexOf('"', q1 + 1);
+                fileName = line.substring(q1 + 1, q2);
+            } catch (Exception e) {
+                System.out.println("{\"error\":\"Bad JSON input\"}");
+                System.exit(1);
+                return;
+            }
+
+            File f = new File(fileName);
+            if (!f.exists() || !f.isFile()) {
+                System.out.println("{\"error\":\"File not found\"}");
+                System.exit(1);
+            }
+
+            try {
+                run(fileName);
+                System.out.println("{\"ok\":\"loaded\"}");
+            } catch (Exception e) {
+                String msg = escapeForJson(e.getMessage());
+                System.out.println("{\"error\":\"" + msg + "\"}");
+                System.exit(1);
+            }
+        }
+        scanner.close();
     }
 
-    private static String DBName(String zipName) {
-        return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
-    }
+    public static String run(String fileName) throws IOException, SQLException {
+        File f = new File(fileName);
+        String lc = fileName.toLowerCase();
 
-    /**
-     * Turn an entry name like "folder/sub/file-name.txt" into a safe table name "file_name"
-     */
-    private static String sanitizeTableName(String entryName) {
-        // strip any path
-        String fileName = entryName.contains("/")
-                ? entryName.substring(entryName.lastIndexOf('/') + 1)
-                : entryName;
-        // remove extension
-        String base = fileName.contains(".")
-                ? fileName.substring(0, fileName.lastIndexOf('.'))
-                : fileName;
-        // replace any non-alphanumeric/underscore with underscore
-        return base.replaceAll("[^A-Za-z0-9_]", "_");
+        if (lc.endsWith(".db")) {
+            // just validate connectivity
+            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + fileName)) { }
+            return fileName;
+        }
+
+        if (!lc.endsWith(".zip")) {
+            throw new IOException("Unsupported file type: " + fileName);
+        }
+
+        String dbName = computeDbName(f.getName());
+        boolean existed = new File(dbName).exists();
+
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbName)) {
+            configureDatabase(conn);
+
+            if (!existed) {
+                try (ZipFile zipFile = new ZipFile(fileName)) {
+                    Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                    while (entries.hasMoreElements()) {
+                        ZipEntry entry = entries.nextElement();
+                        if (entry.isDirectory()) continue;
+
+                        String lower = entry.getName().toLowerCase();
+                        if ((lower.endsWith(".txt") || lower.endsWith(".csv"))
+                                && isCSVformat(zipFile, entry)) {
+                            processCsvEntry(zipFile, entry, conn);
+                        }
+                    }
+                }
+            }
+        }
+
+        return dbName;
     }
 
     private static void configureDatabase(Connection conn) throws SQLException {
-        try (Statement statem = conn.createStatement()) {
-            statem.execute("PRAGMA synchronous = NORMAL;");
-            statem.execute("PRAGMA journal_mode = WAL;");
+        try (Statement st = conn.createStatement()) {
+            st.execute("PRAGMA synchronous = NORMAL;");
+            st.execute("PRAGMA journal_mode = WAL;");
         }
     }
 
-    public static void run(String fileName) {
-        File selectedFile = new File(fileName);
-        if (selectedFile == null) {
-            System.out.println("No file selected, exiting");
-            return;
-        }
+    private static void processCsvEntry(ZipFile zipFile, ZipEntry entry,
+                                        Connection conn)
+            throws IOException, SQLException {
 
-        String zipPath = selectedFile.getAbsolutePath();
-        String dbName = DBName(selectedFile.getName());
-        String dbPath = dbName;
-        System.out.println("dbName " + dbName + " saved to: " + System.getProperty("user.dir"));
-
-        File dbFile = new File(dbName);
-        boolean dbExisted = dbFile.exists();
-
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
-            configureDatabase(conn);
-            processZipFile(zipPath, conn, dbExisted);
-            listTables(conn);
-//            handleUserQueries(conn);
-        } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static void processZipFile(String zipPath, Connection conn, boolean dbExisted) {
-        try (ZipFile zipFile = new ZipFile(zipPath)) {
-            if (!dbExisted) {
-                processZipEntries(zipFile, conn);
-            } else {
-                System.out.println("DB already exists, using existing one: " + new File(zipPath).getName());
-            }
-        } catch (IOException e) {
-            System.out.println("!!Error with zip: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static void processZipEntries(ZipFile zipFile, Connection conn) {
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        while (entries.hasMoreElements()) {
-            ZipEntry entry = entries.nextElement();
-            String entryName = entry.getName();
-            if ((entryName.endsWith(".txt") || entryName.endsWith(".csv")) && isCSVformat(zipFile, entry)) {
-                processCsvEntry(zipFile, entry, entryName, conn);
-            }
-        }
-    }
-
-    private static void processCsvEntry(ZipFile zipFile, ZipEntry entry, String entryName, Connection conn) {
-
+        String entryName = entry.getName();
         String tableName = sanitizeTableName(entryName);
-        System.out.println("loading " + entryName + " into table " + tableName);
 
-        try (InputStream inputStream = zipFile.getInputStream(entry);
-             Reader reader = new InputStreamReader(inputStream);
-             CSVParser parser = CSVParser.parse(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
-            List<String> headers = parser.getHeaderNames();
+        try (
+            InputStream is = zipFile.getInputStream(entry);
+            Reader ir = new InputStreamReader(is, StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(ir)
+        ) {
+            // --- 1) Read & clean header line ---
+            String headerLine;
+            do {
+                headerLine = br.readLine();
+            } while (headerLine != null && headerLine.trim().isEmpty());
+
+            if (headerLine == null) {
+                throw new IOException("Empty CSV: " + entryName);
+            }
+            headerLine = headerLine.replaceAll("^[\\uFEFF\\s]+", "");
+            String[] rawH = splitCsvLine(headerLine);
+            List<String> headers = new ArrayList<>();
+            for (String h : rawH) headers.add(h.trim());
+
             createTable(conn, tableName, headers);
-            insertCsvData(conn, tableName, headers, parser);
-        } catch (IOException e) {
-            System.out.println("error in " + entryName + " error= " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("db error in: " + entryName + " error= " + e.getMessage());
-        }
-    }
 
-    private static void createTable(Connection conn, String tableName, List<String> headers) throws SQLException {
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute("DROP TABLE IF EXISTS " + tableName);
-            String createTableSQL = "CREATE TABLE " + tableName + " (" +
-                    String.join(" TEXT, ", headers) + " TEXT)";
-            stmt.execute(createTableSQL);
-        }
-    }
+            // --- 2) Prepare INSERT ---
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO ").append(tableName).append(" (");
+            for (int i = 0; i < headers.size(); i++) {
+                if (i > 0) sql.append(", ");
+                sql.append(headers.get(i).replaceAll("[^A-Za-z0-9_]", "_"));
+            }
+            sql.append(") VALUES (")
+               .append(String.join(",", Collections.nCopies(headers.size(), "?")))
+               .append(");");
 
-    private static void insertCsvData(Connection conn, String tableName, List<String> headers, CSVParser parser) throws SQLException {
-        String insertSQL = "INSERT INTO " + tableName + " (" +
-                String.join(", ", headers) + ") VALUES (" +
-                String.join(",", Collections.nCopies(headers.size(), "?")) + ")";
-        try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             conn.setAutoCommit(false);
-            int batchSize = 1000;
-            int count = 0;
-            for (CSVRecord record : parser) {
-                for (int i = 0; i < headers.size(); i++) {
-                    pstmt.setString(i + 1, record.get(i));
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                String line;
+                int batch = 0;
+                while ((line = br.readLine()) != null) {
+                    if (line.trim().isEmpty()) continue;
+                    String[] fields = splitCsvLine(line);
+                    if (fields.length != headers.size()) continue;
+                    for (int i = 0; i < fields.length; i++) {
+                        ps.setString(i + 1, fields[i].trim());
+                    }
+                    ps.addBatch();
+                    if (++batch % 1000 == 0) {
+                        ps.executeBatch();
+                        conn.commit();
+                    }
                 }
-                pstmt.addBatch();
-                count++;
-                if (count % batchSize == 0) {
-                    pstmt.executeBatch();
-                    conn.commit();
-                    System.out.println("current== " + count + " rows");
-                }
-            }
-            if (count % batchSize != 0) {
-                pstmt.executeBatch();
+                ps.executeBatch();
                 conn.commit();
+            } finally {
+                conn.setAutoCommit(true);
             }
-        } finally {
-            conn.setAutoCommit(true);
+
+            // --- 3) Create indexes if needed ---
+            createIndexes(entryName, conn);
         }
     }
 
-    private static void listTables(Connection conn) throws SQLException {
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table'")) {
-            System.out.println("Tables in DB:");
-            while (rs.next()) {
-                System.out.println(rs.getString("name"));
-            }
-            System.out.println();
-        }
-    }
+    private static String[] splitCsvLine(String line) {
+        List<String> parts = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean inQuotes = false;
 
-//    private static void handleUserQueries(Connection conn) {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Loading database done.");
-//        while (true) {
-//            System.out.print("Enter SQL or exit to quit: ");
-//            String query = scanner.nextLine().trim();
-//            if (query.equalsIgnoreCase("exit")) {
-//                break;
-//            }
-//            executeUserQuery(conn, query);
-//        }
-//    }
-
-    private static void executeUserQuery(Connection conn, String query) {
-        try (Statement queryStmt = conn.createStatement()) {
-            boolean hasResult = queryStmt.execute(query);
-            if (hasResult) {
-                try (ResultSet rs = queryStmt.getResultSet()) {
-                    printResultSet(rs);
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                if (inQuotes && i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                    sb.append('"');
+                    i++;
+                } else {
+                    inQuotes = !inQuotes;
                 }
+            } else if (c == ',' && !inQuotes) {
+                parts.add(sb.toString());
+                sb.setLength(0);
             } else {
-                System.out.println("No result set (update executed or no rows found)");
+                sb.append(c);
             }
-        } catch (SQLException e) {
-            System.out.println("Error executing query: " + e.getMessage());
         }
-    }
-
-    private static void printResultSet(ResultSet rs) throws SQLException {
-        ResultSetMetaData meta = rs.getMetaData();
-        int columnCount = meta.getColumnCount();
-        for (int i = 1; i <= columnCount; i++) {
-            System.out.print(meta.getColumnName(i) + "\t");
-        }
-        System.out.println();
-        while (rs.next()) {
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print(rs.getString(i) + "\t");
-            }
-            System.out.println();
-        }
+        parts.add(sb.toString());
+        return parts.toArray(new String[0]);
     }
 
     private static boolean isCSVformat(ZipFile zipFile, ZipEntry entry) {
-        try (InputStream inputStream = zipFile.getInputStream(entry);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            int count = 0;
-            while (reader.readLine() != null) {
-                count++;
-                if (count > 11) {
-                    return true;
-                }
+        try (
+            InputStream is = zipFile.getInputStream(entry);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
+        ) {
+            String first = br.readLine();
+            if (first == null) return false;
+            String lower = first.toLowerCase();
+
+            if (first.contains(",")
+             || lower.contains("agency")
+             || lower.contains("route")
+             || lower.contains("stop")
+             || lower.contains("trip")) {
+
+                int lines = 1;
+                while (lines < 2 && br.readLine() != null) lines++;
+                return lines >= 2;
             }
             return false;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static void createIndexes(String entryName, Connection conn) throws SQLException {
+        String tableName = sanitizeTableName(entryName);
+        if ("stop_times".equals(tableName)) {
+            try (Statement st = conn.createStatement()) {
+                st.executeUpdate(
+                    "CREATE INDEX IF NOT EXISTS idx_stop_times_stop_id " +
+                    "ON stop_times (stop_id);"
+                );
+                st.executeUpdate(
+                    "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq " +
+                    "ON stop_times (trip_id, stop_sequence);"
+                );
+            }
+        }
+    }
+
+    private static void createTable(Connection conn, String tableName, List<String> headers)
+            throws SQLException {
+        StringBuilder ddl = new StringBuilder();
+        ddl.append("DROP TABLE IF EXISTS ").append(tableName).append(";");
+        ddl.append("CREATE TABLE ").append(tableName).append(" (");
+        for (int i = 0; i < headers.size(); i++) {
+            if (i > 0) ddl.append(", ");
+            String col = headers.get(i).replaceAll("[^A-Za-z0-9_]", "_");
+            ddl.append(col).append(" TEXT");
+        }
+        ddl.append(");");
+        try (Statement st = conn.createStatement()) {
+            st.executeUpdate(ddl.toString());
+        }
+    }
+
+    private static String sanitizeTableName(String entryName) {
+        String file = entryName.contains("/") ?
+                      entryName.substring(entryName.lastIndexOf('/') + 1) :
+                      entryName;
+        String base = file.contains(".") ?
+                      file.substring(0, file.lastIndexOf('.')) :
+                      file;
+        return base.replaceAll("[^A-Za-z0-9_]", "_");
+    }
+
+    private static String computeDbName(String zipName) {
+        if (!zipName.contains(".")) return zipName + ".db";
+        return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
+    }
+
+    private static String escapeForJson(String raw) {
+        if (raw == null) return "";
+        return raw.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }

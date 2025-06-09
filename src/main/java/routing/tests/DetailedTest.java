@@ -1,5 +1,8 @@
 package routing.tests;
 
+import java.sql.SQLException;
+import java.util.Scanner;
+
 import routing.api.Router;
 import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
 import routing.routingEngineDijkstra.dijkstra.algorithm.DijkstraRouter;
@@ -7,9 +10,6 @@ import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 import routing.routingEngineDijkstra.formatter.RouteFormatter;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
-
-import java.sql.SQLException;
-import java.util.Scanner;
 //TODO: FIX CLI READING LOGIC
 
 public class DetailedTest {

@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import routing.routingEngineDijkstra.adiModels.*;
+import routing.routingEngineDijkstra.adiModels.Stop.*;
 
 public class StopsCache {
     private static StopsCache instance;

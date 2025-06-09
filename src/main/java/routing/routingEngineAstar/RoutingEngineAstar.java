@@ -1,357 +1,320 @@
-//package routing.routingEngineAstar;
-//
-//import routing.routingEngineModels.FinalRoute;
-//import routing.routingEngineModels.InputJourney;
-//
-//
-//import routing.routingEngineModels.*;
-//import routing.routingenginemain.model.Stop;
-//import routing.routingenginemain.model.Coordinates;
-//import routing.routingenginemain.model.pathway.Pathway;
-//
-//import java.sql.*;
-//import java.time.Duration;
-//import java.time.LocalTime;
-//import java.util.*;
-//
-//
-//public class RoutingEngineAstar {
-//
-//    //Receive object called Journey in format Journey{StartCoordinates, EndCoordinates, StartTime}
-//    //Output list of objects (FinalRoute) of type RouteStep, where trips is {Mode of transport, StartPoint, EndPoint, StartTime}
-//
-//    // we want dijksta to return finalroute
-//
-//
-///**
-// * Implements A* search over a transit network (GTFS-based) with bus schedules and walking transfers.
-// */
-//public class AStarRoutingEngine {
-//    private final Map<String, Stop> stops = new HashMap<>();
-//    private final Map<String, List<ServiceEdge>> serviceEdgesByStop = new HashMap<>();
-//    private final double walkingSpeedKmPerHour = 5.0;
-//    private final double maxBusSpeedKmPerHour = 50.0;
-//
-//    /**
-//     * Initialize engine by loading stops, pathways, and service edges from SQLite GTFS.
-//     * @param sqliteDbPath path to SQLite file (e.g. "gtfs.db")
-//     */
-//    public AStarRoutingEngine(String sqliteDbPath) throws SQLException {
-//        Connection conn = DriverManager.getConnection("jdbc:sqlite:" + sqliteDbPath);
-//        loadStops(conn);
-//        loadServiceEdges(conn);
-//        conn.close();
-//    }
-//
-//    private void loadStops(Connection conn) throws SQLException {
-//        // 1) load all stops with empty footpaths
-//        String sqlStops = "SELECT stop_id, stop_name, stop_lat, stop_lon FROM stops";
-//        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sqlStops)) {
-//            while (rs.next()) {
-//                String id = rs.getString("stop_id");
-//                String name = rs.getString("stop_name");
-//                double lat = rs.getDouble("stop_lat");
-//                double lon = rs.getDouble("stop_lon");
-//                Stop s = new Stop(id, name, new Coordinates(lat, lon), new ArrayList<>());
-//                stops.put(id, s);
-//            }
-//        }
-//        // 2) load pathways and attach to stops
-//        String sqlPaths = "SELECT pathway_id, from_stop_id, to_stop_id, pathway_mode, traversal_time, is_bidirectional FROM pathways";
-//        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sqlPaths)) {
-//            while (rs.next()) {
-//                String pid = rs.getString("pathway_id");
-//                String from = rs.getString("from_stop_id");
-//                String to   = rs.getString("to_stop_id");
-//                int code    = rs.getInt("pathway_mode");
-//                int timeSec = rs.getInt("traversal_time");
-//                Stop sFrom = stops.get(from);
-//                Stop sTo   = stops.get(to);
-//                if (sFrom != null && sTo != null) {
-//                    Pathway p = new Pathway(pid, sFrom, sTo, code, timeSec);
-//                    sFrom.getFootpaths().add(p);
-//                    // if bidirectional, also add reverse
-//                    if (rs.getInt("is_bidirectional") == 1) {
-//                        Pathway rev = new Pathway(pid + "_rev", sTo, sFrom, code, timeSec);
-//                        sTo.getFootpaths().add(rev);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private void loadServiceEdges(Connection conn) throws SQLException {
-//        // load every consecutive segment of trips as a scheduled edge
-//        String sql = "SELECT st1.trip_id, st1.stop_id AS from_id, st1.departure_time AS dep, " +
-//                     "st2.stop_id AS to_id, st2.arrival_time AS arr " +
-//                     "FROM stop_times st1 " +
-//                     "JOIN stop_times st2 " +
-//                     "ON st1.trip_id = st2.trip_id AND st2.stop_sequence = st1.stop_sequence + 1";
-//        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-//            while (rs.next()) {
-//                String tripId = rs.getString("trip_id");
-//                String from   = rs.getString("from_id");
-//                String to     = rs.getString("to_id");
-//                String depStr = rs.getString("dep");
-//                String arrStr = rs.getString("arr");
-//                Stop sFrom = stops.get(from);
-//                Stop sTo   = stops.get(to);
-//                if (sFrom == null || sTo == null || depStr == null || arrStr == null) continue;
-//                LocalTime dep = LocalTime.parse(depStr);
-//                LocalTime arr = LocalTime.parse(arrStr);
-//                double travelMin = Duration.between(dep, arr).toMinutes();
-//                ServiceEdge e = new ServiceEdge(sFrom, sTo, tripId, dep, arr, travelMin);
-//                serviceEdgesByStop
-//                    .computeIfAbsent(from, k -> new ArrayList<>())
-//                    .add(e);
-//            }
-//        }
-//        // sort edges by departure time for fast "next" lookup
-//        for (List<ServiceEdge> list : serviceEdgesByStop.values()) {
-//            list.sort(Comparator.comparing(e -> e.departureTime));
-//        }
-//    }
-//
-//    /**
-//     * Find fastest path (min total minutes) from journey.start to journey.end.
-//     */
-//    public FinalRoute findRoute(InputJourney journey) {
-//        // snap to nearest stops
-//        Stop startStop = findNearestStop(journey.getStart());
-//        Stop endStop   = findNearestStop(journey.getEnd());
-//        double walkInitial = computeWalkingMinutes(journey.getStart(), startStop.getLatitude(), startStop.getLongitude());
-//        double walkFinal   = computeWalkingMinutes(journey.getEnd(), endStop.getLatitude(),   endStop.getLongitude());
-//        LocalTime startTimeAtStop = journey.getStartTime().plusSeconds((long)(walkInitial * 60));
-//
-//        // A* state: (stop, time)
-//        class State {
-//            final Stop stop;
-//            final LocalTime time;
-//            State(Stop s, LocalTime t) { stop = s; time = t; }
-//            @Override public boolean equals(Object o) {
-//                if (this == o) return true;
-//                if (!(o instanceof State)) return false;
-//                State s = (State) o;
-//                return stop.getStopID().equals(s.stop.getStopID()) && time.equals(s.time);
-//            }
-//            @Override public int hashCode() {
-//                return Objects.hash(stop.getStopID(), time);
-//            }
-//        }
-//
-//        // edge record to reconstruct path
-//        Map<State, Object> viaEdge = new HashMap<>(); // maps state -> ServiceEdge or Pathway
-//        Map<State, State> cameFrom = new HashMap<>();
-//        Map<State, Double> gScore = new HashMap<>();
-//        Map<State, Double> fScore = new HashMap<>();
-//
-//        // comparator for open set nodes
-//        class SearchNode implements Comparable<SearchNode> {
-//            final State state; final double f;
-//            SearchNode(State state, double f) { this.state = state; this.f = f; }
-//            @Override public int compareTo(SearchNode o) { return Double.compare(this.f, o.f); }
-//        }
-//
-//        PriorityQueue<SearchNode> open = new PriorityQueue<>();
-//        State startState = new State(startStop, startTimeAtStop);
-//        gScore.put(startState, walkInitial);
-//        double h0 = heuristic(startStop, journey.getEnd());
-//        fScore.put(startState, walkInitial + h0);
-//        open.offer(new SearchNode(startState, fScore.get(startState)));
-//
-//        State goalState = null;
-//        while (!open.isEmpty()) {
-//            SearchNode node = open.poll();
-//            State cur = node.state;
-//            // skip stale
-//            double curF = gScore.get(cur) + heuristic(cur.stop, journey.getEnd());
-//            if (node.f > curF) continue;
-//            if (cur.stop.getStopID().equals(endStop.getStopID())) {
-//                goalState = cur;
-//                break;
-//            }
-//            double curG = gScore.get(cur);
-//
-//            // 1) footpaths
-//            for (Pathway p : cur.stop.getFootpaths()) {
-//                Stop nbr = p.getToStop();
-//                long walkSec = p.getTraversalTime();
-//                LocalTime nbrTime = cur.time.plusSeconds(walkSec);
-//                double cost = curG + walkSec / 60.0;
-//                State nbrState = new State(nbr, nbrTime);
-//                if (cost < gScore.getOrDefault(nbrState, Double.POSITIVE_INFINITY)) {
-//                    cameFrom.put(nbrState, cur);
-//                    viaEdge.put(nbrState, p);
-//                    gScore.put(nbrState, cost);
-//                    double f = cost + heuristic(nbr, journey.getEnd());
-//                    fScore.put(nbrState, f);
-//                    open.offer(new SearchNode(nbrState, f));
-//                }
-//            }
-//
-//            // 2) service edges (bus)
-//            List<ServiceEdge> edges = serviceEdgesByStop.getOrDefault(cur.stop.getStopID(), Collections.emptyList());
-//            // binary search first departure >= cur.time
-//            int idx = Collections.binarySearch(edges, null, Comparator.comparing((ServiceEdge e) -> e.departureTime)
-//                .thenComparing(e -> e.to.stopID));
-//            // workaround: find manually first
-//            idx = 0;
-//            while (idx < edges.size() && edges.get(idx).departureTime.isBefore(cur.time)) idx++;
-//            for (; idx < edges.size(); idx++) {
-//                ServiceEdge e = edges.get(idx);
-//                LocalTime dep = e.departureTime;
-//                LocalTime arr = e.arrivalTime;
-//                double waitMin = Duration.between(cur.time, dep).toMinutes();
-//                double rideMin = e.travelMinutes;
-//                double cost = curG + waitMin + rideMin;
-//                State nbrState = new State(e.to, arr);
-//                if (cost < gScore.getOrDefault(nbrState, Double.POSITIVE_INFINITY)) {
-//                    cameFrom.put(nbrState, cur);
-//                    viaEdge.put(nbrState, e);
-//                    gScore.put(nbrState, cost);
-//                    double f = cost + heuristic(e.to, journey.getEnd());
-//                    fScore.put(nbrState, f);
-//                    open.offer(new SearchNode(nbrState, f));
-//                }
-//            }
-//        }
-//
-//        if (goalState == null) {
-//            return new FinalRoute(new ArrayList<>(), 0, Double.POSITIVE_INFINITY);
-//        }
-//
-//        // reconstruct path
-//        List<Object> edgePath = new LinkedList<>();
-//        List<State> statePath = new LinkedList<>();
-//        State cur = goalState;
-//        statePath.add(0, cur);
-//        while (!cur.equals(startState)) {
-//            Object edge = viaEdge.get(cur);
-//            edgePath.add(0, edge);
-//            cur = cameFrom.get(cur);
-//            statePath.add(0, cur);
-//        }
-//
-//        // build RouteSteps
-//        List<RouteStep> steps = new ArrayList<>();
-//        // initial walk
-//        steps.add(new RouteStep("WALK", journey.getStart(), new Coordinates(
-//                statePath.get(0).stop.getLatitude() + "," + statePath.get(0).stop.getLongitude()), walkInitial));
-//        double totalDist = 0, totalTime = 0;
-//        for (int i = 1; i < statePath.size(); i++) {
-//            State prev = statePath.get(i-1);
-//            State now  = statePath.get(i);
-//            Object edge = edgePath.get(i-1);
-//            if (edge instanceof Pathway) {
-//                Pathway p = (Pathway) edge;
-//                double tmin = p.getTraversalTime() / 60.0;
-//                Coordinates a = new Coordinates(
-//                    prev.stop.getLatitude() + "," + prev.stop.getLongitude());
-//                Coordinates b = new Coordinates(
-//                    now.stop.getLatitude() + "," + now.stop.getLongitude());
-//                steps.add(new RouteStep("WALK", a, b, tmin));
-//                totalTime += tmin;
-//                totalDist += haversineDist(a, b);
-//            } else if (edge instanceof ServiceEdge) {
-//                ServiceEdge e = (ServiceEdge) edge;
-//                // wait
-//                long waitSec = Duration.between(prev.time, e.departureTime).getSeconds();
-//                double waitMin = waitSec / 60.0;
-//                Coordinates loc = new Coordinates(
-//                    prev.stop.getLatitude() + "," + prev.stop.getLongitude());
-//                steps.add(new RouteStep("WAIT", loc, loc, waitMin));
-//                totalTime += waitMin;
-//                // ride
-//                double rideMin = e.travelMinutes;
-//                Coordinates fromC = new Coordinates(
-//                    prev.stop.getLatitude() + "," + prev.stop.getLongitude());
-//                Coordinates toC = new Coordinates(
-//                    now.stop.getLatitude() + "," + now.stop.getLongitude());
-//                steps.add(new RouteStep("BUS", fromC, toC, rideMin));
-//                totalTime += rideMin;
-//                totalDist += haversineDist(fromC, toC);
-//            }
-//        }
-//        // final walk
-//        steps.add(new RouteStep("WALK", new Coordinates(
-//                endStop.getLatitude() + "," + endStop.getLongitude()), journey.getEnd(), walkFinal));
-//        totalTime += walkFinal;
-//        totalDist += haversineDist(new Coordinates(
-//                endStop.getLatitude() + "," + endStop.getLongitude()), journey.getEnd());
-//
-//        return new FinalRoute((ArrayList<RouteStep>) steps, totalDist, totalTime);
-//    }
-//
-//    private double heuristic(Stop s, Coordinates goal) {
-//        double d = haversineDist(
-//            new Coordinates(s.getLatitude() + "," + s.getLongitude()), goal);
-//        // time = dist (km) / speed (km/h) * 60
-//        return (d / maxBusSpeedKmPerHour) * 60.0;
-//    }
-//
-//    private Stop findNearestStop(Coordinates coord) {
-//        Stop best = null;
-//        double bestD = Double.POSITIVE_INFINITY;
-//        for (Stop s : stops.values()) {
-//            double d = haversineDist(coord,
-//                new Coordinates(s.getLatitude() + "," + s.getLongitude()));
-//            if (d < bestD) {
-//                bestD = d;
-//                best = s;
-//            }
-//        }
-//        return best;
-//    }
-//
-//    private double computeWalkingMinutes(Coordinates a, double lat, double lon) {
-//        Coordinates b = new Coordinates(lat + "," + lon);
-//        double dist = haversineDist(a, b); // km
-//        // time (min) = dist(km)/speed(km/h)*60
-//        return (dist / walkingSpeedKmPerHour) * 60.0;
-//    }
-//
-//    private static double haversineDist(Coordinates c1, Coordinates c2) {
-//        // returns kilometers
-//        double R = 6371.0;
-//        double lat1 = Math.toRadians(c1.getLatitude());
-//        double lon1 = Math.toRadians(c1.getLongitude());
-//        double lat2 = Math.toRadians(c2.getLatitude());
-//        double lon2 = Math.toRadians(c2.getLongitude());
-//        double dLat = lat2 - lat1;
-//        double dLon = lon2 - lon1;
-//        double a = Math.sin(dLat/2)*Math.sin(dLat/2)
-//                 + Math.cos(lat1)*Math.cos(lat2)
-//                 * Math.sin(dLon/2)*Math.sin(dLon/2);
-//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//        return R * c;
-//    }
-//
-//    // inner class for scheduled edges
-//    private static class ServiceEdge {
-//        final Stop from, to;
-//        final String tripId;
-//        final LocalTime departureTime;
-//        final LocalTime arrivalTime;
-//        final double travelMinutes;
-//        ServiceEdge(Stop f, Stop t, String tripId,
-//                    LocalTime dep, LocalTime arr, double mins) {
-//            this.from = f; this.to = t;
-//            this.tripId = tripId;
-//            this.departureTime = dep;
-//            this.arrivalTime   = arr;
-//            this.travelMinutes = mins;
-//        }
-//    }
-//}
-//
-//
-//
-//
-//
-//
-//    public FinalRoute run(InputJourney journey) {
-//        return null;
-//
-//    }
-//
-//}
+package routing.routingEngineAstar;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
+
+import parsers.ZipToSQLite;
+import routing.db.DBConnectionManager;
+import routing.routingEngineAstar.builders.DynamicGraphBuilder;
+import routing.routingEngineAstar.builders.RouteBuilder;
+import routing.routingEngineAstar.finders.StopService;
+import routing.routingEngineAstar.miscellaneous.Node;
+import routing.routingEngineAstar.miscellaneous.TimeUtils;
+import routing.routingEngineModels.RouteStep;
+import routing.routingEngineModels.Stop.Stop;
+import routing.routingEngineModels.utils.TimeAndGeoUtils;
+
+/**
+ * AStarRouter with dynamic graph building and time constraints.
+ *
+ * Changes: 1. If A* finds no transit steps, fall back to a single “WALK” step.
+ * 2. Merge any consecutive walk legs in the final route into one direct walk
+ * (so you don’t walk to an intermediate stop and then walk again).
+ */
+public class RoutingEngineAstar {
+
+    private static final int MAX_WAIT_SECONDS = 1800;     // 30 mins
+    private static final double INITIAL_WALK_RADIUS_M = 1000;    // 300 m
+    private static final double SEARCH_RADIUS = 1000;           // ~1 km
+    private static final boolean DEBUG = false;                  // Enable/disable debug output
+    private static final double WALKING_SPEED_MPS = 1.3889;     // ~5 km/h in m/s
+
+    private final DBConnectionManager dbManager;
+    private final Map<String, Stop> allStops;
+    private final DynamicGraphBuilder graphBuilder;
+    private RouteBuilder routeBuilder;
+    private StopService stopService;
+
+    public static void main(String[] args) {
+        RoutingEngineAstar router = new RoutingEngineAstar(
+                new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
+        );
+
+        // Example: two farther‐apart points
+        double sourceLat = 47.498333190458226; //source point
+        double sourceLon = 19.074383183671998; //source point 2
+        double destLat = 47.49563896935584; // destination point
+        double destLon = 19.035322782272477; // destination point 2
+        String startTime = "18:54:00";
+
+        System.out.println("Testing route finding...");
+        List<RouteStep> route = router.findRoute(sourceLat, sourceLon, destLat, destLon, startTime);
+
+        System.out.println("Found route with " + route.size() + " steps:");
+        for (int i = 0; i < route.size(); i++) {
+            System.out.println("Step " + (i + 1) + ": " + route.get(i));
+        }
+    }
+
+    public RoutingEngineAstar(DBConnectionManager dbManager) {
+        this.dbManager = dbManager;
+        this.routeBuilder = new RouteBuilder(WALKING_SPEED_MPS);
+        this.stopService = new StopService(dbManager);
+        this.allStops = stopService.getAllStops(); 
+
+        this.graphBuilder = new DynamicGraphBuilder(dbManager);
+
+        // ensure our stop_times indexes exist
+        try (Connection conn = dbManager.getConnection()) {
+            ZipToSQLite.createIndexes("stop_times.txt", conn);
+        } catch (SQLException e) {
+            // either log or rethrow as unchecked
+            throw new RuntimeException("Unable to create indexes", e);
+        }
+
+    }
+
+    /**
+     * Main routing method – finds a sequence of RouteStep from source to
+     * destination.
+     */
+    public List<RouteStep> findRoute(double sourceLat, double sourceLon,
+            double destLat, double destLon, String startTime) {
+
+        // 1) If source and destination are within walking distance, return direct walk.
+        double directDistance = TimeAndGeoUtils.haversineMeters(
+                sourceLat, sourceLon, destLat, destLon);
+        if (directDistance <= INITIAL_WALK_RADIUS_M) {
+            return routeBuilder.createDirectWalkingRoute(sourceLat, sourceLon, destLat, destLon, startTime);
+        }
+
+        // 2) Find nearby stops within SEARCH_RADIUS of source and destination.
+        List<Stop> startStops = stopService.findNearbyStops(sourceLat, sourceLon, SEARCH_RADIUS);
+        List<Stop> endStops = stopService.findNearbyStops(destLat, destLon, SEARCH_RADIUS);
+
+        if (DEBUG && !startStops.isEmpty()) {
+            for (int i = 0; i < Math.min(3, startStops.size()); i++) {
+                Stop stop = startStops.get(i);
+                double dist = TimeAndGeoUtils.haversineMeters(
+                        sourceLat, sourceLon,
+                        stop.getLatitude(), stop.getLongitude()
+                );
+            }
+        }
+        if (DEBUG && !endStops.isEmpty()) {
+            for (int i = 0; i < Math.min(3, endStops.size()); i++) {
+                Stop stop = endStops.get(i);
+                double dist = TimeAndGeoUtils.haversineMeters(
+                        destLat, destLon,
+                        stop.getLatitude(), stop.getLongitude()
+                );
+            }
+        }
+
+        if (startStops.isEmpty()) {
+            System.err.println("No start stops found within " + SEARCH_RADIUS + " m");
+            return Collections.emptyList();
+        }
+        if (endStops.isEmpty()) {
+            System.err.println("No end stops found within " + SEARCH_RADIUS + " m");
+            return Collections.emptyList();
+        }
+
+        // 3) Run A* to get both the list of RouteStep and the actual boarding stop.
+        AStarResult result = runAStar(
+                startStops, endStops, startTime, sourceLat, sourceLon, destLat, destLon
+        );
+
+        List<RouteStep> transitRoute = result.steps;
+        Stop boardingStop = result.firstBoardStop;
+
+        // If A* found no transit path, fall back to walking the entire distance.
+        if (transitRoute.isEmpty()) {
+            return routeBuilder.createDirectWalkingRoute(sourceLat, sourceLon, destLat, destLon, startTime);
+        }
+
+        // 4) Wrap transit steps with walking‐to and walking‐from, then merge consecutive walks.
+        List<RouteStep> withWalks = routeBuilder.addWalkingSteps(
+                transitRoute, boardingStop,
+                sourceLat, sourceLon,
+                destLat, destLon,
+                startTime
+        );
+        return routeBuilder.mergeConsecutiveWalks(withWalks, sourceLat, sourceLon, destLat, destLon);
+        
+    }   
+
+    /**
+     * A small container for the result of runAStar: - steps: the sequence of
+     * RouteStep (in forward order) - firstBoardStop: the Stop where the first
+     * step boards
+     */
+    private static class AStarResult {
+
+        final List<RouteStep> steps;
+        final Stop firstBoardStop;
+
+        AStarResult(List<RouteStep> steps, Stop firstBoardStop) {
+            this.steps = steps;
+            this.firstBoardStop = firstBoardStop;
+        }
+    }
+
+    /**
+     * Implements A* to find the optimal chain of RouteStep from any of the
+     * startStops to any of the endStops, beginning no earlier than `startTime`.
+     * Returns both the list of RouteStep and the Stop where the first step
+     * boards.
+     */
+    private AStarResult runAStar(List<Stop> startStops, List<Stop> endStops, String startTime, double sourceLat, double sourceLon, double destLat, double destLon) {
+
+        // Convert "HH:mm:ss" → seconds since midnight
+        int startTimeSec = TimeUtils.timeToSeconds(startTime);
+
+        // Build a Set of end‐stop IDs for quick membership test
+        Set<String> endStopIds = new HashSet<>();
+        for (Stop s : endStops) {
+            endStopIds.add(s.getStopID());
+        }
+
+        // Data structures for A*:
+        Map<String, Integer> bestArrivalTime = new HashMap<>();        // stopID → best known arrival in seconds
+        Map<String, String> cameFrom = new HashMap<>();                 // stopID → predecessor stopID
+        Map<String, RouteStep> cameStep = new HashMap<>();              // stopID → RouteStep used to arrive here
+
+        PriorityQueue<Node> openSet = new PriorityQueue<>();
+
+        // Initialize: for each startStop, account for walking time from source
+        for (Stop startStop : startStops) {
+            String sid = startStop.getStopID();
+
+            double walkDistance = TimeAndGeoUtils.haversineMeters(
+                    sourceLat, sourceLon,
+                    startStop.getLatitude(), startStop.getLongitude()
+            );
+            int walkingSeconds = (int) Math.ceil(walkDistance / WALKING_SPEED_MPS);
+            int arrival = startTimeSec + walkingSeconds;
+
+            double h = heuristic(startStop, endStops);
+            double f = arrival + h;
+
+            bestArrivalTime.put(sid, arrival);
+            openSet.add(new Node(startStop, arrival, f));
+        }
+
+        // A* main loop
+        while (!openSet.isEmpty()) {
+            Node current = openSet.poll();
+            Stop currStop = current.stop;
+            int currArrSec = current.arrivalTime;
+            String currId = currStop.getStopID();
+
+            // Skip if we have already found a better arrival for this stop
+            if (bestArrivalTime.containsKey(currId)
+                    && currArrSec > bestArrivalTime.get(currId)) {
+                continue;
+            }
+
+            // If this stop is one of the endStops, reconstruct the path
+            if (endStopIds.contains(currId) && cameFrom.containsKey(currId)) {
+
+                // Reconstruct the list of RouteSteps
+                List<RouteStep> path = reconstructPath(currId, cameFrom, cameStep);
+
+                // We know path is non-empty here
+                String firstToId = path.get(0).getToStop().getStopID();
+                String firstFromId = cameFrom.get(firstToId);
+                Stop firstBoardStop = allStops.get(firstFromId);
+
+                return new AStarResult(path, firstBoardStop);
+            }
+
+            // Otherwise, expand neighbors from currStop at currTimeStr
+            String currTimeStr = TimeUtils.secondsToTime(currArrSec);
+            List<RouteStep> neighbors = getConnectionsForStop(currStop, currTimeStr);
+
+            for (RouteStep step : neighbors) {
+                Stop nextStop = step.getToStop();
+                String nextId = nextStop.getStopID();
+
+                int depSec = TimeUtils.timeToSeconds(step.getDepartureTime());
+                int arrSec = TimeUtils.timeToSeconds(step.getArrivalTime());
+
+                // Skip invalid connections or excessive waiting
+                if (arrSec < depSec || depSec < currArrSec || depSec - currArrSec > MAX_WAIT_SECONDS) {
+                    continue;
+                }
+
+                int bestKnown = bestArrivalTime.getOrDefault(nextId, Integer.MAX_VALUE);
+                if (arrSec < bestKnown) {
+                    bestArrivalTime.put(nextId, arrSec);
+                    cameFrom.put(nextId, currId);
+                    cameStep.put(nextId, step);
+
+                    double hNext = heuristic(nextStop, endStops);
+                    double fNext = arrSec + hNext;
+                    openSet.add(new Node(nextStop, arrSec, fNext));
+
+                }
+            }
+        }
+        // No route found → return empty steps and null boarding stop
+        return new AStarResult(Collections.emptyList(), null);
+    }
+
+    /**
+     * Reconstructs the list of RouteStep from the startStop to destStopId.
+     */
+    private List<RouteStep> reconstructPath(
+            String destStopId,
+            Map<String, String> cameFrom,
+            Map<String, RouteStep> cameStep
+    ) {
+        LinkedList<RouteStep> path = new LinkedList<>();
+        String currentId = destStopId;
+
+        while (cameFrom.containsKey(currentId)) {
+            RouteStep step = cameStep.get(currentId);
+            path.addFirst(step);
+            currentId = cameFrom.get(currentId);
+        }
+        return path;
+    }
+
+    /**
+     * Heuristic: straight-line distance converted to walking time.
+     */
+    private double heuristic(Stop currentStop, List<Stop> endStops) {
+        double minDist = Double.MAX_VALUE;
+        double lat1 = currentStop.getLatitude();
+        double lon1 = currentStop.getLongitude();
+
+        for (Stop end : endStops) {
+            double d = TimeAndGeoUtils.haversineMeters(
+                    lat1, lon1,
+                    end.getLatitude(), end.getLongitude()
+            );
+            if (d < minDist) {
+                minDist = d;
+            }
+        }
+        return minDist / WALKING_SPEED_MPS;
+    }
+
+
+    /**
+     * Delegates to DynamicGraphBuilder to get valid RouteSteps from a stop at a
+     * given time.
+     */
+    public List<RouteStep> getConnectionsForStop(Stop stop, String currentTime) {
+        return graphBuilder.getValidRouteSteps(stop, currentTime);
+    }
+}

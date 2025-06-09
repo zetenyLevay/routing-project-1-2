@@ -4,7 +4,7 @@ import java.time.LocalTime;
 
 public class InputJourney {
     Coordinates start;
-    Coordinates end; 
+    Coordinates end;
     LocalTime startTime;
 
     public InputJourney(Coordinates start, Coordinates end, LocalTime startTime) {

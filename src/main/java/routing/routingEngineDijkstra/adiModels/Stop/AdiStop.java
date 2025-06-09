@@ -1,6 +1,8 @@
 package routing.routingEngineDijkstra.adiModels.Stop;
 
 import routing.routingEngineModels.Coordinates;
+import routing.routingEngineModels.*;
+import routing.routingEngineModels.Stop.StopType;
 
 public class AdiStop {
     private final String stopID;
@@ -10,16 +12,21 @@ public class AdiStop {
 //    private final StopType stopType;
 //    private final String parentStationID;
 //    private final List<Pathway> footpaths;
+    private final Object parentStationID;
 
-    public AdiStop(String stopID, String stopName, Coordinates stopCoordinates) {
+    public AdiStop(String stopID, String stopName, Coordinates stopCoordinates, StopType stopType, Object parentStationID) {
         this.stopID = stopID;
         this.stopName = stopName;
         this.stopCoordinates = stopCoordinates;
-//        this.footpaths = footpaths;
-//        this.stopType = StopType.getNameFromCode(code);
-//        this.parentStationID = parentStationID;
+        this.parentStationID = parentStationID;
     }
 
+        public AdiStop(String stopId2, String stopName2, Coordinates coordinates) {
+        this.stopID = stopId2;
+        this.stopName = stopName2;
+        this.stopCoordinates = coordinates;
+        this.parentStationID = null;
+    }
     public double getLatitude() {
         return this.stopCoordinates.getLatitude();
     }
@@ -49,19 +56,5 @@ public class AdiStop {
 //    public boolean isPlatform() {
 //        return stopType.isPlatform(parentStationID);
 //    }
-
-
-//    public int getMinimumTransferTime() {
-//        return minimumTransferTime;
-//    }
-
-//    public Station getParentStation() {
-//        return parentStation;
-//    }
-
-//    public List<Pathway> getFootpaths() {
-//        return footpaths;
-//    }
-
 
 }

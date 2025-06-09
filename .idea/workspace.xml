@@ -4,93 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/tests/DetailedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/tests/DetailedTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="362628ce-4d17-4af4-a0e2-f2eb336b1bac" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Enum" />
-        <option value="Interface" />
-        <option value="FxmlFile" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="2xrOwDmAB9a2FmLYoXsZKe6gqNB" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.BulkTest.executor": "Run",
-    "Application.DetailedTest.executor": "Run",
     "Application.HeatmapExample.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MapUI.executor": "Debug",
-    "Application.NLCHeatmapExample.executor": "Run",
-    "Application.RealAStarUsage.executor": "Run",
-    "Application.RealDijkstraUsage.executor": "Run",
-    "Application.RoutingExample.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/adityasingha/group20/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+    "Application.MapUI.executor": "Run",
+    "git-widget-placeholder": "a-star",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="routing.routingEngineModels" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/newDijkstra/model/output" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="routing.routingEngineDijkstra.newDijkstra.model.input" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.DetailedTest">
-    <configuration name="DetailedTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.tests.DetailedTest" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routing.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.MapUI">
     <configuration name="HeatmapExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="heatmap.HeatmapExample" />
       <module name="bcs1600" />
@@ -117,69 +51,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NLCHeatmapExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="nlc.NLCHeatmapExample" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="nlc.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RoutingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="routing.tests.RoutingExample" />
-      <module name="bcs1600" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="routing.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DetailedTest" />
-        <item itemvalue="Application.HeatmapExample" />
-        <item itemvalue="Application.NLCHeatmapExample" />
-        <item itemvalue="Application.RoutingExample" />
         <item itemvalue="Application.MapUI" />
+        <item itemvalue="Application.HeatmapExample" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="b0128262-636e-4f71-bb8b-3c5f5755c245" name="Changes" comment="" />
-      <created>1748259054103</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1748259054103</updated>
-      <workItem from="1748259055255" duration="2846000" />
-      <workItem from="1748692963585" duration="7762000" />
-      <workItem from="1748960781290" duration="11952000" />
-      <workItem from="1749037722199" duration="7738000" />
-      <workItem from="1749112599276" duration="6165000" />
-      <workItem from="1749125551070" duration="312000" />
-      <workItem from="1749203243323" duration="4171000" />
-      <workItem from="1749294199139" duration="11812000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

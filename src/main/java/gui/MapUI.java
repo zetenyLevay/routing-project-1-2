@@ -1,10 +1,16 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.awt.*;
-import javax.swing.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import gui.components.MapDisplay;
 import gui.components.UserInterfaceBuilder;

@@ -1,15 +1,22 @@
 package gui.components;
 
-import java.awt.*;
-
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import gui.MapLine;
 import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 import gui.interaction.CoordinateSelectionManager;
@@ -20,6 +27,7 @@ import gui.transform.MapViewTransform;
 import gui.util.MapImageLoader;
 
 public class MapDisplay extends JPanel {
+
     private final MapRenderer mapRenderer;
     private final MapInteractionHandler interactionHandler;
     private final MapViewTransform viewTransform;
@@ -28,9 +36,10 @@ public class MapDisplay extends JPanel {
     private final List<LocationPoint> busStopPoints;
     private Map<String, Color> heatmapStopColors = new HashMap<>();
     private boolean isHeatmapVisible = false;
+    private List<MapLine> routeLines = new ArrayList<>();
 
     public MapDisplay(GeographicBounds mapBounds, List<LocationPoint> busStops,
-                      JTextField startCoordinateField, JTextField endCoordinateField) throws IOException {
+            JTextField startCoordinateField, JTextField endCoordinateField) throws IOException {
         this.baseMapImage = MapImageLoader.load("/mapImage.jpg");
         this.busStopPoints = busStops;
         this.viewTransform = new MapViewTransform(baseMapImage, mapBounds);
@@ -74,15 +83,77 @@ public class MapDisplay extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        Graphics2D g2 = (Graphics2D) graphics;
-        mapRenderer.render(g2);
-        if (isHeatmapVisible && !heatmapStopColors.isEmpty()) {
-            HeatmapOverlayRenderer overlay = new HeatmapOverlayRenderer(viewTransform, busStopPoints, heatmapStopColors);
-            overlay.paint(g2, getWidth(), getHeight());
+        Graphics2D g2d = (Graphics2D) graphics.create();
+
+        try {
+            super.paintComponent(graphics);
+            Graphics2D g2 = (Graphics2D) graphics;
+            mapRenderer.render(g2);
+            if (isHeatmapVisible && !heatmapStopColors.isEmpty()) {
+                HeatmapOverlayRenderer overlay = new HeatmapOverlayRenderer(viewTransform, busStopPoints, heatmapStopColors);
+                overlay.paint(g2, getWidth(), getHeight());
+            }
+            drawRouteLines(g2d);
+
+        } finally {
+            g2d.dispose();
+        }
+    }
+
+    public void drawRouteLines(List<MapLine> lines) {
+        this.routeLines = new ArrayList<>(lines);
+
+        // Debug: Print the lines
+        for (int i = 0; i < lines.size(); i++) {
+            MapLine line = lines.get(i);
+        }
+    }
+
+    public void clearRouteLines() {
+        this.routeLines.clear();
+    }
+
+    private void drawRouteLines(Graphics2D g2d) {
+        if (routeLines == null || routeLines.isEmpty()) {
+            return;
+        }
+
+
+        // Set line properties
+        g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        for (int i = 0; i < routeLines.size(); i++) {
+            MapLine line = routeLines.get(i);
+
+            // Convert geo coordinates to screen coordinates
+            Point startPoint = viewTransform.geoToScreen(line.getSourceLat(), line.getSourceLon());
+            Point endPoint = viewTransform.geoToScreen(line.getDestLat(), line.getDestLon());
+
+
+            if (startPoint != null && endPoint != null) {
+                // Set color - make it more visible
+                Color lineColor = line.getColour();
+                if (lineColor == null) {
+                    lineColor = Color.MAGENTA; // Fallback bright color
+                }
+                g2d.setColor(lineColor);
+
+                // Draw the line
+                g2d.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+
+                // Draw small circles at endpoints to make them more visible
+                g2d.fillOval(startPoint.x - 3, startPoint.y - 3, 6, 6);
+                g2d.fillOval(endPoint.x - 3, endPoint.y - 3, 6, 6);
+
+            } else {
+
+            }
         }
     }
 
     public List<LocationPoint> getBusStopPoints() {
         return busStopPoints;
     }
+
 }

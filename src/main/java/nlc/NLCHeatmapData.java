@@ -1,10 +1,10 @@
 package nlc;
 
-import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
-
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 public class NLCHeatmapData {
     private final AdiStop closedStop;

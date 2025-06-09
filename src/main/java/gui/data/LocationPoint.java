@@ -29,6 +29,7 @@ public class LocationPoint {
         this.stopName = null;
     }
 
+
     public double getLatitude() {
         return latitude;
     }

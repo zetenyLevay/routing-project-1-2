@@ -2,40 +2,41 @@ package parsers;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.leastfixedpoint.json.JSONWriter;
 
+import routing.routingEngineModels.RouteStep;
+
 public class CLIWrite {
-    private JSONWriter<OutputStreamWriter> responseWriter;
+    private final JSONWriter<OutputStreamWriter> responseWriter;
 
     public CLIWrite() {
-        responseWriter = new JSONWriter<>(new OutputStreamWriter(System.out));
+        this.responseWriter = new JSONWriter<>(new OutputStreamWriter(System.out));
     }
 
-    /**
-     * Sends a successful JSON response.
-     * 
-     * @param value the value to include in the "ok" response.
-     * @throws IOException if an I/O error occurs.
-     */
     public void sendOk(Object value) throws IOException {
         responseWriter.write(Map.of("ok", value));
         responseWriter.getWriter().write('\n');
         responseWriter.getWriter().flush();
     }
 
-    /**
-     * Sends an error JSON response.
-     * 
-     * @param message the error message.
-     * @throws IOException if an I/O error occurs.
-     */
     public void sendError(String message) throws IOException {
         responseWriter.write(Map.of("error", message));
         responseWriter.getWriter().write('\n');
         responseWriter.getWriter().flush();
     }
 
-    //TODO: maybe see if the
+    public void writeRouteSteps(List<RouteStep> route) throws IOException {
+        List<Map<String, Object>> steps = new ArrayList<>(route.size());
+        for (RouteStep step : route) {
+            steps.add(step.toJSON());
+            //map.draw("type", step.getType().toString());
+        }
+        responseWriter.write(Map.of("ok", steps));
+        responseWriter.getWriter().write('\n');
+        responseWriter.getWriter().flush();
+    }
 }

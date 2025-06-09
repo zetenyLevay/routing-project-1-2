@@ -27,3 +27,7 @@ target/*
 .idea/workspace.xml
 /.idea
 *.xml
+.DS_Store
+*.xml
+.DS_Store
+.DS_Store

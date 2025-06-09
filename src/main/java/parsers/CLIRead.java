@@ -1,3 +1,4 @@
+// CLIRead.java
 package parsers;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class CLIRead {
     }
 
     /**
-     * Reads a JSON object from the standard input.
+     * Reads a JSON object from the standard input (JSON Lines format).
      * 
      * @return the parsed JSON object.
      * @throws IOException if an I/O error occurs.
@@ -23,5 +24,4 @@ public class CLIRead {
     public Object read() throws IOException, JSONSyntaxError {
         return requestReader.read();
     }
-    
 }

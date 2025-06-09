@@ -11,6 +11,7 @@ import routing.routingEngineDijkstra.dijkstra.model.output.DijkstraInputJourney;
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
 //TODO: FIX WALKING LOGIC
 
@@ -33,6 +34,7 @@ public class DijkstraRoutePlanner implements RoutingStrategy {
         return DijkstraModelConverter.toFinalRoute(dijkstraResult, inputJourney.getStartTime());
     }
 
+    @Override
     public FinalRoute findRoute(AdiStop from, AdiStop to, LocalTime startTime) {
         InputJourney inputJourney = new InputJourney(
                 new Coordinates(from.getLatitude(), from.getLongitude()),
@@ -46,4 +48,5 @@ public class DijkstraRoutePlanner implements RoutingStrategy {
         InputJourney inputJourney = new InputJourney(from, to, startTime);
         return findRoute(inputJourney);
     }
+
 }

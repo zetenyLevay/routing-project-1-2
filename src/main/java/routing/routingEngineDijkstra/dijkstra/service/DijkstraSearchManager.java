@@ -34,6 +34,11 @@ public class DijkstraSearchManager {
                 processedStops.add(current.stop.id);
                 return current;
             }
+//            if (current.time != earliestArrival.get(current.stop.id)) {
+//                continue; // stale path—ignore
+//            }
+//            return current;
+
         }
         return null;
     }

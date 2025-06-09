@@ -1,11 +1,11 @@
 package routing.api;
 
+import java.time.LocalTime;
+
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.FinalRoute;
 import routing.routingEngineModels.InputJourney;
-
-import java.time.LocalTime;
 
 public class Router {
     private RoutingStrategy strategy;

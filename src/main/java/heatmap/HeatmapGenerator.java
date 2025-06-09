@@ -1,12 +1,12 @@
 package heatmap;
 
-import routing.api.Router;
-import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
-import routing.routingEngineModels.FinalRoute;
-
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import routing.api.Router;
+import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
+import routing.routingEngineModels.FinalRoute;
 
 public class HeatmapGenerator {
     private final Router router;
