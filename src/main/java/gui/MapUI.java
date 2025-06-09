@@ -14,7 +14,7 @@ import gui.transform.CoordinateConverter;
 
 public class MapUI {
     public static void main(String[] args) throws IOException {
-        MapUI.create();
+        create();
     }
 
     public static void create() {
@@ -24,23 +24,27 @@ public class MapUI {
         double westBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(18, 41, 15.29);
         double eastBoundary = CoordinateConverter.degreesMinutesSecondsToDecimal(19, 28, 30.60);
         GeographicBounds mapBoundaries = new GeographicBounds(
-            southBoundary, northBoundary, westBoundary, eastBoundary);
-        
+                southBoundary, northBoundary, westBoundary, eastBoundary
+        );
+
         SwingUtilities.invokeLater(() -> {
             try {
                 JTextField startCoordinateInput = new JTextField("(lat,lon)", 20);
                 JTextField endCoordinateInput = new JTextField("(lat,lon)", 20);
                 MapDisplay mapDisplayPanel = new MapDisplay(
-                    mapBoundaries, busStopData, startCoordinateInput, endCoordinateInput);
+                        mapBoundaries, busStopData, startCoordinateInput, endCoordinateInput
+                );
                 JScrollPane scrollPane = new JScrollPane(mapDisplayPanel);
-                scrollPane.getViewport().addMouseWheelListener(e -> {
-                    mapDisplayPanel.dispatchEvent(
+                scrollPane.getViewport().addMouseWheelListener(e -> mapDisplayPanel.dispatchEvent(
                         SwingUtilities.convertMouseEvent(scrollPane.getViewport(), e, mapDisplayPanel)
-                    );
-                });
-                JPanel controlPanel = UserInterfaceBuilder.createControlPanelWithoutHeatmap(
-                    startCoordinateInput, endCoordinateInput, mapDisplayPanel);
-                
+                ));
+                JPanel controlPanel = UserInterfaceBuilder.createControlPanel(
+                        startCoordinateInput,
+                        endCoordinateInput,
+                        mapDisplayPanel,
+                        null
+                );
+
                 JPanel applicationPanel = new JPanel(new BorderLayout());
                 applicationPanel.add(controlPanel, BorderLayout.NORTH);
                 applicationPanel.add(scrollPane, BorderLayout.CENTER);
@@ -49,9 +53,10 @@ public class MapUI {
             } catch (IOException fileError) {
                 fileError.printStackTrace();
                 JOptionPane.showMessageDialog(null,
-                    "Error loading map: " + fileError.getMessage(),
-                    "Map Loading Error",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Error loading map: " + fileError.getMessage(),
+                        "Map Loading Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
         });
     }

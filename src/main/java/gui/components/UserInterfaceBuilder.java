@@ -29,42 +29,56 @@ import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
 import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 
 public class UserInterfaceBuilder {
-
-    public static JPanel createControlPanel(JTextField startCoordinateField, JTextField endCoordinateField,
-                                            MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
-        JButton generateHeatmapButton = createHeatmapButton(startCoordinateField, mapDisplay, heatmapAPI);
-        JButton evaluateStopsButton = createStopEvaluatorButton(mapDisplay);
-        JButton zoomInButton = createZoomButton("+", 1.5, mapDisplay);
-        JButton zoomOutButton = createZoomButton("-", 0.9, mapDisplay);
-        return buildControlPanel(startCoordinateField, endCoordinateField,
-                zoomInButton, zoomOutButton, generateHeatmapButton,
-                null, null, null, evaluateStopsButton, mapDisplay);
+    public static JPanel createControlPanel(
+            JTextField startField,
+            JTextField endField,
+            MapDisplay mapDisplay,
+            TravelTimeHeatmapAPI heatmapAPI
+    ) {
+        JButton heatmapButton = heatmapAPI != null
+                ? createHeatmapButton(startField, mapDisplay, heatmapAPI)
+                : createLazyHeatmapButton(startField, mapDisplay);
+        JButton zoomIn = createZoomButton("+", 1.5, mapDisplay);
+        JButton zoomOut = createZoomButton("-", 0.9, mapDisplay);
+        JButton evaluateStops = createStopEvaluatorButton(mapDisplay);
+        JTextField stopIdField = null;
+        JButton nlcButton = null;
+        JButton clearButton = null;
+        if (heatmapAPI == null) {
+            stopIdField = NLCHandler.createStopIdField();
+            nlcButton = NLCHandler.createNLCButton(stopIdField, mapDisplay);
+            clearButton = NLCHandler.createClearButton(stopIdField, mapDisplay);
+        }
+        return buildControlPanel(
+                startField,
+                endField,
+                zoomIn,
+                zoomOut,
+                heatmapButton,
+                stopIdField,
+                nlcButton,
+                clearButton,
+                evaluateStops,
+                mapDisplay
+        );
     }
 
-    public static JPanel createControlPanelWithoutHeatmap(JTextField startCoordinateField, JTextField endCoordinateField,
-                                                          MapDisplay mapDisplay) {
-        JButton heatmapButton = createLazyHeatmapButton(startCoordinateField, mapDisplay);
-        JButton evaluateStopsButton = createStopEvaluatorButton(mapDisplay);
-        JButton zoomInButton = createZoomButton("+", 1.5, mapDisplay);
-        JButton zoomOutButton = createZoomButton("-", 0.9, mapDisplay);
-        JTextField stopIdField = NLCHandler.createStopIdField();
-        JButton nlcButton = NLCHandler.createNLCButton(stopIdField, mapDisplay);
-        JButton clearButton = NLCHandler.createClearButton(stopIdField, mapDisplay);
-        return buildControlPanel(startCoordinateField, endCoordinateField,
-                zoomInButton, zoomOutButton, heatmapButton,
-                stopIdField, nlcButton, clearButton, evaluateStopsButton, mapDisplay);
-    }
-
-    private static JButton createHeatmapButton(JTextField startCoordinateField, MapDisplay mapDisplay,
-                                               TravelTimeHeatmapAPI heatmapAPI) {
+    private static JButton createHeatmapButton(
+            JTextField startField,
+            MapDisplay mapDisplay,
+            TravelTimeHeatmapAPI heatmapAPI
+    ) {
         JButton button = new JButton("Generate Heatmap");
-        button.addActionListener(e -> generateHeatmap(startCoordinateField, mapDisplay, heatmapAPI, button));
+        button.addActionListener(e -> generateHeatmap(startField, mapDisplay, heatmapAPI, button));
         return button;
     }
 
-    private static JButton createLazyHeatmapButton(JTextField startCoordinateField, MapDisplay mapDisplay) {
+    private static JButton createLazyHeatmapButton(
+            JTextField startField,
+            MapDisplay mapDisplay
+    ) {
         JButton button = new JButton("Generate Heatmap");
-        button.addActionListener(e -> generateHeatmapWithInitialization(startCoordinateField, mapDisplay, button));
+        button.addActionListener(e -> generateHeatmapWithInitialization(startField, mapDisplay, button));
         return button;
     }
 
@@ -74,45 +88,57 @@ public class UserInterfaceBuilder {
         return button;
     }
 
-    private static JButton createZoomButton(String text, double zoomFactor, MapDisplay mapDisplay) {
+    private static JButton createZoomButton(
+            String text,
+            double factor,
+            MapDisplay mapDisplay
+    ) {
         JButton button = new JButton(text);
-        button.addActionListener(e -> mapDisplay.adjustZoom(zoomFactor));
+        button.addActionListener(e -> mapDisplay.adjustZoom(factor));
         return button;
     }
 
-    private static JPanel buildControlPanel(JTextField startField, JTextField endField,
-                                            JButton zoomInButton, JButton zoomOutButton, JButton actionButton,
-                                            JTextField stopIdField, JButton nlcButton, JButton clearButton,
-                                            JButton evaluateStopsButton, MapDisplay mapDisplay) {
-        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        controlPanel.add(new JLabel("Start:")); controlPanel.add(startField);
-        controlPanel.add(new JLabel("End:"));   controlPanel.add(endField);
-        controlPanel.add(zoomInButton);         controlPanel.add(zoomOutButton);
-        controlPanel.add(actionButton);         controlPanel.add(evaluateStopsButton);
+    private static JPanel buildControlPanel(
+            JTextField startField,
+            JTextField endField,
+            JButton zoomIn,
+            JButton zoomOut,
+            JButton actionButton,
+            JTextField stopIdField,
+            JButton nlcButton,
+            JButton clearButton,
+            JButton evaluateStops,
+            MapDisplay mapDisplay
+    ) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.add(new JLabel("Start:")); panel.add(startField);
+        panel.add(new JLabel("End:")); panel.add(endField);
+        panel.add(zoomIn); panel.add(zoomOut);
+        panel.add(actionButton); panel.add(evaluateStops);
         if (stopIdField != null) {
-            controlPanel.add(Box.createHorizontalStrut(20));
-            controlPanel.add(new JLabel("Out of Service:"));
-            controlPanel.add(stopIdField);
-            controlPanel.add(nlcButton);
-            controlPanel.add(clearButton);
+            panel.add(Box.createHorizontalStrut(20));
+            panel.add(new JLabel("Out of Service:"));
+            panel.add(stopIdField);
+            panel.add(nlcButton); panel.add(clearButton);
         }
-        return controlPanel;
+        return panel;
     }
 
     private static void runStopEvaluator(MapDisplay mapDisplay, JButton button) {
         button.setText("Evaluating...");
         button.setEnabled(false);
-        SwingWorker<Map<String, Color>, Void> worker = new SwingWorker<>() {
+        new SwingWorker<Map<String, Color>, Void>() {
             @Override
             protected Map<String, Color> doInBackground() {
                 StopEvaluator evaluator = new StopEvaluator();
-                Map<String, Double> rawScores = evaluator.doEverything();
-                double min = rawScores.values().stream().mapToDouble(d -> d).min().orElse(0);
-                double max = rawScores.values().stream().mapToDouble(d -> d).max().orElse(1);
-                return rawScores.entrySet().stream().collect(Collectors.toMap(
-                    Map.Entry::getKey,
-                    e -> interpolateRedGreen((e.getValue() - min) / (max - min))
-                ));
+                Map<String, Double> scores = evaluator.doEverything();
+                double min = scores.values().stream().mapToDouble(d -> d).min().orElse(0);
+                double max = scores.values().stream().mapToDouble(d -> d).max().orElse(1);
+                return scores.entrySet().stream()
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                e -> interpolateRedGreen((e.getValue() - min) / (max - min))
+                        ));
             }
             @Override
             protected void done() {
@@ -120,27 +146,30 @@ public class UserInterfaceBuilder {
                     mapDisplay.applyTravelTimeHeatmap(get());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(mapDisplay, "Error during stop evaluation:\n" + ex.getMessage(),
-                                                  "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 } finally {
                     button.setText("Evaluate Stops");
                     button.setEnabled(true);
                 }
             }
-        };
-        worker.execute();
+        }.execute();
     }
 
     private static Color interpolateRedGreen(double t) {
         t = Math.max(0, Math.min(1, t));
-        int r = (int)((1 - t) * 255);
-        int g = (int)(t * 255);
+        int r = (int) ((1 - t) * 255);
+        int g = (int) (t * 255);
         return new Color(r, g, 0);
     }
 
-    private static void generateHeatmap(JTextField startCoordinateField, MapDisplay mapDisplay,
-                                        TravelTimeHeatmapAPI heatmapAPI, JButton button) {
-        CoordinateInput ci = parseCoordinateInput(startCoordinateField, mapDisplay);
+    private static void generateHeatmap(
+            JTextField startField,
+            MapDisplay mapDisplay,
+            TravelTimeHeatmapAPI heatmapAPI,
+            JButton button
+    ) {
+        CoordinateInput ci = parseCoordinateInput(startField, mapDisplay);
         if (ci == null) return;
         String id = findNearestStopId(ci.latitude, ci.longitude);
         if (id == null) {
@@ -150,9 +179,12 @@ public class UserInterfaceBuilder {
         executeHeatmapGeneration(mapDisplay, heatmapAPI, button, id);
     }
 
-    private static void generateHeatmapWithInitialization(JTextField startCoordinateField, MapDisplay mapDisplay,
-                                                          JButton button) {
-        CoordinateInput ci = parseCoordinateInput(startCoordinateField, mapDisplay);
+    private static void generateHeatmapWithInitialization(
+            JTextField startField,
+            MapDisplay mapDisplay,
+            JButton button
+    ) {
+        CoordinateInput ci = parseCoordinateInput(startField, mapDisplay);
         if (ci == null) return;
         button.setText("Initializing...");
         button.setEnabled(false);
@@ -167,7 +199,7 @@ public class UserInterfaceBuilder {
                 SwingUtilities.invokeLater(() -> {
                     mapDisplay.applyTravelTimeHeatmap(colors);
                     JOptionPane.showMessageDialog(mapDisplay,
-                        String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
+                            String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
                 });
                 return null;
             }
@@ -179,58 +211,66 @@ public class UserInterfaceBuilder {
         }.execute();
     }
 
-    private static CoordinateInput parseCoordinateInput(JTextField f, MapDisplay m) {
-        String t = f.getText();
-        if (t.trim().isEmpty() || t.contains("lat")) {
-            JOptionPane.showMessageDialog(m, "Enter coordinates", "Error", JOptionPane.ERROR_MESSAGE);
+    private static CoordinateInput parseCoordinateInput(JTextField field, MapDisplay mapDisplay) {
+        String text = field.getText();
+        if (text.trim().isEmpty() || text.contains("lat")) {
+            JOptionPane.showMessageDialog(mapDisplay, "Enter coordinates", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        String[] p = t.split(",");
-        if (p.length != 2) {
-            JOptionPane.showMessageDialog(m, "Format: lat,lon", "Error", JOptionPane.ERROR_MESSAGE);
+        String[] parts = text.split(",");
+        if (parts.length != 2) {
+            JOptionPane.showMessageDialog(mapDisplay, "Format: lat,lon", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        return new CoordinateInput(Double.parseDouble(p[0].trim()), Double.parseDouble(p[1].trim()));
+        return new CoordinateInput(
+                Double.parseDouble(parts[0].trim()),
+                Double.parseDouble(parts[1].trim())
+        );
     }
 
     private static String findNearestStopId(double lat, double lon) {
-        return StopsCache.getAllStops().values().stream().min(
-            Comparator.comparingDouble(s -> calculateDistance(lat, lon,
-                s.getCoordinates().getLatitude(), s.getCoordinates().getLongitude()))
-        ).map(AdiStop::getStopID).orElse(null);
+        return StopsCache.getAllStops().values().stream()
+                .min(Comparator.comparingDouble(s -> calculateDistance(lat, lon,
+                        s.getCoordinates().getLatitude(), s.getCoordinates().getLongitude())))
+                .map(AdiStop::getStopID)
+                .orElse(null);
     }
 
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double r = 6371;
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat/2)*Math.sin(dLat/2) +
-                   Math.cos(Math.toRadians(lat1))*Math.cos(Math.toRadians(lat2)) *
-                   Math.sin(dLon/2)*Math.sin(dLon/2);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         return r * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    private static void executeHeatmapGeneration(MapDisplay d, TravelTimeHeatmapAPI api,
-                                                 JButton b, String id) {
-        b.setText("Generating...");
-        b.setEnabled(false);
+    private static void executeHeatmapGeneration(
+            MapDisplay mapDisplay,
+            TravelTimeHeatmapAPI api,
+            JButton button,
+            String stopId
+    ) {
+        button.setText("Generating...");
+        button.setEnabled(false);
         new SwingWorker<HeatmapData, Void>() {
             @Override
             protected HeatmapData doInBackground() throws SQLException {
-                return api.generateHeatmap(id);
+                return api.generateHeatmap(stopId);
             }
             @Override
             protected void done() {
                 try {
                     HeatmapData data = get();
-                    d.applyTravelTimeHeatmap(api.getAllStopColors(data));
-                    JOptionPane.showMessageDialog(d,
-                        String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
+                    mapDisplay.applyTravelTimeHeatmap(api.getAllStopColors(data));
+                    JOptionPane.showMessageDialog(mapDisplay,
+                            String.format("Heatmap from %.1f to %.1f minutes", data.getMinTime(), data.getMaxTime()));
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(d, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(mapDisplay, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 } finally {
-                    b.setText("Generate Heatmap");
-                    b.setEnabled(true);
+                    button.setText("Generate Heatmap");
+                    button.setEnabled(true);
                 }
             }
         }.execute();
@@ -238,7 +278,7 @@ public class UserInterfaceBuilder {
 
     private static TravelTimeHeatmapAPI initializeHeatmapSystem() throws SQLException, IOException {
         return new TravelTimeHeatmapAPI(new Router(new DijkstraRoutePlanner(
-            GTFSDatabaseParser.createRouterFromGTFS(500)
+                GTFSDatabaseParser.createRouterFromGTFS(500)
         )));
     }
 
