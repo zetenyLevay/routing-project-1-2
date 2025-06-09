@@ -3,17 +3,13 @@ package gui.components;
 import java.awt.*;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import gui.MapUI;
 import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 import gui.interaction.CoordinateSelectionManager;

@@ -15,7 +15,7 @@ import nlc.NLCHeatmapData;
 public class NLCHandler {
     
     public static JTextField createStopIdField() {
-        return new JTextField("Enter Stop ID", 15);
+        return new JTextField("(stop ID)", 15);
     }
     
     public static JButton createNLCButton(JTextField stopIdField, MapDisplay mapDisplay) {
@@ -25,10 +25,10 @@ public class NLCHandler {
     }
     
     public static JButton createClearButton(JTextField stopIdField, MapDisplay mapDisplay) {
-        JButton clearButton = new JButton("Clear");
+        JButton clearButton = new JButton("Clear Everyting");
         clearButton.addActionListener(e -> {
             mapDisplay.clearTravelTimeHeatmap();
-            stopIdField.setText("Enter Stop ID");
+            stopIdField.setText("(stop ID)");
         });
         return clearButton;
     }
@@ -37,7 +37,7 @@ public class NLCHandler {
         try {
             String stopId = stopIdField.getText().trim();
             
-            if (stopId.equals("Enter Stop ID") || stopId.isEmpty()) {
+            if (stopId.equals("(stop ID)") || stopId.isEmpty()) {
                 showErrorMessage(mapDisplay, "Please enter a stop ID");
                 return;
             }
