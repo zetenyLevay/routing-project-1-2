@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
@@ -11,8 +12,13 @@ import gui.data.BusStopDataLoader;
 import gui.data.GeographicBounds;
 import gui.data.LocationPoint;
 import gui.transform.CoordinateConverter;
+import routing.api.Router;
+import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
+import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 
 public class MapUI {
+    private static Router sharedRouter;
+    
     public static void main(String[] args) throws IOException {
         create();
     }
@@ -29,6 +35,8 @@ public class MapUI {
 
         SwingUtilities.invokeLater(() -> {
             try {
+                initializeSharedRouter();
+                
                 JTextField startCoordinateInput = new JTextField("(lat,lon)", 20);
                 JTextField endCoordinateInput = new JTextField("(lat,lon)", 20);
                 MapDisplay mapDisplayPanel = new MapDisplay(
@@ -50,7 +58,7 @@ public class MapUI {
                 applicationPanel.add(scrollPane, BorderLayout.CENTER);
                 JFrame mainWindow = UserInterfaceBuilder.createMainWindow(applicationPanel);
                 mainWindow.setVisible(true);
-            } catch (IOException fileError) {
+            } catch (Exception fileError) {
                 fileError.printStackTrace();
                 JOptionPane.showMessageDialog(null,
                         "Error loading map: " + fileError.getMessage(),
@@ -59,5 +67,15 @@ public class MapUI {
                 );
             }
         });
+    }
+    
+    private static void initializeSharedRouter() throws SQLException, IOException {
+        sharedRouter = new Router(new DijkstraRoutePlanner(
+                GTFSDatabaseParser.createRouterFromGTFS(500)
+        ));
+    }
+    
+    public static Router getSharedRouter() {
+        return sharedRouter;
     }
 }

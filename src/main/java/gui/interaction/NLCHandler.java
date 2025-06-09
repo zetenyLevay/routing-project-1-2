@@ -8,50 +8,47 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import gui.MapUI;
 import gui.components.MapDisplay;
 import nlc.NLCHeatmapAPI;
 import nlc.NLCHeatmapData;
+import routing.api.Router;
 
 public class NLCHandler {
-    
     public static JTextField createStopIdField() {
         return new JTextField("(stop ID)", 15);
     }
-    
+
     public static JButton createNLCButton(JTextField stopIdField, MapDisplay mapDisplay) {
         JButton button = new JButton("Show Impact");
         button.addActionListener(e -> generateNLCHeatmap(stopIdField, mapDisplay, button));
         return button;
     }
-    
+
     public static JButton createClearButton(JTextField stopIdField, MapDisplay mapDisplay) {
-        JButton clearButton = new JButton("Clear Everyting");
+        JButton clearButton = new JButton("Clear Everything");
         clearButton.addActionListener(e -> {
             mapDisplay.clearTravelTimeHeatmap();
             stopIdField.setText("(stop ID)");
         });
         return clearButton;
     }
-    
+
     private static void generateNLCHeatmap(JTextField stopIdField, MapDisplay mapDisplay, JButton button) {
         try {
             String stopId = stopIdField.getText().trim();
-            
             if (stopId.equals("(stop ID)") || stopId.isEmpty()) {
                 showErrorMessage(mapDisplay, "Please enter a stop ID");
                 return;
             }
-
             button.setText("Analyzing...");
             button.setEnabled(false);
-
-            SwingWorker<NLCHeatmapData, Void> nlcWorker = new SwingWorker<NLCHeatmapData, Void>() {
+            new SwingWorker<NLCHeatmapData, Void>() {
                 @Override
                 protected NLCHeatmapData doInBackground() throws Exception {
                     NLCHeatmapAPI nlcAPI = new NLCHeatmapAPI();
                     return nlcAPI.generateHeatmap(stopId);
                 }
-
                 @Override
                 protected void done() {
                     try {
@@ -59,16 +56,14 @@ public class NLCHandler {
                         NLCHeatmapAPI nlcAPI = new NLCHeatmapAPI();
                         Map<String, Color> stopColors = nlcAPI.getAllStopColors(heatmapData);
                         Map<String, Integer> nlcValues = nlcAPI.getAllNLCValues(heatmapData);
-                        
                         mapDisplay.applyTravelTimeHeatmap(stopColors);
                         showNLCSuccessMessage(mapDisplay, heatmapData, nlcValues);
-                        
                     } catch (Exception ex) {
-                        String errorMsg = ex.getMessage();
-                        if (errorMsg != null && errorMsg.contains("Stop not found")) {
-                            showErrorMessage(mapDisplay, "Stop ID not found: " + stopId);
+                        String msg = ex.getMessage();
+                        if (msg != null && msg.contains("Stop not found")) {
+                            showErrorMessage(mapDisplay, "Stop ID not found: " + stopIdField.getText().trim());
                         } else {
-                            showErrorMessage(mapDisplay, "Error analyzing stop impact: " + errorMsg);
+                            showErrorMessage(mapDisplay, "Error analyzing stop impact: " + msg);
                         }
                         ex.printStackTrace();
                     } finally {
@@ -76,9 +71,7 @@ public class NLCHandler {
                         button.setEnabled(true);
                     }
                 }
-            };
-            nlcWorker.execute();
-
+            }.execute();
         } catch (Exception ex) {
             showErrorMessage(mapDisplay, "Error: " + ex.getMessage());
             button.setText("Show Impact");
@@ -86,11 +79,10 @@ public class NLCHandler {
             ex.printStackTrace();
         }
     }
-    
+
     private static void showNLCSuccessMessage(MapDisplay mapDisplay, NLCHeatmapData heatmapData, Map<String, Integer> nlcValues) {
-        int maxImpact = nlcValues.values().stream().max(Integer::compare).orElse(0);
+        int maxImpact = nlcValues.values().stream().mapToInt(i -> i).max().orElse(0);
         int affectedStops = (int) nlcValues.values().stream().filter(v -> v > 0).count();
-        
         String message = String.format(
             "Impact Analysis Complete!\n" +
             "Closed Stop: %s\n" +
@@ -101,7 +93,6 @@ public class NLCHandler {
             affectedStops,
             maxImpact
         );
-        
         JOptionPane.showMessageDialog(mapDisplay, message, "Stop Closure Impact", JOptionPane.INFORMATION_MESSAGE);
     }
 
