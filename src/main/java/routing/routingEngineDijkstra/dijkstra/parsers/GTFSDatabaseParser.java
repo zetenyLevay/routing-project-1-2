@@ -12,7 +12,7 @@ import java.util.*;
  * Parses GTFS data from a SQLite database to create routing model objects for stops, routes, and connections.
  */
 public class GTFSDatabaseParser {
-    private static final String DB_PATH = "jdbc:sqlite::resource:gtfs.db";
+    private static final String DB_PATH = "jdbc:sqlite:budapest_gtfs.db";
 
     /**
      * Parses stops from the GTFS database.

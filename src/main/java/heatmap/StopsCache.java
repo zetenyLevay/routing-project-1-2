@@ -15,7 +15,7 @@ import routing.routingEngineDijkstra.adiModels.Stop.*;
 public class StopsCache {
     private static StopsCache instance;
     private final Map<String, AdiStop> stopsMap;
-    private static final String DB_PATH = "jdbc:sqlite::resource:gtfs.db";
+    private static final String DB_PATH = "jdbc:sqlite:budapest_gtfs.db";
 
     /**
      * Constructs a StopsCache and loads stops from the database.
