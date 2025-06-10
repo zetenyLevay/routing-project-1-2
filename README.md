@@ -178,7 +178,38 @@ Input and output to the command line are JSON objects. They have to be formatted
 
 ### Common Issues
 
-#### Issue 1: Maven Build Failure
+#### Issue 1: Missing input file
+```bash
+> {"load":"/dev/null"}
+< {"error":"File not found"}
+  [engine terminates]
+```
+The problem is the inputted file does not exist or that you have inputted the wrong path. You have to insert the correct path.
+
+#### Issue 2: Non-JSON input
+```bash
+> hello there
+< {"error":"Bad JSON input"}
+  [engine terminates]
+```
+The input has to be in JSON format of with command "load" or "routefrom". For example
+```bash
+> {"load":"data/budapest_gtfs.zip"}
+< {"ok":"loaded"}
+```
+Or
+```bash
+> {"routeFrom":{"lat":47.51828032904577,"lon":18.97828487843043},"to":{"lat":47.4924417,"lon":19.0527917},"startingAt":"18:54:00"}
+< {"ok":[{"duration":2.683333333333333,"mode":"walk","startTime":"18:54","to":{"lat":47.517099,"lon":18.980692}},{"duration":21,"mode":"ride","route":{"headSign":"Nyugati pályaudvar M","longName":"","operator":"BKK","shortName":"291"},"startTime":"19:01","stop":"Jászai Mari tér (F00930)","to":{"lat":47.512478,"lon":19.049558}},{"duration":8,"mode":"ride","route":{"headSign":"Kőbánya alsó vasútáll.","longName":"","operator":"BKK","shortName":"9"},"startTime":"19:25","stop":"Szent István Bazilika (048505)","to":{"lat":47.500141,"lon":19.054665}},{"duration":10.416666666666666,"mode":"walk","startTime":"19:33","to":{"lat":47.4924417,"lon":19.0527917}}]}
+```
+
+#### Issue 3: Non-object input, but valid JSON
+````bash
+> 1234
+< {"error":"Bad request"}
+[engine awaits next request]
+````
+Again, your input needs to be of proper JSON format. See above.
 
 
 
