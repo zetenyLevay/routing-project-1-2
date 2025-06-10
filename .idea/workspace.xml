@@ -6,18 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="362628ce-4d17-4af4-a0e2-f2eb336b1bac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/MainUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/ColorGradient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/ColorGradient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapExample.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/StopsCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/TravelTimeHeatmapAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/TravelTimeHeatmapAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmapExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/tests/DetailedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/routing/tests/RoutingExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nlc/NLCHeatmap.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,20 +24,20 @@
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HeatmapExample.executor": "Run",
-    "Application.MainUI.executor": "Run",
-    "Application.MapUI.executor": "Run",
-    "Application.NLCHeatmapExample.executor": "Run",
-    "Maven.bcs1600 [clean].executor": "Run",
-    "Maven.bcs1600 [compile].executor": "Run",
-    "Maven.bcs1600 [exec:java].executor": "Run",
-    "Maven.bcs1600 [org.codehaus.mojo:exec-maven-plugin:3.1.0:java].executor": "Run",
-    "git-widget-placeholder": "main",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HeatmapExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MapUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.NLCHeatmapExample.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bcs1600 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bcs1600 [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bcs1600 [exec:java].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bcs1600 [org.codehaus.mojo:exec-maven-plugin:3.1.0:java].executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
