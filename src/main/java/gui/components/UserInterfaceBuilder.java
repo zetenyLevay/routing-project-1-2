@@ -2,6 +2,7 @@ package gui.components;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +21,6 @@ import javax.swing.SwingWorker;
 
 import closureAnalysis.StopEvaluator;
 import gui.MapLine;
-import gui.MapUI;
 import gui.interaction.NLCHandler;
 import heatmap.HeatmapData;
 import heatmap.StopsCache;
@@ -29,6 +29,8 @@ import routing.api.Router;
 import routing.db.DBConnectionManager;
 import routing.routingEngineAstar.RoutingEngineAstar;
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
+import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
+import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 import routing.routingEngineModels.RouteStep;
 
 public class UserInterfaceBuilder {
@@ -73,7 +75,7 @@ public class UserInterfaceBuilder {
             MapDisplay mapDisplay
     ) {
         JButton button = new JButton("Generate Heatmap");
-        button.addActionListener(e -> generateHeatmapWithSharedRouter(startField, mapDisplay, button));
+        button.addActionListener(e -> generateHeatmapWithInitialization(startField, mapDisplay, button));
         return button;
     }
 
@@ -234,32 +236,23 @@ public class UserInterfaceBuilder {
         executeHeatmapGeneration(mapDisplay, heatmapAPI, button, id);
     }
 
-    private static void generateHeatmapWithSharedRouter(
+    private static void generateHeatmapWithInitialization(
             JTextField startField,
             MapDisplay mapDisplay,
             JButton button
     ) {
         CoordinateInput ci = parseCoordinateInput(startField, mapDisplay);
         if (ci == null) return;
-        
-        button.setText("Generating...");
+        button.setText("Initializing...");
         button.setEnabled(false);
-        
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                Router sharedRouter = MapUI.getSharedRouter();
-                if (sharedRouter == null) {
-                    throw new Exception("Router not initialized");
-                }
-                
-                TravelTimeHeatmapAPI api = new TravelTimeHeatmapAPI(sharedRouter);
+                TravelTimeHeatmapAPI api = initializeHeatmapSystem();
                 String id = findNearestStopId(ci.latitude, ci.longitude);
                 if (id == null) throw new Exception("No nearby bus stop found");
-                
                 HeatmapData data = api.generateHeatmap(id);
                 Map<String, Color> colors = api.getAllStopColors(data);
-                
                 SwingUtilities.invokeLater(() -> {
                     mapDisplay.applyTravelTimeHeatmap(colors);
                     JOptionPane.showMessageDialog(mapDisplay,
@@ -270,15 +263,8 @@ public class UserInterfaceBuilder {
 
             @Override
             protected void done() {
-                try {
-                    get();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(mapDisplay, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    ex.printStackTrace();
-                } finally {
-                    button.setText("Generate Heatmap");
-                    button.setEnabled(true);
-                }
+                button.setText("Generate Heatmap");
+                button.setEnabled(true);
             }
         }.execute();
     }
@@ -349,6 +335,11 @@ public class UserInterfaceBuilder {
         }.execute();
     }
 
+    private static TravelTimeHeatmapAPI initializeHeatmapSystem() throws SQLException, IOException {
+        return new TravelTimeHeatmapAPI(new Router(new DijkstraRoutePlanner(
+                GTFSDatabaseParser.createRouterFromGTFS(500)
+        )));
+    }
 
     public static JFrame createMainWindow(JPanel contentPanel) {
         JFrame frame = new JFrame("Offline Map Viewer");
