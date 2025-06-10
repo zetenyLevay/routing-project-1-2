@@ -34,36 +34,21 @@ public class RoutingEngineAstar {
     private static final int MAX_WAIT_SECONDS = 1800;     // 30 mins
     private static final double INITIAL_WALK_RADIUS_M = 1000;    // 300 m
     private static final double SEARCH_RADIUS = 1000;           // ~1 km
-    private static final boolean DEBUG = false;                  // Enable/disable debug output
     private static final double WALKING_SPEED_MPS = 1.3889;     // ~5 km/h in m/s
 
+    @SuppressWarnings("unused")
     private final DBConnectionManager dbManager;
     private final Map<String, Stop> allStops;
     private final DynamicGraphBuilder graphBuilder;
     private RouteBuilder routeBuilder;
     private StopService stopService;
 
-    public static void main(String[] args) {
-        RoutingEngineAstar router = new RoutingEngineAstar(
-                new DBConnectionManager("jdbc:sqlite:budapest_gtfs.db")
-        );
 
-        // Example: two farther‐apart points
-        double sourceLat = 47.498333190458226; //source point
-        double sourceLon = 19.074383183671998; //source point 2
-        double destLat = 47.49563896935584; // destination point
-        double destLon = 19.035322782272477; // destination point 2
-        String startTime = "18:54:00";
-
-        System.out.println("Testing route finding...");
-        List<RouteStep> route = router.findRoute(sourceLat, sourceLon, destLat, destLon, startTime);
-
-        System.out.println("Found route with " + route.size() + " steps:");
-        for (int i = 0; i < route.size(); i++) {
-            System.out.println("Step " + (i + 1) + ": " + route.get(i));
-        }
-    }
-
+    /**
+     * Constructor for RoutingEngineAstar.
+     *
+     * @param dbManager the database connection manager
+     */
     public RoutingEngineAstar(DBConnectionManager dbManager) {
         this.dbManager = dbManager;
         this.routeBuilder = new RouteBuilder(WALKING_SPEED_MPS);
@@ -83,8 +68,15 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Main routing method – finds a sequence of RouteStep from source to
-     * destination.
+     * Finds a route from source to destination, using A* search with dynamic
+     * graph building and time constraints.
+     *
+     * @param sourceLat  latitude of the source location
+     * @param sourceLon  longitude of the source location
+     * @param destLat    latitude of the destination location
+     * @param destLon    longitude of the destination location
+     * @param startTime  starting time in "HH:mm:ss" format
+     * @return a list of RouteStep representing the route
      */
     public List<RouteStep> findRoute(double sourceLat, double sourceLon,
             double destLat, double destLon, String startTime) {
@@ -100,24 +92,6 @@ public class RoutingEngineAstar {
         List<Stop> startStops = stopService.findNearbyStops(sourceLat, sourceLon, SEARCH_RADIUS);
         List<Stop> endStops = stopService.findNearbyStops(destLat, destLon, SEARCH_RADIUS);
 
-        if (DEBUG && !startStops.isEmpty()) {
-            for (int i = 0; i < Math.min(3, startStops.size()); i++) {
-                Stop stop = startStops.get(i);
-                double dist = TimeAndGeoUtils.haversineMeters(
-                        sourceLat, sourceLon,
-                        stop.getLatitude(), stop.getLongitude()
-                );
-            }
-        }
-        if (DEBUG && !endStops.isEmpty()) {
-            for (int i = 0; i < Math.min(3, endStops.size()); i++) {
-                Stop stop = endStops.get(i);
-                double dist = TimeAndGeoUtils.haversineMeters(
-                        destLat, destLon,
-                        stop.getLatitude(), stop.getLongitude()
-                );
-            }
-        }
 
         if (startStops.isEmpty()) {
             System.err.println("No start stops found within " + SEARCH_RADIUS + " m");
@@ -153,9 +127,7 @@ public class RoutingEngineAstar {
     }   
 
     /**
-     * A small container for the result of runAStar: - steps: the sequence of
-     * RouteStep (in forward order) - firstBoardStop: the Stop where the first
-     * step boards
+     * A simple container for the result of the A* search.
      */
     private static class AStarResult {
 
@@ -169,10 +141,17 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Implements A* to find the optimal chain of RouteStep from any of the
-     * startStops to any of the endStops, beginning no earlier than `startTime`.
-     * Returns both the list of RouteStep and the Stop where the first step
-     * boards.
+     * Runs the A* search algorithm to find the best route from startStops to
+     * endStops, considering the given start time and source/destination coordinates.
+     *
+     * @param startStops  list of starting stops
+     * @param endStops    list of ending stops
+     * @param startTime   starting time in "HH:mm:ss" format
+     * @param sourceLat   latitude of the source location
+     * @param sourceLon   longitude of the source location
+     * @param destLat     latitude of the destination location
+     * @param destLon     longitude of the destination location
+     * @return an AStarResult containing the route steps and first boarding stop
      */
     private AStarResult runAStar(List<Stop> startStops, List<Stop> endStops, String startTime, double sourceLat, double sourceLon, double destLat, double destLon) {
 
@@ -186,9 +165,9 @@ public class RoutingEngineAstar {
         }
 
         // Data structures for A*:
-        Map<String, Integer> bestArrivalTime = new HashMap<>();        // stopID → best known arrival in seconds
-        Map<String, String> cameFrom = new HashMap<>();                 // stopID → predecessor stopID
-        Map<String, RouteStep> cameStep = new HashMap<>();              // stopID → RouteStep used to arrive here
+        Map<String, Integer> bestArrivalTime = new HashMap<>();
+        Map<String, String> cameFrom = new HashMap<>();
+        Map<String, RouteStep> cameStep = new HashMap<>();
 
         PriorityQueue<Node> openSet = new PriorityQueue<>();
 
@@ -271,7 +250,13 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Reconstructs the list of RouteStep from the startStop to destStopId.
+     * Reconstructs the path from the destination stop back to the source stop
+     * using the cameFrom and cameStep maps.
+     *
+     * @param destStopId  ID of the destination stop
+     * @param cameFrom    map of stop IDs to their predecessor stop IDs
+     * @param cameStep    map of stop IDs to their corresponding RouteSteps
+     * @return a list of RouteStep representing the reconstructed path
      */
     private List<RouteStep> reconstructPath(
             String destStopId,
@@ -290,7 +275,12 @@ public class RoutingEngineAstar {
     }
 
     /**
-     * Heuristic: straight-line distance converted to walking time.
+     * Heuristic function for A* search: calculates the minimum distance from
+     * the current stop to any of the end stops, divided by walking speed.
+     *
+     * @param currentStop  the current stop being evaluated
+     * @param endStops     list of destination stops
+     * @return estimated time in seconds to reach any end stop from the current stop
      */
     private double heuristic(Stop currentStop, List<Stop> endStops) {
         double minDist = Double.MAX_VALUE;
@@ -311,8 +301,11 @@ public class RoutingEngineAstar {
 
 
     /**
-     * Delegates to DynamicGraphBuilder to get valid RouteSteps from a stop at a
-     * given time.
+     * Retrieves all valid connections for a given stop at the specified time.
+     *
+     * @param stop         the stop to get connections for
+     * @param currentTime  the current time in "HH:mm:ss" format
+     * @return a list of RouteStep representing valid connections from the stop
      */
     public List<RouteStep> getConnectionsForStop(Stop stop, String currentTime) {
         return graphBuilder.getValidRouteSteps(stop, currentTime);

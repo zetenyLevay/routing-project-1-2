@@ -24,10 +24,6 @@ public class RequestHandler {
     private final CLIRead cliRead;
     private final CLIWrite cliWrite;
 
-    /**
-     * The full JDBC URL of the currently loaded SQLite database, e.g. "jdbc:sqlite:budapest_gtfs.db".
-     * Null if no database has been loaded yet.
-     */
     private String currentJdbcUrl = null;
 
     public RequestHandler() {
@@ -53,7 +49,6 @@ public class RequestHandler {
                 continue;
             }
 
-            @SuppressWarnings("unchecked")
             Map<?, ?> request = (Map<?, ?>) json;
 
             // --- ping / pong ---
@@ -84,9 +79,7 @@ public class RequestHandler {
                 continue;
             }
 
-            // --- routeFrom / to / startingAt ---
             if (request.containsKey("routeFrom")) {
-                // Must have loaded a database first
                 if (this.currentJdbcUrl == null) {
                     cliWrite.sendError("No database loaded");
                     continue;
@@ -98,7 +91,6 @@ public class RequestHandler {
                     cliWrite.sendError("Bad request");
                     continue;
                 }
-                @SuppressWarnings("unchecked")
                 Map<?, ?> routeFromMap = (Map<?, ?>) routeFromObj;
 
                 // 2) Extract lat / lon from routeFromMap
@@ -118,7 +110,6 @@ public class RequestHandler {
                     cliWrite.sendError("Bad request");
                     continue;
                 }
-                @SuppressWarnings("unchecked")
                 Map<?, ?> toMap = (Map<?, ?>) toObj;
 
                 // 4) Extract lat / lon from toMap
@@ -164,14 +155,16 @@ public class RequestHandler {
                 continue;
             }
 
-            // --- anything else ---
             cliWrite.sendError("Bad request");
         }
     }
 
     /**
-     * Helper: take an Object from JSON and coerce it to Double.
-     * If it’s not a Number, throws IllegalArgumentException.
+     * Extracts a double value from an Object, which should be a Number.
+     * Throws IllegalArgumentException if the object is not a Number.
+     *
+     * @param o the Object to extract the double from
+     * @return the double value
      */
     private Double extractDouble(Object o) {
         if (o instanceof Number) {

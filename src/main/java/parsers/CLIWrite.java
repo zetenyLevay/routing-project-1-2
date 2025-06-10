@@ -33,7 +33,6 @@ public class CLIWrite {
         List<Map<String, Object>> steps = new ArrayList<>(route.size());
         for (RouteStep step : route) {
             steps.add(step.toJSON());
-            //map.draw("type", step.getType().toString());
         }
         responseWriter.write(Map.of("ok", steps));
         responseWriter.getWriter().write('\n');

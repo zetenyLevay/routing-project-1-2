@@ -9,15 +9,15 @@ public class RouteStep {
 
     private String modeOfTransport;
     private Coordinates toCoord;
-    private Stop toStop; // Add this field
+    private Stop toStop;
     private double numOfMinutes;
     private String startTime;
-    private String departureTime; // Add this field
-    private String arrivalTime;   // Add this field
+    private String departureTime;
+    private String arrivalTime;
     private String stopStr;
     private RouteInfo routeInfo;
 
-    // Constructor for transit
+    // Constructor for ride steps
     public RouteStep(String modeOfTransport, Stop toStop, double numOfMinutes,
             String departureTime, String arrivalTime, String stopStr, RouteInfo routeInfo) {
         this.modeOfTransport = modeOfTransport;
@@ -26,7 +26,7 @@ public class RouteStep {
         this.numOfMinutes = numOfMinutes;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
-        this.startTime = departureTime; // Keep for backward compatibility
+        this.startTime = departureTime;
         this.stopStr = stopStr;
         this.routeInfo = routeInfo;
     }
@@ -41,7 +41,7 @@ public class RouteStep {
         this.arrivalTime = addSecondsToTime(startTime, walkingSeconds);
         this.numOfMinutes = walkingSeconds / 60.0;
         this.stopStr = toStop.getStopName() + " (" + toStop.getStopID() + ")";
-        this.routeInfo = null; // No route info for walking steps
+        this.routeInfo = null;
     }
 
     // Getters
@@ -98,6 +98,7 @@ public class RouteStep {
         }
     }
 
+    // Method to get the route information into String
     @Override
     public String toString() {
         if (modeOfTransport.equals("walk")) {
@@ -112,7 +113,8 @@ public class RouteStep {
             );
         }
     }
-
+    
+    // Method to convert the route step to JSON format
     public Map<String, Object> toJSON() {
         Map<String, Object> json = new HashMap<>();
 

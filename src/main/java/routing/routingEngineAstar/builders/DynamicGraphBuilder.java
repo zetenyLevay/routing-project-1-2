@@ -24,6 +24,7 @@ public class DynamicGraphBuilder {
     private final DBConnectionManager dbManager;
     private final StopConnectionFinder connectionFinder;
     private final FootpathConnectionBuilder footpathBuilder;
+    @SuppressWarnings("unused")
     private final TimeConstraintValidator timeValidator;
     
     // Cache to avoid rebuilding connections for the same stop-time combination
@@ -54,10 +55,9 @@ public class DynamicGraphBuilder {
         List<RouteStep> transitSteps = connectionFinder.findValidConnections(fromStop, currentTime);
         validSteps.addAll(transitSteps);
         
-        // Get walking connections (footpaths)
+        // Get walking connections
         Map<String, Integer> footpaths = footpathBuilder.findFootpathConnections(fromStop);
         for (Map.Entry<String, Integer> footpath : footpaths.entrySet()) {
-            // Create a walking RouteStep
             RouteStep walkingStep = createWalkingRouteStep(
                 fromStop, 
                 footpath.getKey(), 
@@ -69,7 +69,6 @@ public class DynamicGraphBuilder {
             }
         }
         
-        // Cache the result
         connectionCache.put(cacheKey, validSteps);
         return validSteps;
     }
@@ -79,13 +78,11 @@ public class DynamicGraphBuilder {
      */
     private RouteStep createWalkingRouteStep(Stop fromStop, String toStopId, 
                                            int walkingSeconds, String startTime) {
-        // Get destination stop
         Stop toStop = getStopById(toStopId);
         if (toStop == null) {
             return null;
         }
         
-        // Use the walking constructor that takes Stop object and walking time
         return new RouteStep("walk", toStop, startTime, walkingSeconds);
     }
     
@@ -116,9 +113,7 @@ public class DynamicGraphBuilder {
         return null;
     }
     
-    /**
-     * Clears the connection cache (useful for memory management)
-     */
+
     public void clearCache() {
         connectionCache.clear();
     }

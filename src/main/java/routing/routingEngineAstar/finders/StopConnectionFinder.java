@@ -33,7 +33,6 @@ public class StopConnectionFinder {
     public List<RouteStep> findValidConnections(Stop fromStop, String currentTime) {
         List<RouteStep> validSteps = new ArrayList<>();
 
-        // Note: We now JOIN routes -> agency so that we can pull agency_name as operator_name.
         String query = """
             SELECT DISTINCT
                 st1.stop_id        AS from_stop_id,
@@ -74,9 +73,8 @@ public class StopConnectionFinder {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String fromDeparture = rs.getString("from_departure");
-                    String toArrival     = rs.getString("to_arrival");
 
-                    // Validate the time constraint (e.g. transfer windows, etc.)
+                    // Validate the time constraint
                     if (timeValidator.isValidTimeConnection(currentTime, fromDeparture)) {
                         RouteStep step = createRouteStep(rs);
                         if (step != null) {
@@ -95,37 +93,33 @@ public class StopConnectionFinder {
     }
 
     /**
-     * Builds a RouteStep object from the current row in ResultSet.
-     * Now correctly extracts operator_name, route_short_name, route_long_name, trip_headsign.
+     * Creates a RouteStep from the ResultSet.
+     * 
+     * @param rs The ResultSet containing the route step data.
+     * @return A RouteStep object or null if the stop was not found.
+     * @throws SQLException If there is an error accessing the ResultSet.
      */
     private RouteStep createRouteStep(ResultSet rs) throws SQLException {
-        // 1) Fetch the “to” stop’s ID & look it up in the stops table:
         String toStopId = rs.getString("to_stop_id");
         Stop toStop = getStopById(toStopId);
         if (toStop == null) {
-            // If we couldn’t find the Stop in stops table, skip this row.
             return null;
         }
 
-        // 2) Calculate how many minutes this trip leg takes:
         String departureTime = rs.getString("from_departure");
         String arrivalTime   = rs.getString("to_arrival");
         double durationMinutes = calculateDurationMinutes(departureTime, arrivalTime);
 
-        // 3) Mode-of-transport string (fall back to “Transit” if short name is null)
         String routeShortName = rs.getString("route_short_name");
         String modeOfTransport = (routeShortName != null ? routeShortName : "Transit");
 
-        // 4) A human‐readable “stop description” just for logging/UIs:
         String stopStr = toStop.getStopName() + " (" + toStopId + ")";
 
-        // 5) Pull operator, short name, long name, headsign from the result‐set:
-        String operatorName = rs.getString("operator_name");         // agency.agency_name
-        String shortName    = rs.getString("route_short_name");      // routes.route_short_name
-        String longName     = rs.getString("route_long_name");       // routes.route_long_name
-        String headSign     = rs.getString("trip_headsign");         // trips.trip_headsign
+        String operatorName = rs.getString("operator_name");
+        String shortName    = rs.getString("route_short_name");
+        String longName     = rs.getString("route_long_name");
+        String headSign     = rs.getString("trip_headsign");
 
-        // 6) Build a proper RouteInfo using exactly (operator, shortName, longName, headSign)
         RouteInfo routeInfo = new RouteInfo(
             operatorName,
             shortName,
@@ -133,7 +127,6 @@ public class StopConnectionFinder {
             headSign
         );
 
-        // 7) Finally, assemble and return the RouteStep:
         return new RouteStep(
             modeOfTransport,
             toStop,
@@ -146,7 +139,10 @@ public class StopConnectionFinder {
     }
 
     /**
-     * Utility: Lookup a Stop by its ID (from the 'stops' table).
+     * Retrieves a Stop object by its ID from the database.
+     *
+     * @param stopId The ID of the stop to retrieve.
+     * @return A Stop object or null if not found.
      */
     private Stop getStopById(String stopId) {
         String query = "SELECT stop_id, stop_name, stop_lat, stop_lon "
@@ -174,8 +170,12 @@ public class StopConnectionFinder {
     }
 
     /**
-     * Calculates duration (in minutes) between two “HH:mm:ss” strings,
-     * accounting for possible day rollover.
+     * Calculates the duration in minutes between two times.
+     * Handles cases where the end time rolls over past midnight.
+     *
+     * @param startTime The start time in "HH:mm:ss" format.
+     * @param endTime   The end time in "HH:mm:ss" format.
+     * @return The duration in minutes, or 0.0 if parsing fails.
      */
     private double calculateDurationMinutes(String startTime, String endTime) {
         try {
@@ -194,7 +194,11 @@ public class StopConnectionFinder {
     }
 
     /**
-     * Helper: “HH:mm:ss” → seconds since midnight.
+     * Converts a time string in "HH:mm:ss" format to seconds.
+     *
+     * @param time The time string to convert.
+     * @return The total number of seconds.
+     * @throws IllegalArgumentException If the time format is invalid.
      */
     private int timeToSeconds(String time) {
         String[] parts = time.split(":");
