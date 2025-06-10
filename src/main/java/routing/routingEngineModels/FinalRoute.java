@@ -5,8 +5,6 @@ package routing.routingEngineModels;
 
 import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
 
-import routing.routingEngineDijkstra.adiModels.AdiRouteStep;
-
 import java.util.ArrayList;
 
 public class FinalRoute{

@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import routing.routingEngineDijkstra.adiModels.*;
-import routing.routingEngineDijkstra.adiModels.Stop.*;
 
 /**
  * Singleton cache for storing stop data loaded from a GTFS database.
@@ -69,7 +67,11 @@ public class StopsCache {
      * @return the AdiStop object, or null if not found
      */
     public static AdiStop getStop(String stopId) {
-        return getInstance().stopsMap.get(stopId);
+        String lowerCaseId = stopId.toLowerCase();
+        return getInstance().stopsMap.values().stream()
+                .filter(stop -> stop.getStopID().toLowerCase().equals(lowerCaseId))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -86,15 +88,6 @@ public class StopsCache {
      */
     public static void init() {
         getInstance();
-    }
-
-    /**
-     * Retrieves the number of stops in the cache.
-     *
-     * @return the size of the cache
-     */
-    public static int getCacheSize() {
-        return getInstance().stopsMap.size();
     }
 
     /**

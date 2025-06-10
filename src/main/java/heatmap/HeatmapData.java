@@ -56,15 +56,6 @@ public class HeatmapData {
     }
 
     /**
-     * Retrieves the origin stop of the heatmap.
-     *
-     * @return the origin AdiStop
-     */
-    public AdiStop getOriginStop() {
-        return originStop;
-    }
-
-    /**
      * Retrieves the map of travel times to each stop.
      *
      * @return a map of AdiStop to travel times in seconds

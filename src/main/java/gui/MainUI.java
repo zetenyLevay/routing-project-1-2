@@ -8,7 +8,7 @@ public class MainUI {
 
     public static void main(String[] args) throws IOException {
         //uncomment at some point
-        //   MapUI.create();
+           MapUI.create();
 
         //{"load":"/Users/jakelockitch/Downloads/budapest_gtfs.zip"}
         //{"load":"budapest_gtfs.zip"}

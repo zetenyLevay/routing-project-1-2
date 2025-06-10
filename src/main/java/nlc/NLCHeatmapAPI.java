@@ -11,14 +11,14 @@ import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
  * API for generating and querying Network Loss of Connectivity (NLC) heatmaps.
  */
 public class NLCHeatmapAPI {
-    private final NLCHeatmap heatmap;
+    private final NLCHeatMap heatmap;
 
     /**
      * Constructs an NLCHeatmapAPI and initializes the stops cache and heatmap generator.
      */
     public NLCHeatmapAPI() {
         StopsCache.init();
-        this.heatmap = new NLCHeatmap();
+        this.heatmap = new NLCHeatMap();
     }
 
     /**
@@ -29,7 +29,12 @@ public class NLCHeatmapAPI {
      * @throws IllegalArgumentException if the stop ID is not found
      */
     public NLCHeatmapData generateHeatmap(String closedStopId) {
-        return heatmap.createFromStopId(closedStopId);
+        try {
+            return heatmap.createFromStopId(closedStopId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(
+                    "Failed to generate heatmap: " + e.getMessage(), e);
+        }
     }
 
     /**

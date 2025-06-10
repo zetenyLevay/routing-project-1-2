@@ -1,7 +1,6 @@
 package routing.routingEngineDijkstra.adiModels.Stop;
 
 import routing.routingEngineModels.Coordinates;
-import routing.routingEngineModels.*;
 import routing.routingEngineModels.Stop.StopType;
 
 /**
@@ -11,10 +10,6 @@ public class AdiStop {
     private final String stopID;
     private final String stopName;
     private final Coordinates stopCoordinates;
-    //    private final int minimumTransferTime = 120;
-//    private final StopType stopType;
-//    private final String parentStationID;
-//    private final List<Pathway> footpaths;
     private final Object parentStationID;
 
     /**
@@ -92,30 +87,4 @@ public class AdiStop {
         return this.stopCoordinates;
     }
 
-//    /**
-//     * Retrieves the type of the stop.
-//     *
-//     * @return the StopType of the stop
-//     */
-//    public StopType getStopType() {
-//        return stopType;
-//    }
-
-//    /**
-//     * Retrieves the ID of the parent station.
-//     *
-//     * @return the parent station ID as a String, or null if none
-//     */
-//    public String getParentStationID() {
-//        return parentStationID;
-//    }
-
-//    /**
-//     * Checks if the stop is a platform based on its type and parent station ID.
-//     *
-//     * @return true if the stop is a platform, false otherwise
-//     */
-//    public boolean isPlatform() {
-//        return stopType.isPlatform(parentStationID);
-//    }
 }
