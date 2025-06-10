@@ -16,56 +16,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+/**
+ * Parses a ZIP file containing GTFS data and converts it into an SQLite database.
+ * If the input is already an SQLite database, it simply returns the file name.
+ * 
+ * The ZIP file should contain CSV files with GTFS data, which will be processed
+ * and stored in the SQLite database.
+ */
 public class ZipToSQLite {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in, "UTF-8");
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) continue;
 
-            String fileName;
-            try {
-                // very simple JSON parse: {"load":"path/to/zip"}
-                int p = line.indexOf("\"load\"");
-                int c = line.indexOf(':', p);
-                int q1 = line.indexOf('"', c + 1);
-                int q2 = line.indexOf('"', q1 + 1);
-                fileName = line.substring(q1 + 1, q2);
-            } catch (Exception e) {
-                System.out.println("{\"error\":\"Bad JSON input\"}");
-                System.exit(1);
-                return;
-            }
-
-            File f = new File(fileName);
-            if (!f.exists() || !f.isFile()) {
-                System.out.println("{\"error\":\"File not found\"}");
-                System.exit(1);
-            }
-
-            try {
-                run(fileName);
-                System.out.println("{\"ok\":\"loaded\"}");
-            } catch (Exception e) {
-                String msg = escapeForJson(e.getMessage());
-                System.out.println("{\"error\":\"" + msg + "\"}");
-                System.exit(1);
-            }
-        }
-        scanner.close();
-    }
-
+    @SuppressWarnings("unused")
     public static String run(String fileName) throws IOException, SQLException {
         File f = new File(fileName);
         String lc = fileName.toLowerCase();
 
         if (lc.endsWith(".db")) {
-            // just validate connectivity
             try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + fileName)) { }
             return fileName;
         }
@@ -94,7 +63,7 @@ public class ZipToSQLite {
 
                                     if (tableName.equals("stops") || tableName.equals("routes")
                                         || tableName.equals("trips") || tableName.equals("stop_times") || tableName.equals("agency")) {
-                                        processCsvEntry(zipFile, entry, entry.getName(), conn);
+                                        processCsvEntry(zipFile, entry, conn);
                                         }
 
                                     }
@@ -106,6 +75,12 @@ public class ZipToSQLite {
         return dbName;
     }
 
+    /**
+     * Configures the SQLite database with specific settings.
+     * 
+     * @param conn The connection to the SQLite database.
+     * @throws SQLException If there is an error configuring the database.
+     */
     private static void configureDatabase(Connection conn) throws SQLException {
         try (Statement st = conn.createStatement()) {
             st.execute("PRAGMA synchronous = NORMAL;");
@@ -113,6 +88,15 @@ public class ZipToSQLite {
         }
     }
 
+    /**
+     * Processes a CSV entry from the ZIP file and inserts its data into the SQLite database.
+     * 
+     * @param zipFile The ZIP file containing the CSV entry.
+     * @param entry The ZipEntry representing the CSV file.
+     * @param conn The connection to the SQLite database.
+     * @throws IOException If there is an error reading the CSV file.
+     * @throws SQLException If there is an error inserting data into the database.
+     */
     private static void processCsvEntry(ZipFile zipFile, ZipEntry entry,
                                         Connection conn)
             throws IOException, SQLException {
@@ -125,7 +109,6 @@ public class ZipToSQLite {
             Reader ir = new InputStreamReader(is, StandardCharsets.UTF_8);
             BufferedReader br = new BufferedReader(ir)
         ) {
-            // --- 1) Read & clean header line ---
             String headerLine;
             do {
                 headerLine = br.readLine();
@@ -141,7 +124,6 @@ public class ZipToSQLite {
 
             createTable(conn, tableName, headers);
 
-            // --- 2) Prepare INSERT ---
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO ").append(tableName).append(" (");
             for (int i = 0; i < headers.size(); i++) {
@@ -175,7 +157,6 @@ public class ZipToSQLite {
                 conn.setAutoCommit(true);
             }
 
-            // --- 3) Create indexes if needed ---
             createIndexes(entryName, conn);
         }
     }
@@ -230,6 +211,13 @@ public class ZipToSQLite {
         }
     }
 
+    /**
+     * Creates indexes for the specified table in the SQLite database.
+     * 
+     * @param entryName The name of the entry (table) to create indexes for.
+     * @param conn The connection to the SQLite database.
+     * @throws SQLException If there is an error creating the indexes.
+     */
     public static void createIndexes(String entryName, Connection conn) throws SQLException {
         String tableName = sanitizeTableName(entryName);
         if ("stop_times".equals(tableName)) {
@@ -242,7 +230,6 @@ public class ZipToSQLite {
                     "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq " +
                     "ON stop_times (trip_id, stop_sequence);"
                 );
-                // extra ones
                 st.execute("CREATE INDEX IF NOT EXISTS idx_stop_times_trip_id ON stop_times (trip_id);");
                 st.execute("CREATE INDEX IF NOT EXISTS idx_trips_route_id ON trips (route_id);");
                 st.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_stop_times_unique ON stop_times (trip_id, stop_sequence);");
@@ -252,6 +239,14 @@ public class ZipToSQLite {
     }
 
 
+    /**
+     * Creates a table in the SQLite database based on the provided headers.
+     * 
+     * @param conn The connection to the SQLite database.
+     * @param tableName The name of the table to create.
+     * @param headers The list of headers (column names) for the table.
+     * @throws SQLException If there is an error creating the table.
+     */
    private static void createTable(Connection conn, String tableName, List<String> headers)
             throws SQLException {
         StringBuilder ddl = new StringBuilder();
@@ -298,6 +293,7 @@ public class ZipToSQLite {
         return zipName.substring(0, zipName.lastIndexOf('.')) + ".db";
     }
 
+    @SuppressWarnings("unused")
     private static String escapeForJson(String raw) {
         if (raw == null) return "";
         return raw.replace("\\", "\\\\").replace("\"", "\\\"");
