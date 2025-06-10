@@ -10,6 +10,9 @@ import routing.routingEngineDijkstra.dijkstra.service.PathReconstructionService.
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Implements Dijkstra's algorithm for finding the shortest journey between stops, incorporating walking and transit connections.
+ */
 public class DijkstraRouter {
     private final Map<String, DijkstraStop> stops;
     private final Map<String, List<DijkstraConnection>> outgoingConnections;
@@ -20,6 +23,14 @@ public class DijkstraRouter {
     private final HaversineDistanceCalculator distanceCalculator;
     private final Map<String, DijkstraConnection[]> connectionArrayCache = new HashMap<>();
 
+    /**
+     * Constructs a DijkstraRouter with the specified stops, connections, route information, and maximum walking distance.
+     *
+     * @param stops                   the map of stop IDs to DijkstraStop objects
+     * @param outgoingConnections     the map of stop IDs to lists of outgoing connections
+     * @param routeInfo               the map of route IDs to DijkstraRouteInfo objects
+     * @param maxWalkingDistanceMeters the maximum walking distance in meters
+     */
     public DijkstraRouter(Map<String, DijkstraStop> stops,
                           Map<String, List<DijkstraConnection>> outgoingConnections,
                           Map<String, DijkstraRouteInfo> routeInfo,
@@ -40,6 +51,9 @@ public class DijkstraRouter {
         precomputeConnectionArrays();
     }
 
+    /**
+     * Precomputes connection arrays for each stop, sorting connections by departure time.
+     */
     private void precomputeConnectionArrays() {
         outgoingConnections.forEach((stopId, connections) -> {
             connections.sort(Comparator.comparingInt(c ->
@@ -48,6 +62,9 @@ public class DijkstraRouter {
         });
     }
 
+    /**
+     * Precomputes walking connections between stops within the maximum walking distance.
+     */
     private void precomputeWalkingConnections() {
         stops.values().parallelStream()
                 .filter(stop -> !outgoingConnections.containsKey(stop.id) ||
@@ -80,10 +97,26 @@ public class DijkstraRouter {
                 });
     }
 
+    /**
+     * Finds the shortest journey between two stops starting at a specified time.
+     *
+     * @param fromStopId    the ID of the starting stop
+     * @param toStopId      the ID of the destination stop
+     * @param departureTime the departure time as a LocalTime
+     * @return a Journey object representing the shortest journey, or null if no journey is found
+     */
     public Journey findShortestJourney(String fromStopId, String toStopId, LocalTime departureTime) {
         return findShortestJourney(fromStopId, toStopId, departureTime.toSecondOfDay());
     }
 
+    /**
+     * Finds the shortest journey between two stops starting at a specified time in seconds.
+     *
+     * @param fromStopId       the ID of the starting stop
+     * @param toStopId         the ID of the destination stop
+     * @param departureTimeSec the departure time in seconds since midnight
+     * @return a Journey object representing the shortest journey, or null if no journey is found
+     */
     public Journey findShortestJourney(String fromStopId, String toStopId, int departureTimeSec) {
         DijkstraStop start = stops.get(fromStopId);
         DijkstraStop end = stops.get(toStopId);
@@ -110,6 +143,12 @@ public class DijkstraRouter {
         return null;
     }
 
+    /**
+     * Processes outgoing connections from the current node in the Dijkstra search.
+     *
+     * @param current       the current search node
+     * @param searchManager the search manager handling node exploration
+     */
     private void processConnections(SearchNode current, DijkstraSearchManager searchManager) {
         DijkstraConnection[] connections = connectionArrayCache.get(current.stop.id);
         if (connections == null) return;
@@ -148,22 +187,40 @@ public class DijkstraRouter {
         }
     }
 
+    /**
+     * Represents a journey composed of multiple legs, with departure and arrival times.
+     */
     public static class Journey {
         public final List<JourneyLeg> legs;
         public final int departureTime;
         public final int arrivalTime;
 
+        /**
+         * Constructs a Journey with the specified legs and times.
+         *
+         * @param legs          the list of journey legs
+         * @param departureTime the departure time in seconds since midnight
+         * @param arrivalTime   the arrival time in seconds since midnight
+         */
         public Journey(List<JourneyLeg> legs, int departureTime, int arrivalTime) {
             this.legs = Collections.unmodifiableList(legs);
             this.departureTime = departureTime;
             this.arrivalTime = arrivalTime;
         }
 
+        /**
+         * Calculates the total travel time of the journey.
+         *
+         * @return the total travel time in seconds
+         */
         public int getTotalTravelTime() {
             return arrivalTime - departureTime;
         }
     }
 
+    /**
+     * Represents a single leg of a journey, including start and end stops, times, and route details.
+     */
     public static class JourneyLeg {
         public final DijkstraStop from;
         public final DijkstraStop to;
@@ -174,6 +231,18 @@ public class DijkstraRouter {
         public final String headSign;
         public final boolean isWalking;
 
+        /**
+         * Constructs a JourneyLeg with the specified details.
+         *
+         * @param from          the starting stop
+         * @param to            the destination stop
+         * @param departureTime the departure time in seconds
+         * @param arrivalTime   the arrival time in seconds
+         * @param routeId       the ID of the route, or "WALK" for walking
+         * @param tripId        the ID of the trip, or null for walking
+         * @param headSign      the head sign of the route
+         * @param isWalking     true if this leg is a walking leg
+         */
         public JourneyLeg(DijkstraStop from, DijkstraStop to, int departureTime, int arrivalTime,
                           String routeId, String tripId, String headSign, boolean isWalking) {
             this.from = from;
@@ -186,11 +255,22 @@ public class DijkstraRouter {
             this.isWalking = isWalking;
         }
 
+        /**
+         * Calculates the duration of this leg.
+         *
+         * @return the duration in seconds
+         */
         public int getDuration() {
             return arrivalTime - departureTime;
         }
     }
 
+    /**
+     * Finds a route based on the provided DijkstraInputJourney.
+     *
+     * @param inputJourney the journey details including start, end, and start time
+     * @return a DijkstraFinalRoute object representing the calculated route, or null if no route is found
+     */
     public DijkstraFinalRoute findRoute(DijkstraInputJourney inputJourney) {
         DijkstraStop fromStop = walkingService.findClosestStop(inputJourney.getStart(), stops.values());
         DijkstraStop toStop = walkingService.findClosestStop(inputJourney.getEnd(), stops.values());
@@ -236,12 +316,34 @@ public class DijkstraRouter {
         return new DijkstraFinalRoute(steps, totalDistance, totalTime);
     }
 
+    /**
+     * Checks if a coordinate matches a stop's coordinates.
+     *
+     * @param a the DijkstraCoordinates to check
+     * @param b the DijkstraStop to compare against
+     * @return true if the coordinates are the same, false otherwise
+     */
     private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraStop b) {
         return a.getLatitude() == b.lat && a.getLongitude() == b.lon;
     }
+
+    /**
+     * Converts a DijkstraStop to DijkstraCoordinates.
+     *
+     * @param stop the stop to convert
+     * @return a DijkstraCoordinates object representing the stop's location
+     */
     private DijkstraCoordinates toCoord(DijkstraStop stop) {
         return new DijkstraCoordinates(stop.lat, stop.lon);
     }
+
+    /**
+     * Checks if two coordinates are the same.
+     *
+     * @param a the first DijkstraCoordinates
+     * @param b the second DijkstraCoordinates
+     * @return true if the coordinates are identical, false otherwise
+     */
     private boolean isSameCoordinate(DijkstraCoordinates a, DijkstraCoordinates b) {
         return a.getLatitude() == b.getLatitude() && a.getLongitude() == b.getLongitude();
     }

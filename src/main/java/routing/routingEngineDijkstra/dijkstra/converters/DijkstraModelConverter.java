@@ -10,9 +10,18 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides utility methods for converting between routing engine models and Dijkstra-specific models.
+ */
 public class DijkstraModelConverter {
 
     //really regretting this
+    /**
+     * Converts an InputJourney to a DijkstraInputJourney.
+     *
+     * @param inputJourney the input journey to convert
+     * @return a DijkstraInputJourney object
+     */
     public static DijkstraInputJourney toDijkstraInputJourney(InputJourney inputJourney) {
         return new DijkstraInputJourney(
                 toDijkstraCoordinates(inputJourney.getStart()),
@@ -21,10 +30,22 @@ public class DijkstraModelConverter {
         );
     }
 
+    /**
+     * Converts Coordinates to DijkstraCoordinates.
+     *
+     * @param coordinates the coordinates to convert
+     * @return a DijkstraCoordinates object
+     */
     public static DijkstraCoordinates toDijkstraCoordinates(Coordinates coordinates) {
         return new DijkstraCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
+    /**
+     * Converts an AdiStop to a DijkstraStop.
+     *
+     * @param stop the stop to convert
+     * @return a DijkstraStop object
+     */
     public static DijkstraStop toDijkstraStop(AdiStop stop) {
         return new DijkstraStop(
                 stop.getStopID(),
@@ -33,6 +54,14 @@ public class DijkstraModelConverter {
                 stop.getLongitude()
         );
     }
+
+    /**
+     * Converts a DijkstraFinalRoute to a FinalRoute, adjusting times based on the journey start time.
+     *
+     * @param dijkstraFinalRoute the Dijkstra route to convert
+     * @param journeyStartTime   the start time of the journey
+     * @return a FinalRoute object
+     */
     public static FinalRoute toFinalRoute(DijkstraFinalRoute dijkstraFinalRoute, LocalTime journeyStartTime) {
         List<AdiRouteStep> routeSteps = new ArrayList<>();
         LocalTime currentTime = journeyStartTime;
@@ -51,6 +80,13 @@ public class DijkstraModelConverter {
         );
     }
 
+    /**
+     * Converts a DijkstraRouteStep to an AdiRouteStep, handling both walking and transit steps.
+     *
+     * @param dijkstraStep the Dijkstra route step to convert
+     * @param startTime the start time of the step
+     * @return an AdiRouteStep object
+     */
     public static AdiRouteStep toRouteStep(DijkstraRouteStep dijkstraStep, LocalTime startTime) {
         Coordinates to = toCoordinates(dijkstraStep.getEndCoord());
         double duration = dijkstraStep.getTime();
@@ -74,10 +110,22 @@ public class DijkstraModelConverter {
         }
     }
 
+    /**
+     * Converts DijkstraCoordinates to Coordinates.
+     *
+     * @param dijkstraCoordinates the Dijkstra coordinates to convert
+     * @return a Coordinates object
+     */
     public static Coordinates toCoordinates(DijkstraCoordinates dijkstraCoordinates) {
         return new Coordinates(dijkstraCoordinates.getLatitude(), dijkstraCoordinates.getLongitude());
     }
 
+    /**
+     * Converts a DijkstraRouteInfo to an AdiRouteInfo.
+     *
+     * @param dijkstraRouteInfo the Dijkstra route info to convert
+     * @return an AdiRouteInfo object, or null if the input is null
+     */
     public static AdiRouteInfo toRouteInfo(DijkstraRouteInfo dijkstraRouteInfo) {
         if (dijkstraRouteInfo == null) return null;
         return new AdiRouteInfo(
