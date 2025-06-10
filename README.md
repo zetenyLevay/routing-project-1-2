@@ -1,4 +1,5 @@
-# Project Name
+# Group 20 Project 1-2 : Budapest Maps
+
 
 Brief description of what this project does and its main purpose.
 
@@ -14,12 +15,17 @@ Brief description of what this project does and its main purpose.
 
 ## Features
 
+This project consists of two main parts - a model which analyses stops and stations across the city of Budapest using network-based centrality heuristics. Secondly, it comprises of a CLI routing engine, powered by a time-dependant A* algorithm. A GUI wraps this routing engine with additional features such as a journey times heatmap from any stop, a user-friendly UI to the routing usage, and an illustration of the results of the stop closure model on a map of Budapest.
+
 ### GUI
-- Can generate route from given 2 input coordinates and a time.
-- Start and end point can either by typed in or clicked on map.
-- Heatmap of journey times from any stop to all other stops. 
-- Visualization of the effect on the network when one stop is closed.
-- Stop evaluation heatmap.
+- Can generate route from given 2 input coordinates and a time
+- Start and end point can either by typed in or clicked on map
+- Heatmap of journey times from any stop to all other stops.
+- Visualization of the effect on the network when one stop is closed
+- Stop evaluation heatmap\
+Instructions for all features above can be found in the [GUI Usage Instructions](#gui-usage)
+
+
 
 ### Console
 - Ability to load .zip files into .db files using the load command described under [CLI Usage Examples](#cli-usage)
@@ -73,12 +79,18 @@ Run main class of ```MapUI.java``` at filepath ```src\main\java\gui\MapUI.java``
 
 ## Usage Examples
 
-
-
-
-
 ### GUI usage
 
+- When the GUI is launched, you should be able to see a geographical map of Budapest after a short wait to load the database in.
+- The map should be populated with green circles. These circles refer to major stops and stations in Budapest.
+- Clicking anywhere on the GUI should enter the corresponding coordinates into the starting and ending coordinates boxes.
+- Select a time in the time field if needed, it starts out pre-set to the current time, and hit the ```show route``` button to find a route.
+- The route should appear on the map. With blue lines representing walking steps, and red lines representing transits.
+- Click the ```+``` and ```-``` buttons to zoom in and out, respectively.
+- Hit the ```generate heatmap``` button after selecting a stop on the map, to find a heatmap of journey times from that stop to every other stop in the city. As journey times increase, the color of stops range from green to red.
+- Click the ```evaluate stop``` button for a visual illustration of the ranking of each stop in the city, computed by our stop closure analysis model. Where red represents the stop is of low importance, and green represents the stop is of high importance. 
+- In the ```out of service``` field, you can put in a Stop ID, and click the ```show impact``` button. You should a color-coded illustration of how many immediate connections are lost, when the corresponding stop is closed. Note: red represents the stop is lost, green represents a connection is still present. 
+- Finally, hit the "clear everything" button to clear any illustrations or routes on the map to start afresh.
 
 
 ### CLI Usage
