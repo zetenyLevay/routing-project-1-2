@@ -44,7 +44,7 @@ public class UserInterfaceBuilder {
                 ? createHeatmapButton(startField, mapDisplay, heatmapAPI)
                 : createLazyHeatmapButton(startField, mapDisplay);
         JButton zoomIn = createZoomButton("+", 1.5, mapDisplay);
-        JButton zoomOut = createZoomButton("-", 1.5, mapDisplay);
+        JButton zoomOut = createZoomButton("-", 0.9, mapDisplay);
         JButton evaluateStops = createStopEvaluatorButton(mapDisplay);
         JButton showRouteButton = createShowRouteButton(startField, endField, mapDisplay);
         JTextField stopIdField = null;

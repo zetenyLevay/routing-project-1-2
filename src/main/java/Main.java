@@ -10,7 +10,7 @@ public class Main {
         RequestHandler requestHandler = new RequestHandler();
         
         MapUI.create();
-        requestHandler.run();
+        // requestHandler.run();
 
     }
     //BudaPest:
