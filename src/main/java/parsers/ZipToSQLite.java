@@ -59,14 +59,8 @@ public class ZipToSQLite {
                         String lower = entry.getName().toLowerCase();
                         if ((lower.endsWith(".txt") || lower.endsWith(".csv"))
                                 && isCSVformat(zipFile, entry)) {
-                                    String tableName = sanitizeTableName(entry.getName());
-
-                                    if (tableName.equals("stops") || tableName.equals("routes")
-                                        || tableName.equals("trips") || tableName.equals("stop_times") || tableName.equals("agency")) {
-                                        processCsvEntry(zipFile, entry, conn);
-                                        }
-
-                                    }
+                            processCsvEntry(zipFile, entry, conn);
+                        }
                     }
                 }
             }
@@ -247,7 +241,7 @@ public class ZipToSQLite {
      * @param headers The list of headers (column names) for the table.
      * @throws SQLException If there is an error creating the table.
      */
-   private static void createTable(Connection conn, String tableName, List<String> headers)
+    private static void createTable(Connection conn, String tableName, List<String> headers)
             throws SQLException {
         StringBuilder ddl = new StringBuilder();
         ddl.append("DROP TABLE IF EXISTS ").append(tableName).append(";");
@@ -255,28 +249,13 @@ public class ZipToSQLite {
         for (int i = 0; i < headers.size(); i++) {
             if (i > 0) ddl.append(", ");
             String col = headers.get(i).replaceAll("[^A-Za-z0-9_]", "_");
-
-            ddl.append(col);
-
-            if ((tableName.equals("stops") && col.equals("stop_id"))
-                    || (tableName.equals("routes") && col.equals("route_id"))
-                    || (tableName.equals("trips") && col.equals("trip_id"))) {
-                ddl.append(" TEXT PRIMARY KEY");
-            } else {
-                ddl.append(" TEXT");
-            }
+            ddl.append(col).append(" TEXT");
         }
-        if (tableName.equals("stop_times")) {
-            ddl.append(", PRIMARY KEY (trip_id, stop_sequence)");
-        }
-
         ddl.append(");");
-
-        try (Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(ddl.toString());
+        try (Statement st = conn.createStatement()) {
+            st.executeUpdate(ddl.toString());
         }
     }
-
 
     private static String sanitizeTableName(String entryName) {
         String file = entryName.contains("/") ?
