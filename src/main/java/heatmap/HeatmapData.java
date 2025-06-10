@@ -6,6 +6,9 @@ import java.util.Map;
 
 import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 
+/**
+ * Represents heatmap data, including travel times and color mappings for stops relative to an origin stop.
+ */
 public class HeatmapData {
     private final AdiStop originStop;
     private final Map<AdiStop, Double> travelTimes;
@@ -13,6 +16,12 @@ public class HeatmapData {
     private double minTime;
     private double maxTime;
 
+    /**
+     * Constructs a HeatmapData object with the specified origin stop and travel times.
+     *
+     * @param originStop  the starting stop for the heatmap
+     * @param travelTimes a map of stops to their travel times from the origin
+     */
     public HeatmapData(AdiStop originStop, Map<AdiStop, Double> travelTimes) {
         this.originStop = originStop;
         this.travelTimes = new HashMap<>(travelTimes);
@@ -20,6 +29,9 @@ public class HeatmapData {
         calculateColorGradient();
     }
 
+    /**
+     * Calculates color gradients for each stop based on travel times, using a green-to-red gradient.
+     */
     private void calculateColorGradient() {
         this.minTime = travelTimes.values().stream()
                 .filter(t -> t > 0)
@@ -36,16 +48,55 @@ public class HeatmapData {
             } else {
                 float normalized = (float) ((time - minTime) / (maxTime - minTime));
                 normalized = Math.max(0, Math.min(1, normalized));
-        double gamma = 0.8; 
-        double adjusted = Math.pow(normalized, gamma);
-        stopColors.put(stop, ColorGradient.getGreenToRedGradient((float) adjusted));
+                double gamma = 0.8;
+                double adjusted = Math.pow(normalized, gamma);
+                stopColors.put(stop, ColorGradient.getGreenToRedGradient((float) adjusted));
             }
         });
     }
 
-    public AdiStop getOriginStop() { return originStop; }
-    public Map<AdiStop, Double> getTravelTimes() { return travelTimes; }
-    public Map<AdiStop, Color> getStopColors() { return stopColors; }
-    public double getMinTime() { return minTime; }
-    public double getMaxTime() { return maxTime; }
+    /**
+     * Retrieves the origin stop of the heatmap.
+     *
+     * @return the origin AdiStop
+     */
+    public AdiStop getOriginStop() {
+        return originStop;
+    }
+
+    /**
+     * Retrieves the map of travel times to each stop.
+     *
+     * @return a map of AdiStop to travel times in seconds
+     */
+    public Map<AdiStop, Double> getTravelTimes() {
+        return travelTimes;
+    }
+
+    /**
+     * Retrieves the map of colors assigned to each stop.
+     *
+     * @return a map of AdiStop to Color objects
+     */
+    public Map<AdiStop, Color> getStopColors() {
+        return stopColors;
+    }
+
+    /**
+     * Retrieves the minimum travel time in the heatmap (excluding zero times).
+     *
+     * @return the minimum travel time in seconds
+     */
+    public double getMinTime() {
+        return minTime;
+    }
+
+    /**
+     * Retrieves the maximum travel time in the heatmap.
+     *
+     * @return the maximum travel time in seconds
+     */
+    public double getMaxTime() {
+        return maxTime;
+    }
 }

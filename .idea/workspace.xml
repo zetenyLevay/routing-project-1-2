@@ -4,13 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="362628ce-4d17-4af4-a0e2-f2eb336b1bac" name="Changes" comment="" />
+    <list default="true" id="362628ce-4d17-4af4-a0e2-f2eb336b1bac" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/ColorGradient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/ColorGradient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/Heatmap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/Heatmap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/HeatmapGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/StopsCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/StopsCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/heatmap/TravelTimeHeatmapAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/heatmap/TravelTimeHeatmapAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/AdiRouteInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/AdiRouteInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/AdiRouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/AdiRouteStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/adiModels/Stop/AdiStop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/api/DijkstraRoutePlanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/algorithm/DijkstraRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/algorithm/DijkstraRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/converters/DijkstraModelConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/converters/DijkstraModelConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraCoordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraRouteInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraRouteInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraStop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/input/DijkstraStop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraFinalRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraFinalRoute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraInputJourney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraInputJourney.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraRouteStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/model/output/DijkstraRouteStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/parsers/GTFSDatabaseParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/parsers/GTFSDatabaseParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DijkstraSearchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DijkstraSearchManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DistanceCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/DistanceCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/GridIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/GridIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/HaversineDistanceCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/HaversineDistanceCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/PathReconstructionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/PathReconstructionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/dijkstra/service/WalkingTransferService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/formatter/RouteFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/routing/routingEngineDijkstra/formatter/RouteFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/routing/routingEngineModels/Agency.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="a-star" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -19,18 +54,32 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.HeatmapExample.executor": "Run",
+    "Application.MainUI.executor": "Run",
     "Application.MapUI.executor": "Run",
-    "git-widget-placeholder": "a-star",
+    "git-widget-placeholder": "main",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.MapUI">
+  <component name="RunManager" selected="Application.HeatmapExample">
     <configuration name="HeatmapExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="heatmap.HeatmapExample" />
       <module name="bcs1600" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="heatmap.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.MainUI" />
+      <module name="bcs1600" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -53,6 +102,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HeatmapExample" />
+        <item itemvalue="Application.MainUI" />
+        <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.MapUI" />
         <item itemvalue="Application.HeatmapExample" />
       </list>

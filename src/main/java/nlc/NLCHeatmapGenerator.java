@@ -7,16 +7,23 @@ import routing.routingEngineDijkstra.dijkstra.service.HaversineDistanceCalculato
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Generates Network Loss of Connectivity (NLC) heatmap data by calculating connectivity loss for each stop when a specific stop is closed.
+ */
 public class NLCHeatmapGenerator {
     private static final int NEIGHBOR_RADIUS_METERS = 400;
     private final HaversineDistanceCalculator distanceCalculator = new HaversineDistanceCalculator();
 
+    /**
+     * Generates NLC heatmap data for a specified closed stop.
+     *
+     * @param closedStop the stop considered closed for the heatmap
+     * @return an NLCHeatmapData object containing connectivity loss values and color mappings
+     */
     public NLCHeatmapData generate(AdiStop closedStop) {
         Map<String, AdiStop> stopMap = StopsCache.getAllStops();
         Collection<AdiStop> allStops = stopMap.values();
         Map<AdiStop, Integer> connectionLoss = new ConcurrentHashMap<>();
-
-        // Precompute: For each stop, who are its neighbors?
         Map<AdiStop, Set<AdiStop>> neighborsMap = new ConcurrentHashMap<>();
         for (AdiStop s : allStops) {
             Set<AdiStop> neighbors = new HashSet<>();
@@ -40,7 +47,6 @@ public class NLCHeatmapGenerator {
                 if (n.equals(closedStop)) {
                     lostLinks++;
                 } else {
-                    // Check if closedStop was a bridge between s and n (both connected to closedStop, but not directly to each other)
                     boolean nIsNowUnreachable =
                             calculateDistance(s, n) > NEIGHBOR_RADIUS_METERS &&
                                     neighborsMap.getOrDefault(n, Collections.emptySet()).contains(closedStop);
@@ -54,6 +60,13 @@ public class NLCHeatmapGenerator {
         return new NLCHeatmapData(closedStop, connectionLoss);
     }
 
+    /**
+     * Calculates the distance between two stops using the Haversine formula.
+     *
+     * @param stop1 the first stop
+     * @param stop2 the second stop
+     * @return the distance in meters
+     */
     private int calculateDistance(AdiStop stop1, AdiStop stop2) {
         return distanceCalculator.calculateDistanceMeters(
                 stop1.getCoordinates().getLatitude(),

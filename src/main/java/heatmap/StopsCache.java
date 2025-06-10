@@ -9,16 +9,27 @@ import java.util.Map;
 import routing.routingEngineDijkstra.adiModels.*;
 import routing.routingEngineDijkstra.adiModels.Stop.*;
 
+/**
+ * Singleton cache for storing stop data loaded from a GTFS database.
+ */
 public class StopsCache {
     private static StopsCache instance;
     private final Map<String, AdiStop> stopsMap;
     private static final String DB_PATH = "jdbc:sqlite::resource:gtfs.db";
 
+    /**
+     * Constructs a StopsCache and loads stops from the database.
+     */
     private StopsCache() {
         this.stopsMap = Collections.synchronizedMap(new HashMap<>());
         loadStopsFromDatabase();
     }
 
+    /**
+     * Retrieves the singleton instance of StopsCache, initializing it if necessary.
+     *
+     * @return the StopsCache instance
+     */
     public static synchronized StopsCache getInstance() {
         if (instance == null) {
             instance = new StopsCache();
@@ -26,6 +37,11 @@ public class StopsCache {
         return instance;
     }
 
+    /**
+     * Loads stop data from the GTFS database into the cache.
+     *
+     * @throws RuntimeException if a database error occurs
+     */
     private void loadStopsFromDatabase() {
         String query = "SELECT stop_id, stop_name, stop_lat, stop_lon FROM stops";
 
@@ -46,26 +62,51 @@ public class StopsCache {
         }
     }
 
+    /**
+     * Retrieves a stop by its ID.
+     *
+     * @param stopId the ID of the stop
+     * @return the AdiStop object, or null if not found
+     */
     public static AdiStop getStop(String stopId) {
         return getInstance().stopsMap.get(stopId);
     }
 
+    /**
+     * Retrieves all stops in the cache.
+     *
+     * @return an unmodifiable map of stop IDs to AdiStop objects
+     */
     public static Map<String, AdiStop> getAllStops() {
         return Collections.unmodifiableMap(getInstance().stopsMap);
     }
 
+    /**
+     * Initializes the stops cache by creating the singleton instance.
+     */
     public static void init() {
         getInstance();
     }
 
+    /**
+     * Retrieves the number of stops in the cache.
+     *
+     * @return the size of the cache
+     */
     public static int getCacheSize() {
         return getInstance().stopsMap.size();
     }
 
+    /**
+     * Clears all stops from the cache.
+     */
     public static void clearCache() {
         getInstance().stopsMap.clear();
     }
 
+    /**
+     * Reloads the cache by clearing existing data and reloading from the database.
+     */
     public static void reload() {
         synchronized (StopsCache.class) {
             clearCache();

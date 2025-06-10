@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Formats route inputs and outputs for JSON-based communication, parsing input journeys and formatting final routes.
+ */
 public class RouteFormatter {
     private static final Pattern INPUT_PATTERN = Pattern.compile(
             "\\{\\s*\"routeFrom\"\\s*:\\s*\\{\\s*\"lat\"\\s*:\\s*([\\d.]+)\\s*,\\s*\"lon\"\\s*:\\s*([\\d.]+)\\s*}\\s*,\\s*" +
@@ -16,6 +19,13 @@ public class RouteFormatter {
                     "\"startingAt\"\\s*:\\s*\"(\\d{2}:\\d{2})\"\\s*}"
     );
 
+    /**
+     * Parses a JSON input string into an InputJourney object.
+     *
+     * @param jsonInput the JSON string containing route details
+     * @return an InputJourney object
+     * @throws IllegalArgumentException if the input format is invalid or values cannot be parsed
+     */
     public static InputJourney parseInput(String jsonInput) throws IllegalArgumentException {
         Matcher matcher = INPUT_PATTERN.matcher(jsonInput.replaceAll("\\s", ""));
         if (!matcher.matches()) {
@@ -41,6 +51,13 @@ public class RouteFormatter {
         }
     }
 
+    /**
+     * Formats a FinalRoute into a JSON string.
+     *
+     * @param route     the route to format
+     * @param startTime the start time of the journey
+     * @return a JSON string representing the route, or an error message if the route is invalid
+     */
     public static String formatResult(FinalRoute route, LocalTime startTime) {
         if (route == null || route.getRouteSteps() == null) {
             return "{\"error\":\"No route found\"}";
@@ -67,6 +84,13 @@ public class RouteFormatter {
         return builder.toString();
     }
 
+    /**
+     * Formats a single route step into a JSON string.
+     *
+     * @param step      the route step to format
+     * @param startTime the start time of the step
+     * @return a JSON string representing the step
+     */
     private static String formatRouteStep(AdiRouteStep step, LocalTime startTime) {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
@@ -85,6 +109,12 @@ public class RouteFormatter {
         return builder.toString();
     }
 
+    /**
+     * Formats route information into a JSON string.
+     *
+     * @param routeInfo the route information to format
+     * @return a JSON string, or "null" if routeInfo is null
+     */
     private static String formatRouteInfo(AdiRouteInfo routeInfo) {
         if (routeInfo == null) {
             return "null";
@@ -98,14 +128,32 @@ public class RouteFormatter {
         );
     }
 
+    /**
+     * Formats coordinates into a JSON string.
+     *
+     * @param point the coordinates to format
+     * @return a JSON string representing the coordinates
+     */
     private static String formatPoint(Coordinates point) {
         return String.format("{\"lat\":%.6f,\"lon\":%.6f}", point.getLatitude(), point.getLongitude());
     }
 
+    /**
+     * Formats a time into a string in HH:mm format.
+     *
+     * @param time the time to format
+     * @return a string in HH:mm format
+     */
     private static String formatTime(LocalTime time) {
         return String.format("%02d:%02d", time.getHour(), time.getMinute());
     }
 
+    /**
+     * Escapes special characters in a string for JSON output.
+     *
+     * @param value the string to escape
+     * @return the escaped string, or an empty string if the input is null
+     */
     private static String escapeJson(String value) {
         if (value == null) return "";
         return value.replace("\\", "\\\\")
