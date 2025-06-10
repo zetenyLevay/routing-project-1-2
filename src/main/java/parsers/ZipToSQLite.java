@@ -90,8 +90,14 @@ public class ZipToSQLite {
                         String lower = entry.getName().toLowerCase();
                         if ((lower.endsWith(".txt") || lower.endsWith(".csv"))
                                 && isCSVformat(zipFile, entry)) {
-                            processCsvEntry(zipFile, entry, conn);
-                        }
+                                    String tableName = sanitizeTableName(entry.getName());
+
+                                    if (tableName.equals("stops") || tableName.equals("routes")
+                                        || tableName.equals("trips") || tableName.equals("stop_times") || tableName.equals("agency")) {
+                                        processCsvEntry(zipFile, entry, entry.getName(), conn);
+                                        }
+
+                                    }
                     }
                 }
             }
@@ -236,11 +242,17 @@ public class ZipToSQLite {
                     "CREATE INDEX IF NOT EXISTS idx_stop_times_trip_seq " +
                     "ON stop_times (trip_id, stop_sequence);"
                 );
+                // extra ones
+                st.execute("CREATE INDEX IF NOT EXISTS idx_stop_times_trip_id ON stop_times (trip_id);");
+                st.execute("CREATE INDEX IF NOT EXISTS idx_trips_route_id ON trips (route_id);");
+                st.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_stop_times_unique ON stop_times (trip_id, stop_sequence);");
+
             }
         }
     }
 
-    private static void createTable(Connection conn, String tableName, List<String> headers)
+
+   private static void createTable(Connection conn, String tableName, List<String> headers)
             throws SQLException {
         StringBuilder ddl = new StringBuilder();
         ddl.append("DROP TABLE IF EXISTS ").append(tableName).append(";");
@@ -248,13 +260,28 @@ public class ZipToSQLite {
         for (int i = 0; i < headers.size(); i++) {
             if (i > 0) ddl.append(", ");
             String col = headers.get(i).replaceAll("[^A-Za-z0-9_]", "_");
-            ddl.append(col).append(" TEXT");
+
+            ddl.append(col);
+
+            if ((tableName.equals("stops") && col.equals("stop_id"))
+                    || (tableName.equals("routes") && col.equals("route_id"))
+                    || (tableName.equals("trips") && col.equals("trip_id"))) {
+                ddl.append(" TEXT PRIMARY KEY");
+            } else {
+                ddl.append(" TEXT");
+            }
         }
+        if (tableName.equals("stop_times")) {
+            ddl.append(", PRIMARY KEY (trip_id, stop_sequence)");
+        }
+
         ddl.append(");");
-        try (Statement st = conn.createStatement()) {
-            st.executeUpdate(ddl.toString());
+
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(ddl.toString());
         }
     }
+
 
     private static String sanitizeTableName(String entryName) {
         String file = entryName.contains("/") ?
