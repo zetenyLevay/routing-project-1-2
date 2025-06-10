@@ -2,6 +2,7 @@ package gui.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -29,9 +30,9 @@ import gui.util.MapImageLoader;
 /**
  * MapDisplay.java
  *
- * This class represents the main display area for the map in the GUI. It handles
- * rendering the base map, bus stops, and optional heatmap overlays. It also
- * manages user interactions such as zooming and selecting coordinates.
+ * This class represents the main display area for the map in the GUI. It
+ * handles rendering the base map, bus stops, and optional heatmap overlays. It
+ * also manages user interactions such as zooming and selecting coordinates.
  */
 public class MapDisplay extends JPanel {
 
@@ -78,7 +79,8 @@ public class MapDisplay extends JPanel {
     /**
      * Applies a travel time heatmap to the map display.
      *
-     * @param stopColors A map of stop IDs to their corresponding colors for the heatmap.
+     * @param stopColors A map of stop IDs to their corresponding colors for the
+     * heatmap.
      */
     public void applyTravelTimeHeatmap(Map<String, Color> stopColors) {
         this.heatmapStopColors = new HashMap<>(stopColors);
@@ -139,6 +141,10 @@ public class MapDisplay extends JPanel {
             }
             drawRouteLines(g2d);
 
+            if (!routeLines.isEmpty()) {
+                drawLegend(g2d, getWidth(), getHeight());
+            }
+
         } finally {
             g2d.dispose();
         }
@@ -147,7 +153,8 @@ public class MapDisplay extends JPanel {
     /**
      * Draws the route lines on the map display.
      *
-     * @param lines List of MapLine objects representing the route lines to be drawn.
+     * @param lines List of MapLine objects representing the route lines to be
+     * drawn.
      */
     public void drawRouteLines(List<MapLine> lines) {
         this.routeLines = new ArrayList<>(lines);
@@ -175,7 +182,6 @@ public class MapDisplay extends JPanel {
             return;
         }
 
-
         // Set line properties
         g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -186,7 +192,6 @@ public class MapDisplay extends JPanel {
             // Convert geo coordinates to screen coordinates
             Point startPoint = viewTransform.geoToScreen(line.getSourceLat(), line.getSourceLon());
             Point endPoint = viewTransform.geoToScreen(line.getDestLat(), line.getDestLon());
-
 
             if (startPoint != null && endPoint != null) {
                 // Set color - make it more visible
@@ -207,6 +212,42 @@ public class MapDisplay extends JPanel {
 
             }
         }
+    }
+
+    private void drawLegend(Graphics2D g2d, int panelWidth, int panelHeight) {
+        int width = 120;
+        int height = 70;
+        int x = panelWidth - 130;
+        int y = 20;
+        drawLegendBackground(g2d, x, y, width, height);
+        drawLegendTitle(g2d, x, y);
+        drawLegendItems(g2d, x, y);
+    }
+
+    private void drawLegendBackground(Graphics2D g2d, int x, int y, int width, int height) {
+        g2d.setColor(new Color(255, 255, 255, 200));
+        g2d.fillRect(x - 5, y - 5, width, height);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(x - 5, y - 5, width, height);
+    }
+
+    private void drawLegendTitle(Graphics2D g2d, int x, int y) {
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Arial", Font.BOLD, 12));
+        g2d.drawString("Route Legend", x, y + 15);
+    }
+
+    private void drawLegendItems(Graphics2D g2d, int x, int y) {
+        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+        drawLegendItem(g2d, x, y + 30, Color.RED, "Walk");
+        drawLegendItem(g2d, x, y + 50, Color.BLUE, "Ride");
+    }
+
+    private void drawLegendItem(Graphics2D g2d, int x, int y, Color color, String label) {
+        g2d.setColor(color);
+        g2d.fillOval(x, y, 12, 12);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(label, x + 20, y + 10);
     }
 
     /**

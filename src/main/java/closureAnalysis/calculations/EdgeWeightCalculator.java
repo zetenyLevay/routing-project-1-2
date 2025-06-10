@@ -51,6 +51,12 @@ public class EdgeWeightCalculator {
         return  ALPHA * meters + BETA * minutes;
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return the distance traveled between two StopInstances
+     */
     public double calculateDistanceTraveled(StopInstance from, StopInstance to) {
         return to.getDistanceTraveled() - from.getDistanceTraveled();
     }
@@ -85,6 +91,13 @@ public class EdgeWeightCalculator {
     }
 
 
+    /**
+     * Calculates the time taken between two StopInstances.
+     *
+     * @param departure the StopInstance representing the departure stop
+     * @param arrival   the StopInstance representing the arrival stop
+     * @return the time taken in minutes, or Double.POSITIVE_INFINITY if parsing fails
+     */
     public double calculateTimeTaken(StopInstance departure, StopInstance arrival) {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         try {
