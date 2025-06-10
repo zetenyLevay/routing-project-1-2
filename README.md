@@ -66,7 +66,7 @@ mvn clean install
 
 ## Running the Project
 
-### Running the routing
+### Running the routing engine
 
 ```bash
 # Run directly with Maven
@@ -95,7 +95,7 @@ Run main class of ```MapUI.java``` at filepath ```src\main\java\gui\MapUI.java``
 
 ### CLI Usage
 
-Input and output to the command line are JSON objects. They have to be formatted as below else you will encounter an ```{"error":"Bad JSON input"}``` error. 
+Input and output to the command line are JSON objects. They have to be formatted as such to avoid errors. More information about errors can be found [here](#troubleshooting).
 
 #### Loading Database
 
