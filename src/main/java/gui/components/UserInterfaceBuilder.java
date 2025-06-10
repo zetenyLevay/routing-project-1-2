@@ -29,6 +29,13 @@ import routing.routingEngineDijkstra.adiModels.Stop.AdiStop;
 import routing.routingEngineDijkstra.api.DijkstraRoutePlanner;
 import routing.routingEngineDijkstra.dijkstra.parsers.GTFSDatabaseParser;
 
+/**
+ * UserInterfaceBuilder.java
+ *
+ * This class builds the user interface for the offline map viewer application.
+ * It creates control panels, buttons, and handles interactions with the map
+ * display.
+ */
 public class UserInterfaceBuilder {
 
     private static final String DB_URL = "jdbc:sqlite:budapest_gtfs.db";
@@ -39,6 +46,9 @@ public class UserInterfaceBuilder {
     private static JTextField timeField;
     public static ControlPanelBuilder controlPanelBuilder;
 
+    /**
+     * Initializes the UserInterfaceBuilder with a ControlPanelBuilder instance.
+     */
     @SuppressWarnings("static-access")
     public static JPanel createControlPanel(JTextField startField, JTextField endField, MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
         // Create the time field with current time in hh:mm format
@@ -67,6 +77,15 @@ public class UserInterfaceBuilder {
                 stopIdField, nlcButton, clearButton, evaluateStops, showRouteButton, mapDisplay);
     }
 
+    /**
+     * Creates a main control panel with buttons and text fields for user
+     * interaction.
+     *
+     * @param startField Text field for starting coordinates
+     * @param endField Text field for ending coordinates
+     * @param mapDisplay The map display component
+     * @return A JPanel containing the control elements
+     */
     static void runStopEvaluator(MapDisplay mapDisplay, JButton button) {
         button.setText("Evaluating...");
         button.setEnabled(false);
@@ -101,6 +120,13 @@ public class UserInterfaceBuilder {
         }.execute();
     }
 
+    /**
+     * Interpolates a color between red and green based on the input value t.
+     *
+     * @param t A value between 0 and 1, where 0 corresponds to red and 1
+     * corresponds to green.
+     * @return A Color object representing the interpolated color.
+     */
     private static Color interpolateRedGreen(double t) {
         t = Math.max(0, Math.min(1, t));
         int r = (int) ((1 - t) * 255);
@@ -108,6 +134,16 @@ public class UserInterfaceBuilder {
         return new Color(r, g, 0);
     }
 
+    /**
+     * Generates a heatmap based on the coordinates provided in the startField.
+     * If the heatmapAPI is null, it initializes the heatmap system first.
+     *
+     * @param startField Text field containing the starting coordinates
+     * @param mapDisplay The map display component
+     * @param heatmapAPI The heatmap API instance, can be null for lazy
+     * initialization
+     * @param button The button that triggers the heatmap generation
+     */
     static void generateHeatmap(
             JTextField startField,
             MapDisplay mapDisplay,
@@ -126,6 +162,14 @@ public class UserInterfaceBuilder {
         executeHeatmapGeneration(mapDisplay, heatmapAPI, button, id);
     }
 
+    /**
+     * Generates a heatmap with initialization, allowing the user to input
+     * coordinates and automatically finding the nearest bus stop.
+     *
+     * @param startField Text field for starting coordinates
+     * @param mapDisplay The map display component
+     * @param button The button that triggers the heatmap generation
+     */
     static void generateHeatmapWithInitialization(
             JTextField startField,
             MapDisplay mapDisplay,
@@ -163,6 +207,15 @@ public class UserInterfaceBuilder {
         }.execute();
     }
 
+    /**
+     * Parses the input from a JTextField to extract latitude and longitude.
+     * Displays an error message if the input is invalid.
+     *
+     * @param field The JTextField containing the coordinates
+     * @param mapDisplay The MapDisplay component for displaying error messages
+     * @return A CoordinateInput object with latitude and longitude, or null if
+     * invalid
+     */
     private static CoordinateInput parseCoordinateInput(JTextField field, MapDisplay mapDisplay) {
         String text = field.getText();
         if (text.trim().isEmpty() || text.contains("lat")) {
@@ -180,6 +233,15 @@ public class UserInterfaceBuilder {
         );
     }
 
+    /**
+     * Finds the nearest bus stop ID based on the provided latitude and
+     * longitude. Uses the StopsCache to retrieve all stops and calculates the
+     * distance to find the closest one.
+     *
+     * @param lat Latitude of the point
+     * @param lon Longitude of the point
+     * @return The ID of the nearest bus stop, or null if no stops are available
+     */
     private static String findNearestStopId(double lat, double lon) {
         return StopsCache.getAllStops().values().stream()
                 .min(Comparator.comparingDouble(s -> calculateDistance(lat, lon,
@@ -188,6 +250,16 @@ public class UserInterfaceBuilder {
                 .orElse(null);
     }
 
+    /**
+     * Calculates the distance between two geographical coordinates using the
+     * Haversine formula.
+     *
+     * @param lat1 Latitude of the first point
+     * @param lon1 Longitude of the first point
+     * @param lat2 Latitude of the second point
+     * @param lon2 Longitude of the second point
+     * @return The distance in kilometers between the two points
+     */
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double r = 6371;
         double dLat = Math.toRadians(lat2 - lat1);
@@ -198,6 +270,15 @@ public class UserInterfaceBuilder {
         return r * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
+    /**
+     * Executes the heatmap generation in a background thread and updates the
+     * map display.
+     *
+     * @param mapDisplay The map display component
+     * @param api The TravelTimeHeatmapAPI instance
+     * @param button The button that triggers the heatmap generation
+     * @param stopId The ID of the bus stop for which to generate the heatmap
+     */
     private static void executeHeatmapGeneration(
             MapDisplay mapDisplay,
             TravelTimeHeatmapAPI api,
@@ -229,12 +310,26 @@ public class UserInterfaceBuilder {
         }.execute();
     }
 
+    /**
+     * Initializes the heatmap system with a router based on GTFS data. This
+     * method is used when the heatmap API is not provided.
+     *
+     * @return An instance of TravelTimeHeatmapAPI
+     * @throws SQLException If there is an error connecting to the database
+     * @throws IOException If there is an error reading the GTFS data
+     */
     private static TravelTimeHeatmapAPI initializeHeatmapSystem() throws SQLException, IOException {
         return new TravelTimeHeatmapAPI(new Router(new DijkstraRoutePlanner(
                 GTFSDatabaseParser.createRouterFromGTFS(500)
         )));
     }
 
+    /**
+     * Creates the main application window with the specified content panel.
+     *
+     * @param contentPanel The main content panel to be displayed in the window
+     * @return A JFrame containing the content panel
+     */
     public static JFrame createMainWindow(JPanel contentPanel) {
         JFrame frame = new JFrame("Offline Map Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -244,6 +339,10 @@ public class UserInterfaceBuilder {
         return frame;
     }
 
+    /**
+     * CoordinateInput is a simple class to hold latitude and longitude values.
+     * It is used to encapsulate the input from the user for better readability.
+     */
     private static class CoordinateInput {
 
         final double latitude;

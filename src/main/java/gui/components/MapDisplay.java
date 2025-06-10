@@ -26,6 +26,13 @@ import gui.rendering.MapRenderer;
 import gui.transform.MapViewTransform;
 import gui.util.MapImageLoader;
 
+/**
+ * MapDisplay.java
+ *
+ * This class represents the main display area for the map in the GUI. It handles
+ * rendering the base map, bus stops, and optional heatmap overlays. It also
+ * manages user interactions such as zooming and selecting coordinates.
+ */
 public class MapDisplay extends JPanel {
 
     private final MapRenderer mapRenderer;
@@ -38,6 +45,15 @@ public class MapDisplay extends JPanel {
     private boolean isHeatmapVisible = false;
     private List<MapLine> routeLines = new ArrayList<>();
 
+    /**
+     * MapDisplay constrcutor
+     *
+     * @param mapBounds Geographic bounds of the map.
+     * @param busStops List of bus stop points to be displayed on the map.
+     * @param startCoordinateField Text field for start coordinates input.
+     * @param endCoordinateField Text field for end coordinates input.
+     * @throws IOException If there is an error loading the base map image.
+     */
     public MapDisplay(GeographicBounds mapBounds, List<LocationPoint> busStops,
             JTextField startCoordinateField, JTextField endCoordinateField) throws IOException {
         this.baseMapImage = MapImageLoader.load("/mapImage.jpg");
@@ -49,23 +65,41 @@ public class MapDisplay extends JPanel {
         initializeComponent();
     }
 
+    /**
+     * Adjusts the zoom level of the map.
+     *
+     * @param zoomFactor The factor by which to adjust the zoom level.
+     */
     public void adjustZoom(double zoomFactor) {
         viewTransform.adjustZoom(zoomFactor, getWidth() / 2.0, getHeight() / 2.0);
         refreshDisplay();
     }
 
+    /**
+     * Applies a travel time heatmap to the map display.
+     *
+     * @param stopColors A map of stop IDs to their corresponding colors for the heatmap.
+     */
     public void applyTravelTimeHeatmap(Map<String, Color> stopColors) {
         this.heatmapStopColors = new HashMap<>(stopColors);
         this.isHeatmapVisible = true;
         repaint();
     }
 
+    /**
+     * Clears the travel time heatmap from the map display.
+     */
     public void clearTravelTimeHeatmap() {
         this.heatmapStopColors.clear();
         this.isHeatmapVisible = false;
         repaint();
     }
 
+    /**
+     * Returns the geographic bounds of the map.
+     *
+     * @return The geographic bounds of the map.
+     */
     private void initializeComponent() {
         setPreferredSize(viewTransform.getPreferredSize());
         addMouseWheelListener(interactionHandler);
@@ -75,11 +109,21 @@ public class MapDisplay extends JPanel {
         requestFocusInWindow();
     }
 
+    /**
+     * Returns the geographic bounds of the map.
+     *
+     * @return The geographic bounds of the map.
+     */
     private void refreshDisplay() {
         revalidate();
         repaint();
     }
 
+    /**
+     * Returns the geographic bounds of the map.
+     *
+     * @return The geographic bounds of the map.
+     */
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -100,6 +144,11 @@ public class MapDisplay extends JPanel {
         }
     }
 
+    /**
+     * Draws the route lines on the map display.
+     *
+     * @param lines List of MapLine objects representing the route lines to be drawn.
+     */
     public void drawRouteLines(List<MapLine> lines) {
         this.routeLines = new ArrayList<>(lines);
 
@@ -109,10 +158,18 @@ public class MapDisplay extends JPanel {
         }
     }
 
+    /**
+     * Clears the route lines from the map display.
+     */
     public void clearRouteLines() {
         this.routeLines.clear();
     }
 
+    /**
+     * Draws the route lines on the map display.
+     *
+     * @param g2d The Graphics2D object used for drawing.
+     */
     private void drawRouteLines(Graphics2D g2d) {
         if (routeLines == null || routeLines.isEmpty()) {
             return;
@@ -152,6 +209,11 @@ public class MapDisplay extends JPanel {
         }
     }
 
+    /**
+     * Returns the geographic bounds of the map.
+     *
+     * @return The geographic bounds of the map.
+     */
     public List<LocationPoint> getBusStopPoints() {
         return busStopPoints;
     }

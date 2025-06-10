@@ -31,6 +31,13 @@ public class RequestHandler {
         this.cliWrite = new CLIWrite();
     }
 
+    /**
+     * Runs the request handler, processing JSON commands from stdin.
+     * It handles commands like "ping", "load", and "routeFrom"/"to"/"startingAt".
+     * The "load" command sets the current JDBC URL for routing requests.
+     *
+     * @throws IOException if there is an error reading from stdin or writing to stdout
+     */
     @SuppressWarnings("UseSpecificCatch")
     public void run() throws IOException {
         while (true) {
