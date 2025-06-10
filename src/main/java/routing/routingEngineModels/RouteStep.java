@@ -5,6 +5,13 @@ import java.util.Map;
 
 import routing.routingEngineModels.Stop.Stop;
 
+/**
+ * RouteStep.java
+ *
+ * Represents a step in a route, which can either be a ride or a walk. Each step
+ * contains information about the mode of transport, destination coordinates,
+ * stop information, duration, and timing details.
+ */
 public class RouteStep {
 
     private String modeOfTransport;
@@ -17,7 +24,18 @@ public class RouteStep {
     private String stopStr;
     private RouteInfo routeInfo;
 
-    // Constructor for ride steps
+    /**
+     * Constructor for a route step that a step in the final route
+     *
+     * @param modeOfTransport the mode of transport (e.g., "bus", "train")
+     * @param toStop the destination stop
+     * @param numOfMinutes the duration of the step in minutes
+     * @param departureTime the departure time in HH:mm:ss format
+     * @param arrivalTime the arrival time in HH:mm:ss format
+     * @param stopStr a string representation of the stop (e.g., "Stop Name
+     * (Stop ID)")
+     * @param routeInfo the route information associated with this step
+     */
     public RouteStep(String modeOfTransport, Stop toStop, double numOfMinutes,
             String departureTime, String arrivalTime, String stopStr, RouteInfo routeInfo) {
         this.modeOfTransport = modeOfTransport;
@@ -31,7 +49,14 @@ public class RouteStep {
         this.routeInfo = routeInfo;
     }
 
-    // Constructor for walking steps
+    /**
+     * Constructor for a walking step in the route
+     *
+     * @param modeOfTransport the mode of transport (should be "walk")
+     * @param toStop the destination stop
+     * @param startTime the start time in HH:mm:ss format
+     * @param walkingSeconds the duration of the walk in seconds
+     */
     public RouteStep(String modeOfTransport, Stop toStop, String startTime, int walkingSeconds) {
         this.modeOfTransport = modeOfTransport;
         this.toStop = toStop;
@@ -44,7 +69,9 @@ public class RouteStep {
         this.routeInfo = null;
     }
 
-    // Getters
+    /**
+     * Getters for the RouteStep properties
+     */
     public String getModeOfTransport() {
         return modeOfTransport;
     }
@@ -77,7 +104,13 @@ public class RouteStep {
         return stopStr;
     }
 
-    // Helper method to add seconds to time string
+    /**
+     * Adds seconds to a time string in HH:mm:ss format.
+     *
+     * @param timeStr the time string in HH:mm:ss format
+     * @param secondsToAdd the number of seconds to add
+     * @return the new time string in HH:mm:ss format
+     */
     private String addSecondsToTime(String timeStr, int secondsToAdd) {
         try {
             String[] parts = timeStr.split(":");
@@ -98,7 +131,11 @@ public class RouteStep {
         }
     }
 
-    // Method to get the route information into String
+    /**
+     * Returns the route information associated with this step.
+     *
+     * @return the RouteInfo object
+     */
     @Override
     public String toString() {
         if (modeOfTransport.equals("walk")) {
@@ -113,18 +150,21 @@ public class RouteStep {
             );
         }
     }
-    
-    // Method to convert the route step to JSON format
+
+    /**
+     * Converts the RouteStep to a JSON-like Map representation.
+     *
+     * @return a Map representing the RouteStep in JSON format
+     */
     public Map<String, Object> toJSON() {
         Map<String, Object> json = new HashMap<>();
 
         if (modeOfTransport.equals("walk")) {
             json.put("mode", modeOfTransport);
-        }
-        else {
+        } else {
             json.put("mode", "ride");
         }
-        
+
         json.put("to", toCoord.toJSON());
 
         // String twoDecimals = String.format("%.2f", numOfMinutes);
