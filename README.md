@@ -1,30 +1,120 @@
-# BCS1600 Spring 2025 Project Skeleton
+# Project Name
 
-The files in this repository can be used as a basis for your implementation of the routing
-Engine portion of the project.
+Brief description of what this project does and its main purpose.
 
-[Maven]: https://maven.apache.org/
+## Table of Contents
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Building the Project](#building-the-project)
+- [Running the Application](#running-the-application)
+- [Usage Examples](#usage-examples)
 
-## Building
 
-Use [Maven][] to build, clean, test, and start your program. The command-line tool is called
-`mvn`, and IDEs like IntelliJ IDEA and Visual Studio Code have built-in support for Maven
-actions. Maven is configured with the [`pom.xml`](pom.xml) file in the root directory of your
-repository.
+## Features
 
- - `mvn clean`: removes the `target/` directory (but note that e.g. vscode will immediately put
-   it back if vscode is open on the project!).
+- Feature 1: Description of feature
+- Feature 2: Description of feature
+- Feature 3: Description of feature
 
- - `mvn compile`: build the main project.
+## Prerequisites
 
- - `mvn test`: run the test suite.
+Before you begin, ensure you have met the following requirements:
 
- - `mvn exec:java`: invoke the main class of the project (`exec.mainClass` property in
-   `pom.xml`). Use the `-q` flag to silence Maven's own output: `mvn -q exec:java`.
+- Java JDK 11 or higher installed
+- Apache Maven 3.6.0 or higher installed
+- Git (optional, for cloning the repository)
 
-## Files
+### Checking Prerequisites
 
- - `pom.xml`: [Maven][] configuration file.
+```bash
+# Check Java version
+java -version
 
- - `src/main/java/RoutingEngine.java`: Skeleton routing Engine server implementation for you to
-   build on.
+# Check Maven version
+mvn -version
+```
+
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/project-name.git
+cd project-name
+```
+
+### Install Dependencies
+
+```bash
+mvn clean install
+```
+
+## Project Structure
+
+
+## Configuration
+
+
+
+## Running the Project
+
+### Running the routing
+
+#### Using maven
+```bash
+# Run directly with Maven
+mvn exec:java
+```
+
+#### Using java
+```bash
+# Compile first
+javac Main.java
+
+# Run 
+java Main
+```
+
+### Running the UI 
+
+#### Using Java
+
+```bash
+# Compile first
+javac MapUI.java
+
+# Run
+java MapUI
+
+```
+
+
+## Usage Examples
+
+### Basic Usage
+
+
+
+
+## Troubleshooting
+
+### Common Issues
+
+#### Issue 1: Maven Build Failure
+
+
+
+## Dependencies
+
+This project uses the following major dependencies:
+
+
+
+See `pom.xml` for a complete list of dependencies.
+
+
+## Contact
+
+Contact Luka for any inquiries, available 24/7/365 for questions
+Luka Topak  - +386 71 731 061
