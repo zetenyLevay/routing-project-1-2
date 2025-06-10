@@ -39,13 +39,14 @@ public class UserInterfaceBuilder {
     private static JTextField timeField;
     public static ControlPanelBuilder controlPanelBuilder;
 
+    @SuppressWarnings("static-access")
     public static JPanel createControlPanel(JTextField startField, JTextField endField, MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
         // Create the time field with current time in hh:mm format
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         timeField = new JTextField(currentTime, 6);
 
         // Create all buttons
-        JButton heatmapButton = heatmapAPI != null
+        var heatmapButton = heatmapAPI != null
                 ? controlPanelBuilder.createHeatmapButton(startField, mapDisplay, heatmapAPI)
                 : controlPanelBuilder.createLazyHeatmapButton(startField, mapDisplay);
         JButton zoomIn = controlPanelBuilder.createZoomButton("+", 1.5, mapDisplay);
@@ -84,6 +85,7 @@ public class UserInterfaceBuilder {
             }
 
             @Override
+            @SuppressWarnings("UseSpecificCatch")
             protected void done() {
                 try {
                     mapDisplay.applyTravelTimeHeatmap(get());
