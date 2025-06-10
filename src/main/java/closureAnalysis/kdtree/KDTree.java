@@ -8,39 +8,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Using kd tree in order to improve POI finding speed
- * this is a binary tree, where we switch between comparing the x coordinates and y coordinates
- * if more understanding needed i suggest <a href="https://www.youtube.com/watch?v=Glp7THUpGow">this</a>
+ * A k-dimensional tree (KD-Tree) implementation for efficient spatial searching of Points of Interest (POIs).
+ *
+ * <p>This data structure organizes geographic coordinates in a binary tree that alternates between
+ * comparing latitude and longitude at each level, enabling efficient range queries and nearest neighbor searches.
+ *
+ * <p>Key features:
+ * <ul>
+ *   <li>Optimized for 2-dimensional geographic coordinates (latitude/longitude)</li>
+ *   <li>Efficient range searches within a specified radius</li>
+ *   <li>Balanced tree structure for logarithmic time complexity on average</li>
+ *   <li>Supports dynamic insertion of new POIs</li>
+ * </ul>
+ *
+ * <p>For more information on KD-Trees, see
+ * <a href="https://www.youtube.com/watch?v=Glp7THUpGow">this explanatory video</a>.
  */
 public class KDTree {
-
-    private final int dimensions = 2;
-    private class KDNode {
+    /**
+     * Represents a node in the KD-Tree containing a POI and references to child nodes.
+     */
+    private static class KDNode {
         PointOfInterest poi;
         KDNode left, right;
-        boolean isVertical; // this is to check if we need to look at latitude or longitude (it alternates between true and false, so that we spli
+        boolean isVertical; // this is to check if we need to look at latitude or longitude
+        /**
+         * Creates a new KDNode with the specified POI and splitting orientation.
+         * @param poi The Point of Interest to store
+         * @param vertical The splitting orientation for this node
+         */
         KDNode(PointOfInterest poi, boolean vertical) {
             this.poi = poi;
             this.isVertical = vertical ;
             this.left = this.right = null;
         }
     }
+    /**
+     * The root node of the KD-Tree
+     */
     private KDNode root;
 
     /**
-     * default insert if KDTree is not started yet
-     * @param poi
+     * Inserts a new Point of Interest into the KD-Tree.
+     * @param poi The Point of Interest to insert
      */
     public void insert(PointOfInterest poi) {
         root = insert(root, poi, true);
     }
 
     /**
-     *
-     * @param node parent node
-     * @param poi what we are inserting
-     * @param isVertical if yes, we are checking x coordinate, if no we are checking y coordinate
-     * @return
+     * Recursively inserts a POI into the KD-Tree.
+     * @param node The current node being examined
+     * @param poi The Point of Interest to insert
+     * @param isVertical Whether to compare latitude (true) or longitude (false)
+     * @return The updated node after insertion
      */
     private KDNode insert(KDNode node, PointOfInterest poi, boolean isVertical) {
         if (node == null) return new KDNode(poi, isVertical);
@@ -58,27 +79,25 @@ public class KDTree {
     }
 
     /**
-     * starts the search
-     * @param center the stop's coordinates that we are looking around
-     * @param radiusMeters how far we are looking
-     * @param calculator
-     * @return every point of interest in the RadiusMeters
+     * Finds all Points of Interest within a specified radius of a center point.
+     * @param center The central coordinates to search around
+     * @param radiusMeters The search radius in meters
+     * @param calculator The distance calculator to use
+     * @return List of POIs within the specified radius
      */
     public List<PointOfInterest> rangeSearch(Coordinates center, double radiusMeters, DistanceCalculator calculator) {
         List<PointOfInterest> result = new ArrayList<>();
         rangeSearch(root, center, radiusMeters, calculator, result);
         return result;
     }
-
     /**
-     *
-     * @param node current POI we are checking
-     * @param center start point
-     * @param radiusMeters radius to check
-     * @param calculator
-     * @param result all pois
+     * Recursively searches for POIs within a specified radius of a center point.
+     * @param node The current node being examined
+     * @param center The central coordinates to search around
+     * @param radiusMeters The search radius in meters
+     * @param calculator The distance calculator to use
+     * @param result The accumulating list of found POIs
      */
-
     private void rangeSearch(KDNode node, Coordinates center, double radiusMeters, DistanceCalculator calculator, List<PointOfInterest> result) {
         if (node == null) return;
 

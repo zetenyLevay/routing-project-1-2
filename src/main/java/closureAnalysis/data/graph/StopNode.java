@@ -5,18 +5,18 @@ import closureAnalysis.data.models.NearbyPOIs;
 import routing.routingEngineModels.Coordinates;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
- * the stops in the graph
+ * Represents a stop node in the transportation network graph.
+ * Contains information about the stop, its connections, and various metrics
+ * used for network analysis including centrality measures and worth calculations.
  */
-
 public class StopNode {
 
-    private String id;
-    private Set<StopEdge> edges;
+    private final String id;
+    private final Set<StopEdge> edges;
 
-    private List<StopInstance> stopInstances;
+    private final List<StopInstance> stopInstances;
     private double closenessCentrality;
     private double betweennessCentrality;
 
@@ -28,12 +28,17 @@ public class StopNode {
     private double poiWorth;
     public double centralityWorth;
     private double stopWorth; // Higher the better
+    /**
+     * Constructs a StopNode with the given ID.
+     * @param id The unique identifier for this stop
+     */
     public StopNode(String id) {
         this.id = id;
         edges = new HashSet<>();
         stopInstances = new ArrayList<>();
 
     }
+    // getter and setters
     public String getId() {
         return id;
     }
@@ -48,9 +53,7 @@ public class StopNode {
     public List<StopInstance> getStopInstances() {
         return stopInstances;
     }
-    public int getEdgeListSize(){
-        return edges.size();
-    }
+
     public Set<StopEdge> getAllEdges() {
         return edges;
     }

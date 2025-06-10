@@ -4,19 +4,44 @@ import closureAnalysis.data.enums.POIType;
 import routing.routingEngineModels.Coordinates;
 
 /**
- * Using our buildings database a point of interest is anything near a stop, these can have different types as seen in POIType ENUM
+ * Represents a geographic point of interest with categorical classification.
+ *
+ * <p>Each POI contains:
+ * <ul>
+ *   <li>A unique identifier</li>
+ *   <li>A classification type (from POIType enum)</li>
+ *   <li>Geographic coordinates</li>
+ * </ul>
+ *
+ * <p>Used to evaluate the amenities and services available near transit stops.
  */
 public class PointOfInterest {
+    /**
+     * Unique identifier for the POI
+     */
     private String id;
+    /**
+     * Classification category of the POI
+     */
     private POIType type;
-    private Coordinates coordinates;
 
+    /**
+     * Geographic location of the POI
+     */
+    private Coordinates coordinates;
+    /**
+     * Creates a new PointOfInterest instance.
+     * @param id Unique identifier
+     * @param type Classification category
+     * @param coordinates Geographic location
+     */
     public PointOfInterest(String id, POIType type, Coordinates coordinates) {
         this.id = id;
         this.type = type;
         this.coordinates = coordinates;
     }
 
+    // Standard getter and setter methods
     public String getId() {
         return id;
     }

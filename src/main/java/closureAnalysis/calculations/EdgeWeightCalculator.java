@@ -12,19 +12,25 @@ import java.util.List;
 import closureAnalysis.data.graph.StopInstance;
 import closureAnalysis.data.graph.StopNode;
 
+/**
+ * Calculates weights for edges between stops in a transportation network.
+ * Weights combine both distance and time factors between connected stops.
+ */
 public class EdgeWeightCalculator {
 
     double ALPHA = 0.1;
     double BETA = 0.9;
     int count = 0;
 
-    /**
-     *
-     * @param from
-     * @param to
-     * @return the edge's weight between from and to
-     */
 
+    /**
+     * Calculates the edge weight between two stop nodes.
+     * The weight is a combination of distance (ALPHA-weighted) and time (BETA-weighted).
+     *
+     * @param from The starting stop node
+     * @param to The ending stop node
+     * @return The calculated edge weight, or Double.NEGATIVE_INFINITY if calculation fails
+     */
     public double calculateEdgeWeight(StopNode from, StopNode to) {
 
         List<StopInstance> instances = neighboringInstances(from, to);
@@ -52,22 +58,23 @@ public class EdgeWeightCalculator {
     }
 
     /**
+     * Calculates the distance traveled between two stop instances.
      *
-     * @param from
-     * @param to
-     * @return the distance traveled between two StopInstances
+     * @param from The starting stop instance
+     * @param to The ending stop instance
+     * @return Distance traveled between stops in meters
      */
     public double calculateDistanceTraveled(StopInstance from, StopInstance to) {
         return to.getDistanceTraveled() - from.getDistanceTraveled();
     }
 
     /**
+     * Finds neighboring stop instances within the same trip.
      *
-     * @param from
-     * @param to
-     * @return the list of StopInstances within the same trip
+     * @param from The starting stop node
+     * @param to The ending stop node
+     * @return List of StopInstances in sequence, or null if no valid sequence found
      */
-
     private List<StopInstance> neighboringInstances(StopNode from, StopNode to){
         List<StopInstance> neighboringInstances = new ArrayList<>();
 
@@ -85,18 +92,14 @@ public class EdgeWeightCalculator {
                 }
 
         }
-
-
         return null;
     }
-
-
     /**
-     * Calculates the time taken between two StopInstances.
+     * Calculates the time taken between departure and arrival at two stops.
      *
-     * @param departure the StopInstance representing the departure stop
-     * @param arrival   the StopInstance representing the arrival stop
-     * @return the time taken in minutes, or Double.POSITIVE_INFINITY if parsing fails
+     * @param departure The departure stop instance
+     * @param arrival The arrival stop instance
+     * @return Time taken in minutes, or Double.POSITIVE_INFINITY if time parsing fails
      */
     public double calculateTimeTaken(StopInstance departure, StopInstance arrival) {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");

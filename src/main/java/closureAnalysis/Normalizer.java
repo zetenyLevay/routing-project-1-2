@@ -5,10 +5,21 @@ import closureAnalysis.data.graph.StopNode;
 
 import java.util.Comparator;
 
+/**
+ * Provides normalization functionality for various node metrics using min-max scaling.
+ *
+ * <p>Normalization is performed to bring different metrics to a common scale (0-1)
+ * for fair comparison and weighted combination. Supported normalizations include:
+ * <ul>
+ *   <li>Centrality measures (closeness and betweenness)</li>
+ *   <li>Point of Interest (POI) worth values</li>
+ *   <li>Transport worth values</li>
+ * </ul>
+ */
 public class Normalizer {
     /**
-     * min-max normalization on centrality (might do this with the others)
-     * @param stopGraph
+     * Normalizes centrality measures (closeness and betweenness) using min-max scaling.
+     * @param stopGraph The graph containing nodes to normalize
      */
     public void centralityNormalizer(StopGraph stopGraph) {
         double maxCloseness = stopGraph.getStopNodes().stream()
@@ -40,7 +51,10 @@ public class Normalizer {
         }
 
     }
-
+    /**
+     * Normalizes POI worth values using min-max scaling.
+     * @param stopGraph The graph containing nodes to normalize
+     */
     public void poiNormalizer(StopGraph stopGraph) {
         double maxPoi = stopGraph.getStopNodes().stream()
                 .max(Comparator.comparingDouble(StopNode::getPoiWorth))
@@ -57,6 +71,10 @@ public class Normalizer {
             stopNode.setPoiWorth(normalizedPoiWorth);
         }
     }
+    /**
+     * Normalizes transport worth values using min-max scaling.
+     * @param stopGraph The graph containing nodes to normalize
+     */
     public void transportNormalizer(StopGraph stopGraph) {
         double maxTransport = stopGraph.getStopNodes().stream()
                 .max(Comparator.comparingDouble(StopNode::getTransportWorth))

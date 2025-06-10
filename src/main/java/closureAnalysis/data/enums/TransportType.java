@@ -1,11 +1,7 @@
 package closureAnalysis.data.enums;
 
 /**
- * TransportType.java
- *
- * Enum representing different types of public transport.
- * Each type has an associated integer type, yearly passenger count (in millions),
- * and the number of stops of that type.
+ * Enum representing different types of transportation with associated metrics.
  */
 public enum TransportType {
     BUS(3, 564, 4462),
@@ -18,32 +14,30 @@ public enum TransportType {
     public final int intType;
     public final double yearlyPassengers; // millions
     public final double stopCount; // how many of these types exist
-
     /**
-     * Constructor for TransportType enum.
-     *
-     * @param intType the integer type representing the transport type
-     * @param yearlyPassengers the estimated number of passengers per year (in millions)
-     * @param stopCount the number of stops of this transport type
+     * Constructs a TransportType with the specified properties.
+     * @param intType The integer type identifier
+     * @param yearlyPassengers Yearly passengers in millions
+     * @param stopCount Count of stops for this transport type
      */
+
     TransportType(int intType, double yearlyPassengers, double stopCount) {
         this.intType = intType;
         this.yearlyPassengers = yearlyPassengers;
         this.stopCount = stopCount;
     }
-
     /**
-     * Gets the integer type of the transport type.
-     *
-     * @return the integer type
+     * Gets the integer type identifier for this transport type.
+     * @return The integer type identifier
      */
     public int getIntType() {
         return intType;
     }
     /**
-     * Gets the estimated number of passengers per year (in millions).
-     *
-     * @return the yearly passenger count
+     * Retrieves the TransportType corresponding to the given integer type.
+     * @param value The integer type to look up
+     * @return The matching TransportType
+     * @throws IllegalArgumentException if no TransportType matches the given integer
      */
     public static TransportType fromIntType(int value) {
         for (TransportType type : values()) {

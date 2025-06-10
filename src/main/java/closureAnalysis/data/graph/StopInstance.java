@@ -3,7 +3,8 @@ package closureAnalysis.data.graph;
 import java.util.Objects;
 
 /**
- * each stop can have multiple instances, depending on how many different routes it has going through
+ * Represents a specific instance of a stop being visited by a particular trip.
+ * Contains timing and sequence information for the visit.
  */
 public class StopInstance {
     private final int stopSequence;
@@ -12,6 +13,14 @@ public class StopInstance {
     private final int distanceTraveled;
     private final String tripId;
 
+    /**
+     * Constructs a new StopInstance.
+     * @param tripId The trip ID
+     * @param stopSequence The sequence number in the trip
+     * @param arrivalTime Arrival time at the stop
+     * @param departureTime Departure time from the stop
+     * @param distanceTraveled Distance traveled to reach this stop
+     */
     public StopInstance(String tripId, int stopSequence, String arrivalTime, String departureTime, int distanceTraveled) {
         this.tripId = tripId;
         this.stopSequence = stopSequence;
@@ -29,15 +38,14 @@ public class StopInstance {
     public int getStopSequence() { return stopSequence; }
 
     /**
-     * break if i dont have it but its the same as it should be by default???
-     * @param o
-     * @return
+     * Custom equals implementation comparing all fields.
+     * @param o The object to compare
+     * @return true if all fields are equal
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StopInstance)) return false;
-        StopInstance that = (StopInstance) o;
+        if (!(o instanceof StopInstance that)) return false;
         return distanceTraveled == that.distanceTraveled &&
                 stopSequence == that.stopSequence &&
                 Objects.equals(arrivalTime, that.arrivalTime) &&
@@ -46,8 +54,8 @@ public class StopInstance {
     }
 
     /**
-     * this might actually not be needed idk
-     * @return
+     * Generates a hash code based on all fields.
+     * @return A hash code value for this instance
      */
     @Override
     public int hashCode() {

@@ -1,25 +1,30 @@
 package closureAnalysis.data.graph;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 import closureAnalysis.calculations.EdgeWeightCalculator;
 import javafx.util.Pair;
 
 /**
- * big daddy graph itself
+ * Represents the complete transportation network graph.
+ * Contains all stop nodes and their connections, with methods for graph construction
+ * and analysis.
  */
+@SuppressWarnings("all")
 public class StopGraph {
 
-    private Set<StopNode> stopNodes;
-    private Map<String, StopEdge> edgeCache = new HashMap<>();
+    private final Set<StopNode> stopNodes;
+    private final Map<String, StopEdge> edgeCache = new HashMap<>();
     public Map<String, StopNode> stopNodeMap = new HashMap<>();
 
+    /**
+     * Constructs an empty StopGraph.
+     */
     public StopGraph() {
         stopNodes = new LinkedHashSet<>();
     }
@@ -32,21 +37,11 @@ public class StopGraph {
     public int getSize() {
         return stopNodes.size();
     }
-    public StopNode getStopNode(String id) {
-        for (StopNode n : stopNodes) {
-            if (n.getId().equals(id)) {
-                return n;
-            }
-        }
-        return null;
-    }
 
     /**
-     * iterates through every single trip in database, creates a StopNode for each unique stop in table
-     * since a stop can have different routes going through it, we create a new StopInstance for each (by checking if its a different sequence number)
-     *
-     * @param conn db connection
-     * @return returns fully built graph
+     * Builds the complete stop graph from database connection.
+     * @param conn The database connection
+     * @return The fully constructed StopGraph
      */
     public StopGraph buildStopGraph(Connection conn) {
 
@@ -63,7 +58,7 @@ public class StopGraph {
 
 
         try (PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery();) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 String tripId = rs.getString("trip_id");
@@ -106,13 +101,11 @@ public class StopGraph {
     }
 
     /**
-     * starting from 0, we check each sequence number, based on that we create an edge using a unique key for each
-     *
-     * @param tripStops  a trip has number (stop_sequence) connected to a node, so we know which node comes after which
-     * @param calculator
-     * @param stopGraph
+     * Processes a single trip to create edges between consecutive stops.
+     * @param tripStops List of stops in the trip with their sequence numbers
+     * @param calculator Edge weight calculator
+     * @param stopGraph The graph being constructed
      */
-
     private void processTrip(List<Pair<Integer, StopNode>> tripStops, EdgeWeightCalculator calculator, StopGraph stopGraph) {
         tripStops.sort(Comparator.comparingInt(Pair::getKey)); // make sure nodes are in order
 
@@ -133,7 +126,7 @@ public class StopGraph {
             from.addEdge(edge);
             to.addEdge(edge);
 
-            // so the last stops dont get skipped
+            // so the last stops don't get skipped
             stopGraph.addStopNode(from);
             if (i == tripStops.size() - 2) {
                 stopGraph.addStopNode(to);
@@ -142,24 +135,14 @@ public class StopGraph {
     }
 
     /**
-     * simple edge key
-     * @param from
-     * @param to
-     * @return edge key
+     * Generates a unique key for an edge between two nodes.
+     * @param from First node
+     * @param to Second node
+     * @return Generated edge key
      */
     private String generateEdgeKey(StopNode from, StopNode to) {
         return from.getId().compareTo(to.getId()) < 0
                 ? from.getId() + "--" + to.getId()
                 : to.getId() + "--" + from.getId();
-    }
-
-
-    public static void main(String[] args) throws SQLException {
-        StopGraph stopGraph = new StopGraph();
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
-        stopGraph = stopGraph.buildStopGraph(conn);
-        List<StopNode> stops = stopGraph.getStopNodes();
-        System.out.println(stops.size());
-
     }
 }

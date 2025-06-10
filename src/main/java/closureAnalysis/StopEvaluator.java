@@ -1,23 +1,33 @@
 package closureAnalysis;
 
 import closureAnalysis.calculations.CentralityCalculator;
-import closureAnalysis.data.graph.StopEdge;
 import closureAnalysis.data.graph.StopGraph;
 import closureAnalysis.data.graph.StopNode;
 import closureAnalysis.data.enums.TransportType;
 import closureAnalysis.data.models.NearbyPOIs;
 import closureAnalysis.data.models.PointOfInterest;
 import closureAnalysis.data.readers.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
-
+/**
+ * The StopEvaluator class is responsible for evaluating the worth or importance of transit stops
+ * based on multiple factors including centrality measures, nearby points of interest, and transport types.
+ * It combines these factors using weighted sums to calculate a final stop worth value.
+ *
+ * <p>The evaluation process involves:
+ * <ul>
+ *   <li>Building a stop graph from GTFS data</li>
+ *   <li>Calculating centrality measures (closeness and betweenness)</li>
+ *   <li>Finding nearby points of interest for each stop</li>
+ *   <li>Determining transport types for each stop</li>
+ *   <li>Normalizing and combining these factors</li>
+ * </ul>
+ *
+ * <p>The class uses several weighting parameters (ALPHA, BETA, GAMMA, OMEGA) to control
+ * the influence of different factors in the final evaluation.
+ */
 public class StopEvaluator {
 
     CentralityCalculator cc = new CentralityCalculator();
@@ -29,68 +39,56 @@ public class StopEvaluator {
     double BETA = 0.33;
 
 
-
+    /**
+     * Performs the complete stop evaluation process.
+     * @return A map of stop IDs to their calculated worth values
+     */
     public Map<String, Double> doEverything(){
         StopGraph graph = new StopGraph();
-        Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:data/june2ndBudapestGTFS.db");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:data/june2ndBudapestGTFS.db");
+            graph = graph.buildStopGraph(conn);
+
+
+            TransportTypeFinder transportTypeFinder = new TransportTypeFinder();
+            POIFinder poiFinder = new POIFinder();
+            NameFinder nameFinder = new NameFinder();
+            transportTypeFinder.preload(conn);
+            poiFinder.preload();
+            nameFinder.preload(conn);
+
+
+            preprocess(graph, transportTypeFinder, poiFinder, nameFinder);
+            assignCentralityValue(graph.getStopNodes(), ALPHA);
+            double sum = BETA + GAMMA + OMEGA;
+
+            double betaNorm = BETA / sum;
+            double omegaNorm = OMEGA / sum;
+            double gammaNorm = GAMMA / sum;
+
+            stopEvaluation(graph, betaNorm, omegaNorm, gammaNorm);
+
+            List<StopNode> stopNodes = graph.getStopNodes();
+
+            Map<String, Double> stopValues = new HashMap<>();
+            for (StopNode stopNode : stopNodes) {
+                stopValues.putIfAbsent(stopNode.getId(), stopNode.getStopWorth());
+            }
+            return stopValues;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        graph = graph.buildStopGraph(conn);
 
-
-        TransportTypeFinder transportTypeFinder = new TransportTypeFinder();
-        POIFinder poiFinder = new POIFinder();
-        NameFinder nameFinder = new NameFinder();
-        transportTypeFinder.preload(conn);
-        poiFinder.preload();
-        nameFinder.preload(conn);
-
-
-        preprocess(graph, transportTypeFinder, poiFinder, nameFinder);
-        assignCentralityValue(graph.getStopNodes(), ALPHA);
-        double sum = BETA + GAMMA + OMEGA;
-
-        double betaNorm = BETA / sum;
-        double omegaNorm = OMEGA / sum;
-        double gammaNorm = GAMMA / sum;
-
-        stopEvaluation(graph, betaNorm, omegaNorm, gammaNorm);
-
-        List<StopNode> stopNodes = graph.getStopNodes();
-
-        Map<String, Double> stopValues = new HashMap<>();
-        for (StopNode stopNode : stopNodes) {
-            stopValues.putIfAbsent(stopNode.getId(), stopNode.getStopWorth());
-        }
-        return stopValues;
     }
-
-
-    public static void main(String[] args) throws SQLException {
-        StopEvaluator stopEvaluator = new StopEvaluator();
-        Map<String, Double> stopValues = stopEvaluator.doEverything();
-        System.out.println(stopValues);
-    }
-
-    public void exportStopScores(StopGraph graph, String filename) {
-        try (PrintWriter writer = new PrintWriter(new File(filename))) {
-            writer.println("stop_id,poiWorth,centralityWorth,transportWorth");
-            for (StopNode node : graph.getStopNodes()) {
-                writer.printf(Locale.US, "%s,%.4f,%.4f,%.4f\n",
-                        node.getId(),
-                        node.getPoiWorth(),
-                        node.getCentralityWorth(),
-                        node.getTransportWorth()
-                );
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Preprocesses the stop graph by calculating centrality measures,
+     * finding coordinates, POIs, transport types, and names for each stop.
+     * @param stopGraph The graph to preprocess
+     * @param transportTypeFinder Finder for transport types
+     * @param poiFinder Finder for points of interest
+     * @param nameFinder Finder for stop names
+     */
     public void preprocess(StopGraph stopGraph, TransportTypeFinder transportTypeFinder, POIFinder poiFinder, NameFinder nameFinder) {
         Normalizer normalizer = new Normalizer();
 
@@ -113,19 +111,11 @@ public class StopEvaluator {
         normalizer.poiNormalizer(stopGraph);
         normalizer.transportNormalizer(stopGraph);
     }
-
-    public void evaluate(StopGraph stopGraph, double alpha, double beta, double gamma, double omega,
-                         TransportTypeFinder transportTypeFinder, POIFinder poiFinder) {
-
-
-
-    }
-
-
-
     /**
-     * using geometric mean the combined centrality measures of a stop (this punishes
-     * @param stops stop we are chekcing
+     * Assigns a combined centrality value to each stop using a weighted sum
+     * of closeness and betweenness centrality.
+     * @param stops List of stops to evaluate
+     * @param alpha Weight for betweenness centrality (closeness weight is 1-alpha)
      */
     private void assignCentralityValue(List<StopNode> stops, double alpha) {
 
@@ -138,6 +128,10 @@ public class StopEvaluator {
 
     }
 
+    /**
+     * Calculates and assigns a transport worth value based on the stop's transport type.
+     * @param node The stop node to evaluate
+     */
     private void assignTransportValue(StopNode node) {
 
         TransportType transportType = node.getTransportType();
@@ -153,6 +147,10 @@ public class StopEvaluator {
 
     }
 
+    /**
+     * Calculates and assigns a POI worth value based on nearby points of interest.
+     * @param node The stop node to evaluate
+     */
     private void assignPoiValue(StopNode node) {
         NearbyPOIs a = node.getNearbyPOIs();
         double closeValue = 0;
@@ -174,6 +172,14 @@ public class StopEvaluator {
         node.setPoiWorth(totalValue);
     }
 
+    /**
+     * Performs the final stop evaluation by combining normalized POI, centrality,
+     * and transport worth values using the specified weights.
+     * @param graph The stop graph to evaluate
+     * @param beta Normalized weight for POI worth
+     * @param gamma Normalized weight for transport worth
+     * @param omega Normalized weight for centrality worth
+     */
     private void stopEvaluation(StopGraph graph, double beta, double gamma, double omega) {
         List<StopNode> stops = graph.getStopNodes();
 

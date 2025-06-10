@@ -1,13 +1,4 @@
 package closureAnalysis;
-
-
-
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -17,22 +8,38 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
-
 import closureAnalysis.data.graph.StopEdge;
 import closureAnalysis.data.graph.StopGraph;
 import closureAnalysis.data.graph.StopNode;
 
 /**
- * As the name suggests Dijkstra
- * As the name does NOT suggest, also includes Brandes' algorithm (needed for betwenness)
+ * Implements Dijkstra's algorithm for finding the shortest paths in a graph,
+ * with additional functionality for Brandes' algorithm to support betweenness centrality calculations.
+ *
+ * <p>This class provides:
+ * <ul>
+ *   <li>Shortest path calculations between nodes</li>
+ *   <li>Tracking of predecessor nodes and path counts</li>
+ *   <li>Support for betweenness centrality calculations through Brandes' algorithm</li>
+ * </ul>
+ *
+ * <p>The algorithm maintains:
+ * <ul>
+ *   <li>Distance maps for each node</li>
+ *   <li>Counts of shortest paths (sigma)</li>
+ *   <li>Predecessor lists for path reconstruction</li>
+ * </ul>
  */
 public class Dijkstra {
 
-    public long totalTime;
-    public DijkstraResult dijkstra(StopGraph graph, StopNode startNode) {
 
-        Instant start = Instant.now();
-        //System.out.println("Dijkstra start: " + start);
+    /**
+     * Executes Dijkstra's algorithm from a given start node.
+     * @param graph The graph to analyze
+     * @param startNode The starting node for path calculations
+     * @return A DijkstraResult containing distances, path counts, predecessors, and traversal order
+     */
+    public DijkstraResult dijkstra(StopGraph graph, StopNode startNode) {
 
         Map<StopNode, List<StopNode>> pred = new HashMap<>();
         Map<StopNode, Integer> sigma = new HashMap<>();
@@ -82,63 +89,16 @@ public class Dijkstra {
                 }
             }
         }
-
-        Instant finish = Instant.now();
-        totalTime +=  Duration.between(start,finish).toMillis();
-        //System.out.println("Dijkstra finished");
-        //System.out.println("Dijkstra time: " + Duration.between(start, finish).toMillis());
-
-
         return new DijkstraResult(distances, sigma, pred, stack);
     }
-
-    public static void main(String[] args) throws SQLException {
-        StopGraph graph = new StopGraph();
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:data/budapest_gtfs.db");
-        graph = graph.buildStopGraph(conn);
-
-        Dijkstra dijkstra = new Dijkstra();
-
-        System.out.println(graph.getStopNodes().size());
-
-        StopNode testNode = graph.getStopNode("007884");
-        System.out.println(testNode.getId());
-
-
-        DijkstraResult dijkstraResult = dijkstra.dijkstra(graph, testNode);
-        Map<StopNode, List<StopNode>> pred = dijkstraResult.pred;
-        Map<StopNode, Double> dist = dijkstraResult.dist;
-        List<StopNode> list = pred.get(testNode);
-
-        System.out.println(list.size());
-
-        for (StopNode node : pred.get(testNode)) {
-            System.out.println("To: " + node.getId() + " | "+ dist.get(node) + " Meters");
-        }
-
-
-        /*
-
-        for (StopNode node : graph.getStopNodes()) {
-            System.out.println("To: " + node.getId() + " | "+ dist.get(node) + " Meters");
-        }
-
-         */
-
-
-
-    }
-
     /**
-     *
-     * @param dist default dijkstra result
-     * @param sigma number of shortests paths from node s to v
-     * @param pred all the steps we need to take to get to the node
-     * @param stack reverse the order of pred basically
+     * Represents the results of a Dijkstra algorithm execution.
+     * @param dist Map of nodes to their distances from the start node
+     * @param sigma Map of nodes to their number of shortest paths from start
+     * @param pred Map of nodes to their predecessor nodes in the shortest paths
+     * @param stack The traversal order of nodes (LIFO)
      */
     public record DijkstraResult(Map<StopNode, Double> dist, Map<StopNode, Integer> sigma, Map<StopNode, List<StopNode>> pred,
                           Stack<StopNode> stack) {
     }
-
-
 }

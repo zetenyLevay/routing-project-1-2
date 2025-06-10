@@ -1,10 +1,5 @@
 package closureAnalysis.data.readers;
-
-import closureAnalysis.data.enums.TransportType;
-import closureAnalysis.data.graph.StopGraph;
 import closureAnalysis.data.graph.StopNode;
-import javafx.util.Pair;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +7,21 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Retrieves and attaches stop names to StopNodes using preloaded data from a GTFS database.
+ *
+ * <p>This implementation preloads all stop names into memory during initialization
+ * for efficient lookup during the find operation. This avoids repeated database queries
+ * when processing multiple stops.
+ */
 public class NameFinder implements Finder {
 
-    Map<String, String> nameMap = new HashMap<String, String>();
+    Map<String, String> nameMap = new HashMap<>();
 
+    /**
+     * Preloads all stop names from the database into memory.
+     * @param conn Active database connection to the GTFS data
+     */
     public void preload(Connection conn) {
         String query = "SELECT stop_id, stop_name FROM stops";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -34,7 +40,8 @@ public class NameFinder implements Finder {
         }
     }
     /**
-     * @param input
+     * Finds and sets the name for the given stop node using preloaded data.
+     * @param input The StopNode whose name needs to be set
      */
     @Override
     public void find(StopNode input) {

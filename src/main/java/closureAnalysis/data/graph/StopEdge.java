@@ -3,37 +3,28 @@ package closureAnalysis.data.graph;
 import java.util.Objects;
 
 /**
- * Edges on the graph
+ * Represents a connection between two stop nodes in the transportation network.
+ * Contains weight information for both distance and time factors.
  */
 public class StopEdge {
 
-    private StopNode from;
-    private StopNode to;
+    private final StopNode from;
+    private final StopNode to;
     private double weight;
-    public double distWeight;
-    public double timeWeight;
+    /**
+     * Constructs a new StopEdge between two nodes.
+     * @param to The destination node
+     * @param from The origin node
+     */
     public StopEdge(StopNode to, StopNode from) {
         this.to = to;
         this.from = from;
     }
-    public double getTimeWeight() {
-        return timeWeight;
-    }
-    public void setTimeWeight(double timeWeight) {
-        this.timeWeight = timeWeight;
-    }
-    public double getDistWeight() {
-        return distWeight;
-    }
-    public void setDistWeight(double distWeight) {
-        this.distWeight = distWeight;
-    }
     /**
-     *
-     * we check if in this edge the node we are checking from, is the later node, if it is we return the earlier node
-     * else other way around
-     * @param from
-     * @return connected node
+     * Gets the connected node based on the given origin.
+     * @param from The node to check connection from
+     * @return The connected node
+     * @throws IllegalArgumentException if the given node is not part of this edge
      */
     public StopNode getTo(StopNode from) {
         if (from.equals(this.to)) return this.from;
@@ -48,9 +39,9 @@ public class StopEdge {
     }
 
     /**
-     * custom equals function, i did this like 2 months ago no idea why
-     * @param o
-     * @return
+     * Custom equals implementation that considers edges bidirectional.
+     * @param o The object to compare
+     * @return true if edges connect the same nodes (in any direction)
      */
     @Override
     public boolean equals(Object o) {
@@ -65,9 +56,8 @@ public class StopEdge {
     }
 
     /**
-     * we hash together both the from and to, since we dont want to duplicate the edge
-     * if we only did one, then after hashing from and to, hashing to and from would be a different object, giving a new edge (thats bad)
-     * @return
+     * Custom hashCode implementation that ensures bidirectional equality.
+     * @return A hash code value for this edge
      */
     @Override
     public int hashCode() {

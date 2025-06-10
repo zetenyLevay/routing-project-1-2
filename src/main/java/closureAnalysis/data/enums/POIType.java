@@ -1,4 +1,7 @@
 package closureAnalysis.data.enums;
+/**
+ * Enum representing different types of Points of Interest (POI) with associated values.
+ */
 public enum POIType {
     AGRICULTURAL(5),
     COMMERCIAL(20),

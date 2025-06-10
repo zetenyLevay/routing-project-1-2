@@ -17,21 +17,32 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Finds Points of Interest (POIs) near transit stops using a KD-Tree for spatial indexing.
+ *
+ * <p>This implementation:
+ * <ul>
+ *   <li>Preloads all POIs from a spatial database into a KD-Tree for efficient range queries</li>
+ *   <li>Categorizes POIs into "close" (within 400m) and "far" (400-800m) groups</li>
+ *   <li>Uses efficient spatial searches to minimize computation time</li>
+ * </ul>
+ */
+@SuppressWarnings("all")
 public class POIFinder implements Finder {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private final double BIGRADIUS = 800;
+    @SuppressWarnings("FieldCanBeLocal")
     private final double SMALLRADIUS = 400;
 
     private final DistanceCalculator calculator = new DistanceCalculator();
-    // private List<PointOfInterest> allPOIs = new ArrayList<>();
 
-    private KDTree poiTree = new KDTree();
+    private final KDTree poiTree = new KDTree();
 
     /**
-     * we preload all the Points of interests, since we dont want to query again and again for each stop
+     * Preloads all Points of Interest from the database into a KD-Tree structure.
+     * Reads POI data including location coordinates and category types.
      */
-
     public void preload() {
         String query = "SELECT ogc_fid, category, xcoord, ycoord FROM added_geom_info";
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:data/ClosureAnalysis/countyBuildingsAsPoints.sqlite");
@@ -52,13 +63,13 @@ public class POIFinder implements Finder {
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
-
     /**
-     * using kdTree (k dimensional tree) in our case k is 2, we find all pois nearby
-     * @param stop
+     * Finds nearby POIs for a stop and categorizes them into close and far groups.
+     * @param stop The StopNode to find POIs around
      */
      public void find(StopNode stop) {
 

@@ -2,16 +2,22 @@ package closureAnalysis.calculations;
 
 import routing.routingEngineModels.Coordinates;
 
+/**
+ * Provides geographic distance calculations using the Haversine formula.
+ * Calculates distances between geographic coordinates on Earth.
+ */
 public class DistanceCalculator {
 
-    private static final double EARTH_RADIUS_KM = 6371;
+
     private static final double EARTH_RADIUS_M = 6_371_000;
 
     /**
+     * Calculates the distance between two geographic coordinates using the Haversine formula.
+     * Returns the distance in meters.
      *
-     * @param startCoordinates
-     * @param endCoordinates
-     * @return distance in meters
+     * @param startCoordinates The starting coordinates (latitude/longitude)
+     * @param endCoordinates The ending coordinates (latitude/longitude)
+     * @return Distance between coordinates in meters
      */
     public double calculateDistance(Coordinates startCoordinates, Coordinates endCoordinates) {
 
