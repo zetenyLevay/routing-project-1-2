@@ -1,23 +1,26 @@
 package gui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
-import parsers.RequestHandler;
+import parsers.ZipToSQLite;
 
 public class MainUI {
 
-    public static void main(String[] args) throws IOException {
-        //uncomment at some point
-           MapUI.create();
-
-        //{"load":"/Users/jakelockitch/Downloads/budapest_gtfs.zip"}
-        //{"load":"budapest_gtfs.zip"}
-        //{"load":"data/budapest_gtfs.zip"}
-        //NOTE: you have to be explicit about the path to the GTFS file
-           RequestHandler rh = new RequestHandler();
-           rh.run();
-           
-        // ZipToSQLite zts = new ZipToSQLite();
-        // zts.run("data/budapest_gtfs.zip");
+    /**
+     * Main method used to launch the Map UI application. NOTE: the database has
+     * to be loaded in order for this to work
+     *
+     * @param args command line arguments (not used)
+     * @throws IOException if there is an error loading the map data
+     * @throws SQLException
+     */
+    @SuppressWarnings("static-access")
+    public static void main(String[] args) throws IOException, SQLException {
+        ZipToSQLite zts = new ZipToSQLite();
+        System.out.println("Loading databse...");
+        zts.run("data/budapest_gtfs.zip");
+        System.out.println("Database loaded successfully");
+        MapUI.create();
     }
 }

@@ -31,6 +31,7 @@ public class RequestHandler {
         this.cliWrite = new CLIWrite();
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     public void run() throws IOException {
         while (true) {
             Object json;
@@ -172,9 +173,5 @@ public class RequestHandler {
         } else {
             throw new IllegalArgumentException("Expected a numeric latitude/longitude");
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        new RequestHandler().run();
     }
 }

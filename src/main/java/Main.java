@@ -5,20 +5,16 @@ import parsers.RequestHandler;
 
 public class Main {
 
+    /**
+     * Main method used to launch the Request Handler application. This
+     * application handles requests for routing and GTFS data processing.
+     *
+     * @param args command line arguments (not used)
+     * @throws IOException if there is an error processing requests
+     */
     public static void main(String[] args) throws IOException {
         RequestHandler requestHandler = new RequestHandler();
-        
-        // MapUI.create();
         requestHandler.run();
-
     }
-    
-    //BudaPest:
-    // {"routeFrom":{"lat":47.51828032904577,"lon":18.97828487843043},"to":{"lat":47.4924417,"lon":19.0527917},"startingAt":"18:54:00"}
-    //Budapest: 
-    //{"routeFrom":{"lat":47.533834,"lon":18.862378},"to":{"lat":47.4924417,"lon":19.0527917},"startingAt":"18:54:00"}
 
-    //Budapest super edgecase:
-    //{"routeFrom":{"lat":47.567101,"lon":18.909322},"to":{"lat":47.568488,"lon":19.275036},"startingAt":"18:54:00"}
-    //{"load":"data/budapest_gtfs.zip"}
 }
