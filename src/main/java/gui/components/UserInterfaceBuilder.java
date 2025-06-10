@@ -1,9 +1,12 @@
 package gui.components;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -40,15 +43,22 @@ public class UserInterfaceBuilder {
     private static final RoutingEngineAstar routingEngine = new RoutingEngineAstar(dbManager);
     private static JTextField startField;
     private static JTextField endField;
+    private static JTextField timeField;
 
     public static JPanel createControlPanel(JTextField startField, JTextField endField, MapDisplay mapDisplay, TravelTimeHeatmapAPI heatmapAPI) {
+        // Create the time field with current time in hh:mm format
+        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        timeField = new JTextField(currentTime, 6);
+        
+        // Create all buttons
         JButton heatmapButton = heatmapAPI != null
                 ? createHeatmapButton(startField, mapDisplay, heatmapAPI)
                 : createLazyHeatmapButton(startField, mapDisplay);
         JButton zoomIn = createZoomButton("+", 1.5, mapDisplay);
         JButton zoomOut = createZoomButton("-", 0.9, mapDisplay);
         JButton evaluateStops = createStopEvaluatorButton(mapDisplay);
-        JButton showRouteButton = createShowRouteButton(startField, endField, mapDisplay);
+        JButton showRouteButton = createShowRouteButton(startField, endField, timeField, mapDisplay);
+        
         JTextField stopIdField = null;
         JButton nlcButton = null;
         JButton clearButton = null;
@@ -57,7 +67,9 @@ public class UserInterfaceBuilder {
             nlcButton = NLCHandler.createNLCButton(stopIdField, mapDisplay);
             clearButton = NLCHandler.createClearButton(stopIdField, mapDisplay);
         }
-        return buildControlPanel(startField, endField, zoomIn, zoomOut, heatmapButton, stopIdField, nlcButton, clearButton, evaluateStops, showRouteButton, mapDisplay);
+        
+        return buildControlPanel(startField, endField, timeField, zoomIn, zoomOut, heatmapButton, 
+                                stopIdField, nlcButton, clearButton, evaluateStops, showRouteButton, mapDisplay);
     }
 
     private static JButton createHeatmapButton(
@@ -85,7 +97,7 @@ public class UserInterfaceBuilder {
         return button;
     }
 
-    private static JButton createShowRouteButton(JTextField startField, JTextField endField, MapDisplay mapDisplay) {
+    private static JButton createShowRouteButton(JTextField startField, JTextField endField, JTextField timeField, MapDisplay mapDisplay) {
         JButton button = new JButton("Show Route");
         button.addActionListener(e -> {
             try {
@@ -117,7 +129,22 @@ public class UserInterfaceBuilder {
                 double targetLat = Double.parseDouble(endParts[0].trim());
                 double targetLon = Double.parseDouble(endParts[1].trim());
 
-                String startTime = "08:00:00"; //TODO: change in a but
+                // Get the time from the time field and convert to hh:mm:ss format
+                String timeInput = timeField.getText().trim();
+                String startTime;
+                if (timeInput.isEmpty()) {
+                    String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                    startTime = currentTime;
+                } else {
+                    // Convert hh:mm to hh:mm:ss
+                    if (timeInput.matches("\\d{2}:\\d{2}")) {
+                        startTime = timeInput + ":00";
+                    } else {
+                        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                        startTime = currentTime;
+                    }
+                }
+                
                 System.out.println("Finding route from " + sourceLat + "," + sourceLon
                         + " to " + targetLat + "," + targetLon + " at " + startTime);
                 List<RouteStep> route = routingEngine.findRoute(sourceLat, sourceLon, targetLat, targetLon, startTime);
@@ -157,25 +184,45 @@ public class UserInterfaceBuilder {
         return button;
     }
 
-    private static JPanel buildControlPanel(JTextField startField, JTextField endField, JButton zoomIn, JButton zoomOut, JButton actionButton, JTextField stopIdField, JButton nlcButton, JButton clearButton, JButton evaluateStops, JButton showRouteButton, MapDisplay mapDisplay) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("Start:"));
-        panel.add(startField);
-        panel.add(new JLabel("End:"));
-        panel.add(endField);
-        panel.add(zoomIn);
-        panel.add(zoomOut);
-        panel.add(showRouteButton);
-        panel.add(actionButton);
-        panel.add(evaluateStops);
+    private static JPanel buildControlPanel(JTextField startField, JTextField endField, JTextField timeField,
+                                          JButton zoomIn, JButton zoomOut, JButton actionButton, 
+                                          JTextField stopIdField, JButton nlcButton, JButton clearButton, 
+                                          JButton evaluateStops, JButton showRouteButton, MapDisplay mapDisplay) {
+        
+        // Main panel with BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        
+        // Top panel for input fields, route planning, and map controls
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.add(new JLabel("Start:"));
+        topPanel.add(startField);
+        topPanel.add(new JLabel("End:"));
+        topPanel.add(endField);
+        topPanel.add(new JLabel("Time:"));
+        topPanel.add(timeField);
+        topPanel.add(showRouteButton);
+        topPanel.add(Box.createHorizontalStrut(20)); // Add some spacing
+        topPanel.add(zoomIn);
+        topPanel.add(zoomOut);
+        
+        // Bottom panel for analysis tools
+        JPanel analysisPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        analysisPanel.add(actionButton);
+        analysisPanel.add(evaluateStops);
+        
+        // Add NLC controls if they exist
         if (stopIdField != null) {
-            panel.add(Box.createHorizontalStrut(20));
-            panel.add(new JLabel("Out of Service:"));
-            panel.add(stopIdField);
-            panel.add(nlcButton);
-            panel.add(clearButton);
+            analysisPanel.add(Box.createHorizontalStrut(20));
+            analysisPanel.add(new JLabel("Out of Service:"));
+            analysisPanel.add(stopIdField);
+            analysisPanel.add(nlcButton);
+            analysisPanel.add(clearButton);
         }
-        return panel;
+        
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(analysisPanel, BorderLayout.SOUTH);
+        
+        return mainPanel;
     }
 
     private static void runStopEvaluator(MapDisplay mapDisplay, JButton button) {
