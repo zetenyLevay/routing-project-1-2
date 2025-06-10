@@ -12,9 +12,21 @@ import java.util.Map;
 import routing.routingEngineModels.Coordinates;
 import routing.routingEngineModels.Stop.Stop;
 
+/**
+ * StopsCache.java
+ *
+ * This class is responsible for loading and caching stop data from a GTFS database.
+ * It provides methods to initialize the cache, retrieve a specific stop by ID,
+ * and get all stops in the cache.
+ */
 public class StopsCache {
     private static final Map<String, Stop> STOPS = new HashMap<>();
 
+    /**
+     * Initializes the StopsCache by loading stop data from the GTFS database.
+     * This method connects to the database, retrieves all stops, and stores them
+     * in a map for quick access.
+     */
     public static void init() {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:gtfs.db");
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM stops");
@@ -34,6 +46,7 @@ public class StopsCache {
         }
     }
 
+    //Getters
     public static Stop getStop(String id) {
         return STOPS.get(id);
     }

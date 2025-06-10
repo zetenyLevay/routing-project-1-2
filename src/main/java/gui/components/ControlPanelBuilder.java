@@ -19,12 +19,23 @@ import routing.db.DBConnectionManager;
 import routing.routingEngineAstar.RoutingEngineAstar;
 import routing.routingEngineModels.RouteStep;
 
+/**
+ * ControlPanelBuilder.java
+ *
+ * This class builds the control panel for the GUI, including buttons for
+ * generating heatmaps, evaluating stops, zooming in and out, and showing
+ * routes.
+ */
 public class ControlPanelBuilder {
+
     static UserInterfaceBuilder userInterfaceBuilder;
     private static final String DB_URL = "jdbc:sqlite:budapest_gtfs.db";
     private final static DBConnectionManager dbManager = new DBConnectionManager(DB_URL);
     private static final RoutingEngineAstar routingEngine = new RoutingEngineAstar(dbManager);
 
+    /**
+     * Initializes the UserInterfaceBuilder instance.
+     */
     static JButton createHeatmapButton(
             JTextField startField,
             MapDisplay mapDisplay,
@@ -35,6 +46,14 @@ public class ControlPanelBuilder {
         return button;
     }
 
+    /**
+     * Creates a button that generates a heatmap with lazy initialization. This
+     * means the heatmap is generated only when the button is clicked.
+     *
+     * @param startField The text field containing the start coordinates.
+     * @param mapDisplay The map display where the heatmap will be shown.
+     * @return A JButton configured to generate a heatmap on click.
+     */
     static JButton createLazyHeatmapButton(
             JTextField startField,
             MapDisplay mapDisplay
@@ -44,12 +63,24 @@ public class ControlPanelBuilder {
         return button;
     }
 
+    /**
+     * Creates a button that evaluates stops in the map display.
+     *
+     * @param mapDisplay The map display where the stops will be evaluated.
+     * @return A JButton configured to evaluate stops on click.
+     */
     static JButton createStopEvaluatorButton(MapDisplay mapDisplay) {
         JButton button = new JButton("Evaluate Stops");
         button.addActionListener(e -> userInterfaceBuilder.runStopEvaluator(mapDisplay, button));
         return button;
     }
 
+    /**
+     * Creates a button that evaluates stops in the map display with lazy initialization.
+     *
+     * @param mapDisplay The map display where the stops will be evaluated.
+     * @return A JButton configured to evaluate stops on click.
+     */
     static JButton createZoomButton(
             String text,
             double factor,
@@ -60,6 +91,15 @@ public class ControlPanelBuilder {
         return button;
     }
 
+    /**
+     * Creates a button that shows the route between two coordinates.
+     *
+     * @param startField The text field containing the start coordinates.
+     * @param endField The text field containing the end coordinates.
+     * @param timeField The text field containing the time for the route.
+     * @param mapDisplay The map display where the route will be shown.
+     * @return A JButton configured to show the route on click.
+     */
     static JButton createShowRouteButton(JTextField startField, JTextField endField, JTextField timeField, MapDisplay mapDisplay) {
         JButton button = new JButton("Show Route");
         button.addActionListener(e -> {
@@ -137,6 +177,23 @@ public class ControlPanelBuilder {
         return button;
     }
 
+    /**
+     * Builds the control panel with input fields, buttons, and map controls.
+     *
+     * @param startField The text field for the start coordinates.
+     * @param endField The text field for the end coordinates.
+     * @param timeField The text field for the time.
+     * @param zoomIn The button to zoom in on the map.
+     * @param zoomOut The button to zoom out on the map.
+     * @param actionButton The button for additional actions (e.g., generating heatmap).
+     * @param stopIdField The text field for stop ID (optional).
+     * @param nlcButton The button to analyze stop impact (optional).
+     * @param clearButton The button to clear the NLC analysis (optional).
+     * @param evaluateStops The button to evaluate stops.
+     * @param showRouteButton The button to show the route.
+     * @param mapDisplay The map display component.
+     * @return A JPanel containing the control panel components.
+     */
     static JPanel buildControlPanel(JTextField startField, JTextField endField, JTextField timeField,
             JButton zoomIn, JButton zoomOut, JButton actionButton,
             JTextField stopIdField, JButton nlcButton, JButton clearButton,
