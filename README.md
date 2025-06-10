@@ -13,16 +13,20 @@ Brief description of what this project does and its main purpose.
 
 ## Features
 
+### GUI
 - Feature 1: Description of feature
 - Feature 2: Description of feature
 - Feature 3: Description of feature
 
+### Console
+- Ability to load .zip files into .db files using the load command described under [CLI Usage Examples](#cli-usage)
+- Ability to route from a coordinate to coordinate using the route command described under [CLI Usage Examples](#cli-usage)
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
-- Java JDK 11 or higher installed
-- Apache Maven 3.6.0 or higher installed
+- Java JDK 23 or higher installed
+- Apache Maven 3.9.10 or higher installed
 - Git (optional, for cloning the repository)
 
 ### Checking Prerequisites
@@ -49,12 +53,6 @@ cd project-name
 ```bash
 mvn clean install
 ```
-
-## Project Structure
-
-
-## Configuration
-
 
 
 ## Running the Project
@@ -92,7 +90,12 @@ java MapUI
 
 ## Usage Examples
 
-### Basic Usage
+
+### GUI usage
+
+
+
+### CLI Usage
 
 
 
