@@ -1,7 +1,6 @@
 
 import java.io.IOException;
 
-import gui.MapUI;
 import parsers.RequestHandler;
 
 public class Main {

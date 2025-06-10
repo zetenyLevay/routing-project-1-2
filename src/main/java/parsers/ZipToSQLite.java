@@ -225,7 +225,6 @@ public class ZipToSQLite {
                     "ON stop_times (trip_id, stop_sequence);"
                 );
                 st.execute("CREATE INDEX IF NOT EXISTS idx_stop_times_trip_id ON stop_times (trip_id);");
-                st.execute("CREATE INDEX IF NOT EXISTS idx_trips_route_id ON trips (route_id);");
                 st.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_stop_times_unique ON stop_times (trip_id, stop_sequence);");
 
             }
